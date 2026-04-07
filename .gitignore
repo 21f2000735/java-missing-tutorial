@@ -1,0 +1,8 @@
+build/
+target/
+out/
+.gradle/
+*.class
+node_modules/
+npm-debug.log*
+dist/
