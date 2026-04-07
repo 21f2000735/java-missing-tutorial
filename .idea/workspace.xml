@@ -4,49 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next.__PAGE__.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next.__PAGE__.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next._full.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._full.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next._head.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._head.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next._index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._index.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next._tree.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._tree.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_next/static/9H2S392KmwVxmwCvzovQz/_buildManifest.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_next/static/9H2S392KmwVxmwCvzovQz/_clientMiddlewareManifest.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_next/static/9H2S392KmwVxmwCvzovQz/_ssgManifest.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_next/static/chunks/0lmf5qhsg8ab4.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_next/static/chunks/0msjfq.vkgmxs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._full.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._full.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._head.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._head.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._index.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._not-found.__PAGE__.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._not-found.__PAGE__.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._not-found.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._not-found.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._tree.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._tree.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec04_streams_and_functional_style/ch01_streams/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec04_streams_and_functional_style/ch01_streams/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/TOPIC_QUALITY_RUBRIC.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/TOPIC_QUALITY_RUBRIC.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/list-set-map/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/list-set-map/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planning/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planning/TOPIC_QUALITY_RUBRIC.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/TOPIC_QUALITY_RUBRIC.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/build_site.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_site.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md" afterDir="false" />
-    </list>
+    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -105,30 +63,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Formatting.executor&quot;: &quot;Debug&quot;,
-    &quot;Application.LocalDateTime.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RepresentingAbsence.executor&quot;: &quot;Run&quot;,
-    &quot;Application.RunAllTopics.executor&quot;: &quot;Run&quot;,
-    &quot;Application.Zones.executor&quot;: &quot;Run&quot;,
-    &quot;Application.com.learning.javamissing.sec01_fundamentals.ch01_java_basics.RunAllTopics.executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;SHELLCHECK.PATH&quot;: &quot;/Users/indiadelhi/Library/Application Support/JetBrains/IntelliJIdea2026.1/plugins/Shell Script/shellcheck&quot;,
-    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Formatting.executor": "Debug",
+    "Application.LocalDateTime.executor": "Run",
+    "Application.RepresentingAbsence.executor": "Run",
+    "Application.RunAllTopics.executor": "Run",
+    "Application.Zones.executor": "Run",
+    "Application.com.learning.javamissing.sec01_fundamentals.ch01_java_basics.RunAllTopics.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "SHELLCHECK.PATH": "/Users/indiadelhi/Library/Application Support/JetBrains/IntelliJIdea2026.1/plugins/Shell Script/shellcheck",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="LocalDateTime" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.learning.javamissing.sec16_core_data_time_and_text.ch02_date_and_time.topics.local_date_time.LocalDateTime" />
@@ -250,7 +209,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775585766841</updated>
       <workItem from="1775585771101" duration="3671000" />
-      <workItem from="1775591243727" duration="2422000" />
+      <workItem from="1775591243727" duration="2726000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <option name="closed" value="true" />
@@ -324,7 +283,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775592112093</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="update">
+      <option name="closed" value="true" />
+      <created>1775593755457</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1775593755457</updated>
+    </task>
+    <task id="LOCAL-00014" summary="update">
+      <option name="closed" value="true" />
+      <created>1775593939100</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1775593939100</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

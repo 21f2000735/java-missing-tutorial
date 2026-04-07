@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build:content": "bash scripts/build_site.sh",
-    "build:web": "next build && rm -rf docs && mv out docs",
+    "build:web": "next build && rm -rf docs && mv out docs && python3 scripts/validate_exported_site.py",
     "build": "npm run build:content && npm run build:web",
     "dev": "npm run build:content && next dev",
     "preview": "python3 -m http.server 4173 -d docs"

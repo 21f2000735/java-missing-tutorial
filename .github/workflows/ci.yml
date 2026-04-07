@@ -37,3 +37,11 @@ jobs:
 
       - name: Build content and site
         run: npm run build
+
+      - name: Verify committed docs match the generated export
+        run: |
+          if [ -n "$(git status --porcelain --untracked-files=all -- docs)" ]; then
+            echo "Generated docs/ is out of sync with the committed export."
+            git status --short --untracked-files=all -- docs
+            exit 1
+          fi
