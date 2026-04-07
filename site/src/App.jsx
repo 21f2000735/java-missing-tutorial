@@ -2046,7 +2046,7 @@ export default function App() {
         <nav className="navbar navbar-expand-lg px-3 px-lg-4 py-3">
           <div className="container-fluid px-0">
             <a className="navbar-brand fw-semibold" href="#home">{SITE_TITLE}</a>
-            <div className="ms-lg-4 flex-grow-1 d-flex align-items-center gap-3">
+            <div className="ms-lg-4 flex-grow-1 d-flex flex-wrap flex-lg-nowrap align-items-center gap-3 header-actions">
               <SearchBox entries={searchEntries} />
               <div className="d-none d-lg-flex align-items-center gap-2">
                 <button className={`btn btn-sm rounded-pill ${uiPreferences.isDark ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleTheme}>

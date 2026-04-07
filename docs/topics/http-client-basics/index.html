@@ -47,7 +47,7 @@
     background:linear-gradient(180deg,rgba(31,27,22,.96),rgba(27,23,19,.92)),var(--panel);
   }
   .static-header{padding:1.6rem 1.4rem}
-  .panel{padding:1.4rem 1.25rem}
+  .panel{padding:1.4rem 1.25rem;min-width:0}
   .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
   h1,h2,h3{font-family:"Fraunces",Georgia,serif;line-height:1.08}
   h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem}
@@ -65,17 +65,30 @@
   .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
   .code-title,.lead,.muted{color:var(--muted)}
-  img{display:block;width:min(100%,56rem);margin:1.2rem auto;border-radius:1.15rem;border:1px solid var(--line);background:var(--panel-strong);box-shadow:var(--shadow)}
-  pre{overflow:auto;background:#241d15;color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+  img{display:block;width:min(100%,56rem);max-width:100%;height:auto;margin:1.2rem auto;border-radius:1.15rem;border:1px solid var(--line);background:var(--panel-strong);box-shadow:var(--shadow)}
+  pre{overflow:auto;-webkit-overflow-scrolling:touch;background:#241d15;color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
   html[data-theme="dark"] pre{background:#15110d;color:#f7eddc}
   code{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
-  table{width:100%;border-collapse:collapse;margin:1rem 0;border-radius:1rem;overflow:hidden}
+  table{width:100%;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;border-collapse:collapse;margin:1rem 0;border-radius:1rem}
   th,td{border:1px solid var(--line);padding:.8rem .85rem;vertical-align:top}
   th{background:rgba(175,91,12,.08)}
   blockquote{margin:1rem 0;padding:.95rem 1rem;border-left:4px solid rgba(58,106,87,.45);background:rgba(58,106,87,.08);border-radius:.9rem}
   .back-link{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;color:var(--muted)}
   .footer-note{margin-top:1rem;color:var(--muted);font-size:.95rem}
-  @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  @media (max-width: 900px){
+    main{padding:1rem .85rem 2.5rem}
+    .layout{grid-template-columns:1fr}
+    .toolbar{align-items:stretch}
+    .nav{width:100%}
+    .nav a,.theme-toggle{width:100%;justify-content:center}
+  }
+  @media (max-width: 640px){
+    .static-header,.panel{padding:1rem}
+    h1{font-size:1.9rem}
+    h2{font-size:1.35rem}
+    th,td{min-width:8rem;padding:.65rem .7rem;font-size:.94rem}
+    pre{padding:.85rem;font-size:.84rem}
+  }
 </style>
 </head>
 <body>

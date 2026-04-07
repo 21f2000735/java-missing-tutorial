@@ -5,13 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planning/CHAPTER_QUALITY_CHECKLIST.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/CHAPTER_QUALITY_CHECKLIST.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planning/DEEP_DIVE_STANDARD.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/DEEP_DIVE_STANDARD.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/planning/TOPIC_QUALITY_RUBRIC.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/TOPIC_QUALITY_RUBRIC.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/validate_guide_structure.py" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/validate_guide_structure.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,7 +197,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1775585766841</updated>
-      <workItem from="1775585771101" duration="1522000" />
+      <workItem from="1775585771101" duration="1906000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <option name="closed" value="true" />
@@ -228,7 +223,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775586572140</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="update">
+      <option name="closed" value="true" />
+      <created>1775587550131</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1775587550131</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
