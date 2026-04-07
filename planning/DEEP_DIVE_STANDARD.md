@@ -43,18 +43,20 @@ The learner should understand:
 
 For a deep-dive topic, keep the standard topic order and deepen the middle of the lesson:
 
-1. `Why This Matters`
-2. `Intuition`
-3. `Problem Statement`
-4. `Core Idea`
-5. `Mental Model`
-6. `Simple Example`
-7. `Step-by-Step Working`
-8. `Rules / Syntax`
-9. `Common Mistakes`
-10. `When To Use / When Not To Use`
-11. `Practice`
-12. `Summary`
+1. `Why This Exists`
+2. `The Pain Before It`
+3. `Java Creator Mindset`
+4. `How You Might Invent It`
+5. `Naive Attempt`
+6. `Why It Breaks`
+7. `Final Java Solution`
+8. `Code`
+9. `Walkthrough`
+10. `Mental Model`
+11. `Mistakes`
+12. `Tradeoffs`
+13. `Use / Avoid`
+14. `Summary`
 
 Inside those sections, make sure the topic still covers:
 

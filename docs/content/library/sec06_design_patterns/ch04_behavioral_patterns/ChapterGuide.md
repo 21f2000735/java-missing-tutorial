@@ -1,24 +1,42 @@
 # Behavioral Patterns
 
-## Why This Chapter Matters
+## Why This Chapter Exists
 
 Behavioral patterns are about flow: who reacts, what order work happens in, and how much of that flow stays visible.
 
-## Intuition
+## The Pain Before It
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Before learners build a mental model for behavioral patterns, the APIs feel like isolated facts instead of answers to one connected problem.
 
-## Problem Statement
-
-Behavioral patterns are about flow: who reacts, what order work happens in, and how much of that flow stays visible.
-
-## Core Ideas
+## Java Creator Mindset
 
 Read the chapter as a small set of related ideas around behavioral Patterns, not as isolated trivia.
 
-## Mental Model
+## How You Might Invent It
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Two very common flow problems appear in business systems:
+
+- one event should trigger several listeners
+- one workflow should keep the same outer steps while allowing a few variations
+
+Observer and template method solve those two pressures in very different ways.
+
+## Naive Attempt
+
+| Compare | Use Left When | Use Right When |
+| --- | --- | --- |
+| observer | one event fans out to many listeners | one caller needs one direct response |
+| template method | process order is fixed | flexible composition is more important than inheritance |
+
+## Why It Breaks
+
+- avoid observer when one direct collaborator would be simpler
+- avoid template method when composition can vary behavior more clearly than inheritance
+- avoid hidden control flow that readers cannot trace from the caller
+
+## Final Java Direction
+
+Read the chapter as a small set of related ideas around behavioral Patterns, not as isolated trivia.
 
 ## Study Order
 
@@ -47,13 +65,24 @@ A: When too many listeners create hidden control flow, unclear ordering, or uncl
 Q: When is template method the wrong fit?  
 A: When subclassing starts varying too many steps and composition would be clearer.
 
+## Mental Model
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
 ## Common Mistakes
 
 - avoid observer when one direct collaborator would be simpler
 - avoid template method when composition can vary behavior more clearly than inheritance
 - avoid hidden control flow that readers cannot trace from the caller
 
-## When To Use / When Not To Use
+## Tradeoffs
+
+| Compare | Use Left When | Use Right When |
+| --- | --- | --- |
+| observer | one event fans out to many listeners | one caller needs one direct response |
+| template method | process order is fixed | flexible composition is more important than inheritance |
+
+## Use / Avoid
 
 ### Use It When
 
@@ -73,6 +102,30 @@ Every export fetches data, formats it, and delivers it, but CSV and JSON exports
 ## Summary
 
 After this chapter, you should be able to explain the main decisions behind behavioral patterns and connect them back to the runnable examples.
+
+## Why This Chapter Matters
+
+Behavioral patterns are about flow: who reacts, what order work happens in, and how much of that flow stays visible.
+
+## Intuition
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
+## Problem Statement
+
+Behavioral patterns are about flow: who reacts, what order work happens in, and how much of that flow stays visible.
+
+## Core Ideas
+
+Read the chapter as a small set of related ideas around behavioral Patterns, not as isolated trivia.
+
+## When To Use / When Not To Use
+
+### Use It When
+
+- use observer when one event should notify many independent listeners
+- use template method when the algorithm order is stable but a few steps vary
+- use either pattern only if the flow stays explainable to the next reader
 
 ## The Story
 

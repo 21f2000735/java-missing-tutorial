@@ -1,24 +1,47 @@
 # Strategy Pattern
 
-## Why This Chapter Matters
+## Why This Chapter Exists
 
 Strategy is the pattern you reach for when the workflow stays stable but one decision keeps changing.
 
-## Intuition
+## The Pain Before It
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Before learners build a mental model for strategy pattern, the APIs feel like isolated facts instead of answers to one connected problem.
 
-## Problem Statement
-
-Strategy is the pattern you reach for when the workflow stays stable but one decision keeps changing.
-
-## Core Ideas
+## Java Creator Mindset
 
 Read the chapter as a small set of related ideas around strategy Pattern, not as isolated trivia.
 
-## Mental Model
+## How You Might Invent It
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+An online store starts with one discount rule.  
+Then the business adds:
+
+- festival discounts
+- student discounts
+- premium-member discounts
+- region-specific rules
+
+The dangerous move is to keep adding branches inside checkout.  
+Checkout should run the purchase flow, not own every marketing rule.
+
+## Naive Attempt
+
+| Compare | Use Left When | Use Right When |
+| --- | --- | --- |
+| `if/switch` | there are few stable cases | new rules will keep appearing |
+| inheritance | the whole type meaning changes | only one behavior changes |
+| enum branching | logic is tiny and static | rules need their own tests and growth path |
+
+## Why It Breaks
+
+- there are only one or two tiny stable cases
+- a short method is still more readable than introducing new classes
+- the rule will never vary separately from the workflow
+
+## Final Java Direction
+
+Read the chapter as a small set of related ideas around strategy Pattern, not as isolated trivia.
 
 ## Study Order
 
@@ -48,13 +71,25 @@ A: It isolates interchangeable behavior behind a contract so the caller stops gr
 Q: What is the most common misuse?  
 A: Introducing strategy when the behavior is too small and stable to justify extra structure.
 
+## Mental Model
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
 ## Common Mistakes
 
 - there are only one or two tiny stable cases
 - a short method is still more readable than introducing new classes
 - the rule will never vary separately from the workflow
 
-## When To Use / When Not To Use
+## Tradeoffs
+
+| Compare | Use Left When | Use Right When |
+| --- | --- | --- |
+| `if/switch` | there are few stable cases | new rules will keep appearing |
+| inheritance | the whole type meaning changes | only one behavior changes |
+| enum branching | logic is tiny and static | rules need their own tests and growth path |
+
+## Use / Avoid
 
 ### Use It When
 
@@ -73,6 +108,30 @@ Strategy keeps discount logic reusable and local.
 ## Summary
 
 After this chapter, you should be able to explain the main decisions behind strategy pattern and connect them back to the runnable examples.
+
+## Why This Chapter Matters
+
+Strategy is the pattern you reach for when the workflow stays stable but one decision keeps changing.
+
+## Intuition
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
+## Problem Statement
+
+Strategy is the pattern you reach for when the workflow stays stable but one decision keeps changing.
+
+## Core Ideas
+
+Read the chapter as a small set of related ideas around strategy Pattern, not as isolated trivia.
+
+## When To Use / When Not To Use
+
+### Use It When
+
+- one small part of the workflow changes often
+- each rule should be tested independently
+- callers should stop knowing every rule formula
 
 ## The Story
 

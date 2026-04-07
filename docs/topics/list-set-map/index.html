@@ -97,17 +97,9 @@
       <div class="layout">
         <article class="panel">
           <a class="back-link" href="../../index.html#topic/sec02_collections/ch01_collections/list_set_map">← Back to interactive topic view</a>
-          <h2>Why This Matters</h2>
+          <h2>Why This Exists</h2>
 <p>A lot of Java bugs are not syntax bugs.<br>They are data-shape bugs.</p>
-<h2>Intuition</h2>
-<p><img src="../../content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMapVisual.svg" alt="List, Set, Map single-look visual"></p>
-<p>The point of the picture is simple:</p>
-<ul>
-<li><code>List</code> answers &quot;keep items in order, even if repeated&quot;</li>
-<li><code>Set</code> answers &quot;keep items unique&quot;</li>
-<li><code>Map</code> answers &quot;find the value by key fast&quot;</li>
-</ul>
-<h2>Problem Statement</h2>
+<h2>The Pain Before It</h2>
 <p>A lot of Java bugs are not syntax bugs.<br>They are data-shape bugs.</p>
 <p>You wanted:</p>
 <ul>
@@ -116,7 +108,7 @@
 <li>lookup by key</li>
 </ul>
 <p>but you picked the wrong collection.</p>
-<h2>Core Idea</h2>
+<h2>Java Creator Mindset</h2>
 <p>Pick the collection based on the problem shape:</p>
 <ul>
 <li><code>List</code> for ordered repeated items</li>
@@ -124,6 +116,49 @@
 <li><code>Map</code> for key-based lookup</li>
 </ul>
 <p>That is both cleaner design and cleaner code.</p>
+<h2>How You Might Invent It</h2>
+<p><img src="../../content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMapVisual.svg" alt="List, Set, Map single-look visual"></p>
+<p>The point of the picture is simple:</p>
+<ul>
+<li><code>List</code> answers &quot;keep items in order, even if repeated&quot;</li>
+<li><code>Set</code> answers &quot;keep items unique&quot;</li>
+<li><code>Map</code> answers &quot;find the value by key fast&quot;</li>
+</ul>
+<h2>Naive Attempt</h2>
+<p>Use <code>List</code> for everything because it is familiar.</p>
+<p>That usually leads to:</p>
+<ul>
+<li>duplicate values where uniqueness mattered</li>
+<li>manual searching where direct lookup was needed</li>
+<li>intent that is harder to read</li>
+</ul>
+<h2>Why It Breaks</h2>
+<p>Use <code>List</code> for everything because it is familiar.</p>
+<p>That usually leads to:</p>
+<ul>
+<li>duplicate values where uniqueness mattered</li>
+<li>manual searching where direct lookup was needed</li>
+<li>intent that is harder to read</li>
+</ul>
+<h2>Final Java Solution</h2>
+<p>Pick the collection based on the problem shape:</p>
+<ul>
+<li><code>List</code> for ordered repeated items</li>
+<li><code>Set</code> for unique values</li>
+<li><code>Map</code> for key-based lookup</li>
+</ul>
+<p>That is both cleaner design and cleaner code.</p>
+<h2>Code</h2>
+<h3>Run It</h3>
+<p>Run the example and compare cart items, coupon codes, and product quantities.</p>
+<h3>Expected Result</h3>
+<ul>
+<li>cart items keep duplicates and order</li>
+<li>coupon codes stay unique</li>
+<li>product quantities can be looked up by SKU</li>
+</ul>
+<h2>Walkthrough</h2>
+<p>The collection type itself becomes documentation.<br>A reader can often understand the data rules just by seeing whether you chose <code>List</code>, <code>Set</code>, or <code>Map</code>.</p>
 <h2>Mental Model</h2>
 <p><img src="../../content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMapVisual.svg" alt="List, Set, Map single-look visual"></p>
 <p>The point of the picture is simple:</p>
@@ -156,6 +191,125 @@
 <td>SKU to quantity, user ID to profile, code to meaning</td>
 </tr>
 </tbody></table>
+<h2>Mistakes</h2>
+<p>Use <code>List</code> for everything because it is familiar.</p>
+<p>That usually leads to:</p>
+<ul>
+<li>duplicate values where uniqueness mattered</li>
+<li>manual searching where direct lookup was needed</li>
+<li>intent that is harder to read</li>
+</ul>
+<h2>Tradeoffs</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Best fit</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Preserve order and duplicates</td>
+<td><code>List</code></td>
+<td>Cart lines, screen rows, ordered history</td>
+</tr>
+<tr>
+<td>Keep values unique</td>
+<td><code>Set</code></td>
+<td>Tags, coupon codes, distinct IDs</td>
+</tr>
+<tr>
+<td>Find by key</td>
+<td><code>Map</code></td>
+<td>SKU to quantity, user ID to profile, code to meaning</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th><code>ArrayList</code> style <code>List</code></th>
+<th><code>HashSet</code></th>
+<th><code>HashMap</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Append/add</td>
+<td>usually cheap</td>
+<td>usually cheap</td>
+<td>usually cheap</td>
+</tr>
+<tr>
+<td>Check contains</td>
+<td>often linear scan</td>
+<td>usually near constant average</td>
+<td>usually near constant average by key</td>
+</tr>
+<tr>
+<td>Lookup by index</td>
+<td>direct</td>
+<td>not supported</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>Lookup by key</td>
+<td>not natural</td>
+<td>not natural</td>
+<td>direct by key on average</td>
+</tr>
+</tbody></table>
+<p>These are the mental-model costs that matter first for learners:</p>
+<ul>
+<li>using <code>List</code> for lookup often pushes you into repeated scanning</li>
+<li>using <code>Set</code> for uniqueness removes &quot;did we already add it?&quot; bugs</li>
+<li>using <code>Map</code> turns &quot;search for the item&quot; into &quot;ask by key&quot;</li>
+</ul>
+<h2>Use / Avoid</h2>
+<h3>Use It When</h3>
+<p>Ask these three questions in order:</p>
+<ol>
+<li>Do I care about order?</li>
+<li>Do I need uniqueness?</li>
+<li>Do I need lookup by key?</li>
+</ol>
+<p>The first &quot;yes&quot; often tells you the right family of collection.</p>
+<h3>Avoid It When</h3>
+<ul>
+<li>you are choosing by habit instead of by data shape</li>
+</ul>
+<h2>Summary</h2>
+<ul>
+<li>choosing the right collection is a business-rule decision, not just an API choice</li>
+<li><code>List</code>, <code>Set</code>, and <code>Map</code> each express a different data shape</li>
+<li>the wrong collection often creates correctness bugs before it creates performance bugs</li>
+</ul>
+<h2>Why This Matters</h2>
+<p>A lot of Java bugs are not syntax bugs.<br>They are data-shape bugs.</p>
+<h2>Intuition</h2>
+<p><img src="../../content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMapVisual.svg" alt="List, Set, Map single-look visual"></p>
+<p>The point of the picture is simple:</p>
+<ul>
+<li><code>List</code> answers &quot;keep items in order, even if repeated&quot;</li>
+<li><code>Set</code> answers &quot;keep items unique&quot;</li>
+<li><code>Map</code> answers &quot;find the value by key fast&quot;</li>
+</ul>
+<h2>Problem Statement</h2>
+<p>A lot of Java bugs are not syntax bugs.<br>They are data-shape bugs.</p>
+<p>You wanted:</p>
+<ul>
+<li>ordered items</li>
+<li>unique values</li>
+<li>lookup by key</li>
+</ul>
+<p>but you picked the wrong collection.</p>
+<h2>Core Idea</h2>
+<p>Pick the collection based on the problem shape:</p>
+<ul>
+<li><code>List</code> for ordered repeated items</li>
+<li><code>Set</code> for unique values</li>
+<li><code>Map</code> for key-based lookup</li>
+</ul>
+<p>That is both cleaner design and cleaner code.</p>
 <h2>Simple Example</h2>
 <h3>Run It</h3>
 <p>Run the example and compare cart items, coupon codes, and product quantities.</p>
@@ -198,12 +352,6 @@
 <p>Change one part of the runnable example, rerun it, and explain whether list, set, map still behaves the way you expected.</p>
 <h3>After That</h3>
 <p>Go next to the collections internals and tradeoffs chapter if you want the complexity and performance side.</p>
-<h2>Summary</h2>
-<ul>
-<li>choosing the right collection is a business-rule decision, not just an API choice</li>
-<li><code>List</code>, <code>Set</code>, and <code>Map</code> each express a different data shape</li>
-<li>the wrong collection often creates correctness bugs before it creates performance bugs</li>
-</ul>
 <h2>The Problem</h2>
 <p>A lot of Java bugs are not syntax bugs.<br>They are data-shape bugs.</p>
 <p>You wanted:</p>

@@ -97,13 +97,26 @@
       <div class="layout">
         <article class="panel">
           <a class="back-link" href="../../index.html#topic/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/hashmap_buckets_and_collisions">← Back to interactive topic view</a>
-          <h2>Why This Matters</h2>
+          <h2>Why This Exists</h2>
 <p><code>HashMap</code> feels instant until two questions arrive:</p>
 <ul>
 <li>what happens when keys collide</li>
 <li>why do <code>equals()</code> and <code>hashCode()</code> matter so much</li>
 </ul>
-<h2>Intuition</h2>
+<h2>The Pain Before It</h2>
+<p><code>HashMap</code> feels instant until two questions arrive:</p>
+<ul>
+<li>what happens when keys collide</li>
+<li>why do <code>equals()</code> and <code>hashCode()</code> matter so much</li>
+</ul>
+<p>This topic exists because many developers can use <code>HashMap</code>, but fewer can explain why it is fast on average and where the risks come from.</p>
+<h2>Java Creator Mindset</h2>
+<p>Think in two layers:</p>
+<ol>
+<li>average lookup is fast because keys are spread out</li>
+<li>collisions and poor key design increase the amount of work inside a bucket</li>
+</ol>
+<h2>How You Might Invent It</h2>
 <p><img src="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsVisual.svg" alt="HashMap buckets single-look visual"></p>
 <p>Read the picture in one pass:</p>
 <ul>
@@ -111,19 +124,44 @@
 <li>collisions mean more than one key lands in the same bucket</li>
 <li>correct <code>equals()</code> and <code>hashCode()</code> keep lookup correct</li>
 </ul>
-<h2>Problem Statement</h2>
-<p><code>HashMap</code> feels instant until two questions arrive:</p>
+<h2>Naive Attempt</h2>
+<p>Treat <code>HashMap</code> as magical constant-time lookup with no caveats.</p>
+<p>That usually leads to:</p>
 <ul>
-<li>what happens when keys collide</li>
-<li>why do <code>equals()</code> and <code>hashCode()</code> matter so much</li>
+<li>ignoring key design</li>
+<li>weak reasoning about collisions</li>
+<li>confusion when behavior is correct but slower than expected</li>
 </ul>
-<p>This topic exists because many developers can use <code>HashMap</code>, but fewer can explain why it is fast on average and where the risks come from.</p>
-<h2>Core Idea</h2>
+<h2>Why It Breaks</h2>
+<p>Treat <code>HashMap</code> as magical constant-time lookup with no caveats.</p>
+<p>That usually leads to:</p>
+<ul>
+<li>ignoring key design</li>
+<li>weak reasoning about collisions</li>
+<li>confusion when behavior is correct but slower than expected</li>
+</ul>
+<h2>Final Java Solution</h2>
 <p>Think in two layers:</p>
 <ol>
 <li>average lookup is fast because keys are spread out</li>
 <li>collisions and poor key design increase the amount of work inside a bucket</li>
 </ol>
+<h2>Code</h2>
+<h3>Run It</h3>
+<p>Run the example and notice that collisions do not break correctness by themselves.</p>
+<p>The real lesson is:</p>
+<ul>
+<li>bad hashing increases work</li>
+<li>bad <code>equals()</code> or <code>hashCode()</code> breaks map behavior</li>
+</ul>
+<h3>Expected Result</h3>
+<ul>
+<li>the stored status is found correctly</li>
+<li>several keys share the same bucket</li>
+<li>correctness still holds because the key contract is correct</li>
+</ul>
+<h2>Walkthrough</h2>
+<p>Walk through the example in order: start state, rule application, final result.</p>
 <h2>Mental Model</h2>
 <p><img src="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsVisual.svg" alt="HashMap buckets single-look visual"></p>
 <p>Read the picture in one pass:</p>
@@ -161,6 +199,102 @@
 <td>not the same design issue</td>
 </tr>
 </tbody></table>
+<h2>Mistakes</h2>
+<p>Treat <code>HashMap</code> as magical constant-time lookup with no caveats.</p>
+<p>That usually leads to:</p>
+<ul>
+<li>ignoring key design</li>
+<li>weak reasoning about collisions</li>
+<li>confusion when behavior is correct but slower than expected</li>
+</ul>
+<h2>Tradeoffs</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th><code>HashMap</code></th>
+<th><code>TreeMap</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fast average lookup by key</td>
+<td>strong fit</td>
+<td>usually slower</td>
+</tr>
+<tr>
+<td>Sorted keys</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Simple key-value storage</td>
+<td>strong fit</td>
+<td>fine, but adds ordering cost</td>
+</tr>
+<tr>
+<td>Understand collision behavior</td>
+<td>required</td>
+<td>not the same design issue</td>
+</tr>
+</tbody></table>
+<p>The right mental model is:</p>
+<ul>
+<li>lookup is usually near constant average time</li>
+<li>collision-heavy buckets can do more work</li>
+<li>key design affects speed and correctness</li>
+</ul>
+<p>When performance matters, the useful measurements are:</p>
+<ul>
+<li>lookup time with realistic keys</li>
+<li>map size growth</li>
+<li>collision rate under real data shape</li>
+<li>memory cost per entry</li>
+</ul>
+<h2>Use / Avoid</h2>
+<h3>Use It When</h3>
+<ul>
+<li>you need key-based lookup</li>
+<li>ordering is not the main requirement</li>
+<li>average fast access matters</li>
+</ul>
+<h3>Avoid It When</h3>
+<ul>
+<li>you need sorted traversal by key</li>
+<li>the real problem is uniqueness only, not key-to-value lookup</li>
+</ul>
+<h2>Summary</h2>
+<ul>
+<li><code>HashMap</code> speed depends on good key distribution, not magic</li>
+<li>collisions increase work but do not automatically break correctness</li>
+<li>correct <code>equals()</code> and <code>hashCode()</code> are part of the data-structure contract</li>
+</ul>
+<h2>Why This Matters</h2>
+<p><code>HashMap</code> feels instant until two questions arrive:</p>
+<ul>
+<li>what happens when keys collide</li>
+<li>why do <code>equals()</code> and <code>hashCode()</code> matter so much</li>
+</ul>
+<h2>Intuition</h2>
+<p><img src="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsVisual.svg" alt="HashMap buckets single-look visual"></p>
+<p>Read the picture in one pass:</p>
+<ul>
+<li>keys are spread into buckets</li>
+<li>collisions mean more than one key lands in the same bucket</li>
+<li>correct <code>equals()</code> and <code>hashCode()</code> keep lookup correct</li>
+</ul>
+<h2>Problem Statement</h2>
+<p><code>HashMap</code> feels instant until two questions arrive:</p>
+<ul>
+<li>what happens when keys collide</li>
+<li>why do <code>equals()</code> and <code>hashCode()</code> matter so much</li>
+</ul>
+<p>This topic exists because many developers can use <code>HashMap</code>, but fewer can explain why it is fast on average and where the risks come from.</p>
+<h2>Core Idea</h2>
+<p>Think in two layers:</p>
+<ol>
+<li>average lookup is fast because keys are spread out</li>
+<li>collisions and poor key design increase the amount of work inside a bucket</li>
+</ol>
 <h2>Simple Example</h2>
 <h3>Run It</h3>
 <p>Run the example and notice that collisions do not break correctness by themselves.</p>
@@ -206,12 +340,6 @@
 <p>Change one part of the runnable example, rerun it, and explain whether hashmap buckets and collisions still behaves the way you expected.</p>
 <h3>After That</h3>
 <p>Go back and compare this with <code>ArrayList</code> growth and lookup. Together they explain two of the most important everyday Java performance tradeoffs.</p>
-<h2>Summary</h2>
-<ul>
-<li><code>HashMap</code> speed depends on good key distribution, not magic</li>
-<li>collisions increase work but do not automatically break correctness</li>
-<li>correct <code>equals()</code> and <code>hashCode()</code> are part of the data-structure contract</li>
-</ul>
 <h2>The Problem</h2>
 <p><code>HashMap</code> feels instant until two questions arrive:</p>
 <ul>

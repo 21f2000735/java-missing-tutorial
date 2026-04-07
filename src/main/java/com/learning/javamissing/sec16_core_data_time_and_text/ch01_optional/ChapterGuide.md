@@ -1,35 +1,16 @@
 # Optional Learning Kit
 
-## Why This Chapter Matters
+## Why This Chapter Exists
 
 - represent missing values with `Optional` safely
 - transform present values without manual null checks
 - choose where `Optional` belongs in an API
 
-## Intuition
+## The Pain Before It
 
-```mermaid
-mindmap
-  root((Optional))
-    Creation
-      of
-      ofNullable
-      empty
-    Transform
-      map
-      orElse
-    Best Practices
-      method return values
-      avoid misuse
-```
+Before learners build a mental model for optional, the APIs feel like isolated facts instead of answers to one connected problem.
 
-## Problem Statement
-
-- represent missing values with `Optional` safely
-- transform present values without manual null checks
-- choose where `Optional` belongs in an API
-
-## Core Ideas
+## Java Creator Mindset
 
 ### Representing Optional Values
 
@@ -47,7 +28,7 @@ mindmap
 - `Optional` is useful in method returns
 - it is not a replacement for every field or every parameter
 
-## Mental Model
+## How You Might Invent It
 
 ```mermaid
 mindmap
@@ -63,6 +44,36 @@ mindmap
       method return values
       avoid misuse
 ```
+
+## Naive Attempt
+
+| Compare | Prefer Left When | Prefer Right When |
+| --- | --- | --- |
+| `null` vs `Optional` | almost never for a meaningful API boundary | absence should be explicit to the caller |
+| `of()` vs `ofNullable()` | you already know the value must exist | the input may be null |
+| `map()` vs `orElse()` | you want to transform the present value | you want a fallback result when the value is absent |
+
+## Why It Breaks
+
+That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+
+## Final Java Direction
+
+### Representing Optional Values
+
+- `Optional.of(value)` means the value must not be null
+- `Optional.ofNullable(value)` is safe when null is possible
+- `Optional.empty()` means no value is present
+
+### Transforming Optional Values
+
+- `map(...)` changes the inside value if present
+- `orElse(...)` gives a fallback if missing
+
+### Choosing Optional Boundaries
+
+- `Optional` is useful in method returns
+- it is not a replacement for every field or every parameter
 
 ## Study Order
 
@@ -112,11 +123,41 @@ flowchart TD
   G -->|No| I[Use of]
 ```
 
+## Mental Model
+
+```mermaid
+mindmap
+  root((Optional))
+    Creation
+      of
+      ofNullable
+      empty
+    Transform
+      map
+      orElse
+    Best Practices
+      method return values
+      avoid misuse
+```
+
 ## Common Mistakes
 
 The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
 
-## When To Use / When Not To Use
+## Tradeoffs
+
+| Compare | Prefer Left When | Prefer Right When |
+| --- | --- | --- |
+| `null` vs `Optional` | almost never for a meaningful API boundary | absence should be explicit to the caller |
+| `of()` vs `ofNullable()` | you already know the value must exist | the input may be null |
+| `map()` vs `orElse()` | you want to transform the present value | you want a fallback result when the value is absent |
+
+- Optional is most valuable at API boundaries where absence is business-meaningful
+- using Optional everywhere often adds ceremony without clarifying the model
+- `get()` is rarely the right abstraction because it bypasses the contract
+- good Optional usage reduces null-handling bugs and makes call sites more explicit
+
+## Use / Avoid
 
 ### Use It When
 
@@ -162,6 +203,66 @@ Imagine a user profile page.
 
 - `Optional` is useful in method returns
 - it is not a replacement for every field or every parameter
+
+## Why This Chapter Matters
+
+- represent missing values with `Optional` safely
+- transform present values without manual null checks
+- choose where `Optional` belongs in an API
+
+## Intuition
+
+```mermaid
+mindmap
+  root((Optional))
+    Creation
+      of
+      ofNullable
+      empty
+    Transform
+      map
+      orElse
+    Best Practices
+      method return values
+      avoid misuse
+```
+
+## Problem Statement
+
+- represent missing values with `Optional` safely
+- transform present values without manual null checks
+- choose where `Optional` belongs in an API
+
+## Core Ideas
+
+### Representing Optional Values
+
+- `Optional.of(value)` means the value must not be null
+- `Optional.ofNullable(value)` is safe when null is possible
+- `Optional.empty()` means no value is present
+
+### Transforming Optional Values
+
+- `map(...)` changes the inside value if present
+- `orElse(...)` gives a fallback if missing
+
+### Choosing Optional Boundaries
+
+- `Optional` is useful in method returns
+- it is not a replacement for every field or every parameter
+
+## When To Use / When Not To Use
+
+### Use It When
+
+- use `Optional` for return values when absence is normal
+- use it when you want the caller to think about the missing case
+
+### Avoid It When
+
+- do not use `Optional.of(...)` on a possibly null value
+- do not use `Optional` only for style
+- do not call `get()` without proving the value exists
 
 ## Beginner Focus
 

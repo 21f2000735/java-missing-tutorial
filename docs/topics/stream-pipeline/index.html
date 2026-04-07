@@ -97,23 +97,14 @@
       <div class="layout">
         <article class="panel">
           <a class="back-link" href="../../index.html#topic/sec04_streams_and_functional_style/ch01_streams/stream_pipeline">← Back to interactive topic view</a>
-          <h2>Why This Matters</h2>
+          <h2>Why This Exists</h2>
 <p>You have a list of data.<br>You want to:</p>
 <ul>
 <li>filter it</li>
 <li>transform it</li>
 <li>collect the result</li>
 </ul>
-<h2>Intuition</h2>
-<p><img src="../../content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipelineVisual.svg" alt="Stream pipeline single-look visual"></p>
-<p>Read the picture left to right:</p>
-<ul>
-<li>raw data goes in</li>
-<li>filters remove what does not qualify</li>
-<li>map reshapes what remains</li>
-<li>collect produces the final answer</li>
-</ul>
-<h2>Problem Statement</h2>
+<h2>The Pain Before It</h2>
 <p>You have a list of data.<br>You want to:</p>
 <ul>
 <li>filter it</li>
@@ -121,7 +112,7 @@
 <li>collect the result</li>
 </ul>
 <p>The question is not &quot;can Java do this?&quot;<br>The question is &quot;how do I express that flow clearly?&quot;</p>
-<h2>Core Idea</h2>
+<h2>Java Creator Mindset</h2>
 <p>Use streams when the work is really a data transformation pipeline.</p>
 <p>If the code reads naturally as:</p>
 <ol>
@@ -130,6 +121,52 @@
 <li>collect the result</li>
 </ol>
 <p>then a stream is probably a good fit.</p>
+<h2>How You Might Invent It</h2>
+<p><img src="../../content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipelineVisual.svg" alt="Stream pipeline single-look visual"></p>
+<p>Read the picture left to right:</p>
+<ul>
+<li>raw data goes in</li>
+<li>filters remove what does not qualify</li>
+<li>map reshapes what remains</li>
+<li>collect produces the final answer</li>
+</ul>
+<h2>Naive Attempt</h2>
+<p>A common mistake is to use streams only because they look modern.</p>
+<p>That leads to:</p>
+<ul>
+<li>heavy nesting</li>
+<li>hard-to-debug side effects</li>
+<li>collectors that are harder to read than a loop</li>
+</ul>
+<h2>Why It Breaks</h2>
+<p>A common mistake is to use streams only because they look modern.</p>
+<p>That leads to:</p>
+<ul>
+<li>heavy nesting</li>
+<li>hard-to-debug side effects</li>
+<li>collectors that are harder to read than a loop</li>
+</ul>
+<h2>Final Java Solution</h2>
+<p>Use streams when the work is really a data transformation pipeline.</p>
+<p>If the code reads naturally as:</p>
+<ol>
+<li>keep these items</li>
+<li>change them this way</li>
+<li>collect the result</li>
+</ol>
+<p>then a stream is probably a good fit.</p>
+<h2>Code</h2>
+<h3>Run It</h3>
+<p>Run the Java example and read the pipeline left to right.</p>
+<h3>Expected Result</h3>
+<p>Compare the output with the pipeline stages:</p>
+<ul>
+<li>what got filtered out</li>
+<li>what got transformed</li>
+<li>what got collected at the end</li>
+</ul>
+<h2>Walkthrough</h2>
+<p>Streams separate <em>what should happen</em> from the low-level loop mechanics.<br>That can make business rules easier to scan, especially for filtering, mapping, grouping, and aggregating.</p>
 <h2>Mental Model</h2>
 <p><img src="../../content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipelineVisual.svg" alt="Stream pipeline single-look visual"></p>
 <p>Read the picture left to right:</p>
@@ -168,6 +205,111 @@
 <td>risky when side effects are hidden in pipeline stages</td>
 </tr>
 </tbody></table>
+<h2>Mistakes</h2>
+<p>A common mistake is to use streams only because they look modern.</p>
+<p>That leads to:</p>
+<ul>
+<li>heavy nesting</li>
+<li>hard-to-debug side effects</li>
+<li>collectors that are harder to read than a loop</li>
+</ul>
+<h2>Tradeoffs</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Plain loop</th>
+<th>Stream pipeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Best for</td>
+<td>explicit step-by-step local state</td>
+<td>data transformation flow</td>
+</tr>
+<tr>
+<td>Easier to debug line by line</td>
+<td>usually yes</td>
+<td>sometimes no</td>
+</tr>
+<tr>
+<td>Easier to read for filter-map-collect work</td>
+<td>sometimes no</td>
+<td>often yes</td>
+</tr>
+<tr>
+<td>Safer for side effects</td>
+<td>clearer because mutation is visible</td>
+<td>risky when side effects are hidden in pipeline stages</td>
+</tr>
+</tbody></table>
+<p>Do not teach streams with &quot;always faster&quot; language. The useful rule is:</p>
+<ul>
+<li>stream readability is the first reason to use streams</li>
+<li>allocation, boxing, and pipeline overhead can matter in hot loops</li>
+<li>side effects and poor collector choices usually hurt clarity before they hurt speed</li>
+</ul>
+<p>If performance is critical, benchmark the real pipeline with realistic data size instead of arguing from style.</p>
+<p>When you compare a loop and a stream, keep these conditions the same:</p>
+<ul>
+<li>same input size</li>
+<li>same result shape</li>
+<li>warm-up before measuring</li>
+<li>no logging inside the measured code</li>
+<li>do not confuse parallel work with simple sequential transformation</li>
+</ul>
+<h2>Use / Avoid</h2>
+<h3>Use It When</h3>
+<ul>
+<li>the code is mainly about transforming data</li>
+<li>each step can be read left to right</li>
+<li>the collector clearly shows the desired result</li>
+</ul>
+<h3>Avoid It When</h3>
+<ul>
+<li>side effects are the main point</li>
+<li>the pipeline becomes harder to explain than a loop</li>
+<li>debugging needs very explicit step-by-step local state</li>
+</ul>
+<h2>Summary</h2>
+<ul>
+<li>a stream pipeline is a good fit when the business rule naturally reads as filter, map, then finish</li>
+<li>stream clarity is more important than stream cleverness</li>
+<li>performance discussions should start with measurement, not assumption</li>
+</ul>
+<h2>Why This Matters</h2>
+<p>You have a list of data.<br>You want to:</p>
+<ul>
+<li>filter it</li>
+<li>transform it</li>
+<li>collect the result</li>
+</ul>
+<h2>Intuition</h2>
+<p><img src="../../content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipelineVisual.svg" alt="Stream pipeline single-look visual"></p>
+<p>Read the picture left to right:</p>
+<ul>
+<li>raw data goes in</li>
+<li>filters remove what does not qualify</li>
+<li>map reshapes what remains</li>
+<li>collect produces the final answer</li>
+</ul>
+<h2>Problem Statement</h2>
+<p>You have a list of data.<br>You want to:</p>
+<ul>
+<li>filter it</li>
+<li>transform it</li>
+<li>collect the result</li>
+</ul>
+<p>The question is not &quot;can Java do this?&quot;<br>The question is &quot;how do I express that flow clearly?&quot;</p>
+<h2>Core Idea</h2>
+<p>Use streams when the work is really a data transformation pipeline.</p>
+<p>If the code reads naturally as:</p>
+<ol>
+<li>keep these items</li>
+<li>change them this way</li>
+<li>collect the result</li>
+</ol>
+<p>then a stream is probably a good fit.</p>
 <h2>Simple Example</h2>
 <h3>Run It</h3>
 <p>Run the Java example and read the pipeline left to right.</p>
@@ -211,12 +353,6 @@
 <p>Change one part of the runnable example, rerun it, and explain whether stream pipeline still behaves the way you expected.</p>
 <h3>After That</h3>
 <p>Open the collectors topic after this one. It is where many stream users become unsure, and it deserves extra attention.</p>
-<h2>Summary</h2>
-<ul>
-<li>a stream pipeline is a good fit when the business rule naturally reads as filter, map, then finish</li>
-<li>stream clarity is more important than stream cleverness</li>
-<li>performance discussions should start with measurement, not assumption</li>
-</ul>
 <h2>The Problem</h2>
 <p>You have a list of data.<br>You want to:</p>
 <ul>

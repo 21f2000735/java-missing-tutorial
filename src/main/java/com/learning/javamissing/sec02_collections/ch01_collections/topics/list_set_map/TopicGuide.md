@@ -7,6 +7,160 @@ estimated: 8 min
 
 # List, Set, Map
 
+## Why This Exists
+
+A lot of Java bugs are not syntax bugs.  
+They are data-shape bugs.
+
+## The Pain Before It
+
+A lot of Java bugs are not syntax bugs.  
+They are data-shape bugs.
+
+You wanted:
+
+- ordered items
+- unique values
+- lookup by key
+
+but you picked the wrong collection.
+
+## Java Creator Mindset
+
+Pick the collection based on the problem shape:
+
+- `List` for ordered repeated items
+- `Set` for unique values
+- `Map` for key-based lookup
+
+That is both cleaner design and cleaner code.
+
+## How You Might Invent It
+
+![List, Set, Map single-look visual](./ListSetMapVisual.svg)
+
+The point of the picture is simple:
+
+- `List` answers "keep items in order, even if repeated"
+- `Set` answers "keep items unique"
+- `Map` answers "find the value by key fast"
+
+## Naive Attempt
+
+Use `List` for everything because it is familiar.
+
+That usually leads to:
+
+- duplicate values where uniqueness mattered
+- manual searching where direct lookup was needed
+- intent that is harder to read
+
+## Why It Breaks
+
+Use `List` for everything because it is familiar.
+
+That usually leads to:
+
+- duplicate values where uniqueness mattered
+- manual searching where direct lookup was needed
+- intent that is harder to read
+
+## Final Java Solution
+
+Pick the collection based on the problem shape:
+
+- `List` for ordered repeated items
+- `Set` for unique values
+- `Map` for key-based lookup
+
+That is both cleaner design and cleaner code.
+
+## Code
+
+### Run It
+
+Run the example and compare cart items, coupon codes, and product quantities.
+
+### Expected Result
+
+- cart items keep duplicates and order
+- coupon codes stay unique
+- product quantities can be looked up by SKU
+
+## Walkthrough
+
+The collection type itself becomes documentation.  
+A reader can often understand the data rules just by seeing whether you chose `List`, `Set`, or `Map`.
+
+## Mental Model
+
+![List, Set, Map single-look visual](./ListSetMapVisual.svg)
+
+The point of the picture is simple:
+
+- `List` answers "keep items in order, even if repeated"
+- `Set` answers "keep items unique"
+- `Map` answers "find the value by key fast"
+
+| Need | Best fit | Why |
+| --- | --- | --- |
+| Preserve order and duplicates | `List` | Cart lines, screen rows, ordered history |
+| Keep values unique | `Set` | Tags, coupon codes, distinct IDs |
+| Find by key | `Map` | SKU to quantity, user ID to profile, code to meaning |
+
+## Mistakes
+
+Use `List` for everything because it is familiar.
+
+That usually leads to:
+
+- duplicate values where uniqueness mattered
+- manual searching where direct lookup was needed
+- intent that is harder to read
+
+## Tradeoffs
+
+| Need | Best fit | Why |
+| --- | --- | --- |
+| Preserve order and duplicates | `List` | Cart lines, screen rows, ordered history |
+| Keep values unique | `Set` | Tags, coupon codes, distinct IDs |
+| Find by key | `Map` | SKU to quantity, user ID to profile, code to meaning |
+
+| Operation | `ArrayList` style `List` | `HashSet` | `HashMap` |
+| --- | --- | --- | --- |
+| Append/add | usually cheap | usually cheap | usually cheap |
+| Check contains | often linear scan | usually near constant average | usually near constant average by key |
+| Lookup by index | direct | not supported | not supported |
+| Lookup by key | not natural | not natural | direct by key on average |
+
+These are the mental-model costs that matter first for learners:
+
+- using `List` for lookup often pushes you into repeated scanning
+- using `Set` for uniqueness removes "did we already add it?" bugs
+- using `Map` turns "search for the item" into "ask by key"
+
+## Use / Avoid
+
+### Use It When
+
+Ask these three questions in order:
+
+1. Do I care about order?
+2. Do I need uniqueness?
+3. Do I need lookup by key?
+
+The first "yes" often tells you the right family of collection.
+
+### Avoid It When
+
+- you are choosing by habit instead of by data shape
+
+## Summary
+
+- choosing the right collection is a business-rule decision, not just an API choice
+- `List`, `Set`, and `Map` each express a different data shape
+- the wrong collection often creates correctness bugs before it creates performance bugs
+
 ## Why This Matters
 
 A lot of Java bugs are not syntax bugs.  
@@ -44,22 +198,6 @@ Pick the collection based on the problem shape:
 - `Map` for key-based lookup
 
 That is both cleaner design and cleaner code.
-
-## Mental Model
-
-![List, Set, Map single-look visual](./ListSetMapVisual.svg)
-
-The point of the picture is simple:
-
-- `List` answers "keep items in order, even if repeated"
-- `Set` answers "keep items unique"
-- `Map` answers "find the value by key fast"
-
-| Need | Best fit | Why |
-| --- | --- | --- |
-| Preserve order and duplicates | `List` | Cart lines, screen rows, ordered history |
-| Keep values unique | `Set` | Tags, coupon codes, distinct IDs |
-| Find by key | `Map` | SKU to quantity, user ID to profile, code to meaning |
 
 ## Simple Example
 
@@ -118,12 +256,6 @@ Change one part of the runnable example, rerun it, and explain whether list, set
 ### After That
 
 Go next to the collections internals and tradeoffs chapter if you want the complexity and performance side.
-
-## Summary
-
-- choosing the right collection is a business-rule decision, not just an API choice
-- `List`, `Set`, and `Map` each express a different data shape
-- the wrong collection often creates correctness bugs before it creates performance bugs
 
 ## The Problem
 

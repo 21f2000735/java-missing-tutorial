@@ -45,12 +45,13 @@ src/main/java/com/learning/javamissing/
           ConceptName.java
 ```
 
-`TopicGuide.md` is optional but preferred for strong topics. It should follow this ordered lesson shape:
-`Why This Matters`, `Intuition`, `Problem Statement`, `Core Idea`, `Mental Model`,
-`Simple Example`, `Step-by-Step Working`, `Rules / Syntax`, `Common Mistakes`,
-`When To Use / When Not To Use`, `Practice`, `Summary`.
+`TopicGuide.md` is optional but preferred for strong topics. It should follow this invention-first shape:
+`Why This Exists`, `The Pain Before It`, `Java Creator Mindset`,
+`How You Might Invent It`, `Naive Attempt`, `Why It Breaks`,
+`Final Java Solution`, `Code`, `Walkthrough`, `Mental Model`,
+`Mistakes`, `Tradeoffs`, `Use / Avoid`, `Summary`.
 `ConceptName.java` should stay runnable and focused on code.
-Where it helps, use `### Bad Code`, `### Better Code`, `### Wrong Mental Model`, and `### Better Mental Model` inside the relevant topic-guide section so learners can compare choices quickly.
+Where it helps, use `### Bad Code`, `### Better Idea`, `### Wrong Mental Model`, and `### Better Mental Model` inside the relevant topic-guide section so learners can compare choices quickly.
 For high-value topics, also add:
 
 - one quick visual (`.svg` preferred) that explains the concept at a glance
@@ -128,19 +129,25 @@ Every chapter should include:
 
 Every `ChapterGuide.md` should follow this ordered chapter shape:
 
-- `Why This Chapter Matters`
-- `Intuition`
-- `Problem Statement`
-- `Core Ideas`
-- `Mental Model`
+- `Why This Chapter Exists`
+- `The Pain Before It`
+- `Java Creator Mindset`
+- `How You Might Invent It`
+- `Naive Attempt`
+- `Why It Breaks`
+- `Final Java Direction`
 - `Study Order`
 - `What To Notice`
+- `Mental Model`
 - `Common Mistakes`
-- `When To Use / When Not To Use`
+- `Tradeoffs`
+- `Use / Avoid`
 - `Practice`
 - `Summary`
 
 Appendix sections such as `Sources`, `Effective Java Mapping`, `OCJP Focus`, `Compare With`, and `Next Chapter` should come after `Summary`.
+
+The repo should not lead with a heavy prerequisite map. The writing itself should rebuild the idea from first principles so readers can judge for themselves what they already know.
 
 ## Sections
 

@@ -7,6 +7,105 @@ estimated: 7 min
 
 # Handling Payment Failures
 
+## Why This Exists
+
+Real systems fail.
+
+## The Pain Before It
+
+Real systems fail.
+
+The question is not whether failure happens.  
+The question is whether the code explains the failure clearly enough for:
+
+- the developer
+- the log reader
+- the user-facing flow
+
+## Java Creator Mindset
+
+Throw and catch exceptions that preserve business meaning.
+
+In this case:
+
+- the payment failed
+- the gateway was unavailable
+
+That is simple, precise, and useful.
+
+## How You Might Invent It
+
+Throw and catch exceptions that preserve business meaning.
+
+## Naive Attempt
+
+Catch a broad exception, print a generic message, and lose the real reason.
+
+That leads to code that is hard to debug and hard to trust.
+
+## Why It Breaks
+
+Catch a broad exception, print a generic message, and lose the real reason.
+
+That leads to code that is hard to debug and hard to trust.
+
+## Final Java Solution
+
+Throw and catch exceptions that preserve business meaning.
+
+In this case:
+
+- the payment failed
+- the gateway was unavailable
+
+That is simple, precise, and useful.
+
+## Code
+
+### Run It
+
+Run the example and see how the failure keeps business meaning instead of becoming a vague generic message.
+
+### Expected Result
+
+- the payment status becomes failed
+- the reason stays visible
+
+## Walkthrough
+
+Good exception handling keeps the meaning of the failure path visible.  
+That is very close to Clean Code thinking: unclear failure handling is unclear code.
+
+## Mental Model
+
+Use a small mental model first: identify the input, the rule, and the outcome that handling payment failures should guarantee.
+
+## Mistakes
+
+Catch a broad exception, print a generic message, and lose the real reason.
+
+That leads to code that is hard to debug and hard to trust.
+
+## Tradeoffs
+
+The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+
+## Use / Avoid
+
+### Use It When
+
+- business failures need clear context
+- the caller should decide how to react
+
+### Avoid It When
+
+- you are swallowing exceptions
+- you convert every failure into the same vague message
+
+## Summary
+
+After this topic, you should be able to explain handling payment failures, run the example, and defend when it helps versus when it adds noise.
+
 ## Why This Matters
 
 Real systems fail.
@@ -36,10 +135,6 @@ In this case:
 - the gateway was unavailable
 
 That is simple, precise, and useful.
-
-## Mental Model
-
-Use a small mental model first: identify the input, the rule, and the outcome that handling payment failures should guarantee.
 
 ## Simple Example
 
@@ -89,10 +184,6 @@ Change one part of the runnable example, rerun it, and explain whether handling 
 ### After That
 
 Read the networking chapter after this one, because remote calls create many of the failures engineers must learn to handle well.
-
-## Summary
-
-After this topic, you should be able to explain handling payment failures, run the example, and defend when it helps versus when it adds noise.
 
 ## The Problem
 

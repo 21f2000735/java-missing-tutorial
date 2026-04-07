@@ -1,5 +1,89 @@
 # Streams Learning Kit
 
+## Why This Chapter Exists
+
+This chapter answers one question first: when is a stream a clearer way to express data work than a loop?
+
+## The Pain Before It
+
+Business code often needs to:
+
+- keep only the matching records
+- reshape those records into another form
+- group or summarize the result
+
+If the code is really “take data, transform it, produce an answer,” streams can be clearer than manual loops. If the code is stateful or awkward in a pipeline, a loop is usually better.
+
+## Java Creator Mindset
+
+Read the chapter as a small set of related ideas around streams, not as isolated trivia.
+
+## How You Might Invent It
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
+## Naive Attempt
+
+- streams do not execute until a terminal operation runs
+- `groupingBy` and `toMap` do not solve the same problem
+- parallel streams can give correct output and still be the wrong choice
+
+## Why It Breaks
+
+- streams do not execute until a terminal operation runs
+- `groupingBy` and `toMap` do not solve the same problem
+- parallel streams can give correct output and still be the wrong choice
+
+## Final Java Direction
+
+Read the chapter as a small set of related ideas around streams, not as isolated trivia.
+
+## Study Order
+
+1. Run [StreamPipeline.java](topics/stream_pipeline/StreamPipeline.java)
+2. Run [Collectors.java](topics/collectors/Collectors.java)
+3. Run [ParallelStreams.java](topics/parallel_streams/ParallelStreams.java)
+
+## What To Notice
+
+- a stream pipeline reads like a chain of data steps
+- collectors define the final shape of the answer
+- parallel streams are a performance decision, not a style upgrade
+
+## Mental Model
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
+## Common Mistakes
+
+- streams do not execute until a terminal operation runs
+- `groupingBy` and `toMap` do not solve the same problem
+- parallel streams can give correct output and still be the wrong choice
+
+- a simple loop is shorter and clearer
+- the logic depends on mutation or complicated state across steps
+- you are thinking about parallel before understanding the sequential version
+
+## Tradeoffs
+
+Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+
+## Use / Avoid
+
+### Use It When
+
+- the work is mostly filtering, mapping, grouping, or counting
+- you want the transformation steps to read directly in the code
+- the final result is a list, set, map, summary, or joined string
+
+## Practice
+
+Run the examples again, change one assumption, and explain how the chapter guidance changes.
+
+## Summary
+
+After this chapter, you should be able to explain the main decisions behind streams and connect them back to the runnable examples.
+
 ## Why This Chapter Matters
 
 This chapter answers one question first: when is a stream a clearer way to express data work than a loop?
@@ -22,32 +106,6 @@ If the code is really “take data, transform it, produce an answer,” streams 
 
 Read the chapter as a small set of related ideas around streams, not as isolated trivia.
 
-## Mental Model
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Study Order
-
-1. Run [StreamPipeline.java](topics/stream_pipeline/StreamPipeline.java)
-2. Run [Collectors.java](topics/collectors/Collectors.java)
-3. Run [ParallelStreams.java](topics/parallel_streams/ParallelStreams.java)
-
-## What To Notice
-
-- a stream pipeline reads like a chain of data steps
-- collectors define the final shape of the answer
-- parallel streams are a performance decision, not a style upgrade
-
-## Common Mistakes
-
-- streams do not execute until a terminal operation runs
-- `groupingBy` and `toMap` do not solve the same problem
-- parallel streams can give correct output and still be the wrong choice
-
-- a simple loop is shorter and clearer
-- the logic depends on mutation or complicated state across steps
-- you are thinking about parallel before understanding the sequential version
-
 ## When To Use / When Not To Use
 
 ### Use It When
@@ -55,14 +113,6 @@ Keep one question in mind while reading: what stays stable here, what changes, a
 - the work is mostly filtering, mapping, grouping, or counting
 - you want the transformation steps to read directly in the code
 - the final result is a list, set, map, summary, or joined string
-
-## Practice
-
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
-
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind streams and connect them back to the runnable examples.
 
 ## The Problem
 

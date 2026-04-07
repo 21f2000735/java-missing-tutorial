@@ -97,17 +97,9 @@
       <div class="layout">
         <article class="panel">
           <a class="back-link" href="../../index.html#topic/sec05_multithreading_and_concurrency/ch01_concurrency_basics/threads">← Back to interactive topic view</a>
-          <h2>Why This Matters</h2>
+          <h2>Why This Exists</h2>
 <p>Sometimes one flow of work is not enough.</p>
-<h2>Intuition</h2>
-<p><img src="../../content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/ThreadsVisual.svg" alt="Threads single-look visual"></p>
-<p>At one glance:</p>
-<ul>
-<li>the main thread keeps moving</li>
-<li>a worker thread handles a separate task</li>
-<li>as soon as both touch shared state, design risk appears</li>
-</ul>
-<h2>Problem Statement</h2>
+<h2>The Pain Before It</h2>
 <p>Sometimes one flow of work is not enough.</p>
 <p>Examples:</p>
 <ul>
@@ -116,8 +108,32 @@
 <li>keep the UI or API responsive</li>
 </ul>
 <p>Threads are the oldest Java tool for that problem.</p>
-<h2>Core Idea</h2>
+<h2>Java Creator Mindset</h2>
 <p>Call <code>start()</code> when you want the JVM to schedule a new thread.</p>
+<h2>How You Might Invent It</h2>
+<p><img src="../../content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/ThreadsVisual.svg" alt="Threads single-look visual"></p>
+<p>At one glance:</p>
+<ul>
+<li>the main thread keeps moving</li>
+<li>a worker thread handles a separate task</li>
+<li>as soon as both touch shared state, design risk appears</li>
+</ul>
+<h2>Naive Attempt</h2>
+<p>A very common beginner mistake is to call <code>run()</code> directly and think a new thread started.</p>
+<p>It did not.<br>That just ran the method on the current thread.</p>
+<h2>Why It Breaks</h2>
+<p>A very common beginner mistake is to call <code>run()</code> directly and think a new thread started.</p>
+<p>It did not.<br>That just ran the method on the current thread.</p>
+<h2>Final Java Solution</h2>
+<p>Call <code>start()</code> when you want the JVM to schedule a new thread.</p>
+<h2>Code</h2>
+<h3>Run It</h3>
+<p>Run the example and watch the main flow and worker flow both print output.</p>
+<h3>Expected Result</h3>
+<p>You should see work happening from more than one thread, but not necessarily in the same order every time.</p>
+<p>That non-deterministic order is part of the lesson.</p>
+<h2>Walkthrough</h2>
+<p>Threads let the JVM schedule separate units of execution.<br>That gives you concurrency, but it also introduces coordination and shared-state risks.</p>
 <h2>Mental Model</h2>
 <p><img src="../../content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/ThreadsVisual.svg" alt="Threads single-look visual"></p>
 <p>At one glance:</p>
@@ -160,6 +176,91 @@
 <td>increasingly useful</td>
 </tr>
 </tbody></table>
+<h2>Mistakes</h2>
+<p>A very common beginner mistake is to call <code>run()</code> directly and think a new thread started.</p>
+<p>It did not.<br>That just ran the method on the current thread.</p>
+<h2>Tradeoffs</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Raw <code>Thread</code></th>
+<th><code>ExecutorService</code></th>
+<th>Virtual thread</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Learn the mental model</td>
+<td>best starting point</td>
+<td>hides some basics</td>
+<td>builds on thread mental model</td>
+</tr>
+<tr>
+<td>Run many managed tasks</td>
+<td>weak fit</td>
+<td>strong fit</td>
+<td>strong fit for waiting-heavy work</td>
+</tr>
+<tr>
+<td>One-off demo</td>
+<td>simple</td>
+<td>more setup</td>
+<td>needs newer JDK</td>
+</tr>
+<tr>
+<td>Production task orchestration</td>
+<td>usually not ideal</td>
+<td>common choice</td>
+<td>increasingly useful</td>
+</tr>
+</tbody></table>
+<p>Do not benchmark threads only by &quot;time to print&quot;.</p>
+<p>The real costs are:</p>
+<ul>
+<li>thread creation</li>
+<li>waiting and blocking</li>
+<li>coordination</li>
+<li>contention on shared state</li>
+</ul>
+<p>For tiny demos the cost looks invisible.<br>For real systems the hidden cost appears when you create many threads, wait on slow I/O, or lock shared objects too often.</p>
+<h2>Use / Avoid</h2>
+<h3>Use It When</h3>
+<ul>
+<li>you are learning the basic mental model of concurrency</li>
+<li>you need to understand what executors and virtual threads build on top of</li>
+</ul>
+<h3>Avoid It When</h3>
+<ul>
+<li>production task orchestration would be clearer with executors or structured concurrency</li>
+<li>shared mutable state is not well controlled</li>
+</ul>
+<h2>Summary</h2>
+<ul>
+<li><code>start()</code> and <code>run()</code> are not interchangeable</li>
+<li>thread ordering is not guaranteed just because the source code has one order</li>
+<li>concurrency problems usually begin when multiple threads share mutable state</li>
+</ul>
+<h2>Why This Matters</h2>
+<p>Sometimes one flow of work is not enough.</p>
+<h2>Intuition</h2>
+<p><img src="../../content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/ThreadsVisual.svg" alt="Threads single-look visual"></p>
+<p>At one glance:</p>
+<ul>
+<li>the main thread keeps moving</li>
+<li>a worker thread handles a separate task</li>
+<li>as soon as both touch shared state, design risk appears</li>
+</ul>
+<h2>Problem Statement</h2>
+<p>Sometimes one flow of work is not enough.</p>
+<p>Examples:</p>
+<ul>
+<li>send a report while the main request continues</li>
+<li>process many independent tasks</li>
+<li>keep the UI or API responsive</li>
+</ul>
+<p>Threads are the oldest Java tool for that problem.</p>
+<h2>Core Idea</h2>
+<p>Call <code>start()</code> when you want the JVM to schedule a new thread.</p>
 <h2>Simple Example</h2>
 <h3>Run It</h3>
 <p>Run the example and watch the main flow and worker flow both print output.</p>
@@ -192,12 +293,6 @@
 <p>Change one part of the runnable example, rerun it, and explain whether threads still behaves the way you expected.</p>
 <h3>After That</h3>
 <p>Move to executors after this one. That is the practical next step for most production code.</p>
-<h2>Summary</h2>
-<ul>
-<li><code>start()</code> and <code>run()</code> are not interchangeable</li>
-<li>thread ordering is not guaranteed just because the source code has one order</li>
-<li>concurrency problems usually begin when multiple threads share mutable state</li>
-</ul>
 <h2>The Problem</h2>
 <p>Sometimes one flow of work is not enough.</p>
 <p>Examples:</p>

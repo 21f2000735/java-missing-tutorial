@@ -88,31 +88,36 @@ estimated: 8 min
 
 # Topic Name
 
-## Why This Matters
-## Intuition
-## Problem Statement
-## Core Idea
+## Why This Exists
+## The Pain Before It
+## Java Creator Mindset
+## How You Might Invent It
+## Naive Attempt
+## Why It Breaks
+## Final Java Solution
+## Code
+## Walkthrough
 ## Mental Model
-## Simple Example
-## Step-by-Step Working
-## Rules / Syntax
-## Common Mistakes
-## When To Use / When Not To Use
-## Practice
+## Mistakes
+## Tradeoffs
+## Use / Avoid
 ## Summary
 
 ## Quick Visual
 ## Comparison Snapshot
 ## Performance Lens
 ## Benchmark Checklist
+## Interview Angle
+## OCJP Angle
 ## Version Notes
 ## Next Topic
 ```
 
 Use `runner: embedded` for stable single-file examples that can be pushed to JDoodle from the site.  
 Use `runner: local` for preview-sensitive or multi-file examples.
-`Intuition` is required. It should explain the concept in plain human terms before formal detail starts.
-Use `###` subheadings inside the required sections when you want to teach contrast quickly, especially for Clean Code, concurrency, collections, exception handling, and API design topics. Example: `### Wrong Mental Model`, `### Better Mental Model`, `### Bad Code`, `### Better Code`.
+The required order is invention-first. The learner should feel how the idea emerges before they see the final Java form.
+`Java Creator Mindset` is required. It should explain what the Java designer is trying to protect, simplify, or enable.
+Use `###` subheadings inside the required sections when you want to teach contrast quickly, especially for Clean Code, concurrency, collections, exception handling, and API design topics. Example: `### Wrong Mental Model`, `### Better Mental Model`, `### Bad Code`, `### Better Idea`.
 For topics with clear mental-model value, prefer adding:
 
 - one `.svg` visual that explains the idea in a single look
@@ -121,6 +126,7 @@ For topics with clear mental-model value, prefer adding:
 
 Keep those explanations in `TopicGuide.md` instead of bloating the runnable Java file with too much teaching narration.
 Keep the required `##` headings in the exact order shown above. Optional appendix sections should come after `## Summary`.
+Do not add a heavy prerequisite list. Write the topic so readers can infer for themselves what background they already have and what they need to revisit.
 
 ## Naming Limits
 
@@ -227,20 +233,24 @@ Every chapter should contain these chapter-level files:
 Every `ChapterGuide.md` should also include:
 
 - a short line saying the chapter is beginner-friendly
-- the chapter-level form of the same teaching order:
+- the chapter-level form of the same invention-first order:
 
 ```md
 # Chapter Name Learning Kit
 
-## Why This Chapter Matters
-## Intuition
-## Problem Statement
-## Core Ideas
-## Mental Model
+## Why This Chapter Exists
+## The Pain Before It
+## Java Creator Mindset
+## How You Might Invent It
+## Naive Attempt
+## Why It Breaks
+## Final Java Direction
 ## Study Order
 ## What To Notice
+## Mental Model
 ## Common Mistakes
-## When To Use / When Not To Use
+## Tradeoffs
+## Use / Avoid
 ## Practice
 ## Summary
 
@@ -253,6 +263,17 @@ Every `ChapterGuide.md` should also include:
 Keep chapter appendices such as `Sources`, `Effective Java Mapping`, `OCJP Focus`, `Compare With`, and `Next Chapter` after `## Summary`.
 - a simple study order
 - a quick summary after each major idea
+
+## Layered Reader Rule
+
+One topic should serve multiple reader levels without turning into a mess.
+
+- beginners should get story, pain, and a simple code path
+- intermediate readers should get the mental model and the reasoning path
+- interview readers should get tradeoffs and explanation language
+- advanced readers should still see why Java chose this shape
+
+The safest way to satisfy different readers is to layer the explanation in that order instead of trying to satisfy everyone at once.
 
 ## Release-Aware Writing
 

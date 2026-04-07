@@ -20,9 +20,10 @@ Use this checklist before calling any chapter complete.
 - every topic file includes one interview question and answer
 - every topic file includes one exercise and one working solution
 - every `TopicGuide.md` follows this H2 order:
-  `Why This Matters`, `Intuition`, `Problem Statement`, `Core Idea`, `Mental Model`,
-  `Simple Example`, `Step-by-Step Working`, `Rules / Syntax`, `Common Mistakes`,
-  `When To Use / When Not To Use`, `Practice`, `Summary`
+  `Why This Exists`, `The Pain Before It`, `Java Creator Mindset`,
+  `How You Might Invent It`, `Naive Attempt`, `Why It Breaks`,
+  `Final Java Solution`, `Code`, `Walkthrough`, `Mental Model`,
+  `Mistakes`, `Tradeoffs`, `Use / Avoid`, `Summary`
 
 ## Chapter Guide
 
@@ -35,9 +36,10 @@ Use this checklist before calling any chapter complete.
 - source links
 - at least one mindmap or flowchart
 - every `ChapterGuide.md` follows this H2 order:
-  `Why This Chapter Matters`, `Intuition`, `Problem Statement`, `Core Ideas`,
-  `Mental Model`, `Study Order`, `What To Notice`, `Common Mistakes`,
-  `When To Use / When Not To Use`, `Practice`, `Summary`
+  `Why This Chapter Exists`, `The Pain Before It`, `Java Creator Mindset`,
+  `How You Might Invent It`, `Naive Attempt`, `Why It Breaks`,
+  `Final Java Direction`, `Study Order`, `What To Notice`, `Mental Model`,
+  `Common Mistakes`, `Tradeoffs`, `Use / Avoid`, `Practice`, `Summary`
 
 ## Quality Bar
 

@@ -1,24 +1,43 @@
 # Structural Patterns
 
-## Why This Chapter Matters
+## Why This Chapter Exists
 
 Structural patterns help when the business logic is mostly fine, but the edges between parts of the code are awkward.
 
-## Intuition
+## The Pain Before It
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Before learners build a mental model for structural patterns, the APIs feel like isolated facts instead of answers to one connected problem.
 
-## Problem Statement
-
-Structural patterns help when the business logic is mostly fine, but the edges between parts of the code are awkward.
-
-## Core Ideas
+## Java Creator Mindset
 
 Read the chapter as a small set of related ideas around structural Patterns, not as isolated trivia.
 
-## Mental Model
+## How You Might Invent It
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Two common frustrations show up in mature codebases:
+
+- new code wants one interface, but a legacy library gives another
+- a stable class needs extra behavior like logging, auditing, retries, or caching
+
+The pain is not "what should the business rule be?"  
+The pain is "how do these objects fit together cleanly?"
+
+## Naive Attempt
+
+| Compare | Use Left When | Use Right When |
+| --- | --- | --- |
+| adapter vs decorator | interfaces do not match | interfaces match and you need extra behavior |
+| subclassing vs decorator | extension is intrinsic to the base class | behavior should be optional and composable |
+
+## Why It Breaks
+
+- avoid adapter if you control both sides and can align the interface directly
+- avoid decorator if the "extra behavior" is really a different service with a different responsibility
+- avoid creating wrappers that hide where the real work happens
+
+## Final Java Direction
+
+Read the chapter as a small set of related ideas around structural Patterns, not as isolated trivia.
 
 ## Study Order
 
@@ -47,13 +66,24 @@ A: Adapter changes the interface shape. Decorator keeps the same interface and a
 Q: Why are these patterns common in framework code?  
 A: Because framework code often integrates third-party APIs and layers optional cross-cutting behavior.
 
+## Mental Model
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
 ## Common Mistakes
 
 - avoid adapter if you control both sides and can align the interface directly
 - avoid decorator if the "extra behavior" is really a different service with a different responsibility
 - avoid creating wrappers that hide where the real work happens
 
-## When To Use / When Not To Use
+## Tradeoffs
+
+| Compare | Use Left When | Use Right When |
+| --- | --- | --- |
+| adapter vs decorator | interfaces do not match | interfaces match and you need extra behavior |
+| subclassing vs decorator | extension is intrinsic to the base class | behavior should be optional and composable |
+
+## Use / Avoid
 
 ### Use It When
 
@@ -73,6 +103,30 @@ Decorator adds that feature without changing callers.
 ## Summary
 
 After this chapter, you should be able to explain the main decisions behind structural patterns and connect them back to the runnable examples.
+
+## Why This Chapter Matters
+
+Structural patterns help when the business logic is mostly fine, but the edges between parts of the code are awkward.
+
+## Intuition
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
+## Problem Statement
+
+Structural patterns help when the business logic is mostly fine, but the edges between parts of the code are awkward.
+
+## Core Ideas
+
+Read the chapter as a small set of related ideas around structural Patterns, not as isolated trivia.
+
+## When To Use / When Not To Use
+
+### Use It When
+
+- use adapter when you cannot or should not rewrite a dependency
+- use decorator when you want optional behavior around a stable interface
+- use these patterns when changing the original type would spread risk
 
 ## The Story
 
