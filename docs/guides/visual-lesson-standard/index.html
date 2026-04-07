@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Lesson Standard - Java Missing Tutorial</title>
+  <meta name="description" content="Use this standard for topics where a learner benefits from seeing the internal working before reading the code.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/guides/visual-lesson-standard/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+  :root{
+    --bg:#f5efe3;--panel:#fffaf2;--panel-strong:#fff6ea;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);
+    --accent:#8d4300;--accent-strong:#af5b0c;--shadow:0 18px 42px rgba(60,42,18,.08);--radius:1.35rem;
+  }
+  html[data-theme="dark"]{
+    --bg:#161311;--panel:#1f1a15;--panel-strong:#26201a;--text:#efe4d2;--muted:#baa88e;--line:rgba(230,216,194,.12);
+    --accent:#f1b26a;--accent-strong:#e29a4d;--shadow:0 18px 42px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(244,194,126,.22), transparent 28rem),
+      radial-gradient(circle at 85% 10%, rgba(83,135,111,.12), transparent 22rem),
+      linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);
+    color:var(--text);
+  }
+  html[data-theme="dark"] body{
+    background:
+      radial-gradient(circle at top left, rgba(131,87,39,.22), transparent 28rem),
+      radial-gradient(circle at 85% 10%, rgba(58,106,87,.12), transparent 22rem),
+      linear-gradient(180deg,#161311 0%,#191611 46%,#12100d 100%);
+  }
+  a{color:var(--accent-strong)}
+  main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+  .static-shell{display:grid;gap:1rem}
+  .static-header,.panel{
+    background:linear-gradient(180deg,rgba(255,252,247,.96),rgba(255,249,240,.9)),var(--panel);
+    border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+  }
+  html[data-theme="dark"] .static-header,
+  html[data-theme="dark"] .panel{
+    background:linear-gradient(180deg,rgba(31,27,22,.96),rgba(27,23,19,.92)),var(--panel);
+  }
+  .static-header{padding:1.6rem 1.4rem}
+  .panel{padding:1.4rem 1.25rem;min-width:0}
+  .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;line-height:1.08}
+  h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem}
+  h2{margin-top:1.8rem}
+  p,li{line-height:1.75}
+  .toolbar,.nav{display:flex;flex-wrap:wrap;gap:.75rem}
+  .toolbar{justify-content:space-between;align-items:center;margin-top:1rem}
+  .nav a,.theme-toggle,.action-btn{
+    display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.72rem .98rem;text-decoration:none;
+    background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(49,40,29,.08);color:var(--text);border:0;font:inherit;cursor:pointer;
+  }
+  html[data-theme="dark"] .nav a,
+  html[data-theme="dark"] .theme-toggle,
+  html[data-theme="dark"] .action-btn{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
+  .action-btn-primary{background:rgba(141,67,0,.12);box-shadow:inset 0 0 0 1px rgba(141,67,0,.18)}
+  html[data-theme="dark"] .action-btn-primary{background:rgba(241,178,106,.16);box-shadow:inset 0 0 0 1px rgba(241,178,106,.22)}
+  .nav a:hover,.theme-toggle:hover,.action-btn:hover{transform:translateY(-1px)}
+  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible,.action-btn:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+  .code-title,.lead,.muted{color:var(--muted)}
+  .code-cta{display:grid;gap:.85rem;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:linear-gradient(165deg,rgba(255,250,244,.96),rgba(246,238,221,.88))}
+  html[data-theme="dark"] .code-cta{background:linear-gradient(180deg,rgba(31,27,22,.96),rgba(27,23,19,.92)),var(--panel)}
+  .code-actions{display:flex;flex-wrap:wrap;gap:.75rem}
+  .code-status{margin:0;color:var(--muted);font-size:.95rem;min-height:1.4rem}
+  img{display:block;width:min(100%,56rem);max-width:100%;height:auto;margin:1.2rem auto;border-radius:1.15rem;border:1px solid var(--line);background:var(--panel-strong);box-shadow:var(--shadow)}
+  pre{overflow:auto;-webkit-overflow-scrolling:touch;background:#241d15;color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+  html[data-theme="dark"] pre{background:#15110d;color:#f7eddc}
+  code{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+  table{width:100%;display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;border-collapse:collapse;margin:1rem 0;border-radius:1rem}
+  th,td{border:1px solid var(--line);padding:.8rem .85rem;vertical-align:top}
+  th{background:rgba(175,91,12,.08)}
+  blockquote{margin:1rem 0;padding:.95rem 1rem;border-left:4px solid rgba(58,106,87,.45);background:rgba(58,106,87,.08);border-radius:.9rem}
+  .back-link{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;color:var(--muted)}
+  .footer-note{margin-top:1rem;color:var(--muted);font-size:.95rem}
+  @media (max-width: 900px){
+    main{padding:1rem .85rem 2.5rem}
+    .layout{grid-template-columns:1fr}
+    .toolbar{align-items:stretch}
+    .nav,.code-actions{width:100%}
+    .nav a,.theme-toggle,.action-btn{width:100%;justify-content:center}
+  }
+  @media (max-width: 640px){
+    .static-header,.panel{padding:1rem}
+    h1{font-size:1.9rem}
+    h2{font-size:1.35rem}
+    th,td{min-width:8rem;padding:.65rem .7rem;font-size:.94rem}
+    pre{padding:.85rem;font-size:.84rem}
+  }
+</style>
+</head>
+<body>
+  <main>
+    <div class="static-shell">
+      <section class="static-header">
+        <p class="eyebrow">Static Guide</p>
+        <h1>Visual Lesson Standard</h1>
+        <p class="lead">A crawlable article view of this guide, with the same reading direction as the main app.</p>
+        <div class="toolbar">
+          <div class="nav">
+            <a href="../../index.html">Open site home</a>
+            <a href="../../index.html#resource/VISUAL_LESSON_STANDARD">Open app version</a>
+          </div>
+          <button id="theme-toggle" class="theme-toggle" type="button">Dark Mode</button>
+        </div>
+      </section>
+      <article class="panel">
+        <a class="back-link" href="../../index.html#resource/VISUAL_LESSON_STANDARD">← Back to interactive view</a>
+        <p>Use this standard for topics where a learner benefits from seeing the internal working before reading the code.</p>
+<p>This is especially important for:</p>
+<ul>
+<li>JVM internals</li>
+<li>string pool and memory topics</li>
+<li>class loading</li>
+<li>collections internals</li>
+<li>concurrency flow</li>
+<li>thread coordination</li>
+<li>request lifecycle</li>
+<li>retry and idempotency flows</li>
+<li>cache and search architecture</li>
+</ul>
+<h2>Core Rule</h2>
+<p>For internal-working topics, the first teaching move should usually be:</p>
+<ol>
+<li>show the picture</li>
+<li>explain what to notice</li>
+<li>show the code</li>
+<li>explain why Java or the system needs this design</li>
+</ol>
+<p>Do not spend five sections describing the mechanism before the learner sees the shape.</p>
+<h2>Preferred Order</h2>
+<p>For visual-first topics, follow this sequence inside the lesson:</p>
+<ol>
+<li>one-screen diagram</li>
+<li>what the picture means</li>
+<li>runnable code</li>
+<li>walkthrough from picture to code</li>
+<li>problem solved</li>
+<li>tradeoffs and mistakes</li>
+</ol>
+<p>The picture should reduce confusion, not decorate the page.</p>
+<h2>Diagram Types To Prefer</h2>
+<ul>
+<li>block diagram</li>
+<li>memory layout</li>
+<li>object/reference flow</li>
+<li>request flow</li>
+<li>thread/task timeline</li>
+<li>state transition diagram</li>
+<li>cache lookup path</li>
+<li>before/after comparison diagram</li>
+</ul>
+<h2>Asset Format</h2>
+<ul>
+<li>prefer <code>.svg</code> for diagrams</li>
+<li>use <code>.png</code> only when SVG is impractical</li>
+<li>keep labels readable on desktop and mobile</li>
+<li>keep one main idea per image</li>
+</ul>
+<h2>Front Matter</h2>
+<p>When a topic should enforce a diagram, add this to <code>TopicGuide.md</code> front matter:</p>
+<pre><code class="language-md">visual: required
+visual_asset: TopicDiagram.svg
+</code></pre>
+<p>When a diagram is helpful but not mandatory:</p>
+<pre><code class="language-md">visual: recommended
+</code></pre>
+<p>Allowed values:</p>
+<ul>
+<li><code>required</code></li>
+<li><code>recommended</code></li>
+<li><code>none</code></li>
+</ul>
+<h2>What Makes A Good Diagram</h2>
+<p>A good diagram should answer at least one of these quickly:</p>
+<ul>
+<li>where does the object live?</li>
+<li>what happens first, next, and last?</li>
+<li>what part is shared and what part is isolated?</li>
+<li>what is cached and what is recomputed?</li>
+<li>what state changes when the request is retried?</li>
+</ul>
+<p>If the learner still cannot explain the mechanism after seeing the picture, the diagram is too vague.</p>
+<h2>Avoid</h2>
+<ul>
+<li>decorative diagrams with no clear teaching purpose</li>
+<li>too many arrows and labels on one image</li>
+<li>repeating the diagram idea again in three renamed sections</li>
+<li>showing code first when the main confusion is structural</li>
+</ul>
+<h2>Validation Rule</h2>
+<p>If <code>visual: required</code> is set:</p>
+<ul>
+<li>the guide must contain at least one local markdown image</li>
+<li>the referenced asset must exist in the same topic folder</li>
+</ul>
+<p>That rule should be enforced automatically.</p>
+
+        <p class="footer-note">Prefer the app version when you want search, bookmarks, progress, or random-topic navigation.</p>
+      </article>
+    </div>
+  </main>
+  <script>
+  const key = 'java-book-theme';
+  const root = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+  function apply(theme){
+    root.dataset.theme = theme;
+    if(toggle) toggle.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+  }
+  const current = localStorage.getItem(key) || 'light';
+  apply(current);
+  if(toggle){
+    toggle.addEventListener('click', () => {
+      const next = (root.dataset.theme || 'light') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(key, next);
+      apply(next);
+    });
+  }
+  const copyButton = document.getElementById('copy-code-btn');
+  const copyStatus = document.getElementById('copy-code-status');
+  const jdoodleButton = document.getElementById('open-jdoodle-btn');
+  if(copyButton && window.__topicCode){
+    copyButton.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(window.__topicCode);
+        copyButton.textContent = 'Copied';
+        if(copyStatus) copyStatus.textContent = 'Snippet copied. Paste it into your IDE or playground.';
+      }catch{
+        copyButton.textContent = 'Copy failed';
+        if(copyStatus) copyStatus.textContent = 'Clipboard access failed. Use the raw Java file link instead.';
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = 'Copy Code Snippet';
+      }, 1800);
+    });
+  }
+  if(jdoodleButton && window.__topicCode){
+    jdoodleButton.addEventListener('click', () => {
+      const form = document.createElement('form');
+      form.method = 'post';
+      form.action = 'https://www.jdoodle.com/api/redirect-to-post/online-java-compiler';
+      form.target = '_blank';
+      const fields = {
+        language: 'java',
+        versionIndex: '5',
+        code: window.__topicCode
+      };
+      Object.entries(fields).forEach(([name, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
+    });
+  }
+</script>
+</body>
+</html>
