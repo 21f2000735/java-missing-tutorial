@@ -82,10 +82,13 @@ Choose the template based on the primary learner outcome:
 
 - [INTERVIEW_TOPIC_TEMPLATE.md](INTERVIEW_TOPIC_TEMPLATE.md) for interview-readiness topics
 - [CERTIFICATION_TOPIC_TEMPLATE.md](CERTIFICATION_TOPIC_TEMPLATE.md) for Java 25 certification-oriented revision topics
+- [VISUAL_LESSON_STANDARD.md](VISUAL_LESSON_STANDARD.md) for topics that should teach through diagrams first
 
 Use `runner: embedded` for stable single-file examples that can be pushed to JDoodle from the site.  
 Use `runner: local` for preview-sensitive or multi-file examples.
 Set `mode` in topic front matter to one of `interview`, `certification`, or `shared`.
+Set `visual` in topic front matter to one of `required`, `recommended`, or `none`.
+For internal-working topics, prefer the visual-first order from [VISUAL_LESSON_STANDARD.md](VISUAL_LESSON_STANDARD.md): picture, what to notice, code, then explanation of why the design exists.
 Use `###` subheadings inside sections when you want to teach contrast quickly. Example: `### Wrong Mental Model`, `### Better Mental Model`, `### Bad Code`, `### Better Idea`.
 
 For topics with clear mental-model value, prefer adding:
@@ -97,6 +100,7 @@ For topics with clear mental-model value, prefer adding:
 Keep those explanations in `TopicGuide.md` instead of bloating the runnable Java file with too much teaching narration.
 Do not add a heavy prerequisite list. Write the topic so readers can infer for themselves what background they already have and what they need to revisit.
 Do not restate the same teaching point under multiple renamed headings. Every section must add new value.
+For string pool, JVM, memory, concurrency, lifecycle, and architecture topics, one strong diagram is usually worth more than several extra prose sections.
 
 ## Naming Limits
 

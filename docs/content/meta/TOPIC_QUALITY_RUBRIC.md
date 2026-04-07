@@ -94,6 +94,11 @@ Target:
 - Does each section add a new teaching step?
 - Has the topic avoided repeating the same idea under renamed headings?
 
+### 12. Visual Teaching Quality
+
+- For internal-working topics, does the topic use a useful picture before or alongside the code?
+- Does the diagram actually reduce confusion about the mechanism?
+
 ## Required Topic Shape
 
 Every strong topic file should follow one primary template:
@@ -122,6 +127,8 @@ Deep dives should explain:
 - what learners usually misunderstand
 - what design tradeoff matters in production code
 
+Internal topics should usually also include a diagram or visual flow. Use [VISUAL_LESSON_STANDARD.md](VISUAL_LESSON_STANDARD.md) when the main confusion is structural.
+
 ## Rewrite Trigger
 
 Rewrite the topic if:
@@ -132,3 +139,4 @@ Rewrite the topic if:
 - the learner cannot tell when to use the concept
 - the topic is only syntax-first and not concept-first
 - the same explanation appears again under renamed headings
+- the topic is about internal working, but there is no useful picture or flow explanation
