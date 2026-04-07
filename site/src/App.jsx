@@ -71,6 +71,7 @@ const RESOURCE_DESCRIPTIONS = {
   HIGH_DEMAND_JAVA_TOPICS: 'A practical path through the Java topics people keep searching for: collections, streams, errors, concurrency, HTTP, and JVM basics.',
   COMPANY_QUESTION_BANK: 'Company-wise interview tracks with original question-and-answer practice for Google, Meta, Amazon, Apple, Netflix, Coinbase, Jane Street, MakeMyTrip, and HotelTrader.',
   INTERVIEW_PROBLEM_APPROACH: 'A step-by-step process for how to approach coding, backend, debugging, and system questions in interviews.',
+  INTERVIEW_INDEX: 'A fast lookup page for interview prep: topic index, company index, short study sprints, and a clean restart point when you need quick direction.',
   COMPARE_COLLECTIONS: 'A quick compare page for List, Set, and Map: shape, performance, and common mistakes.',
   COMPARE_STREAMS: 'A quick compare page for loops versus streams, focused on clarity, tradeoffs, and debugging.',
   COMPARE_CONCURRENCY: 'A quick compare page for Thread, ExecutorService, and virtual threads.',
@@ -411,6 +412,12 @@ const PLAYGROUND_LINKS = {
   onecompiler: 'https://onecompiler.com/studio/java'
 };
 
+const MODE_COPY = {
+  interview: { label: 'Interview Ready', badgeClass: 'badge-danger-soft' },
+  certification: { label: 'Certification Ready', badgeClass: 'badge-warning-soft' },
+  shared: { label: 'Shared Core', badgeClass: 'badge-success-soft' }
+};
+
 function stripMarkdown(value = '') {
   return value
     .replace(/```[\s\S]*?```/g, ' ')
@@ -451,7 +458,7 @@ function sourcePathFromHref(href, repoRoot) {
   if (srcIndex !== -1) {
     return decoded.slice(srcIndex);
   }
-  const metaMatch = decoded.match(/((?:planning\/)?(?:README|BOOK|CURRICULUM|ROADMAP_099|TOP_20_BOOKS|BOOK_MANUSCRIPT|JAVA_7_TO_25|JAVA_MIGRATION_GUIDES|HIGH_DEMAND_JAVA_TOPICS|COMPANY_QUESTION_BANK|INTERVIEW_PROBLEM_APPROACH|COMPARE_COLLECTIONS|COMPARE_STREAMS|COMPARE_CONCURRENCY|TOPIC_COVERAGE_MAP|OCJP_TRACK|INTERVIEW_TRACK|MODERN_JAVA_TRACK)\.md)$/);
+  const metaMatch = decoded.match(/((?:planning\/)?(?:README|BOOK|CURRICULUM|ROADMAP_099|TOP_20_BOOKS|BOOK_MANUSCRIPT|JAVA_7_TO_25|JAVA_MIGRATION_GUIDES|HIGH_DEMAND_JAVA_TOPICS|COMPANY_QUESTION_BANK|INTERVIEW_PROBLEM_APPROACH|INTERVIEW_INDEX|COMPARE_COLLECTIONS|COMPARE_STREAMS|COMPARE_CONCURRENCY|TOPIC_COVERAGE_MAP|OCJP_TRACK|INTERVIEW_TRACK|MODERN_JAVA_TRACK)\.md)$/);
   if (metaMatch) {
     return metaMatch[1];
   }
@@ -638,6 +645,50 @@ function badgeClassForTone(tone) {
     return 'badge-success-soft';
   }
   return 'badge-soft';
+}
+
+function normalizeLessonMode(value = '') {
+  const normalized = String(value).trim().toLowerCase();
+  if (normalized === 'interview' || normalized === 'certification' || normalized === 'shared') {
+    return normalized;
+  }
+  return '';
+}
+
+function inferTopicMode(sectionSlug, chapterSlug, lessonMeta = {}) {
+  const explicitMode = normalizeLessonMode(lessonMeta.mode);
+  if (explicitMode) {
+    return explicitMode;
+  }
+  if (sectionSlug === 'sec21_company_interview_tracks') {
+    return 'interview';
+  }
+  if (
+    sectionSlug === 'sec02_collections'
+    || sectionSlug === 'sec04_streams_and_functional_style'
+    || sectionSlug === 'sec05_multithreading_and_concurrency'
+    || sectionSlug === 'sec11_exception_handling'
+    || sectionSlug === 'sec20_data_structures_and_complexity'
+    || sectionSlug === 'sec08_internal_of_jvm'
+  ) {
+    return 'shared';
+  }
+  if (
+    sectionSlug === 'sec01_fundamentals'
+    || sectionSlug === 'sec16_core_data_time_and_text'
+    || sectionSlug === 'sec17_language_modeling_and_modern_types'
+    || sectionSlug === 'sec22_build_and_tooling'
+  ) {
+    return 'certification';
+  }
+  if (chapterSlug?.includes('pattern_matching') || chapterSlug?.includes('records_and_sealed_types')) {
+    return 'certification';
+  }
+  return 'shared';
+}
+
+function modePresentation(mode) {
+  return MODE_COPY[mode] || MODE_COPY.shared;
 }
 
 function getSectionPrerequisiteInfo(sectionSlug) {
@@ -1567,50 +1618,59 @@ function CompanyQuestionBankPage({ raw, manifest, resource, routeKey, readingSta
 
 function HomePage({ manifest }) {
   const featuredSections = manifest.sections.filter((section) => (
-    ['sec01_fundamentals', 'sec02_collections', 'sec04_streams_and_functional_style', 'sec05_multithreading_and_concurrency', 'sec20_data_structures_and_complexity']
+    ['sec02_collections', 'sec04_streams_and_functional_style', 'sec05_multithreading_and_concurrency', 'sec08_internal_of_jvm', 'sec21_company_interview_tracks']
       .includes(section.slug)
   ));
   const primaryJourneys = [
-    { title: 'Start Java Clearly', sectionSlug: 'sec01_fundamentals' },
-    { title: 'Crack Interviews', resourceSlug: 'INTERVIEW_TRACK' },
-    { title: 'Learn Modern Java', resourceSlug: 'MODERN_JAVA_TRACK' }
+    { title: 'Interview Track', resourceSlug: 'INTERVIEW_TRACK', label: 'Primary Path', icon: 'bi bi-buildings' },
+    { title: 'Interview Index', resourceSlug: 'INTERVIEW_INDEX', label: 'Fast Lookup', icon: 'bi bi-grid-1x2' },
+    { title: 'Problem Approach', resourceSlug: 'INTERVIEW_PROBLEM_APPROACH', label: 'Answer Better', icon: 'bi bi-diagram-3' },
+    { title: 'Company Question Bank', resourceSlug: 'COMPANY_QUESTION_BANK', label: 'Company Prep', icon: 'bi bi-bank' }
   ]
     .map((item) => ({
       ...item,
-      section: manifest.sections.find((section) => section.slug === item.sectionSlug),
       resource: manifest.resources.find((resource) => resource.slug === item.resourceSlug)
     }))
-    .filter((item) => item.section || item.resource);
+    .filter((item) => item.resource);
+  const secondaryJourneys = [
+    { title: 'High-Demand Topics', resourceSlug: 'HIGH_DEMAND_JAVA_TOPICS', label: 'Core Topics', icon: 'bi bi-lightning-charge' },
+    { title: 'OCJP Track', resourceSlug: 'OCJP_TRACK', label: 'Certification Path', icon: 'bi bi-mortarboard' },
+    { title: 'Java 7 To 25', resourceSlug: 'JAVA_7_TO_25', label: 'Version Revision', icon: 'bi bi-clock-history' }
+  ]
+    .map((item) => ({
+      ...item,
+      resource: manifest.resources.find((resource) => resource.slug === item.resourceSlug)
+    }))
+    .filter((item) => item.resource);
 
   return (
     <>
       <div className="hero-panel hero-home mb-4">
         <div className="row g-4 align-items-end">
           <div className="col-xl-7">
-            <p className="eyebrow mb-2">Java Learning Site</p>
-            <h1 className="display-title">Learn Java by solving real problems, not by opening random files.</h1>
+            <p className="eyebrow mb-2">Interview-First Java Prep</p>
+            <h1 className="display-title">Get interview-ready in structured Java layers, not random topic jumps.</h1>
             <p className="display-subtitle mb-4">
-              Learn Java through short problem-first lessons, runnable examples, and clear next steps.
-              Pick one path, open one chapter, and move forward without getting lost in the repo.
+              Start with the interview track, strengthen high-demand Java topics with runnable examples, then use certification and version guides as follow-up revision instead of as your first navigation problem.
             </p>
             <div className="d-flex flex-wrap gap-2">
-              <a className="btn btn-dark rounded-pill px-4" href="#section/sec01_fundamentals">Start With Fundamentals</a>
-              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/INTERVIEW_TRACK">Open Interview Track</a>
-              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/MODERN_JAVA_TRACK">Open Modern Java Track</a>
+              <a className="btn btn-dark rounded-pill px-4" href="#resource/INTERVIEW_TRACK">Open Interview Track</a>
+              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/INTERVIEW_INDEX">Interview Index</a>
+              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/INTERVIEW_PROBLEM_APPROACH">Problem Approach</a>
             </div>
           </div>
           <div className="col-xl-5">
             <div className="story-strip">
               <div className="story-card story-card-strong">
-                <div className="eyebrow mb-2">How to use it</div>
-                <h3 className="h5">Problem first. Example second. Explanation after that.</h3>
+                <div className="eyebrow mb-2">Best Flow</div>
+                <h3 className="h5">Track first. Core topic second. Company pressure after that.</h3>
                 <p className="muted-copy mb-0">
-                  Each chapter should help you answer one question well, not open ten options at once.
+                  Use the repo the way interviews work: foundations, high-demand topics, tradeoffs, then company-style follow-ups.
                 </p>
               </div>
               <div className="story-card">
-                <div className="stat-number">{manifest.stats.sections}</div>
-                <div className="muted-copy">sections</div>
+                <div className="stat-number">{manifest.stats.topics}</div>
+                <div className="muted-copy">runnable topics</div>
               </div>
               <div className="story-card">
                 <div className="stat-number">{manifest.stats.chapters}</div>
@@ -1623,61 +1683,44 @@ function HomePage({ manifest }) {
 
       <div className="content-card">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-          <h2 className="page-title mb-0">Choose One Path</h2>
-          <span className="badge rounded-pill badge-soft">Start here</span>
+          <h2 className="page-title mb-0">Interview Paths</h2>
+          <span className="badge rounded-pill badge-danger-soft">Primary entry</span>
         </div>
         <div className="journey-grid journey-grid-primary">
-          {primaryJourneys.map(({ title, section, resource }) => {
-            if (!section) {
-              const isOcjp = resource.slug === 'OCJP_TRACK';
-              const isInterview = resource.slug === 'INTERVIEW_TRACK';
-              return (
-                <a
-                  className="journey-card text-decoration-none text-reset"
-                  href={`#resource/${resource.slug}`}
-                  key={resource.slug}
-                >
-                  <div className="d-flex align-items-center gap-2 mb-2">
-                    <i className={`${isOcjp ? 'bi bi-mortarboard' : isInterview ? 'bi bi-buildings' : 'bi bi-clock-history'} section-icon`} />
-                    <span className="badge rounded-pill badge-soft">
-                      {isOcjp ? 'Certification Path' : isInterview ? 'Interview Path' : 'Modern Java Path'}
-                    </span>
-                  </div>
-                  <h3 className="h5 mb-2">{title}</h3>
-                  <p className="muted-copy mb-3">
-                    {isInterview
-                      ? 'Use company-style interview tracks, backend problem guidance, and core Java sections together instead of treating prep as disconnected lists.'
-                      : 'Follow Java from 7 through 25, then use the migration guide to decide what to learn at each jump.'}
-                  </p>
-                  <BulletList items={isInterview
-                    ? [
-                        'Practice original questions with sample answers',
-                        'Prep by company pressure, not just by logo',
-                        'Match interview style to the right Java sections'
-                      ]
-                    : [
-                        'See what changed by release',
-                        'Focus on the major mental shifts',
-                        'Plan the right migration path'
-                      ]} />
-                </a>
-              );
-            }
-
-            const profile = SECTION_PROFILES[section.slug] || {};
+          {primaryJourneys.map(({ title, resource, label, icon }) => {
             return (
-              <a className="journey-card text-decoration-none text-reset" href={`#section/${section.slug}`} key={section.slug}>
+              <a className="journey-card text-decoration-none text-reset" href={`#resource/${resource.slug}`} key={resource.slug}>
                 <div className="d-flex align-items-center gap-2 mb-2">
-                  {profile.icon ? <i className={`${profile.icon} section-icon`} /> : null}
-                  <span className="badge rounded-pill badge-soft">Foundation Path</span>
+                  <i className={`${icon} section-icon`} />
+                  <span className="badge rounded-pill badge-danger-soft">{label}</span>
                 </div>
                 <h3 className="h5 mb-2">{title}</h3>
-                <p className="muted-copy mb-3">{profile.hook || `Open ${section.title} as a guided starting point.`}</p>
-                <BulletList items={[
-                  'Start from simple runnable Java examples',
-                  'Build collections, streams, and design later',
-                  'Use revision sheets after each chapter'
-                ]} />
+                <p className="muted-copy mb-3">{RESOURCE_DESCRIPTIONS[resource.slug]}</p>
+                <BulletList items={
+                  resource.slug === 'INTERVIEW_TRACK'
+                    ? [
+                        'Use a deliberate study order',
+                        'Match sections to interview pressure',
+                        'Move from concept to answer language'
+                      ]
+                    : resource.slug === 'INTERVIEW_INDEX'
+                      ? [
+                          'Jump straight to topic lookup',
+                          'Use it as a restart point when lost',
+                          'Find short study sprints fast'
+                        ]
+                    : resource.slug === 'INTERVIEW_PROBLEM_APPROACH'
+                      ? [
+                          'Structure coding and backend answers',
+                          'Avoid random solving under pressure',
+                          'Practice stronger follow-up responses'
+                        ]
+                      : [
+                          'Filter by company and focus area',
+                          'Practice original question-answer pairs',
+                          'Jump into the linked Java sections after each answer'
+                        ]
+                } />
               </a>
             );
           })}
@@ -1686,8 +1729,8 @@ function HomePage({ manifest }) {
 
       <div className="content-card">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-          <h2 className="page-title mb-0">Popular Starting Sections</h2>
-          <span className="badge rounded-pill badge-soft">Simple navigation</span>
+          <h2 className="page-title mb-0">Core Java For Interviews</h2>
+          <span className="badge rounded-pill badge-success-soft">Shared core</span>
         </div>
         <div className="section-grid">
           {featuredSections.map((section) => {
@@ -1721,6 +1764,44 @@ function HomePage({ manifest }) {
           ))}
         </div>
       </div>
+
+      <div className="content-card">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h2 className="page-title mb-0">Certification And Version Follow-Up</h2>
+          <span className="badge rounded-pill badge-warning-soft">Secondary path</span>
+        </div>
+        <div className="journey-grid">
+          {secondaryJourneys.map(({ title, resource, label, icon }) => (
+            <a className="journey-card text-decoration-none text-reset" href={`#resource/${resource.slug}`} key={resource.slug}>
+              <div className="d-flex align-items-center gap-2 mb-2">
+                <i className={`${icon} section-icon`} />
+                <span className="badge rounded-pill badge-warning-soft">{label}</span>
+              </div>
+              <h3 className="h5 mb-2">{title}</h3>
+              <p className="muted-copy mb-3">{RESOURCE_DESCRIPTIONS[resource.slug]}</p>
+              <BulletList items={
+                resource.slug === 'OCJP_TRACK'
+                  ? [
+                      'Revise exam-heavy Java areas in order',
+                      'Use after core interview topics feel stable',
+                      'Keep runnable examples attached to revision'
+                    ]
+                  : resource.slug === 'HIGH_DEMAND_JAVA_TOPICS'
+                    ? [
+                        'Use as a drill list for repeated weak areas',
+                        'Connect search-heavy topics to runnable code',
+                        'Prioritize sections interviewers ask most'
+                      ]
+                    : [
+                        'See what changed across Java releases',
+                        'Support Java 25 revision with historical context',
+                        'Use migration notes after topic-level understanding'
+                      ]
+              } />
+            </a>
+          ))}
+        </div>
+      </div>
     </>
   );
 }
@@ -1736,6 +1817,8 @@ function PageLayout({ header, children }) {
 
 function TopicPreviewCard({ section, chapter, topic }) {
   const versionMeta = resolveVersionMeta(section.slug, chapter.slug, topic.lessonMeta, topic.preview);
+  const mode = inferTopicMode(section.slug, chapter.slug, topic.lessonMeta);
+  const modeUi = modePresentation(mode);
   const summary = truncateText(
     topic.preview.storyHook
       || topic.preview.problem
@@ -1748,7 +1831,10 @@ function TopicPreviewCard({ section, chapter, topic }) {
   return (
     <a className="topic-card topic-teaser text-decoration-none text-reset" href={`#topic/${section.slug}/${chapter.slug}/${topic.slug}`} key={topic.slug}>
       <div className="d-flex justify-content-between align-items-start gap-3 mb-2">
-        <span className="badge rounded-pill badge-soft">{topic.preview.concept || topic.concept}</span>
+        <div className="d-flex flex-wrap gap-2">
+          <span className="badge rounded-pill badge-soft">{topic.preview.concept || topic.concept}</span>
+          <span className={`badge rounded-pill ${modeUi.badgeClass}`}>{modeUi.label}</span>
+        </div>
         {versionMeta.display ? <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>{versionMeta.display}</span> : null}
       </div>
       <h3 className="h5 mb-2">{topic.title}</h3>
@@ -1761,9 +1847,12 @@ function TopicPreviewCard({ section, chapter, topic }) {
 
 function QuickLinkRail({ onRandomTopic, onToggleTheme, themeLabel, onToggleReadingMode, readingLabel }) {
   const links = [
-    { label: 'Start Here', href: '#section/sec01_fundamentals' },
     { label: 'Interview Track', href: '#resource/INTERVIEW_TRACK' },
-    { label: 'Modern Java', href: '#resource/MODERN_JAVA_TRACK' },
+    { label: 'Interview Index', href: '#resource/INTERVIEW_INDEX' },
+    { label: 'Problem Approach', href: '#resource/INTERVIEW_PROBLEM_APPROACH' },
+    { label: 'Company Bank', href: '#resource/COMPANY_QUESTION_BANK' },
+    { label: 'High-Demand', href: '#resource/HIGH_DEMAND_JAVA_TOPICS' },
+    { label: 'Certification', href: '#resource/OCJP_TRACK' },
     { label: 'Streams', href: '#section/sec04_streams_and_functional_style' },
     { label: 'Concurrency', href: '#section/sec05_multithreading_and_concurrency' },
     { label: 'Collections', href: '#section/sec02_collections' }
@@ -1946,8 +2035,9 @@ export default function App() {
                 </button>
                 <RandomTopicButton manifest={manifest} currentRoute={currentHash()} />
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_TRACK">Interview Track</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/MODERN_JAVA_TRACK">Modern Java</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_INDEX">Interview Index</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Problem Approach</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/OCJP_TRACK">Certification</a>
               </div>
             </div>
           </div>
@@ -2307,6 +2397,8 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
   const lessonFlow = extractTopicLessonFlow(data.lessonRaw);
   const topicRunner = effectiveRunner(topicSummary, data.lessonMeta);
   const versionMeta = resolveVersionMeta(data.section.slug, data.chapter.slug, data.lessonMeta, topicSummary);
+  const lessonMode = inferTopicMode(data.section.slug, data.chapter.slug, data.lessonMeta);
+  const lessonModeUi = modePresentation(lessonMode);
   const routeKey = `#topic/${data.section.slug}/${data.chapter.slug}/${data.topic.slug}`;
   const conceptLabel = topicSummary.concept || data.topic.concept || titleFromSlug(data.topic.slug);
   const topicSummaryLine = firstNonEmpty(
@@ -2467,6 +2559,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
                 {versionMeta.status && versionMeta.status !== 'preview' ? (
                   <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>Status: {versionMeta.status}</span>
                 ) : null}
+                <span className={`badge rounded-pill ${lessonModeUi.badgeClass}`}>Mode: {lessonModeUi.label}</span>
                 <span className="badge rounded-pill badge-soft">Runner: {topicRunner}</span>
                 {data.lessonMeta.estimated ? <span className="badge rounded-pill badge-soft">Read time: {data.lessonMeta.estimated}</span> : null}
               </div>

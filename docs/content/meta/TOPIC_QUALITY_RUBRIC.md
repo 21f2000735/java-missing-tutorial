@@ -5,6 +5,11 @@ Use this rubric to judge whether a topic file is good enough to keep.
 The goal is not to add more words.
 The goal is to teach the concept clearly, correctly, and memorably.
 
+Choose the expected shape first:
+
+- interview-first topic: use [INTERVIEW_TOPIC_TEMPLATE.md](INTERVIEW_TOPIC_TEMPLATE.md)
+- certification-first topic: use [CERTIFICATION_TOPIC_TEMPLATE.md](CERTIFICATION_TOPIC_TEMPLATE.md)
+
 ## Pass Criteria
 
 A topic is strong only if it teaches:
@@ -84,26 +89,19 @@ Target:
 
 - Does the topic include at least one maintainability, API design, or correctness note for experienced developers?
 
+### 11. Focus And Non-Repetition
+
+- Does each section add a new teaching step?
+- Has the topic avoided repeating the same idea under renamed headings?
+
 ## Required Topic Shape
 
-Every strong topic file should contain these `##` sections in this order:
+Every strong topic file should follow one primary template:
 
-1. `Why This Exists`
-2. `The Pain Before It`
-3. `Java Creator Mindset`
-4. `How You Might Invent It`
-5. `Naive Attempt`
-6. `Why It Breaks`
-7. `Final Java Solution`
-8. `Code`
-9. `Walkthrough`
-10. `Mental Model`
-11. `Mistakes`
-12. `Tradeoffs`
-13. `Use / Avoid`
-14. `Summary`
+- interview-first topic: [INTERVIEW_TOPIC_TEMPLATE.md](INTERVIEW_TOPIC_TEMPLATE.md)
+- certification-first topic: [CERTIFICATION_TOPIC_TEMPLATE.md](CERTIFICATION_TOPIC_TEMPLATE.md)
 
-Optional sections such as `Quick Visual`, `Comparison Snapshot`, `Performance Lens`, `Benchmark Checklist`, `Interview Angle`, `OCJP Angle`, `Version Notes`, and `Next Topic` should come after `Summary`.
+Do not merge both templates into one long page unless there is a strong reason.
 
 ## Deep Dive Rule
 
@@ -133,3 +131,4 @@ Rewrite the topic if:
 - the output is not explained
 - the learner cannot tell when to use the concept
 - the topic is only syntax-first and not concept-first
+- the same explanation appears again under renamed headings

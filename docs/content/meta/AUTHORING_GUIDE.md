@@ -74,50 +74,20 @@ Each topic file should include:
 - at least one interview question and answer
 - one exercise with a clearly explained solution
 
-## Topic Guide Template
+## Topic Guide Templates
 
-Preferred `TopicGuide.md` layout:
+There is no longer one default topic-guide shape for every audience.
 
-```md
----
-introduced: Java 8
-status: stable
-runner: embedded
-estimated: 8 min
----
+Choose the template based on the primary learner outcome:
 
-# Topic Name
-
-## Why This Exists
-## The Pain Before It
-## Java Creator Mindset
-## How You Might Invent It
-## Naive Attempt
-## Why It Breaks
-## Final Java Solution
-## Code
-## Walkthrough
-## Mental Model
-## Mistakes
-## Tradeoffs
-## Use / Avoid
-## Summary
-
-## Quick Visual
-## Comparison Snapshot
-## Performance Lens
-## Benchmark Checklist
-## Interview Angle
-## OCJP Angle
-## Version Notes
-## Next Topic
-```
+- [INTERVIEW_TOPIC_TEMPLATE.md](INTERVIEW_TOPIC_TEMPLATE.md) for interview-readiness topics
+- [CERTIFICATION_TOPIC_TEMPLATE.md](CERTIFICATION_TOPIC_TEMPLATE.md) for Java 25 certification-oriented revision topics
 
 Use `runner: embedded` for stable single-file examples that can be pushed to JDoodle from the site.  
 Use `runner: local` for preview-sensitive or multi-file examples.
-The required order is invention-first. The learner should feel how the idea emerges before they see the final Java form.
-`Java Creator Mindset` is required. It should explain what the Java designer is trying to protect, simplify, or enable.
-Use `###` subheadings inside the required sections when you want to teach contrast quickly, especially for Clean Code, concurrency, collections, exception handling, and API design topics. Example: `### Wrong Mental Model`, `### Better Mental Model`, `### Bad Code`, `### Better Idea`.
+Set `mode` in topic front matter to one of `interview`, `certification`, or `shared`.
+Use `###` subheadings inside sections when you want to teach contrast quickly. Example: `### Wrong Mental Model`, `### Better Mental Model`, `### Bad Code`, `### Better Idea`.
+
 For topics with clear mental-model value, prefer adding:
 
 - one `.svg` visual that explains the idea in a single look
@@ -125,8 +95,8 @@ For topics with clear mental-model value, prefer adding:
 - one performance or complexity lens
 
 Keep those explanations in `TopicGuide.md` instead of bloating the runnable Java file with too much teaching narration.
-Keep the required `##` headings in the exact order shown above. Optional appendix sections should come after `## Summary`.
 Do not add a heavy prerequisite list. Write the topic so readers can infer for themselves what background they already have and what they need to revisit.
+Do not restate the same teaching point under multiple renamed headings. Every section must add new value.
 
 ## Naming Limits
 
@@ -260,9 +230,27 @@ Every `ChapterGuide.md` should also include:
 ## Next Chapter
 ```
 
+## Choosing The Right Template
+
+Use the interview template when the topic should help the learner:
+
+- explain a decision out loud
+- defend tradeoffs
+- handle follow-up questions
+- connect code to backend or company-style discussion
+
+Use the certification template when the topic should help the learner:
+
+- predict output
+- predict compile behavior
+- revise a narrow Java rule
+- study quickly in exam order
+
+If a topic tries to do both equally, the writing usually gets bloated.
+Pick a primary goal and let the secondary goal be a short appendix instead.
+
 Keep chapter appendices such as `Sources`, `Effective Java Mapping`, `OCJP Focus`, `Compare With`, and `Next Chapter` after `## Summary`.
-- a simple study order
-- a quick summary after each major idea
+Chapter guides should also keep a simple study order and a quick summary after each major idea.
 
 ## Layered Reader Rule
 

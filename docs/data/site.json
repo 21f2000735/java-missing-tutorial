@@ -1,7 +1,7 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T19:42:17Z",
+  "generatedAt": "2026-04-07T20:27:29Z",
   "stats": {
     "sections": 22,
     "chapters": 56,
@@ -14,6 +14,8 @@
     {"slug": "ROADMAP_099", "title": "ROADMAP 099", "sourcePath": "planning/ROADMAP_099.md", "contentPath": "content/meta/ROADMAP_099.md", "type": "markdown"},
     {"slug": "TOP_20_BOOKS", "title": "TOP 20 BOOKS", "sourcePath": "planning/TOP_20_BOOKS.md", "contentPath": "content/meta/TOP_20_BOOKS.md", "type": "markdown"},
     {"slug": "AUTHORING_GUIDE", "title": "AUTHORING GUIDE", "sourcePath": "planning/AUTHORING_GUIDE.md", "contentPath": "content/meta/AUTHORING_GUIDE.md", "type": "markdown"},
+    {"slug": "INTERVIEW_TOPIC_TEMPLATE", "title": "INTERVIEW TOPIC TEMPLATE", "sourcePath": "planning/INTERVIEW_TOPIC_TEMPLATE.md", "contentPath": "content/meta/INTERVIEW_TOPIC_TEMPLATE.md", "type": "markdown"},
+    {"slug": "CERTIFICATION_TOPIC_TEMPLATE", "title": "CERTIFICATION TOPIC TEMPLATE", "sourcePath": "planning/CERTIFICATION_TOPIC_TEMPLATE.md", "contentPath": "content/meta/CERTIFICATION_TOPIC_TEMPLATE.md", "type": "markdown"},
     {"slug": "CHAPTER_QUALITY_CHECKLIST", "title": "CHAPTER QUALITY CHECKLIST", "sourcePath": "planning/CHAPTER_QUALITY_CHECKLIST.md", "contentPath": "content/meta/CHAPTER_QUALITY_CHECKLIST.md", "type": "markdown"},
     {"slug": "TOPIC_QUALITY_RUBRIC", "title": "TOPIC QUALITY RUBRIC", "sourcePath": "planning/TOPIC_QUALITY_RUBRIC.md", "contentPath": "content/meta/TOPIC_QUALITY_RUBRIC.md", "type": "markdown"},
     {"slug": "DEEP_DIVE_STANDARD", "title": "DEEP DIVE STANDARD", "sourcePath": "planning/DEEP_DIVE_STANDARD.md", "contentPath": "content/meta/DEEP_DIVE_STANDARD.md", "type": "markdown"},
@@ -23,6 +25,7 @@
     {"slug": "HIGH_DEMAND_JAVA_TOPICS", "title": "HIGH DEMAND JAVA TOPICS", "sourcePath": "planning/HIGH_DEMAND_JAVA_TOPICS.md", "contentPath": "content/meta/HIGH_DEMAND_JAVA_TOPICS.md", "type": "markdown"},
     {"slug": "COMPANY_QUESTION_BANK", "title": "COMPANY QUESTION BANK", "sourcePath": "planning/COMPANY_QUESTION_BANK.md", "contentPath": "content/meta/COMPANY_QUESTION_BANK.md", "type": "markdown"},
     {"slug": "INTERVIEW_PROBLEM_APPROACH", "title": "INTERVIEW PROBLEM APPROACH", "sourcePath": "planning/INTERVIEW_PROBLEM_APPROACH.md", "contentPath": "content/meta/INTERVIEW_PROBLEM_APPROACH.md", "type": "markdown"},
+    {"slug": "INTERVIEW_INDEX", "title": "INTERVIEW INDEX", "sourcePath": "planning/INTERVIEW_INDEX.md", "contentPath": "content/meta/INTERVIEW_INDEX.md", "type": "markdown"},
     {"slug": "COMPARE_COLLECTIONS", "title": "COMPARE COLLECTIONS", "sourcePath": "planning/COMPARE_COLLECTIONS.md", "contentPath": "content/meta/COMPARE_COLLECTIONS.md", "type": "markdown"},
     {"slug": "COMPARE_STREAMS", "title": "COMPARE STREAMS", "sourcePath": "planning/COMPARE_STREAMS.md", "contentPath": "content/meta/COMPARE_STREAMS.md", "type": "markdown"},
     {"slug": "COMPARE_CONCURRENCY", "title": "COMPARE CONCURRENCY", "sourcePath": "planning/COMPARE_CONCURRENCY.md", "contentPath": "content/meta/COMPARE_CONCURRENCY.md", "type": "markdown"},

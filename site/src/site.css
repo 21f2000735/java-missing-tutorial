@@ -613,6 +613,11 @@ input:focus-visible {
   color: #875f00;
 }
 
+.badge-danger-soft {
+  background: var(--danger-soft);
+  color: #8b341b;
+}
+
 .badge-success-soft {
   background: rgba(58, 106, 87, 0.14);
   color: #2f624f;
@@ -1222,6 +1227,11 @@ input:focus-visible {
 
 .theme-dark .badge-warning-soft {
   color: #f0ca82;
+}
+
+.theme-dark .badge-danger-soft {
+  background: rgba(202, 97, 67, 0.2);
+  color: #f0b19f;
 }
 
 .theme-dark .badge-success-soft {

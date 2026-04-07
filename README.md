@@ -1,12 +1,61 @@
 # Java Missing Tutorial
 
-This repo is a chapter-based Java learning library for two goals:
+This repo is a structured Java interview-prep library with runnable examples, chapter guides, company-style tracks, and Java 25 certification-oriented revision support.
 
-- OCJP preparation
-- modern Java learning up to the latest release line
+The first goal is interview preparation:
+
+- learn the core Java topics interviewers actually test
+- study them in a deliberate order instead of random browsing
+- practice explaining tradeoffs, not just syntax
+- move from concept to runnable example to interview answer
+
+The second goal is Java 25 certification readiness:
+
+- cover the core language and library areas that certification-style study expects
+- reinforce concepts with runnable examples instead of memorized notes
+- keep revision paths available for exam-focused reading
+
+Modern Java learning remains a supporting path, but it is not the main entry point.
 
 The content style should stay simple, clear, and beginner-friendly, even when the topic is advanced.
 The examples should also stay useful for an experienced Java engineer who cares about correctness, tradeoffs, and maintainability.
+
+## Start Here
+
+If your goal is interview prep, use this reading order first:
+
+1. [planning/INTERVIEW_TRACK.md](planning/INTERVIEW_TRACK.md)
+2. [planning/INTERVIEW_INDEX.md](planning/INTERVIEW_INDEX.md)
+3. [planning/INTERVIEW_PROBLEM_APPROACH.md](planning/INTERVIEW_PROBLEM_APPROACH.md)
+4. [planning/HIGH_DEMAND_JAVA_TOPICS.md](planning/HIGH_DEMAND_JAVA_TOPICS.md)
+5. [planning/COMPANY_QUESTION_BANK.md](planning/COMPANY_QUESTION_BANK.md)
+
+Then move into the core sections in this order:
+
+1. Fundamentals
+2. Collections
+3. Streams And Functional Style
+4. Multithreading And Concurrency
+5. Exception Handling
+6. Internal Of JVM
+7. Architecture And Integration
+8. Company Interview Tracks
+
+If your goal is certification-oriented study after interview prep, continue with:
+
+1. [planning/OCJP_TRACK.md](planning/OCJP_TRACK.md)
+2. [planning/JAVA_7_TO_25.md](planning/JAVA_7_TO_25.md)
+3. [planning/JAVA_MIGRATION_GUIDES.md](planning/JAVA_MIGRATION_GUIDES.md)
+
+## What Success Looks Like
+
+This repo should help a learner do five things well:
+
+- explain a Java concept in plain English
+- write a correct runnable solution under interview pressure
+- compare a naive answer with a stronger answer
+- defend tradeoffs in backend, debugging, and system-style discussions
+- revise important Java 25-era concepts in a certification-friendly order
 
 ## Fresher-First Rule
 
@@ -230,6 +279,11 @@ The repo now uses book-style naming:
 - chapters inside each section use `chXX_*`
 - chapter numbering restarts inside each section
 
+The main interview-prep path lives in [planning/INTERVIEW_TRACK.md](planning/INTERVIEW_TRACK.md).
+Fast lookup and restart navigation live in [planning/INTERVIEW_INDEX.md](planning/INTERVIEW_INDEX.md).
+Problem-solving guidance lives in [planning/INTERVIEW_PROBLEM_APPROACH.md](planning/INTERVIEW_PROBLEM_APPROACH.md).
+Company-style practice lives in [planning/COMPANY_QUESTION_BANK.md](planning/COMPANY_QUESTION_BANK.md).
+High-demand interview topics are grouped in [planning/HIGH_DEMAND_JAVA_TOPICS.md](planning/HIGH_DEMAND_JAVA_TOPICS.md).
 Long-term curriculum planning is tracked in [planning/ROADMAP_099.md](planning/ROADMAP_099.md).
 Section-level grouping is tracked in [planning/CURRICULUM.md](planning/CURRICULUM.md).
 Book-style reading order is tracked in [planning/BOOK.md](planning/BOOK.md).
@@ -241,9 +295,10 @@ The site is intentionally shifting from “repo browser” to “problem-first l
 Topic pages now support a site-first lesson model: `TopicGuide.md` explains the concept, and the Java file stays runnable. Stable examples can be sent directly to JDoodle from the site, while preview-based chapters still need a local JDK 25 setup.
 Where possible, topic lessons should now teach visually: a quick diagram, a comparison snapshot, and a performance lens are usually more useful on the site than extra `System.out.println(...)` narration in the Java file.
 The release track is now split out into [planning/JAVA_7_TO_25.md](planning/JAVA_7_TO_25.md) and [planning/JAVA_MIGRATION_GUIDES.md](planning/JAVA_MIGRATION_GUIDES.md) so users can learn Java by era as well as by concept.
-Dedicated user paths live in [planning/OCJP_TRACK.md](planning/OCJP_TRACK.md), [planning/INTERVIEW_TRACK.md](planning/INTERVIEW_TRACK.md), and [planning/MODERN_JAVA_TRACK.md](planning/MODERN_JAVA_TRACK.md).
+Secondary user paths live in [planning/OCJP_TRACK.md](planning/OCJP_TRACK.md) and [planning/MODERN_JAVA_TRACK.md](planning/MODERN_JAVA_TRACK.md).
 Detailed topic coverage is mapped in [planning/TOPIC_COVERAGE_MAP.md](planning/TOPIC_COVERAGE_MAP.md).
 Detailed authoring rules are tracked in [planning/AUTHORING_GUIDE.md](planning/AUTHORING_GUIDE.md).
+Topic-writing templates now split by audience: [planning/INTERVIEW_TOPIC_TEMPLATE.md](planning/INTERVIEW_TOPIC_TEMPLATE.md) and [planning/CERTIFICATION_TOPIC_TEMPLATE.md](planning/CERTIFICATION_TOPIC_TEMPLATE.md).
 Topic quality is checked against [planning/TOPIC_QUALITY_RUBRIC.md](planning/TOPIC_QUALITY_RUBRIC.md).
 Book sources are tracked in [planning/TOP_20_BOOKS.md](planning/TOP_20_BOOKS.md).
 Chapter completion is checked against [planning/CHAPTER_QUALITY_CHECKLIST.md](planning/CHAPTER_QUALITY_CHECKLIST.md).

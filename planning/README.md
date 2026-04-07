@@ -12,6 +12,7 @@ This folder keeps the roadmap, book-order, compare pages, release tracks, and au
 
 - [OCJP_TRACK.md](OCJP_TRACK.md)
 - [INTERVIEW_TRACK.md](INTERVIEW_TRACK.md)
+- [INTERVIEW_INDEX.md](INTERVIEW_INDEX.md)
 - [MODERN_JAVA_TRACK.md](MODERN_JAVA_TRACK.md)
 - [JAVA_7_TO_25.md](JAVA_7_TO_25.md)
 - [JAVA_MIGRATION_GUIDES.md](JAVA_MIGRATION_GUIDES.md)
@@ -19,6 +20,8 @@ This folder keeps the roadmap, book-order, compare pages, release tracks, and au
 ## Quality And Authoring
 
 - [AUTHORING_GUIDE.md](AUTHORING_GUIDE.md)
+- [INTERVIEW_TOPIC_TEMPLATE.md](INTERVIEW_TOPIC_TEMPLATE.md)
+- [CERTIFICATION_TOPIC_TEMPLATE.md](CERTIFICATION_TOPIC_TEMPLATE.md)
 - [TOPIC_QUALITY_RUBRIC.md](TOPIC_QUALITY_RUBRIC.md)
 - [CHAPTER_QUALITY_CHECKLIST.md](CHAPTER_QUALITY_CHECKLIST.md)
 - [DEEP_DIVE_STANDARD.md](DEEP_DIVE_STANDARD.md)

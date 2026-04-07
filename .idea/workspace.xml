@@ -6,10 +6,46 @@
   <component name="ChangeListManager">
     <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/__next.__PAGE__.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next.__PAGE__.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/__next._full.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._full.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/__next._head.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._head.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/__next._index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._index.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/__next._tree.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._tree.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_next/static/9H2S392KmwVxmwCvzovQz/_buildManifest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_next/static/9H2S392KmwVxmwCvzovQz/_clientMiddlewareManifest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_next/static/9H2S392KmwVxmwCvzovQz/_ssgManifest.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_next/static/chunks/0lmf5qhsg8ab4.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_next/static/chunks/0msjfq.vkgmxs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_not-found.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_not-found.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._full.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._full.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._head.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._head.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._index.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._not-found.__PAGE__.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._not-found.__PAGE__.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._not-found.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._not-found.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._tree.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._tree.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/library/sec04_streams_and_functional_style/ch01_streams/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec04_streams_and_functional_style/ch01_streams/ChapterGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/meta/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/meta/TOPIC_QUALITY_RUBRIC.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/TOPIC_QUALITY_RUBRIC.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/list-set-map/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/list-set-map/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planning/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planning/TOPIC_QUALITY_RUBRIC.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/TOPIC_QUALITY_RUBRIC.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/build_site.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_site.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/ChapterGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +58,7 @@
     </persistenceIdMap>
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="957" />
+    <option name="cachedIndexableFilesCount" value="1560" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -214,6 +250,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775585766841</updated>
       <workItem from="1775585771101" duration="3671000" />
+      <workItem from="1775591243727" duration="2422000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <option name="closed" value="true" />
@@ -271,7 +308,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775589303332</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="update">
+      <option name="closed" value="true" />
+      <created>1775592085062</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1775592085064</updated>
+    </task>
+    <task id="LOCAL-00012" summary="update">
+      <option name="closed" value="true" />
+      <created>1775592112093</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1775592112093</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
