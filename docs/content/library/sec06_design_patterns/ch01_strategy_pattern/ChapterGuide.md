@@ -2,66 +2,107 @@
 
 ## Why This Chapter Exists
 
-Strategy is the pattern you reach for when the workflow stays stable but one decision keeps changing.
+Strategy solves one recurring design pressure: the workflow stays stable, but one business rule keeps changing.
+
+In this chapter, checkout is the stable workflow. Discount policy is the changing part.
 
 ## The Pain Before It
 
-Before learners build a mental model for strategy pattern, the APIs feel like isolated facts instead of answers to one connected problem.
+Teams usually start with one branch:
+
+- festival discount
+- student discount
+- premium discount later
+
+The first version feels harmless. Then checkout becomes the place where every marketing rule lands.
+
+That creates three problems:
+
+- the checkout flow grows branching logic that is not really checkout logic
+- each new rule risks breaking an existing rule
+- testing one rule means mentally re-reading the whole method
 
 ## Java Creator Mindset
 
-Read the chapter as a small set of related ideas around strategy Pattern, not as isolated trivia.
+Do not ask, "How do I use the pattern name?"
+
+Ask:
+
+- what part of this code should stay stable?
+- what part is expected to vary?
+- can the changing part sit behind one small contract?
+
+That is the real strategy mindset.
 
 ## How You Might Invent It
 
-An online store starts with one discount rule.  
-Then the business adds:
+Imagine writing checkout from scratch.
 
-- festival discounts
-- student discounts
-- premium-member discounts
-- region-specific rules
+You know checkout must:
 
-The dangerous move is to keep adding branches inside checkout.  
-Checkout should run the purchase flow, not own every marketing rule.
+1. take an amount
+2. apply one discount rule
+3. return the final amount
+
+The purchase flow itself does not change much. The discount formula does.
+
+That suggests a split:
+
+- keep `applyDiscount()` simple
+- move each discount formula into its own implementation
 
 ## Naive Attempt
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| `if/switch` | there are few stable cases | new rules will keep appearing |
-| inheritance | the whole type meaning changes | only one behavior changes |
-| enum branching | logic is tiny and static | rules need their own tests and growth path |
+The naive design is a single method full of `if` or `switch` branches:
+
+```java
+if (customerType.equals("FESTIVAL")) { ... }
+else if (customerType.equals("STUDENT")) { ... }
+else if (customerType.equals("PREMIUM")) { ... }
+```
+
+It works at first, but the caller now owns every rule.
 
 ## Why It Breaks
 
-- there are only one or two tiny stable cases
-- a short method is still more readable than introducing new classes
-- the rule will never vary separately from the workflow
+That design breaks down when:
+
+- new rules keep arriving
+- each rule needs separate tests
+- more than one workflow needs the same discount logic
+
+You end up changing checkout for marketing reasons. That is the wrong responsibility boundary.
 
 ## Final Java Direction
 
-Read the chapter as a small set of related ideas around strategy Pattern, not as isolated trivia.
+The chapter direction is simple:
+
+- define a small behavior contract: `DiscountPolicy`
+- keep the stable workflow in one method: `applyDiscount()`
+- add one class per changing rule
+
+The caller depends on the contract, not on one concrete discount formula.
 
 ## Study Order
 
 1. Run [ChoosingBehaviorWithStrategy.java](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
-2. Notice that `applyDiscount()` does not change when you swap discount behavior
-3. Imagine adding one more campaign without touching checkout flow
+2. Notice that `applyDiscount()` never changes while the policy object changes
+3. Add one more policy mentally and check whether checkout needs editing
+4. Ask whether the variation is large enough to justify strategy at all
 
 ## What To Notice
 
-- the stable workflow depends on an interface, not a concrete rule
-- each rule gets its own focused implementation
-- the design pressure is "changing behavior", not "creating more classes"
+- `applyDiscount(int amount, DiscountPolicy policy)` is the stable seam
+- `FestivalDiscount` and `StudentDiscount` vary independently
+- the design win is not "more classes"; it is "fewer reasons to change the caller"
 
 ### Compare With
 
 | Compare | Use Left When | Use Right When |
 | --- | --- | --- |
-| `if/switch` | there are few stable cases | new rules will keep appearing |
+| `if/switch` | there are one or two tiny stable cases | new rules will keep appearing |
 | inheritance | the whole type meaning changes | only one behavior changes |
-| enum branching | logic is tiny and static | rules need their own tests and growth path |
+| enum branching | logic is small and static | each rule needs its own growth and tests |
 
 ### Interview Focus
 
@@ -69,128 +110,81 @@ Q: What problem does strategy solve?
 A: It isolates interchangeable behavior behind a contract so the caller stops growing branching logic.
 
 Q: What is the most common misuse?  
-A: Introducing strategy when the behavior is too small and stable to justify extra structure.
+A: Adding strategy when the rule set is tiny, stable, and clearer as one short method.
 
 ## Mental Model
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Use this mental model:
+
+- the workflow is the road
+- the strategy is the route choice
+
+The road should not change every time you pick a different route.
+
+In code terms:
+
+- checkout owns the flow
+- strategy owns the rule
 
 ## Common Mistakes
 
-- there are only one or two tiny stable cases
-- a short method is still more readable than introducing new classes
-- the rule will never vary separately from the workflow
+- introducing strategy before there is real variation pressure
+- moving the rule into strategies but still branching all over the callers
+- creating many tiny classes when a short method is still clearer
 
 ## Tradeoffs
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| `if/switch` | there are few stable cases | new rules will keep appearing |
-| inheritance | the whole type meaning changes | only one behavior changes |
-| enum branching | logic is tiny and static | rules need their own tests and growth path |
+Strategy gives you:
+
+- smaller callers
+- independently testable rules
+- easier extension when new behaviors arrive
+
+Strategy costs you:
+
+- more types
+- one more abstraction layer
+- the need to place strategy selection somewhere sensible
 
 ## Use / Avoid
 
 ### Use It When
 
-- one small part of the workflow changes often
-- each rule should be tested independently
-- callers should stop knowing every rule formula
+- one part of the workflow changes more often than the rest
+- new rules are likely to keep arriving
+- each rule should be tested or reused independently
+
+### Avoid It When
+
+- there are only one or two tiny rules
+- the behavior is not expected to grow
+- the abstraction would hide a simpler design
 
 ## Practice
 
 ### Case Study
 
-Think about a pricing engine used by checkout, order preview, and analytics.  
-If discount logic lives inside checkout, those other flows will either duplicate it or call checkout for the wrong reason.  
-Strategy keeps discount logic reusable and local.
+Suppose discount logic is needed in:
+
+- checkout
+- order preview
+- analytics replay
+
+If checkout owns the formula, the other flows either duplicate it or call checkout for the wrong reason.
+
+Strategy keeps the rule reusable without making checkout the center of every pricing decision.
+
+### Try Next
+
+Add a `PremiumDiscount` policy and verify that only the new rule changes.
 
 ## Summary
 
-After this chapter, you should be able to explain the main decisions behind strategy pattern and connect them back to the runnable examples.
+After this chapter, you should be able to explain strategy in one sentence:
 
-## Why This Chapter Matters
+Keep the stable workflow in one place and move the changing rule behind a small contract.
 
-Strategy is the pattern you reach for when the workflow stays stable but one decision keeps changing.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-Strategy is the pattern you reach for when the workflow stays stable but one decision keeps changing.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around strategy Pattern, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-### Use It When
-
-- one small part of the workflow changes often
-- each rule should be tested independently
-- callers should stop knowing every rule formula
-
-## The Story
-
-An online store starts with one discount rule.  
-Then the business adds:
-
-- festival discounts
-- student discounts
-- premium-member discounts
-- region-specific rules
-
-The dangerous move is to keep adding branches inside checkout.  
-Checkout should run the purchase flow, not own every marketing rule.
-
-## Run This First
-
-1. Run [ChoosingBehaviorWithStrategy.java](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
-2. Notice that `applyDiscount()` does not change when you swap discount behavior
-3. Imagine adding one more campaign without touching checkout flow
-
-## What To Look For
-
-- the stable workflow depends on an interface, not a concrete rule
-- each rule gets its own focused implementation
-- the design pressure is "changing behavior", not "creating more classes"
-
-## Use This Pattern When
-
-- one small part of the workflow changes often
-- each rule should be tested independently
-- callers should stop knowing every rule formula
-
-## Avoid This Pattern When
-
-- there are only one or two tiny stable cases
-- a short method is still more readable than introducing new classes
-- the rule will never vary separately from the workflow
-
-## Compare With
-
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| `if/switch` | there are few stable cases | new rules will keep appearing |
-| inheritance | the whole type meaning changes | only one behavior changes |
-| enum branching | logic is tiny and static | rules need their own tests and growth path |
-
-## Small Case Study
-
-Think about a pricing engine used by checkout, order preview, and analytics.  
-If discount logic lives inside checkout, those other flows will either duplicate it or call checkout for the wrong reason.  
-Strategy keeps discount logic reusable and local.
-
-## Interview Focus
-
-Q: What problem does strategy solve?  
-A: It isolates interchangeable behavior behind a contract so the caller stops growing branching logic.
-
-Q: What is the most common misuse?  
-A: Introducing strategy when the behavior is too small and stable to justify extra structure.
+If you cannot clearly name the changing behavior, you probably do not need strategy yet.
 
 ## Effective Java Mapping
 

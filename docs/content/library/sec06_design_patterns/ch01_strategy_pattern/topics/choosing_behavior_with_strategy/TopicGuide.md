@@ -3,66 +3,58 @@ introduced: Java 5+
 status: stable
 runner: embedded
 estimated: 7 min
+mode: interview
 ---
 
 # Choosing Behavior With Strategy
 
 ## Why This Exists
 
-The checkout flow should not know every discount rule.
+This topic exists because checkout should not know every discount formula.
 
 ## The Pain Before It
 
-The checkout flow should not know every discount rule.
+One rule becomes two, then four, then a long branch chain inside the caller.
 
-That sounds obvious, but teams often start with one rule and then keep adding:
-
-- festival discounts
-- student discounts
-- partner discounts
-- premium-member rules
-
-The checkout flow becomes the place where every marketing change lands. That is the pressure strategy solves.
+That makes the workflow harder to read and harder to change safely.
 
 ## Java Creator Mindset
 
-Use one small contract for the changing behavior and keep the stable workflow separate.
-
-That gives you:
-
-- one place for the workflow
-- one focused class per rule
-- easier tests
+Keep the stable workflow in one place. Move the changing rule behind a small contract.
 
 ## How You Might Invent It
 
-Use one small contract for the changing behavior and keep the stable workflow separate.
+If you were designing this from scratch, you would notice:
+
+- the input amount stays the same
+- the final amount is always the output
+- only the discount rule varies
+
+That is the signal to separate behavior from workflow.
 
 ## Naive Attempt
 
-The wrong design is one giant checkout method with many discount branches.  
-That makes checkout hard to test and easy to break whenever the business adds one more rule.
+Put every discount rule in one checkout method with `if` branches.
+
+That looks cheaper at first but makes one method own every future campaign.
 
 ## Why It Breaks
 
-The wrong design is one giant checkout method with many discount branches.  
-That makes checkout hard to test and easy to break whenever the business adds one more rule.
+The branch-heavy version breaks down when:
+
+- rules keep changing
+- each rule deserves separate tests
+- more than one flow needs the same policy logic
 
 ## Final Java Solution
 
-Use one small contract for the changing behavior and keep the stable workflow separate.
-
-That gives you:
-
-- one place for the workflow
-- one focused class per rule
-- easier tests
+Define `DiscountPolicy`, keep `applyDiscount()` stable, and swap only the policy object.
 
 ## Code
 
 ### Run It
 
-Run the Java file first. Notice that `applyDiscount()` stays the same while the concrete rule changes.
+Run the Java file first and compare the two results produced by different policy implementations.
 
 ### Expected Result
 
@@ -71,77 +63,62 @@ Run the Java file first. Notice that `applyDiscount()` stays the same while the 
 
 ## Walkthrough
 
-Strategy reduces the number of reasons one caller has to change.  
-Checkout changes when checkout changes.  
-Discount logic changes when discount rules change.
+`applyDiscount()` does not care whether the policy is festival or student.
+
+It only knows this rule:
+
+1. receive amount
+2. ask the strategy for discount
+3. subtract discount
+
+That is the point of strategy. The caller keeps one flow while the behavior varies.
 
 ## Mental Model
 
-Use a small mental model first: identify the input, the rule, and the outcome that choosing behavior with strategy should guarantee.
+Treat the strategy as a plug-in rule for one narrow decision inside a stable workflow.
 
 ## Mistakes
 
-The wrong design is one giant checkout method with many discount branches.  
-That makes checkout hard to test and easy to break whenever the business adds one more rule.
+- using strategy for tiny rules that are unlikely to grow
+- scattering strategy selection logic across many callers
+- thinking the benefit is "more classes" instead of "clearer change boundaries"
 
 ## Tradeoffs
 
-The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+You gain clearer responsibilities and easier extension.  
+You pay with extra types and one more abstraction layer.
 
 ## Use / Avoid
 
 ### Use It When
 
-- one behavior changes more often than the rest of the workflow
-- new business rules are likely to keep arriving
-- each rule should be testable by itself
+- one behavior changes more often than the workflow
+- new policies are likely to arrive
+- each policy should be tested independently
 
 ### Avoid It When
 
-- there are only one or two tiny cases
-- the rule set is unlikely to grow
-- extra classes would hide a simpler design
+- the rule set is tiny and stable
+- the abstraction would be heavier than the problem
+- a short direct method is still clearer
 
 ## Summary
 
-After this topic, you should be able to explain choosing behavior with strategy, run the example, and defend when it helps versus when it adds noise.
+After this topic, you should be able to explain why `applyDiscount()` stays stable while discount behavior changes through `DiscountPolicy`.
 
 ## Why This Matters
 
-The checkout flow should not know every discount rule.
-
-## Intuition
-
-Use one small contract for the changing behavior and keep the stable workflow separate.
-
-## Problem Statement
-
-The checkout flow should not know every discount rule.
-
-That sounds obvious, but teams often start with one rule and then keep adding:
-
-- festival discounts
-- student discounts
-- partner discounts
-- premium-member rules
-
-The checkout flow becomes the place where every marketing change lands. That is the pressure strategy solves.
+This is a common interview pattern because it shows that you can separate stable flow from changing business rules.
 
 ## Core Idea
 
-Use one small contract for the changing behavior and keep the stable workflow separate.
-
-That gives you:
-
-- one place for the workflow
-- one focused class per rule
-- easier tests
+Depend on a behavior contract, not one concrete rule.
 
 ## Simple Example
 
 ### Run It
 
-Run the Java file first. Notice that `applyDiscount()` stays the same while the concrete rule changes.
+Run the example and confirm that different policy objects change the outcome without changing checkout flow.
 
 ### Expected Result
 
@@ -150,105 +127,39 @@ Run the Java file first. Notice that `applyDiscount()` stays the same while the 
 
 ## Step-by-Step Working
 
-Strategy reduces the number of reasons one caller has to change.  
-Checkout changes when checkout changes.  
-Discount logic changes when discount rules change.
+- `main()` chooses a policy implementation
+- `applyDiscount()` calls `discountFor(amount)`
+- the selected policy decides the discount
+- the caller stays unchanged
 
 ## Rules / Syntax
 
-This idea is not tied to one Java release.  
-Modern Java helps mostly by making the implementation smaller with records, lambdas, and cleaner interfaces, but the concept itself is much older.
-
-- Prefer the smallest correct rule over cleverness.
-- Connect the rule back to the runnable example.
+The concept is old and stable. Modern Java mainly makes implementations shorter, not different in design intent.
 
 ## Common Mistakes
 
-The wrong design is one giant checkout method with many discount branches.  
-That makes checkout hard to test and easy to break whenever the business adds one more rule.
+- replacing one small `if` with unnecessary structure
+- choosing concrete strategies everywhere instead of keeping selection localized
 
 ## When To Use / When Not To Use
 
 ### Use It When
 
-- one behavior changes more often than the rest of the workflow
-- new business rules are likely to keep arriving
-- each rule should be testable by itself
+- the behavior varies independently
+- the caller should not own every rule
 
 ### Avoid It When
 
-- there are only one or two tiny cases
-- the rule set is unlikely to grow
-- extra classes would hide a simpler design
+- the variation is tiny and unlikely to grow
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether choosing behavior with strategy still behaves the way you expected.
-
-### After That
-
-Move to the creational patterns chapter and compare this kind of variation problem with object-creation problems.
-
-## The Problem
-
-The checkout flow should not know every discount rule.
-
-That sounds obvious, but teams often start with one rule and then keep adding:
-
-- festival discounts
-- student discounts
-- partner discounts
-- premium-member rules
-
-The checkout flow becomes the place where every marketing change lands. That is the pressure strategy solves.
-
-## Run This Code
-
-Run the Java file first. Notice that `applyDiscount()` stays the same while the concrete rule changes.
-
-## Expected Output
-
-- `festivalFinalAmount = 1700`
-- `studentFinalAmount = 1800`
-
-## ❌ Bad Code
-
-The wrong design is one giant checkout method with many discount branches.  
-That makes checkout hard to test and easy to break whenever the business adds one more rule.
-
-## ✅ Better Code
-
-Use one small contract for the changing behavior and keep the stable workflow separate.
-
-That gives you:
-
-- one place for the workflow
-- one focused class per rule
-- easier tests
-
-## Why This Works
-
-Strategy reduces the number of reasons one caller has to change.  
-Checkout changes when checkout changes.  
-Discount logic changes when discount rules change.
-
-## Use This When
-
-- one behavior changes more often than the rest of the workflow
-- new business rules are likely to keep arriving
-- each rule should be testable by itself
-
-## Avoid This When
-
-- there are only one or two tiny cases
-- the rule set is unlikely to grow
-- extra classes would hide a simpler design
+Add a `PremiumDiscount` implementation and explain why `applyDiscount()` should not change.
 
 ## Version Notes
 
-This idea is not tied to one Java release.  
-Modern Java helps mostly by making the implementation smaller with records, lambdas, and cleaner interfaces, but the concept itself is much older.
+You can implement strategy with classes, lambdas, or method references. The design idea stays the same.
 
 ## Next Topic
 
-Move to the creational patterns chapter and compare this kind of variation problem with object-creation problems.
+Compare this variation problem with creational patterns, where the main question is object creation rather than behavior swapping.

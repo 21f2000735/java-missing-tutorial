@@ -232,6 +232,13 @@ function rewriteTopicGuideLinks(html, contentBase) {
   return html
     .replace(/src="\.\//g, `src="${contentBase}/`)
     .replace(/href="\.\//g, `href="${contentBase}/`)
+    .replace(/src="(?![a-z]+:|\/|#|data:|\.{1,2}\/|content\/)([^"]+)"/gi, (_, target) => `src="${contentBase}/${target}"`)
+    .replace(/href="(?![a-z]+:|\/|#|data:|\.{1,2}\/|content\/)([^"]+)"/gi, (_, target) => {
+      if (target.endsWith('.md')) {
+        return `href="${target}"`;
+      }
+      return `href="${contentBase}/${target}"`;
+    })
     .replace(/href="([A-Z0-9_]+)\.md"/g, (_, slug) => {
       const file = `${slug}.md`;
       const generatedSlug = pageByFile.get(file);

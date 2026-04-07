@@ -1,7 +1,7 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T20:46:29Z",
+  "generatedAt": "2026-04-07T21:22:21Z",
   "stats": {
     "sections": 22,
     "chapters": 56,
@@ -363,8 +363,8 @@
           "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/RunChapter.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/RunChapter.java"},
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/RunAllTopics.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/RunAllTopics.java"},
           "topics": [
-            {"slug": "class_loading_lifecycle", "title": "Class Loading Lifecycle", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/ClassLoadingLifecycle.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/ClassLoadingLifecycle.java", "concept": "Class Loading Lifecycle"},
-            {"slug": "runtime_layers", "title": "Runtime Layers", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/RuntimeLayers.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/RuntimeLayers.java", "concept": "Runtime Layers"}
+            {"slug": "class_loading_lifecycle", "title": "Class Loading Lifecycle", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/ClassLoadingLifecycle.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/ClassLoadingLifecycle.java", "concept": "Class Loading Lifecycle", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/TopicGuide.md", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/TopicGuide.md"}},
+            {"slug": "runtime_layers", "title": "Runtime Layers", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/RuntimeLayers.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/RuntimeLayers.java", "concept": "Runtime Layers", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/TopicGuide.md", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/TopicGuide.md"}}
           ]
         },
         {
@@ -375,7 +375,7 @@
           "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/RunChapter.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/RunChapter.java"},
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/RunAllTopics.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/RunAllTopics.java"},
           "topics": [
-            {"slug": "gc_strategies", "title": "Gc Strategies", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/GcStrategies.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/GcStrategies.java", "concept": "Gc Strategies"},
+            {"slug": "gc_strategies", "title": "Gc Strategies", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/GcStrategies.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/GcStrategies.java", "concept": "Gc Strategies", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/TopicGuide.md", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/TopicGuide.md"}},
             {"slug": "jit_basics", "title": "Jit Basics", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/jit_basics/JitBasics.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/jit_basics/JitBasics.java", "concept": "Jit Basics"}
           ]
         }
