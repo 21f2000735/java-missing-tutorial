@@ -1,6 +1,6 @@
-package com.learning.javamissing.sec17_language_modeling_and_modern_types.ch02_records_and_sealed_types.topics.exhaustive_branching_over_closed_hierarchies;
+package com.learning.javamissing.sec17_language_modeling_and_modern_types.ch02_records_and_sealed_types.topics.exhaustive_sealed_branching;
 
-public class ExhaustiveBranchingOverClosedHierarchies {
+public class ExhaustiveSealedBranching {
     public static void main(String[] args) {
         explainWhy();
         runPaymentExample();

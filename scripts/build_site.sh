@@ -11,6 +11,8 @@ meta_root="$content_root/meta"
 data_root="$site_root/data"
 manifest_file="$data_root/site.json"
 
+python3 "$root/scripts/validate_naming.py"
+
 json_escape() {
   printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'
 }

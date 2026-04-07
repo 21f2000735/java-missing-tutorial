@@ -5,7 +5,7 @@ runner: embedded
 estimated: 8 min
 ---
 
-# Understanding ArrayList Growth And Lookup
+# ArrayList Growth And Lookup
 
 ## The Problem
 

@@ -1,4 +1,4 @@
-package com.learning.javamissing.sec20_data_structures_and_complexity.ch03_sorting_searching_and_binary_search.topics.understanding_sorting_tradeoffs;
+package com.learning.javamissing.sec20_data_structures_and_complexity.ch03_sorting_searching_and_binary_search.topics.sorting_tradeoffs;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,7 +27,7 @@ import java.util.List;
  * cheapestOrder = ORD-1
  * sortedOrders = [Order[id=ORD-1, amountInCents=900], Order[id=ORD-2, amountInCents=1500], Order[id=ORD-3, amountInCents=2200]]
  */
-public class UnderstandingSortingTradeoffs {
+public class SortingTradeoffs {
     public static void main(String[] args) {
         System.out.println("Concept: sorting tradeoff");
         System.out.println("Problem: paying sort cost only makes sense if later operations benefit.");

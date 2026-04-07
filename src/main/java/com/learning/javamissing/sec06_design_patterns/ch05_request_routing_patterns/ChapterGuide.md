@@ -19,7 +19,7 @@ One long validation method becomes noisy, hard to reorder, and hard to extend.
 
 ## Run This First
 
-1. Run [PassingRequestsWithChainOfResponsibility.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/topics/passing_requests_with_chain_of_responsibility/PassingRequestsWithChainOfResponsibility.java)
+1. Run [RequestValidationChain.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/topics/request_validation_chain/RequestValidationChain.java)
 2. Notice how each handler owns one rule
 3. Imagine adding one more handler without rewriting the existing chain
 

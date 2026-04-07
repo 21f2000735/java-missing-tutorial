@@ -1,4 +1,4 @@
-package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.understanding_arraylist_growth_and_lookup;
+package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.arraylist_growth_and_lookup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
  * itemAtIndex4 = order-5
  * estimatedCopiesDuringGrowth = 10
  */
-public class UnderstandingArrayListGrowthAndLookup {
+public class ArrayListGrowthAndLookup {
     public static void main(String[] args) {
         System.out.println("Concept: ArrayList internals");
         System.out.println("Problem: appends look cheap, but hidden resize work still exists.");

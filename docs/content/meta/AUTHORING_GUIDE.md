@@ -104,6 +104,31 @@ Use `runner: embedded` for stable single-file examples that can be pushed to JDo
 Use `runner: local` for preview-sensitive or multi-file examples.
 Use `❌` and `✅` sections when you want to teach contrast quickly, especially for Clean Code, concurrency, collections, exception handling, and API design topics.
 
+## Naming Limits
+
+Keep names short enough that they are easy to scan in:
+
+- the site sidebar
+- code tabs
+- package names
+- file paths
+
+Use these limits:
+
+- recommended class name: `<= 32`
+- hard class name: `<= 40`
+- recommended topic folder slug: `<= 28`
+- hard topic folder slug: `<= 42`
+- recommended full package name: `<= 120`
+- hard full package name: `<= 140`
+
+If a name is too long:
+
+- remove filler words like `understanding`, `choosing`, `passing`, `solving`
+- keep the concept noun and the key verb
+- prefer `HashMapBucketsAndCollisions` over `UnderstandingHashMapBucketsAndCollisions`
+- prefer `request_validation_chain` over `passing_requests_with_chain_of_responsibility`
+
 Each topic file should avoid:
 
 - vague placeholders

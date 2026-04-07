@@ -1,4 +1,4 @@
-package com.learning.javamissing.sec20_data_structures_and_complexity.ch04_problem_solving_patterns.topics.solving_window_problems_with_sliding_window;
+package com.learning.javamissing.sec20_data_structures_and_complexity.ch04_problem_solving_patterns.topics.sliding_window_problems;
 
 /**
  * Concept: Sliding window pattern
@@ -22,7 +22,7 @@ package com.learning.javamissing.sec20_data_structures_and_complexity.ch04_probl
  * Expected output:
  * bestThreeHourWindow = 16
  */
-public class SolvingWindowProblemsWithSlidingWindow {
+public class SlidingWindowProblems {
     public static void main(String[] args) {
         System.out.println("Concept: sliding window");
         System.out.println("Problem: recalculating every overlapping range from scratch wastes work.");

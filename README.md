@@ -48,6 +48,20 @@ src/main/java/com/learning/javamissing/
 `TopicGuide.md` is optional but preferred for strong topics. It should carry the hook, explanation, version notes, and next steps. `ConceptName.java` should stay runnable and focused on code.
 Where it helps, use `❌ Bad Code` and `✅ Better Code` sections in `TopicGuide.md` so learners can compare choices quickly. This fits both beginner learning and Clean Code-style contrast.
 
+## Naming Length Rule
+
+To keep the site readable and the learning flow clean, names should stay descriptive but short.
+
+- recommended class name limit: `32` characters
+- hard class name limit: `40` characters
+- recommended topic folder limit: `28` characters
+- hard topic folder limit: `42` characters
+- recommended full package limit: `120` characters
+- hard full package limit: `140` characters
+
+The validator is [validate_naming.py](/Users/indiadelhi/repo/career/java-missing-tutorial/code/scripts/validate_naming.py).  
+`scripts/build_site.sh` now runs it automatically.
+
 ## What Goes In One Topic File
 
 Each topic file should cover one concept completely in one place.

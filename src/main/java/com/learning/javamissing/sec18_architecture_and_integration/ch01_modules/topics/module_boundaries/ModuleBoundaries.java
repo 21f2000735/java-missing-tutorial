@@ -1,6 +1,6 @@
-package com.learning.javamissing.sec18_architecture_and_integration.ch01_modules.topics.choosing_dependencies_and_exposed_packages;
+package com.learning.javamissing.sec18_architecture_and_integration.ch01_modules.topics.module_boundaries;
 
-public class ChoosingDependenciesAndExposedPackages {
+public class ModuleBoundaries {
     public static void main(String[] args) {
         explainWhy();
         showStoreModuleExample();

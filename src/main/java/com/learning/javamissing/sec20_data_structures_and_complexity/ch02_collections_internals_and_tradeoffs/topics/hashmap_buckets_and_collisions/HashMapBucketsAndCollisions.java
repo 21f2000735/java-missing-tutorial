@@ -1,4 +1,4 @@
-package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.understanding_hashmap_buckets_and_collisions;
+package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.hashmap_buckets_and_collisions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +26,7 @@ import java.util.Map;
  * status = EXPIRED
  * sameBucketCount = 3
  */
-public class UnderstandingHashMapBucketsAndCollisions {
+public class HashMapBucketsAndCollisions {
     public static void main(String[] args) {
         System.out.println("Concept: HashMap collisions");
         System.out.println("Problem: fast lookup depends on good key distribution, not on magic.");

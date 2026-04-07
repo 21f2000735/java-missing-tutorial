@@ -1,4 +1,4 @@
-package com.learning.javamissing.sec06_design_patterns.ch05_request_routing_patterns.topics.passing_requests_with_chain_of_responsibility;
+package com.learning.javamissing.sec06_design_patterns.ch05_request_routing_patterns.topics.request_validation_chain;
 
 /**
  * Concept: Chain of responsibility
@@ -22,7 +22,7 @@ package com.learning.javamissing.sec06_design_patterns.ch05_request_routing_patt
  * Expected output:
  * checkout validation = READY
  */
-public class PassingRequestsWithChainOfResponsibility {
+public class RequestValidationChain {
     public static void main(String[] args) {
         System.out.println("Concept: chain of responsibility");
         System.out.println("Story hook: checkout validation keeps gaining new guardrails, and one giant validation method is turning unreadable.");
