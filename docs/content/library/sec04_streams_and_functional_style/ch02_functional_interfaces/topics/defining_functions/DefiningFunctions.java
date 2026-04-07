@@ -3,33 +3,44 @@ package com.learning.javamissing.sec04_streams_and_functional_style.ch02_functio
 /**
  * Concept: Defining Functions
  * Why this concept is needed:
- * Java programs stay useful when they are organized around ideas, not only syntax.
+ * Some rules should be supplied from outside the workflow instead of being hard-coded inside it.
  *
  * What problem this solves:
- * some behavior should be passed around as data.
+ * It lets Java code pass a business rule as data.
  *
  * Real-world setup:
- * This topic uses pricing and callback rules to make the concept easier to understand.
+ * Checkout may apply different pricing rules without rewriting the checkout flow.
  *
  * How to think about it:
- * First understand the problem in plain language, then map that idea to the Java code.
+ * A functional interface is one behavior shape that many rules can satisfy.
  *
  * How to code it:
- * 1. Identify the business data or behavior.
- * 2. Choose the Java construct that expresses the idea clearly.
- * 3. Run the example and compare the output with the explanation.
+ * 1. Define one abstract method.
+ * 2. Provide different lambdas that match that method.
+ * 3. Pass those lambdas where the workflow needs a varying rule.
  *
  * Expected output:
- * Read the inline comments and printed lines in main() to see the expected behavior.
+ * festive price = 1000
+ * student price = 1050
  */
 
 public class DefiningFunctions {
     public static void main(String[] args) {
+        System.out.println("The problem:");
+        System.out.println("The checkout flow stays the same, but the discount rule changes.");
+        System.out.println();
         PriceRule festiveDiscount = price -> price - 200;
         PriceRule studentDiscount = price -> price - 150;
+        System.out.println("Run this example:");
         System.out.println("festive price = " + festiveDiscount.apply(1_200));
         System.out.println("student price = " + studentDiscount.apply(1_200));
-        System.out.println("Concept: one action shape can support many business rules.");
+        System.out.println("Why it works: both lambdas satisfy the same PriceRule contract.");
+        System.out.println("Use this when: one workflow should accept different rules.");
+        System.out.println("Avoid this when: one simple method call is clearer than introducing a new function type.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- a functional interface represents one behavior shape");
+        System.out.println("- different lambdas can supply different business rules");
+        System.out.println("- this idea is the base for many stream operations");
     }
 
     @FunctionalInterface

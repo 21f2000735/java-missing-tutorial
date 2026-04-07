@@ -6,49 +6,52 @@ import java.util.concurrent.Future;
 /**
  * Concept: Executors
  * Why this concept is needed:
- * Java programs stay useful when they are organized around ideas, not only syntax.
+ * Most production code should separate task submission from low-level thread management.
  *
  * What problem this solves:
- * multiple tasks may run together and compete for shared state.
+ * It manages worker threads so the code can focus on tasks and results.
  *
  * Real-world setup:
- * This topic uses background jobs and shared counters to make the concept easier to understand.
+ * A reporting service runs multiple background tasks and waits for their results.
  *
  * How to think about it:
- * First understand the problem in plain language, then map that idea to the Java code.
+ * Submit tasks, then wait for results. Let the executor own the workers.
  *
  * How to code it:
- * 1. Identify the business data or behavior.
- * 2. Choose the Java construct that expresses the idea clearly.
- * 3. Run the example and compare the output with the explanation.
+ * 1. Choose an executor.
+ * 2. Submit independent tasks.
+ * 3. Read results through Future or other coordination APIs.
  *
  * Expected output:
- * Read the inline comments and printed lines in main() to see the expected behavior.
+ * reportLength = 16
+ * retryCount = 3
  */
-
 public class Executors {
     public static void main(String[] args) throws Exception {
         overview();
         wrongExample();
-        // Expected output:
-        // both background report tasks finish and their values are printed through Future.get().
         TaskSummary summary = computeReportLengthAndRetryCount();
+        System.out.println("Run this example:");
         System.out.println("reportLength = " + summary.reportLength());
         System.out.println("retryCount = " + summary.retryCount());
-        System.out.println("What to notice: the task logic is separate from thread creation and waiting.");
-        System.out.println("Senior note: executors separate task submission from thread management, which improves tuning and observability later.");
+        System.out.println("Why it works: task logic is separate from thread creation and waiting.");
+        System.out.println("Use this when: many tasks need cleaner lifecycle management than raw threads.");
+        System.out.println("Avoid this when: you are only trying to understand what a thread is doing at the lowest level.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- executors separate task submission from worker management");
+        System.out.println("- Futures let you wait for task results explicitly");
+        System.out.println("- executor-based code usually scales better as systems grow");
     }
 
     private static void overview() {
-        System.out.println("Topic: Executors");
-        System.out.println("Real-world setup: a reporting service runs multiple background tasks and waits for the results.");
-        System.out.println("Why it matters: executors manage worker threads so the code can focus on tasks, not manual thread lifecycle.");
+        System.out.println("The problem:");
+        System.out.println("You need concurrent tasks, but raw thread creation should not spread through the codebase.");
         System.out.println();
     }
 
     private static void wrongExample() {
-        System.out.println("Wrong example:");
-        System.out.println("Creating a brand-new thread for every report task becomes harder to manage than using an executor.");
+        System.out.println("Common mistake:");
+        System.out.println("- creating a brand-new thread for every small task");
         System.out.println();
     }
 

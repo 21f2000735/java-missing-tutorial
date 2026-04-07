@@ -1,28 +1,48 @@
 # sec05_multithreading_and_concurrency Multithreading And Concurrency
 
-Current chapters:
+This section is about one hard reality: once work overlaps in time, correctness becomes harder than syntax.
+
+## What Real Problems This Section Solves
+
+- a request waits on many slow operations at once
+- two tasks update the same state and produce inconsistent answers
+- background work needs a cleaner execution model than raw thread creation
+- request context must flow safely without becoming global mutable state
+
+## Start Here If
+
+- threads and executors feel related but blurry
+- you understand the syntax but not the ownership model
+- concurrency still feels “advanced” because the bugs are hard to see
+
+## How To Read This Section
+
+- read the problem statement before the API name
+- run the example and compare the output with the explanation
+- ask who owns the task lifetime, who owns the shared state, and what should happen on failure
+- do not move to virtual threads or structured concurrency until raw thread and synchronization ideas are clear
+
+## Current Chapters
 
 - `ch01_concurrency_basics`
 - `ch02_virtual_threads`
 - `ch03_structured_concurrency`
 - `ch04_scoped_values`
 
-## Before You Start
+## Reading Order
 
-- Prerequisites: sec01_fundamentals. Collections and DSA help with reasoning, but are not mandatory.
-- This section prepares you for: Modern Java server work, background jobs, and higher-level concurrency APIs.
-- Suggested pace: 4 to 6 focused sessions.
+- start with `ch01_concurrency_basics` to understand raw threads, shared state, and executors
+- continue to `ch02_virtual_threads` to see how the cost model changes for waiting-heavy workloads
+- then study `ch03_structured_concurrency` so task lifetime and failure handling become explicit
+- finish with `ch04_scoped_values` to learn how request-scoped context travels safely
 
-## How To Read This Section
+## Common Mistakes
 
-- run the topic files before trying to memorize names
-- compare the printed output with the explanation in each topic
-- finish the chapter with its revision sheet before moving on
-
-## Why This Section Matters
-
-Modern Java server work, background jobs, and higher-level concurrency APIs.
+- treating concurrency as only “faster code”
+- sharing mutable state without a safety model
+- assuming virtual threads remove design problems
+- scattering task management across unrelated code
 
 ## Recommended Next Step
 
-Move to sec08_internal_of_jvm, sec19_testing_and_quality, and revisit performance tradeoffs in sec20_data_structures_and_complexity.
+Revisit sec20_data_structures_and_complexity after this section so performance reasoning and concurrency reasoning start reinforcing each other.

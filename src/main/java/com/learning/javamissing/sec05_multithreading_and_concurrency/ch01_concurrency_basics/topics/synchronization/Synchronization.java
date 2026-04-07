@@ -3,40 +3,47 @@ package com.learning.javamissing.sec05_multithreading_and_concurrency.ch01_concu
 /**
  * Concept: Synchronization
  * Why this concept is needed:
- * Java programs stay useful when they are organized around ideas, not only syntax.
+ * Overlapping access to shared mutable state causes bugs that are hard to reproduce.
  *
  * What problem this solves:
- * multiple tasks may run together and compete for shared state.
+ * It prevents lost updates when multiple threads modify the same data.
  *
  * Real-world setup:
- * This topic uses background jobs and shared counters to make the concept easier to understand.
+ * Two worker tasks update the same progress counter.
  *
  * How to think about it:
- * First understand the problem in plain language, then map that idea to the Java code.
+ * Shared state needs one safety rule, not lucky timing.
  *
  * How to code it:
- * 1. Identify the business data or behavior.
- * 2. Choose the Java construct that expresses the idea clearly.
- * 3. Run the example and compare the output with the explanation.
+ * 1. Identify the shared mutable field.
+ * 2. Protect the update path.
+ * 3. Verify the final result after both threads finish.
  *
  * Expected output:
- * Read the inline comments and printed lines in main() to see the expected behavior.
+ * count = 2000
  */
-
 public class Synchronization {
     public static void main(String[] args) throws InterruptedException {
+        System.out.println("The problem:");
+        System.out.println("Two tasks update the same counter. Without protection, some increments may disappear.");
+        System.out.println();
         wrongExample();
-        // Expected output:
-        // count should be 2000 because both threads increment inside synchronized code.
+
         int count = incrementWithTwoThreads(1_000);
+        System.out.println("Run this example:");
         System.out.println("count = " + count);
-        System.out.println("Lesson: synchronized protects shared mutable state from lost updates.");
-        System.out.println("Senior note: synchronization correctness matters more than cleverness; benchmark after correctness is established.");
+        System.out.println("Why it works: only one thread can execute the synchronized counter logic at a time.");
+        System.out.println("Use this when: threads really share mutable state and correctness matters.");
+        System.out.println("Avoid this when: state can be isolated instead of shared.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- synchronization protects invariants on shared mutable state");
+        System.out.println("- count++ is not safe just because it looks small");
+        System.out.println("- isolated state is often simpler than shared synchronized state");
     }
 
     private static void wrongExample() {
-        System.out.println("Wrong example:");
-        System.out.println("Without synchronization, count++ can overlap and lose updates.");
+        System.out.println("Common mistake:");
+        System.out.println("- assuming count++ is safe because it is one short line");
         System.out.println();
     }
 

@@ -426,6 +426,36 @@ function parseTopicMeta(code) {
   return meta;
 }
 
+function extractPrintedValue(code, label) {
+  const inline = code.match(new RegExp(`System\\.out\\.println\\("${label}:\\s*(.*)"\\);`));
+  if (inline && inline[1]) {
+    return inline[1].trim();
+  }
+
+  const lines = code.split('\n');
+  const startIndex = lines.findIndex((line) => line.includes(`System.out.println("${label}:`) || line.includes(`System.out.println("${label}")`));
+  if (startIndex === -1) {
+    return '';
+  }
+
+  const collected = [];
+  for (let index = startIndex + 1; index < lines.length; index += 1) {
+    const line = lines[index].trim();
+    const bullet = line.match(/System\.out\.println\("-\s*(.*)"\);/);
+    if (bullet) {
+      collected.push(bullet[1].trim());
+      continue;
+    }
+    if (collected.length) {
+      break;
+    }
+    if (line.startsWith('System.out.println("')) {
+      break;
+    }
+  }
+  return collected.join(' ');
+}
+
 function extractAfterReadingTakeaways(code) {
   const lines = code.split('\n');
   const markerIndex = lines.findIndex((line) => line.includes('After reading this example, you should know:'));
@@ -452,6 +482,9 @@ function extractCodePreview(raw) {
   return {
     ...meta,
     takeaways: extractAfterReadingTakeaways(raw),
+    useWhen: extractPrintedValue(raw, 'Use this when'),
+    avoidWhen: extractPrintedValue(raw, 'Avoid this when'),
+    commonMistake: extractPrintedValue(raw, 'Common mistake'),
     previewRequired: /StructuredTaskScope|ScopedValue/.test(raw)
   };
 }
@@ -807,10 +840,10 @@ function PageLayout({ header, children }) {
 }
 
 function ChapterStoryCards({ guide }) {
-  const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'Mini Case Study']);
-  const studyOrder = findGuideSection(guide, ['Study Order']);
-  const whenToUse = findGuideSection(guide, ['When To Use']);
-  const compare = findGuideSection(guide, ['Compare With']);
+  const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study']);
+  const studyOrder = findGuideSection(guide, ['Study Order', 'Run This First']);
+  const whenToUse = findGuideSection(guide, ['When To Use', 'Use This Chapter When', 'Use This When']);
+  const compare = findGuideSection(guide, ['Compare With', 'Common Confusion', 'What To Look For']);
 
   return (
     <div className="insight-grid mb-4">
@@ -842,6 +875,24 @@ function TopicPreviewCard({ section, chapter, topic }) {
       <p className="muted-copy mb-3">{summary}</p>
       <div className="topic-kicker">Real-world setup: {topic.preview.realWorld || 'Open the file to see the scenario and code walkthrough.'}</div>
     </a>
+  );
+}
+
+function QuickLinkRail() {
+  const links = [
+    { label: 'Start Here', href: '#section/sec01_fundamentals' },
+    { label: 'Streams', href: '#section/sec04_streams_and_functional_style' },
+    { label: 'Concurrency', href: '#section/sec05_multithreading_and_concurrency' },
+    { label: 'Design Patterns', href: '#section/sec06_design_patterns' },
+    { label: 'Complexity', href: '#section/sec20_data_structures_and_complexity' }
+  ];
+
+  return (
+    <div className="quick-link-rail">
+      {links.map((link) => (
+        <a key={link.href} className="quick-link-chip" href={link.href}>{link.label}</a>
+      ))}
+    </div>
   );
 }
 
@@ -984,6 +1035,9 @@ export default function App() {
             </div>
           </div>
         </nav>
+        <div className="px-3 px-lg-4 pb-3">
+          <QuickLinkRail />
+        </div>
       </header>
 
       <main className="container-fluid">
@@ -1129,9 +1183,9 @@ function RouteRenderer({ route, manifest, fetchText }) {
   if (data.type === 'section') {
     const guide = parseGuide(data.raw);
     const profile = SECTION_PROFILES[data.section.slug] || {};
-    const why = findGuideSection(guide, ['Why This Section Matters']);
-    const beforeStart = findGuideSection(guide, ['Before You Start']);
-    const howToRead = findGuideSection(guide, ['How To Read This Section']);
+    const why = findGuideSection(guide, ['Why This Section Matters', 'What Real Problems This Section Solves']);
+    const beforeStart = findGuideSection(guide, ['Before You Start', 'Start Here If']);
+    const howToRead = findGuideSection(guide, ['How To Read This Section', 'How To Read This Section']);
 
     return (
       <PageLayout
@@ -1186,8 +1240,8 @@ function RouteRenderer({ route, manifest, fetchText }) {
   if (data.type === 'chapter') {
     const guide = parseGuide(data.guideRaw);
     const revision = parseGuide(data.revisionRaw);
-    const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'Mini Case Study']);
-    const quickSummary = findGuideSection(guide, ['Quick Summary']);
+    const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study']);
+    const quickSummary = findGuideSection(guide, ['Quick Summary', 'What To Look For']);
 
     return (
       <PageLayout
@@ -1210,8 +1264,19 @@ function RouteRenderer({ route, manifest, fetchText }) {
         <ChapterStoryCards guide={guide} />
         <div className="content-card">
           <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <h2 className="page-title mb-0">Start With These Examples</h2>
+            <span className="badge rounded-pill badge-soft">{data.chapter.topics.length} runnable topic{data.chapter.topics.length === 1 ? '' : 's'}</span>
+          </div>
+          <div className="topic-grid">
+            {data.chapter.topics.map((topic) => (
+              <TopicPreviewCard section={data.section} chapter={data.chapter} topic={topic} key={topic.slug} />
+            ))}
+          </div>
+        </div>
+        <div className="content-card">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
             <h2 className="page-title mb-0">Chapter Guide</h2>
-            <span className="badge rounded-pill badge-soft">Read like a blog post, then run the code</span>
+            <span className="badge rounded-pill badge-soft">Read this after the first example</span>
           </div>
           <MarkdownBlock html={marked.parse(data.guideRaw)} manifest={manifest} />
         </div>
@@ -1221,17 +1286,6 @@ function RouteRenderer({ route, manifest, fetchText }) {
             <span className="badge rounded-pill badge-soft">{truncateText(revision.intro || 'Use this for quick recap after running the examples.', 100)}</span>
           </div>
           <MarkdownBlock html={marked.parse(data.revisionRaw)} manifest={manifest} />
-        </div>
-        <div className="content-card">
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-            <h2 className="page-title mb-0">Runnable Topic Examples</h2>
-            <span className="badge rounded-pill badge-soft">{data.chapter.topics.length} runnable topic{data.chapter.topics.length === 1 ? '' : 's'}</span>
-          </div>
-          <div className="topic-grid">
-            {data.chapter.topics.map((topic) => (
-              <TopicPreviewCard section={data.section} chapter={data.chapter} topic={topic} key={topic.slug} />
-            ))}
-          </div>
         </div>
       </PageLayout>
     );
@@ -1269,6 +1323,26 @@ function RouteRenderer({ route, manifest, fetchText }) {
           {topicSummary.mentalModel || topicSummary.why || 'Use the example to build the right intuition before memorizing APIs.'}
         </InsightCard>
       </div>
+
+      {(topicSummary.useWhen || topicSummary.avoidWhen || topicSummary.commonMistake) ? (
+        <div className="insight-grid mb-4">
+          {topicSummary.useWhen ? (
+            <InsightCard icon="bi bi-check2-circle" title="Use This When">
+              {topicSummary.useWhen}
+            </InsightCard>
+          ) : null}
+          {topicSummary.avoidWhen ? (
+            <InsightCard icon="bi bi-slash-circle" title="Avoid This When">
+              {topicSummary.avoidWhen}
+            </InsightCard>
+          ) : null}
+          {topicSummary.commonMistake ? (
+            <InsightCard icon="bi bi-exclamation-triangle" title="Common Mistake">
+              {topicSummary.commonMistake}
+            </InsightCard>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="content-card mb-4">
         <div className="topic-brief-grid">

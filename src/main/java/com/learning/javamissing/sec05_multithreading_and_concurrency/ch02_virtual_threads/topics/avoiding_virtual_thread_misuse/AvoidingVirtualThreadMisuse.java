@@ -1,5 +1,28 @@
 package com.learning.javamissing.sec05_multithreading_and_concurrency.ch02_virtual_threads.topics.avoiding_virtual_thread_misuse;
 
+/**
+ * Concept: Avoiding virtual thread misuse
+ * Why this concept is needed:
+ * Cheap threads do not remove design mistakes around locking and blocking.
+ *
+ * What problem this solves:
+ * It shows why virtual threads still need careful synchronization and resource design.
+ *
+ * Real-world setup:
+ * A team adopts virtual threads but keeps slow work inside synchronized blocks.
+ *
+ * How to think about it:
+ * Better thread cost does not remove bad contention.
+ *
+ * How to code it:
+ * 1. Start a virtual thread.
+ * 2. Let it hold a lock while waiting.
+ * 3. Notice that the thread type did not fix the design.
+ *
+ * Expected output:
+ * loading discount rules inside synchronized block
+ * lesson = keep long waiting work out of synchronized sections when possible
+ */
 public class AvoidingVirtualThreadMisuse {
     public static void main(String[] args) throws InterruptedException {
         explainWhy();
@@ -12,9 +35,8 @@ public class AvoidingVirtualThreadMisuse {
     }
 
     private static void explainWhy() {
-        System.out.println("Concept: virtual-thread pitfalls");
-        System.out.println("Real-world problem: a team adopts virtual threads but keeps long lock-held blocking work.");
-        System.out.println("Mental model: cheap thread creation does not replace careful synchronization and resource design.");
+        System.out.println("The problem:");
+        System.out.println("Virtual threads are cheaper, but long lock-held waiting still creates contention and poor scalability.");
         System.out.println();
     }
 
@@ -22,11 +44,9 @@ public class AvoidingVirtualThreadMisuse {
         CheckoutCache cache = new CheckoutCache();
         Thread worker = Thread.ofVirtual().start(cache::loadSlowlyInsideSynchronizedBlock);
         worker.join();
-
-        // Expected output:
-        // loading discount rules inside synchronized block
-        // lesson = keep long waiting work out of synchronized sections when possible
         System.out.println("lesson = keep long waiting work out of synchronized sections when possible");
+        System.out.println("Use this when: you want a warning sign before scaling virtual-thread designs.");
+        System.out.println("Avoid this mistake: holding locks across slow blocking work.");
     }
 
     private static final class CheckoutCache {

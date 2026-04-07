@@ -5,24 +5,25 @@ import java.util.List;
 /**
  * Concept: Stream Pipeline
  * Why this concept is needed:
- * Java programs stay useful when they are organized around ideas, not only syntax.
+ * Many business tasks are really data transformations, and the code should show that clearly.
  *
  * What problem this solves:
- * business code often filters, transforms, groups, and summarizes data.
+ * It expresses filtering and mapping as a readable sequence of steps.
  *
  * Real-world setup:
- * This topic uses order processing and reporting to make the concept easier to understand.
+ * An order screen needs only priority items and only the fields needed for the next step.
  *
  * How to think about it:
- * First understand the problem in plain language, then map that idea to the Java code.
+ * A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.
  *
  * How to code it:
- * 1. Identify the business data or behavior.
- * 2. Choose the Java construct that expresses the idea clearly.
- * 3. Run the example and compare the output with the explanation.
+ * 1. Start with a collection.
+ * 2. Add filter and map steps in the same order as the business rule.
+ * 3. Finish with a terminal operation that produces the answer.
  *
  * Expected output:
- * Read the inline comments and printed lines in main() to see the expected behavior.
+ * longNames = [liam, alex]
+ * priorityTotal = 3798
  */
 
 public class StreamPipeline {
@@ -45,9 +46,9 @@ public class StreamPipeline {
     }
 
     private static void printOverview() {
-        System.out.println("Topic: Stream Pipeline");
-        System.out.println("Chapter: Streams");
-        System.out.println("Why it matters: stream pipelines let you express data transformation clearly when the problem is about filtering, mapping, and collecting values.");
+        System.out.println("The problem:");
+        System.out.println("You have raw data, but the business wants a smaller and clearer answer.");
+        System.out.println("A stream pipeline helps when the code is really a chain of filtering and transformation steps.");
         System.out.println();
     }
 
@@ -57,10 +58,10 @@ public class StreamPipeline {
         List<String> names = List.of("ava", "liam", "zoe", "alex");
         List<String> longNames = longNames(names, 4);
 
-        System.out.println("Basic example:");
+        System.out.println("Run this first:");
         System.out.println("longNames = " + longNames);
-        System.out.println("Lesson: a stream pipeline reads as a sequence of data steps.");
-        System.out.println("Dry run: filter checks ava(false), liam(true), zoe(false), alex(true).");
+        System.out.println("Why it works: the filter keeps only names with length >= 4.");
+        System.out.println("Dry run: ava(false), liam(true), zoe(false), alex(true).");
         System.out.println();
     }
 
@@ -75,15 +76,16 @@ public class StreamPipeline {
 
         int priorityTotal = sumPriorityOrders(orders);
 
-        System.out.println("Better example:");
+        System.out.println("Better real-world example:");
         System.out.println("priorityTotal = " + priorityTotal);
-        System.out.println("Lesson: streams are strongest when each step has one clear purpose.");
-        System.out.println("Senior note: keep pipelines side-effect free so they stay easy to parallelize, test, and review.");
+        System.out.println("Why it works: the filter keeps only priority orders and mapToInt extracts only the field needed for the sum.");
+        System.out.println("Use this when: the task is really filter -> transform -> answer.");
+        System.out.println("Avoid this when: the logic is stateful and a loop is easier to explain.");
         System.out.println();
     }
 
     private static void commonPitfalls() {
-        System.out.println("Common mistakes:");
+        System.out.println("Common mistake:");
         System.out.println("- using streams for logic that is simpler with a loop");
         System.out.println("- mutating external state inside map or filter");
         System.out.println("- forgetting that streams do nothing until a terminal operation runs");
@@ -117,6 +119,10 @@ public class StreamPipeline {
         System.out.println("Solution:");
         System.out.println("passingCount = " + passingCount);
         System.out.println("Why this is better: the filter explains the rule, and count() makes the final goal explicit.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- a stream pipeline is best when the work is a chain of data steps");
+        System.out.println("- terminal operations are what actually trigger execution");
+        System.out.println("- a loop is still the better choice when the pipeline stops being clear");
     }
 
     static List<String> longNames(List<String> names, int minimumLength) {
