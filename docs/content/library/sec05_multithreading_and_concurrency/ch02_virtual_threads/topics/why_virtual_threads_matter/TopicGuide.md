@@ -19,7 +19,7 @@ Virtual threads change that tradeoff for many request-per-task workloads.
 
 ## Quick Visual
 
-![Virtual threads single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/VirtualThreadsVisual.svg)
+![Virtual threads single-look visual](./VirtualThreadsVisual.svg)
 
 One glance should tell you the real story:
 

@@ -146,6 +146,7 @@ The curriculum should now use a finer section model so major areas can grow inde
 - `Section 18: Architecture And Integration`
 - `Section 19: Testing And Quality`
 - `Section 20: Data Structures And Complexity`
+- `Section 21: Company Interview Tracks`
 
 The source tree now follows this finer section layout.
 The full section map lives in [CURRICULUM.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/CURRICULUM.md).

@@ -21,7 +21,7 @@ The question is "how do I express that flow clearly?"
 
 ## Quick Visual
 
-![Stream pipeline single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipelineVisual.svg)
+![Stream pipeline single-look visual](./StreamPipelineVisual.svg)
 
 Read the picture left to right:
 

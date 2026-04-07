@@ -259,7 +259,7 @@ Use this format:
 ```text
 - Item 1: covered in topics/static_factories/StaticFactories.java
 - Item 2: covered in topics/builders/Builders.java
-- Item 3: planned
+- Item 3: cover in the next related topic
 ```
 
 Do not copy long passages from the book.

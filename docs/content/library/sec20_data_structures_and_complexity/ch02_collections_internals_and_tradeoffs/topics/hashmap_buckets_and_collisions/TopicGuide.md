@@ -18,7 +18,7 @@ This topic exists because many developers can use `HashMap`, but fewer can expla
 
 ## Quick Visual
 
-![HashMap buckets single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsVisual.svg)
+![HashMap buckets single-look visual](./HashMapBucketsVisual.svg)
 
 Read the picture in one pass:
 

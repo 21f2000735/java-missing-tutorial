@@ -15,7 +15,7 @@ That gap matters because performance problems often begin with the wrong mental 
 
 ## Quick Visual
 
-![ArrayList growth single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookupVisual.svg)
+![ArrayList growth single-look visual](./ArrayListGrowthAndLookupVisual.svg)
 
 The picture tells the whole story:
 

@@ -22,7 +22,7 @@ but you picked the wrong collection.
 
 ## Quick Visual
 
-![List, Set, Map single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/ListSetMapVisual.svg)
+![List, Set, Map single-look visual](./ListSetMapVisual.svg)
 
 The point of the picture is simple:
 

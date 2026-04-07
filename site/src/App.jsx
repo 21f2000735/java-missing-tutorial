@@ -44,7 +44,9 @@ const RESOURCE_DESCRIPTIONS = {
   BOOK_MANUSCRIPT: 'A combined manuscript view when you want to read the material like one long book.',
   JAVA_7_TO_25: 'A release-by-release learning track so users can understand what changed from Java 7 through Java 25.',
   JAVA_MIGRATION_GUIDES: 'Upgrade guides for the biggest Java jumps, with what to learn, what to watch, and what to modernize.',
-  HIGH_DEMAND_JAVA_TOPICS: 'A practical path through the Java topics people keep searching for: collections, streams, errors, concurrency, HTTP, and JVM basics.'
+  HIGH_DEMAND_JAVA_TOPICS: 'A practical path through the Java topics people keep searching for: collections, streams, errors, concurrency, HTTP, and JVM basics.',
+  COMPANY_QUESTION_BANK: 'Company-wise interview tracks with original question-and-answer practice for Google, Meta, Amazon, Apple, Netflix, Coinbase, Jane Street, MakeMyTrip, and HotelTrader.',
+  INTERVIEW_PROBLEM_APPROACH: 'A step-by-step process for how to approach coding, backend, debugging, and system questions in interviews.'
 };
 
 const HIGH_DEMAND_TOPICS = [
@@ -265,6 +267,15 @@ const SECTION_PROFILES = {
       'You want to understand resizing, collisions, and algorithm tradeoffs.',
       'Interview complexity talk should connect to production code.'
     ]
+  },
+  sec21_company_interview_tracks: {
+    icon: 'bi bi-buildings',
+    hook: 'Practice company-style backend interview questions with runnable Java examples and answer patterns.',
+    problems: [
+      'You want Google, Meta, Amazon, Coinbase, Jane Street, Netflix, MakeMyTrip, and HotelTrader prep to feel distinct where it should.',
+      'You need original company-style questions backed by complete Java examples.',
+      'You want interview preparation that points back to the right sections of the Java book.'
+    ]
   }
 };
 
@@ -328,6 +339,43 @@ function sourcePathToContentPath(sourcePath) {
     return `content/meta/${sourcePath}`;
   }
   return null;
+}
+
+function normalizeContentPath(value) {
+  const parts = [];
+  value.split('/').forEach((part) => {
+    if (!part || part === '.') {
+      return;
+    }
+    if (part === '..') {
+      parts.pop();
+      return;
+    }
+    parts.push(part);
+  });
+  return parts.join('/');
+}
+
+function resolveRelativeContentPath(href, currentContentPath) {
+  if (!href || !currentContentPath) {
+    return null;
+  }
+  if (
+    href.startsWith('#') ||
+    href.startsWith('/') ||
+    href.startsWith('content/') ||
+    href.startsWith('http://') ||
+    href.startsWith('https://') ||
+    href.startsWith('data:')
+  ) {
+    return null;
+  }
+  const slashIndex = currentContentPath.lastIndexOf('/');
+  if (slashIndex === -1) {
+    return null;
+  }
+  const baseDir = currentContentPath.slice(0, slashIndex + 1);
+  return normalizeContentPath(`${baseDir}${href}`);
 }
 
 function parseGuide(raw) {
@@ -733,7 +781,7 @@ function HeaderPanel({ title, eyebrow, summary, sourcePath, actions }) {
   );
 }
 
-function MarkdownBlock({ html, manifest }) {
+function MarkdownBlock({ html, manifest, contentPath }) {
   const ref = useRef(null);
 
   useEffect(() => {
@@ -748,6 +796,13 @@ function MarkdownBlock({ html, manifest }) {
         const href = anchor.getAttribute('href');
         const sourcePath = sourcePathFromHref(href, manifest.repoRoot);
         if (!sourcePath) {
+          const relativeContentPath = resolveRelativeContentPath(href, contentPath);
+          if (relativeContentPath) {
+            anchor.setAttribute('href', relativeContentPath);
+            anchor.setAttribute('target', '_blank');
+            anchor.setAttribute('rel', 'noreferrer');
+            return;
+          }
           if (/^https?:\/\//.test(href)) {
             anchor.target = '_blank';
             anchor.rel = 'noreferrer';
@@ -770,6 +825,10 @@ function MarkdownBlock({ html, manifest }) {
         const src = image.getAttribute('src');
         const sourcePath = sourcePathFromHref(src, manifest.repoRoot);
         if (!sourcePath) {
+          const relativeContentPath = resolveRelativeContentPath(src, contentPath);
+          if (relativeContentPath) {
+            image.setAttribute('src', relativeContentPath);
+          }
           return;
         }
         const contentPath = sourcePathToContentPath(sourcePath);
@@ -870,6 +929,7 @@ function HomePage({ manifest }) {
   const learningJourneys = [
     { title: 'I am starting from zero', sectionSlug: 'sec01_fundamentals' },
     { title: 'I want Java 7 to 25 clarity', resourceSlug: 'JAVA_7_TO_25' },
+    { title: 'I want company-wise interview prep', resourceSlug: 'COMPANY_QUESTION_BANK' },
     { title: 'I want data handling judgment', sectionSlug: 'sec02_collections' },
     { title: 'I want stream confidence', sectionSlug: 'sec04_streams_and_functional_style' },
     { title: 'I want concurrency clarity', sectionSlug: 'sec05_multithreading_and_concurrency' },
@@ -934,19 +994,34 @@ function HomePage({ manifest }) {
         <div className="journey-grid">
           {learningJourneys.map(({ title, section }) => {
             if (!section) {
+              const isCompanyBank = title === 'I want company-wise interview prep';
               return (
-                <a className="journey-card text-decoration-none text-reset" href="#resource/JAVA_7_TO_25" key="JAVA_7_TO_25">
+                <a
+                  className="journey-card text-decoration-none text-reset"
+                  href={isCompanyBank ? '#resource/COMPANY_QUESTION_BANK' : '#resource/JAVA_7_TO_25'}
+                  key={isCompanyBank ? 'COMPANY_QUESTION_BANK' : 'JAVA_7_TO_25'}
+                >
                   <div className="d-flex align-items-center gap-2 mb-2">
-                    <i className="bi bi-clock-history section-icon" />
-                    <span className="badge rounded-pill badge-soft">Release Track</span>
+                    <i className={`${isCompanyBank ? 'bi bi-buildings' : 'bi bi-clock-history'} section-icon`} />
+                    <span className="badge rounded-pill badge-soft">{isCompanyBank ? 'Interview Bank' : 'Release Track'}</span>
                   </div>
                   <h3 className="h5 mb-2">{title}</h3>
-                  <p className="muted-copy mb-3">Follow Java from 7 through 25, then use the migration guide to decide what to learn at each jump.</p>
-                  <BulletList items={[
-                    'See what changed by release',
-                    'Focus on the major mental shifts',
-                    'Plan the right migration path'
-                  ]} />
+                  <p className="muted-copy mb-3">
+                    {isCompanyBank
+                      ? 'Use company-style interview tracks so Google, Meta, Amazon, Jane Street, Coinbase, MakeMyTrip, and HotelTrader do not all blur into one generic prep list.'
+                      : 'Follow Java from 7 through 25, then use the migration guide to decide what to learn at each jump.'}
+                  </p>
+                  <BulletList items={isCompanyBank
+                    ? [
+                        'Practice original questions with sample answers',
+                        'Prep by company pressure, not just by logo',
+                        'Match interview style to the right Java sections'
+                      ]
+                    : [
+                        'See what changed by release',
+                        'Focus on the major mental shifts',
+                        'Plan the right migration path'
+                      ]} />
                 </a>
               );
             }
@@ -1086,6 +1161,8 @@ function QuickLinkRail() {
   const links = [
     { label: 'Start Here', href: '#section/sec01_fundamentals' },
     { label: 'Java 7 to 25', href: '#resource/JAVA_7_TO_25' },
+    { label: 'Random Topic', href: '#random-topic' },
+    { label: 'Interview Approach', href: '#resource/INTERVIEW_PROBLEM_APPROACH' },
     { label: 'Streams', href: '#section/sec04_streams_and_functional_style' },
     { label: 'Concurrency', href: '#section/sec05_multithreading_and_concurrency' },
     { label: 'Design Patterns', href: '#section/sec06_design_patterns' },
@@ -1221,6 +1298,25 @@ export default function App() {
     return entries;
   }, [manifest]);
 
+  const randomTopicRoute = useMemo(() => {
+    if (!manifest) {
+      return '#home';
+    }
+    const topics = [];
+    manifest.sections.forEach((section) => {
+      section.chapters.forEach((chapter) => {
+        chapter.topics.forEach((topic) => {
+          topics.push(`#topic/${section.slug}/${chapter.slug}/${topic.slug}`);
+        });
+      });
+    });
+    if (!topics.length) {
+      return '#home';
+    }
+    const index = Math.floor(Math.random() * topics.length);
+    return topics[index];
+  }, [manifest, route]);
+
   async function fetchText(path) {
     if (contentCache.current.has(path)) {
       return contentCache.current.get(path);
@@ -1259,8 +1355,11 @@ export default function App() {
             <div className="ms-lg-4 flex-grow-1 d-flex align-items-center gap-3">
               <SearchBox entries={searchEntries} />
               <div className="d-none d-lg-flex align-items-center gap-2">
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href={randomTopicRoute}>Random Topic</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/JAVA_7_TO_25">Java 7 To 25</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Interview Approach</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/COMPANY_QUESTION_BANK">Company Bank</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/CURRICULUM">Curriculum</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/TOP_20_BOOKS">Sources</a>
               </div>
@@ -1442,7 +1541,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
         )}
       >
         <div className="content-card">
-          <MarkdownBlock html={marked.parse(data.raw)} manifest={manifest} />
+          <MarkdownBlock html={marked.parse(data.raw)} manifest={manifest} contentPath={data.resource.contentPath} />
         </div>
       </PageLayout>
     );
@@ -1481,7 +1580,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
           </InsightCard>
         </div>
         <div className="content-card">
-          <MarkdownBlock html={marked.parse(data.raw)} manifest={manifest} />
+          <MarkdownBlock html={marked.parse(data.raw)} manifest={manifest} contentPath={data.section.guide.contentPath} />
         </div>
         <div className="content-card">
           <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
@@ -1559,14 +1658,14 @@ function RouteRenderer({ route, manifest, fetchText }) {
             <h2 className="page-title mb-0">Chapter Guide</h2>
             <span className="badge rounded-pill badge-soft">Read this after the first example</span>
           </div>
-          <MarkdownBlock html={marked.parse(data.guideRaw)} manifest={manifest} />
+          <MarkdownBlock html={marked.parse(data.guideRaw)} manifest={manifest} contentPath={data.chapter.guide.contentPath} />
         </div>
         <div className="content-card">
           <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
             <h2 className="page-title mb-0">Revision Sheet</h2>
             <span className="badge rounded-pill badge-soft">{truncateText(revision.intro || 'Use this for quick recap after running the examples.', 100)}</span>
           </div>
-          <MarkdownBlock html={marked.parse(data.revisionRaw)} manifest={manifest} />
+          <MarkdownBlock html={marked.parse(data.revisionRaw)} manifest={manifest} contentPath={data.chapter.revision.contentPath} />
         </div>
       </PageLayout>
     );
@@ -1637,7 +1736,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
             <h2 className="page-title mb-0">Topic Lesson</h2>
             <span className="badge rounded-pill badge-soft">Site-first explanation</span>
           </div>
-          <MarkdownBlock html={marked.parse(data.lessonRaw)} manifest={manifest} />
+          <MarkdownBlock html={marked.parse(data.lessonRaw)} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
         </div>
       ) : null}
 

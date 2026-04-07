@@ -21,7 +21,7 @@ Threads are the oldest Java tool for that problem.
 
 ## Quick Visual
 
-![Threads single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/ThreadsVisual.svg)
+![Threads single-look visual](./ThreadsVisual.svg)
 
 At one glance:
 

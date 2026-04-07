@@ -1,11 +1,11 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T10:48:27Z",
+  "generatedAt": "2026-04-07T11:18:00Z",
   "stats": {
-    "sections": 20,
-    "chapters": 44,
-    "topics": 80
+    "sections": 21,
+    "chapters": 47,
+    "topics": 89
   },
   "resources": [
     {"slug": "README", "title": "README", "sourcePath": "README.md", "contentPath": "content/meta/README.md", "type": "markdown"},
@@ -16,7 +16,9 @@
     {"slug": "BOOK_MANUSCRIPT", "title": "BOOK MANUSCRIPT", "sourcePath": "BOOK_MANUSCRIPT.md", "contentPath": "content/meta/BOOK_MANUSCRIPT.md", "type": "markdown"},
     {"slug": "JAVA_7_TO_25", "title": "JAVA 7 TO 25", "sourcePath": "JAVA_7_TO_25.md", "contentPath": "content/meta/JAVA_7_TO_25.md", "type": "markdown"},
     {"slug": "JAVA_MIGRATION_GUIDES", "title": "JAVA MIGRATION GUIDES", "sourcePath": "JAVA_MIGRATION_GUIDES.md", "contentPath": "content/meta/JAVA_MIGRATION_GUIDES.md", "type": "markdown"},
-    {"slug": "HIGH_DEMAND_JAVA_TOPICS", "title": "HIGH DEMAND JAVA TOPICS", "sourcePath": "HIGH_DEMAND_JAVA_TOPICS.md", "contentPath": "content/meta/HIGH_DEMAND_JAVA_TOPICS.md", "type": "markdown"}
+    {"slug": "HIGH_DEMAND_JAVA_TOPICS", "title": "HIGH DEMAND JAVA TOPICS", "sourcePath": "HIGH_DEMAND_JAVA_TOPICS.md", "contentPath": "content/meta/HIGH_DEMAND_JAVA_TOPICS.md", "type": "markdown"},
+    {"slug": "COMPANY_QUESTION_BANK", "title": "COMPANY QUESTION BANK", "sourcePath": "COMPANY_QUESTION_BANK.md", "contentPath": "content/meta/COMPANY_QUESTION_BANK.md", "type": "markdown"},
+    {"slug": "INTERVIEW_PROBLEM_APPROACH", "title": "INTERVIEW PROBLEM APPROACH", "sourcePath": "INTERVIEW_PROBLEM_APPROACH.md", "contentPath": "content/meta/INTERVIEW_PROBLEM_APPROACH.md", "type": "markdown"}
   ],
   "sections": [
     {
@@ -675,6 +677,52 @@
           "topics": [
             {"slug": "scanning_sorted_data_with_two_pointers", "title": "Scanning Sorted Data With Two Pointers", "sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java", "concept": "Scanning Sorted Data With Two Pointers"},
             {"slug": "sliding_window_problems", "title": "Sliding Window Problems", "sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/sliding_window_problems/SlidingWindowProblems.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/sliding_window_problems/SlidingWindowProblems.java", "concept": "Sliding Window Problems"}
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "sec21_company_interview_tracks",
+      "title": "Company Interview Tracks",
+      "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/SectionGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/SectionGuide.md"},
+      "chapters": [
+        {
+          "slug": "ch01_google_meta_amazon",
+          "title": "Google Meta Amazon",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/ChapterGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/ChapterRevision.md", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/RunChapter.java", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/RunAllTopics.java", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/RunAllTopics.java"},
+          "topics": [
+            {"slug": "idempotent_reservations", "title": "Idempotent Reservations", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/IdempotentReservations.java", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/IdempotentReservations.java", "concept": "Idempotent Reservations", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/TopicGuide.md"}},
+            {"slug": "latency_debug_playbook", "title": "Latency Debug Playbook", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/latency_debug_playbook/LatencyDebugPlaybook.java", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/latency_debug_playbook/LatencyDebugPlaybook.java", "concept": "Latency Debug Playbook", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/latency_debug_playbook/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/latency_debug_playbook/TopicGuide.md"}},
+            {"slug": "search_autocomplete_design", "title": "Search Autocomplete Design", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/search_autocomplete_design/SearchAutocompleteDesign.java", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/search_autocomplete_design/SearchAutocompleteDesign.java", "concept": "Search Autocomplete Design", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/search_autocomplete_design/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/search_autocomplete_design/TopicGuide.md"}}
+          ]
+        },
+        {
+          "slug": "ch02_apple_coinbase_jane_street",
+          "title": "Apple Coinbase Jane Street",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/ChapterGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/ChapterRevision.md", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/RunChapter.java", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/RunAllTopics.java", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/RunAllTopics.java"},
+          "topics": [
+            {"slug": "running_median_prices", "title": "Running Median Prices", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/running_median_prices/RunningMedianPrices.java", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/running_median_prices/RunningMedianPrices.java", "concept": "Running Median Prices", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/running_median_prices/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/running_median_prices/TopicGuide.md"}},
+            {"slug": "safe_api_design", "title": "Safe Api Design", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/safe_api_design/SafeApiDesign.java", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/safe_api_design/SafeApiDesign.java", "concept": "Safe Api Design", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/safe_api_design/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/safe_api_design/TopicGuide.md"}},
+            {"slug": "transfer_idempotency", "title": "Transfer Idempotency", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/transfer_idempotency/TransferIdempotency.java", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/transfer_idempotency/TransferIdempotency.java", "concept": "Transfer Idempotency", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/transfer_idempotency/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/transfer_idempotency/TopicGuide.md"}}
+          ]
+        },
+        {
+          "slug": "ch03_netflix_makemytrip_hoteltrader",
+          "title": "Netflix Makemytrip Hoteltrader",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/ChapterGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/ChapterRevision.md", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/RunChapter.java", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/RunAllTopics.java", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/RunAllTopics.java"},
+          "topics": [
+            {"slug": "availability_freshness", "title": "Availability Freshness", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/AvailabilityFreshness.java", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/AvailabilityFreshness.java", "concept": "Availability Freshness", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/TopicGuide.md"}},
+            {"slug": "hotel_search_cache", "title": "Hotel Search Cache", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/HotelSearchCache.java", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/HotelSearchCache.java", "concept": "Hotel Search Cache", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/TopicGuide.md"}},
+            {"slug": "resilient_signup_flow", "title": "Resilient Signup Flow", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/ResilientSignupFlow.java", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/ResilientSignupFlow.java", "concept": "Resilient Signup Flow", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/TopicGuide.md"}}
           ]
         }
       ]
