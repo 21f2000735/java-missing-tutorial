@@ -4,7 +4,7 @@ This chapter gives the first JVM-internals mental model: local variables live in
 
 ## Study Order
 
-1. Run [UnderstandingStackHeapAndReferences.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java)
+1. Run [UnderstandingStackHeapAndReferences.java](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java)
 
 ## Why This Chapter Matters
 

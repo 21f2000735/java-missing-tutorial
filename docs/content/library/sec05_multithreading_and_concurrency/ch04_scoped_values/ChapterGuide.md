@@ -15,9 +15,9 @@ Passing that through every method can become noisy. Mutable thread-local state c
 
 ## Run This First
 
-1. Run [IntroducingScopedValues.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/introducing_scoped_values/IntroducingScopedValues.java)
-2. Run [BindingRequestContext.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/binding_request_context/BindingRequestContext.java)
-3. Run [ScopedValuesVsThreadLocal.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java)
+1. Run [IntroducingScopedValues.java](topics/introducing_scoped_values/IntroducingScopedValues.java)
+2. Run [BindingRequestContext.java](topics/binding_request_context/BindingRequestContext.java)
+3. Run [ScopedValuesVsThreadLocal.java](topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java)
 
 ## What To Look For
 

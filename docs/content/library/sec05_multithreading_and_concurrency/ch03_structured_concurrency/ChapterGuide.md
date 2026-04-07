@@ -14,9 +14,9 @@ If those tasks are scattered across futures and helpers, they can outlive the re
 
 ## Run This First
 
-1. Run [KeepingChildTasksInsideOneRequest.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch03_structured_concurrency/topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java)
-2. Run [CollectingResultsFromChildTasks.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch03_structured_concurrency/topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java)
-3. Run [ChoosingFirstSuccessfulResult.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch03_structured_concurrency/topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java)
+1. Run [KeepingChildTasksInsideOneRequest.java](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java)
+2. Run [CollectingResultsFromChildTasks.java](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java)
+3. Run [ChoosingFirstSuccessfulResult.java](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java)
 
 ## What To Look For
 

@@ -8,8 +8,8 @@ Teams often pick `HashMap` by reflex, then later discover they needed stable ite
 
 ## Study Order
 
-1. Run [MapTradeoffs.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch02_maps_and_iterators_in_depth/topics/map_tradeoffs/MapTradeoffs.java)
-2. Run [ConcurrentMapsAndIterators.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch02_maps_and_iterators_in_depth/topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java)
+1. Run [MapTradeoffs.java](topics/map_tradeoffs/MapTradeoffs.java)
+2. Run [ConcurrentMapsAndIterators.java](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java)
 3. Revisit the chapter revision sheet and compare page for collections.
 
 ## What This Chapter Covers

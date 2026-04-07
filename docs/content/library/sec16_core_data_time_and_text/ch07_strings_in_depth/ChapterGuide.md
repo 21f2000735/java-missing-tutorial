@@ -8,8 +8,8 @@ Strings look simple until interning, `==`, builders, formatting, and regex all a
 
 ## Study Order
 
-1. Run [StringPoolAndEquals.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch07_strings_in_depth/topics/string_pool_and_equals/StringPoolAndEquals.java)
-2. Run [BuildersFormattingAndRegex.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch07_strings_in_depth/topics/builders_formatting_and_regex/BuildersFormattingAndRegex.java)
+1. Run [StringPoolAndEquals.java](topics/string_pool_and_equals/StringPoolAndEquals.java)
+2. Run [BuildersFormattingAndRegex.java](topics/builders_formatting_and_regex/BuildersFormattingAndRegex.java)
 
 ## What This Chapter Covers
 

@@ -17,9 +17,9 @@ Most bugs happen when teams mix these ideas together. A date without a zone is n
 
 ## Study Order
 
-1. Run [LocalDateTime.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch02_date_and_time/topics/local_date_time/LocalDateTime.java)
-2. Run [Zones.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch02_date_and_time/topics/zones/Zones.java)
-3. Run [Formatting.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch02_date_and_time/topics/formatting/Formatting.java)
+1. Run [LocalDateTime.java](topics/local_date_time/LocalDateTime.java)
+2. Run [Zones.java](topics/zones/Zones.java)
+3. Run [Formatting.java](topics/formatting/Formatting.java)
 
 ## Concept Map
 

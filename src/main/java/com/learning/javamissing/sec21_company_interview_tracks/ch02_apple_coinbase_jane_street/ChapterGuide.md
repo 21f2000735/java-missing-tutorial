@@ -10,9 +10,9 @@ This chapter mixes three interview styles that push on correctness and thought q
 
 ## Run This First
 
-1. Run [SafeApiDesign.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/safe_api_design/SafeApiDesign.java)
-2. Run [TransferIdempotency.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/transfer_idempotency/TransferIdempotency.java)
-3. Run [RunningMedianPrices.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/topics/running_median_prices/RunningMedianPrices.java)
+1. Run [SafeApiDesign.java](topics/safe_api_design/SafeApiDesign.java)
+2. Run [TransferIdempotency.java](topics/transfer_idempotency/TransferIdempotency.java)
+3. Run [RunningMedianPrices.java](topics/running_median_prices/RunningMedianPrices.java)
 
 ## What To Look For
 

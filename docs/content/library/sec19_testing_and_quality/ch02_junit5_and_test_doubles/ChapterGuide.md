@@ -8,8 +8,8 @@ Many learners know the idea of a test but still do not know lifecycle hooks, par
 
 ## Study Order
 
-1. Run [Junit5LifecycleAndParameters.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch02_junit5_and_test_doubles/topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java)
-2. Run [TestDoublesAndVerification.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch02_junit5_and_test_doubles/topics/test_doubles_and_verification/TestDoublesAndVerification.java)
+1. Run [Junit5LifecycleAndParameters.java](topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java)
+2. Run [TestDoublesAndVerification.java](topics/test_doubles_and_verification/TestDoublesAndVerification.java)
 
 ## What This Chapter Covers
 

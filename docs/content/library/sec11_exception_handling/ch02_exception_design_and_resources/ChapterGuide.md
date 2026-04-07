@@ -8,8 +8,8 @@ Teams often mix checked and unchecked exceptions without a clear rule, then lose
 
 ## Study Order
 
-1. Run [CheckedUncheckedAndCustom.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec11_exception_handling/ch02_exception_design_and_resources/topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java)
-2. Run [TryWithResourcesAndChaining.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec11_exception_handling/ch02_exception_design_and_resources/topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java)
+1. Run [CheckedUncheckedAndCustom.java](topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java)
+2. Run [TryWithResourcesAndChaining.java](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java)
 
 ## What This Chapter Covers
 

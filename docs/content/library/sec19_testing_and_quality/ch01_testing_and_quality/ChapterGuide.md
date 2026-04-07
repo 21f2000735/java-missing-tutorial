@@ -17,9 +17,9 @@ This chapter focuses on small, readable, repeatable verification.
 
 ## Study Order
 
-1. Run [DesigningTestsAroundBusinessRules.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch01_testing_and_quality/topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java)
-2. Run [WritingReadableJUnitTests.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch01_testing_and_quality/topics/writing_readable_junit_tests/WritingReadableJUnitTests.java)
-3. Run [CheckingOneRuleWithManyInputs.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch01_testing_and_quality/topics/checking_one_rule_with_many_inputs/CheckingOneRuleWithManyInputs.java)
+1. Run [DesigningTestsAroundBusinessRules.java](topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java)
+2. Run [WritingReadableJUnitTests.java](topics/writing_readable_junit_tests/WritingReadableJUnitTests.java)
+3. Run [CheckingOneRuleWithManyInputs.java](topics/checking_one_rule_with_many_inputs/CheckingOneRuleWithManyInputs.java)
 
 ## Concept Map
 

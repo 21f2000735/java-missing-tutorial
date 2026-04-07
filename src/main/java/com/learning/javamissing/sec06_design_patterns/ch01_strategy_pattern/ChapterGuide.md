@@ -17,7 +17,7 @@ Checkout should run the purchase flow, not own every marketing rule.
 
 ## Run This First
 
-1. Run [ChoosingBehaviorWithStrategy.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
+1. Run [ChoosingBehaviorWithStrategy.java](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
 2. Notice that `applyDiscount()` does not change when you swap discount behavior
 3. Imagine adding one more campaign without touching checkout flow
 

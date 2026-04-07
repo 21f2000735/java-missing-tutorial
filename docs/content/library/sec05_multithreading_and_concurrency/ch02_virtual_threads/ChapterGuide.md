@@ -15,9 +15,9 @@ Virtual threads help when the work is mostly waiting. They do not repair bad loc
 
 ## Run This First
 
-1. Run [WhyVirtualThreadsMatter.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java)
-2. Run [RunningTasksWithVirtualThreadExecutor.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java)
-3. Run [AvoidingVirtualThreadMisuse.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java)
+1. Run [WhyVirtualThreadsMatter.java](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java)
+2. Run [RunningTasksWithVirtualThreadExecutor.java](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java)
+3. Run [AvoidingVirtualThreadMisuse.java](topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java)
 
 ## What To Look For
 

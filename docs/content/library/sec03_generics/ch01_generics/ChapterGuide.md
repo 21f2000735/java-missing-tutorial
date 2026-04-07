@@ -26,9 +26,9 @@ It explains:
 
 ## Study Order
 
-1. Run [GenericType.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec03_generics/ch01_generics/topics/generic_type/GenericType.java)
-2. Run [Bounds.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec03_generics/ch01_generics/topics/bounds/Bounds.java)
-3. Run [Wildcards.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec03_generics/ch01_generics/topics/wildcards/Wildcards.java)
+1. Run [GenericType.java](topics/generic_type/GenericType.java)
+2. Run [Bounds.java](topics/bounds/Bounds.java)
+3. Run [Wildcards.java](topics/wildcards/Wildcards.java)
 4. Revisit this guide for traps, interview angles, and the deeper mental model.
 
 ## Concept Map

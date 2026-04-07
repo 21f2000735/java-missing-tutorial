@@ -13,8 +13,8 @@ Observer and template method solve those two pressures in very different ways.
 
 ## Run This First
 
-1. Run [PublishingUpdatesWithObserver.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch04_behavioral_patterns/topics/publishing_updates_with_observer/PublishingUpdatesWithObserver.java)
-2. Run [CapturingWorkflowsWithTemplateMethod.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch04_behavioral_patterns/topics/capturing_workflows_with_template_method/CapturingWorkflowsWithTemplateMethod.java)
+1. Run [PublishingUpdatesWithObserver.java](topics/publishing_updates_with_observer/PublishingUpdatesWithObserver.java)
+2. Run [CapturingWorkflowsWithTemplateMethod.java](topics/capturing_workflows_with_template_method/CapturingWorkflowsWithTemplateMethod.java)
 3. Ask whether your problem is event fan-out or fixed workflow shape
 
 ## What To Look For

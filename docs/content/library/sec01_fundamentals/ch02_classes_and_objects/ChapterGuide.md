@@ -18,9 +18,9 @@ validation, testing, maintenance, and debugging.
 
 ## Study Order
 
-1. Run [ClassesObjects.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch02_classes_and_objects/topics/classes_objects/ClassesObjects.java)
-2. Run [Inheritance.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch02_classes_and_objects/topics/inheritance/Inheritance.java)
-3. Run [Polymorphism.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch02_classes_and_objects/topics/polymorphism/Polymorphism.java)
+1. Run [ClassesObjects.java](topics/classes_objects/ClassesObjects.java)
+2. Run [Inheritance.java](topics/inheritance/Inheritance.java)
+3. Run [Polymorphism.java](topics/polymorphism/Polymorphism.java)
 4. Revisit this guide for quiz, interview questions, traps, and design notes.
 
 ## Concept Map

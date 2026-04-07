@@ -8,8 +8,8 @@ You may understand `Thread`, but real services also need visibility guarantees, 
 
 ## Study Order
 
-1. Run [VisibilityAndVolatile.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/topics/visibility_and_volatile/VisibilityAndVolatile.java)
-2. Run [LocksLatchesAndFutures.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/topics/locks_latches_and_futures/LocksLatchesAndFutures.java)
+1. Run [VisibilityAndVolatile.java](topics/visibility_and_volatile/VisibilityAndVolatile.java)
+2. Run [LocksLatchesAndFutures.java](topics/locks_latches_and_futures/LocksLatchesAndFutures.java)
 
 ## What This Chapter Covers
 

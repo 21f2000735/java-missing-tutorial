@@ -8,8 +8,8 @@ Developers often know the terms JIT and GC, but not what practical questions tho
 
 ## Study Order
 
-1. Run [JitBasics.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/jit_basics/JitBasics.java)
-2. Run [GcStrategies.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/GcStrategies.java)
+1. Run [JitBasics.java](topics/jit_basics/JitBasics.java)
+2. Run [GcStrategies.java](topics/gc_strategies/GcStrategies.java)
 
 ## What This Chapter Covers
 

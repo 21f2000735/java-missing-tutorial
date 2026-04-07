@@ -12,9 +12,9 @@ This chapter is bundled into one guide so the learner does not need to jump acro
 
 ## Study Order
 
-1. Run [StoringAndNamingValues.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch01_java_basics/topics/storing_and_naming_values/StoringAndNamingValues.java)
-2. Run [MakingDecisionsAndRepeatingWork.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch01_java_basics/topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java)
-3. Run [DesigningSmallMethods.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch01_java_basics/topics/designing_small_methods/DesigningSmallMethods.java)
+1. Run [StoringAndNamingValues.java](topics/storing_and_naming_values/StoringAndNamingValues.java)
+2. Run [MakingDecisionsAndRepeatingWork.java](topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java)
+3. Run [DesigningSmallMethods.java](topics/designing_small_methods/DesigningSmallMethods.java)
 4. Review quiz and interview questions below
 
 ## Visual Map

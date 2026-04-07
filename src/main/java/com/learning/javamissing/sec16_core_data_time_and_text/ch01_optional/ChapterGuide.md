@@ -12,9 +12,9 @@ The goal is to understand how Java represents “value may be missing” in a cl
 
 ## Study Order
 
-1. Run [RepresentingOptionalValues.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch01_optional/topics/representing_optional_values/RepresentingOptionalValues.java)
-2. Run [TransformingOptionalValues.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch01_optional/topics/transforming_optional_values/TransformingOptionalValues.java)
-3. Run [ChoosingOptionalBoundaries.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch01_optional/topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java)
+1. Run [RepresentingOptionalValues.java](topics/representing_optional_values/RepresentingOptionalValues.java)
+2. Run [TransformingOptionalValues.java](topics/transforming_optional_values/TransformingOptionalValues.java)
+3. Run [ChoosingOptionalBoundaries.java](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java)
 
 ## Visual Map
 

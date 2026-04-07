@@ -14,9 +14,9 @@ If that model is unclear, every later concurrency feature feels like extra synta
 
 ## Run This First
 
-1. Run [Threads.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/Threads.java)
-2. Run [Synchronization.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/synchronization/Synchronization.java)
-3. Run [Executors.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/executors/Executors.java)
+1. Run [Threads.java](topics/threads/Threads.java)
+2. Run [Synchronization.java](topics/synchronization/Synchronization.java)
+3. Run [Executors.java](topics/executors/Executors.java)
 
 ## What To Look For
 

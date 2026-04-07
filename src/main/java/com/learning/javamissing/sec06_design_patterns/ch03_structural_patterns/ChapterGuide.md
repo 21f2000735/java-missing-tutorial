@@ -14,8 +14,8 @@ The pain is "how do these objects fit together cleanly?"
 
 ## Run This First
 
-1. Run [TranslatingIncompatibleApisWithAdapter.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch03_structural_patterns/topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java)
-2. Run [AddingFeaturesWithDecorator.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch03_structural_patterns/topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java)
+1. Run [TranslatingIncompatibleApisWithAdapter.java](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java)
+2. Run [AddingFeaturesWithDecorator.java](topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java)
 3. Ask whether the problem is interface mismatch or optional added behavior
 
 ## What To Look For

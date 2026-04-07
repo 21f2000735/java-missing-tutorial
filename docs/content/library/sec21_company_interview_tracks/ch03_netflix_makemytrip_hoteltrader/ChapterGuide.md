@@ -10,9 +10,9 @@ This chapter is about resilience, caching, and freshness in systems that serve u
 
 ## Run This First
 
-1. Run [ResilientSignupFlow.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/ResilientSignupFlow.java)
-2. Run [HotelSearchCache.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/HotelSearchCache.java)
-3. Run [AvailabilityFreshness.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/AvailabilityFreshness.java)
+1. Run [ResilientSignupFlow.java](topics/resilient_signup_flow/ResilientSignupFlow.java)
+2. Run [HotelSearchCache.java](topics/hotel_search_cache/HotelSearchCache.java)
+3. Run [AvailabilityFreshness.java](topics/availability_freshness/AvailabilityFreshness.java)
 
 ## What To Look For
 

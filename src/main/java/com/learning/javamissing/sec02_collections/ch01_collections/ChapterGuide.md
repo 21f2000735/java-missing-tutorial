@@ -13,9 +13,9 @@ You should be able to run the files, read the output, and understand why the out
 
 ## Study Order
 
-1. Run [ListSetMap.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java)
-2. Run [Immutability.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/immutability/Immutability.java)
-3. Run [Comparator.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/comparator/Comparator.java)
+1. Run [ListSetMap.java](topics/list_set_map/ListSetMap.java)
+2. Run [Immutability.java](topics/immutability/Immutability.java)
+3. Run [Comparator.java](topics/comparator/Comparator.java)
 
 ## Visual Map
 

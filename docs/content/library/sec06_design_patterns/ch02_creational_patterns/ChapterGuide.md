@@ -21,8 +21,8 @@ That is where factory method and builder become useful.
 
 ## Run This First
 
-1. Run [CreatingObjectsWithFactoryMethod.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch02_creational_patterns/topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java)
-2. Run [AssemblingObjectsWithBuilder.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch02_creational_patterns/topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java)
+1. Run [CreatingObjectsWithFactoryMethod.java](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java)
+2. Run [AssemblingObjectsWithBuilder.java](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java)
 3. Ask which example hides implementation choice and which one improves call-site readability
 
 ## What To Look For

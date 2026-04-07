@@ -19,7 +19,7 @@ That means grouping and aggregation.
 
 ## Run This First
 
-1. Run [GroupingSales.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch04_data_grouping_and_aggregation/topics/grouping_sales/GroupingSales.java)
+1. Run [GroupingSales.java](topics/grouping_sales/GroupingSales.java)
 
 ## What To Look For
 

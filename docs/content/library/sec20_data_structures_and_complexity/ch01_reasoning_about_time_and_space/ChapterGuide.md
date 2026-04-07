@@ -19,7 +19,7 @@ This chapter trains that question first.
 
 ## Study Order
 
-1. Run [MeasuringGrowthWithBigO.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch01_reasoning_about_time_and_space/topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java)
+1. Run [MeasuringGrowthWithBigO.java](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java)
 
 ## Quick Summary
 

@@ -13,8 +13,8 @@ Sliding window and two pointers are valuable because they reduce repeated work w
 
 ## Study Order
 
-1. Run [SlidingWindowProblems.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/sliding_window_problems/SlidingWindowProblems.java)
-2. Run [ScanningSortedDataWithTwoPointers.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java)
+1. Run [SlidingWindowProblems.java](topics/sliding_window_problems/SlidingWindowProblems.java)
+2. Run [ScanningSortedDataWithTwoPointers.java](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java)
 
 ## Quick Summary
 

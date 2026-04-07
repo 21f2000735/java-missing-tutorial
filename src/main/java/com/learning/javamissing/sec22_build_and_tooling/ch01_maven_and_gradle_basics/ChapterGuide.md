@@ -8,8 +8,8 @@ You may know Java syntax but still feel lost when a project opens with `pom.xml`
 
 ## Study Order
 
-1. Run [BuildFilesAndDependencyScopes.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec22_build_and_tooling/ch01_maven_and_gradle_basics/topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java)
-2. Run [JarWarAndSpringBootWhy.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec22_build_and_tooling/ch01_maven_and_gradle_basics/topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java)
+1. Run [BuildFilesAndDependencyScopes.java](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java)
+2. Run [JarWarAndSpringBootWhy.java](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java)
 
 ## What This Chapter Covers
 

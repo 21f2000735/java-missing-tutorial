@@ -17,9 +17,9 @@ Older code often uses `instanceof`, then a cast, then more branching. Pattern ma
 
 ## Study Order
 
-1. Run [CheckingShapeWithInstanceof.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch01_pattern_matching/topics/checking_shape_with_instanceof/CheckingShapeWithInstanceof.java)
-2. Run [UnpackingRecordsWithPatterns.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch01_pattern_matching/topics/unpacking_records_with_patterns/UnpackingRecordsWithPatterns.java)
-3. Run [SwitchingOnRuntimeShape.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch01_pattern_matching/topics/switching_on_runtime_shape/SwitchingOnRuntimeShape.java)
+1. Run [CheckingShapeWithInstanceof.java](topics/checking_shape_with_instanceof/CheckingShapeWithInstanceof.java)
+2. Run [UnpackingRecordsWithPatterns.java](topics/unpacking_records_with_patterns/UnpackingRecordsWithPatterns.java)
+3. Run [SwitchingOnRuntimeShape.java](topics/switching_on_runtime_shape/SwitchingOnRuntimeShape.java)
 
 ## Concept Map
 

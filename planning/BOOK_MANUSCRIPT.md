@@ -45,9 +45,9 @@ This chapter is bundled into one guide so the learner does not need to jump acro
 
 ## Study Order
 
-1. Run [StoringAndNamingValues.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch01_java_basics/topics/storing_and_naming_values/StoringAndNamingValues.java)
-2. Run [MakingDecisionsAndRepeatingWork.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch01_java_basics/topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java)
-3. Run [DesigningSmallMethods.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch01_java_basics/topics/designing_small_methods/DesigningSmallMethods.java)
+1. Run [StoringAndNamingValues.java](topics/storing_and_naming_values/StoringAndNamingValues.java)
+2. Run [MakingDecisionsAndRepeatingWork.java](topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java)
+3. Run [DesigningSmallMethods.java](topics/designing_small_methods/DesigningSmallMethods.java)
 4. Review quiz and interview questions below
 
 ## Visual Map
@@ -263,9 +263,9 @@ validation, testing, maintenance, and debugging.
 
 ## Study Order
 
-1. Run [ClassesObjects.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch02_classes_and_objects/topics/classes_objects/ClassesObjects.java)
-2. Run [Inheritance.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch02_classes_and_objects/topics/inheritance/Inheritance.java)
-3. Run [Polymorphism.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec01_fundamentals/ch02_classes_and_objects/topics/polymorphism/Polymorphism.java)
+1. Run [ClassesObjects.java](topics/classes_objects/ClassesObjects.java)
+2. Run [Inheritance.java](topics/inheritance/Inheritance.java)
+3. Run [Polymorphism.java](topics/polymorphism/Polymorphism.java)
 4. Revisit this guide for quiz, interview questions, traps, and design notes.
 
 ## Concept Map
@@ -429,6 +429,7 @@ A: Composition builds behavior from collaborating objects, while inheritance reu
 Current chapters:
 
 - `ch01_collections`
+- `ch02_maps_and_iterators_in_depth`
 
 ## Before You Start
 
@@ -466,9 +467,9 @@ You should be able to run the files, read the output, and understand why the out
 
 ## Study Order
 
-1. Run [ListSetMap.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java)
-2. Run [Immutability.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/immutability/Immutability.java)
-3. Run [Comparator.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/comparator/Comparator.java)
+1. Run [ListSetMap.java](topics/list_set_map/ListSetMap.java)
+2. Run [Immutability.java](topics/immutability/Immutability.java)
+3. Run [Comparator.java](topics/comparator/Comparator.java)
 
 ## Visual Map
 
@@ -638,6 +639,66 @@ A: Because the same object may need different sorting rules in different situati
 - what common mistake to avoid
 - how to explain the idea in plain English
 
+### Maps And Iterators In Depth
+
+
+This chapter fills the gap between “I know `Map` exists” and “I can choose the right map and explain iterator behavior under pressure.”
+
+## The Problem
+
+Teams often pick `HashMap` by reflex, then later discover they needed stable iteration order, sorted keys, or safer concurrent reads.
+
+## Study Order
+
+1. Run [MapTradeoffs.java](topics/map_tradeoffs/MapTradeoffs.java)
+2. Run [ConcurrentMapsAndIterators.java](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java)
+3. Revisit the chapter revision sheet and compare page for collections.
+
+## What This Chapter Covers
+
+- `HashMap` basics: hashing, buckets, resize pressure, load factor intuition
+- `TreeMap` vs `LinkedHashMap`
+- fail-fast vs weakly consistent iteration
+- `ConcurrentHashMap` vs `Collections.synchronizedMap`
+
+## Use This Chapter When
+
+- you are choosing a map for real application data
+- interviewers ask why one map implementation fits better
+- iterator behavior or concurrent updates start causing confusion
+
+## Avoid This Mistake
+
+- do not memorize “HashMap is fast” without asking what kind of access, ordering, and concurrency you need
+
+## After Reading This Chapter, You Should Know
+
+- when insertion order matters more than sort order
+- why concurrent maps change iteration guarantees
+- why iterator behavior is a correctness topic, not just an interview trivia topic
+
+#### Revision
+
+
+## Remember
+
+- `HashMap` is the default general-purpose map, not the correct answer for every map problem
+- `LinkedHashMap` preserves insertion order
+- `TreeMap` keeps keys sorted
+- `ConcurrentHashMap` changes the concurrency and iteration story
+
+## Common Mistakes
+
+- using `TreeMap` when only insertion order was needed
+- assuming `Collections.synchronizedMap` and `ConcurrentHashMap` behave the same way
+- editing a collection during iteration without understanding iterator guarantees
+
+## Interview Questions
+
+1. When would you choose `LinkedHashMap` over `HashMap`?
+2. What is the practical difference between fail-fast and weakly consistent iteration?
+3. Why is `ConcurrentHashMap` usually preferable to a synchronized wrapper for heavy shared access?
+
 ## Generics
 
 
@@ -694,9 +755,9 @@ It explains:
 
 ## Study Order
 
-1. Run [GenericType.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec03_generics/ch01_generics/topics/generic_type/GenericType.java)
-2. Run [Bounds.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec03_generics/ch01_generics/topics/bounds/Bounds.java)
-3. Run [Wildcards.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec03_generics/ch01_generics/topics/wildcards/Wildcards.java)
+1. Run [GenericType.java](topics/generic_type/GenericType.java)
+2. Run [Bounds.java](topics/bounds/Bounds.java)
+3. Run [Wildcards.java](topics/wildcards/Wildcards.java)
 4. Revisit this guide for traps, interview angles, and the deeper mental model.
 
 ## Concept Map
@@ -961,9 +1022,9 @@ If the code is really “take data, transform it, produce an answer,” streams 
 
 ## Run This First
 
-1. Run [StreamPipeline.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java)
-2. Run [Collectors.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java)
-3. Run [ParallelStreams.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/parallel_streams/ParallelStreams.java)
+1. Run [StreamPipeline.java](topics/stream_pipeline/StreamPipeline.java)
+2. Run [Collectors.java](topics/collectors/Collectors.java)
+3. Run [ParallelStreams.java](topics/parallel_streams/ParallelStreams.java)
 
 ## What To Look For
 
@@ -1058,7 +1119,7 @@ If a rule should be supplied from outside, Java needs a way to pass that rule ar
 
 ## Run This First
 
-1. Run [DefiningFunctions.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch02_functional_interfaces/topics/defining_functions/DefiningFunctions.java)
+1. Run [DefiningFunctions.java](topics/defining_functions/DefiningFunctions.java)
 
 ## What To Look For
 
@@ -1143,7 +1204,7 @@ That is filtering plus mapping.
 
 ## Run This First
 
-1. Run [FilteringOrders.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch03_data_filtering_and_mapping/topics/filtering_orders/FilteringOrders.java)
+1. Run [FilteringOrders.java](topics/filtering_orders/FilteringOrders.java)
 
 ## What To Look For
 
@@ -1230,7 +1291,7 @@ That means grouping and aggregation.
 
 ## Run This First
 
-1. Run [GroupingSales.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch04_data_grouping_and_aggregation/topics/grouping_sales/GroupingSales.java)
+1. Run [GroupingSales.java](topics/grouping_sales/GroupingSales.java)
 
 ## What To Look For
 
@@ -1362,9 +1423,9 @@ If that model is unclear, every later concurrency feature feels like extra synta
 
 ## Run This First
 
-1. Run [Threads.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/Threads.java)
-2. Run [Synchronization.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/synchronization/Synchronization.java)
-3. Run [Executors.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/executors/Executors.java)
+1. Run [Threads.java](topics/threads/Threads.java)
+2. Run [Synchronization.java](topics/synchronization/Synchronization.java)
+3. Run [Executors.java](topics/executors/Executors.java)
 
 ## What To Look For
 
@@ -1447,9 +1508,9 @@ Virtual threads help when the work is mostly waiting. They do not repair bad loc
 
 ## Run This First
 
-1. Run [WhyVirtualThreadsMatter.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java)
-2. Run [RunningTasksWithVirtualThreadExecutor.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java)
-3. Run [AvoidingVirtualThreadMisuse.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java)
+1. Run [WhyVirtualThreadsMatter.java](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java)
+2. Run [RunningTasksWithVirtualThreadExecutor.java](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java)
+3. Run [AvoidingVirtualThreadMisuse.java](topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java)
 
 ## What To Look For
 
@@ -1533,9 +1594,9 @@ If those tasks are scattered across futures and helpers, they can outlive the re
 
 ## Run This First
 
-1. Run [KeepingChildTasksInsideOneRequest.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch03_structured_concurrency/topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java)
-2. Run [CollectingResultsFromChildTasks.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch03_structured_concurrency/topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java)
-3. Run [ChoosingFirstSuccessfulResult.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch03_structured_concurrency/topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java)
+1. Run [KeepingChildTasksInsideOneRequest.java](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java)
+2. Run [CollectingResultsFromChildTasks.java](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java)
+3. Run [ChoosingFirstSuccessfulResult.java](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java)
 
 ## What To Look For
 
@@ -1622,9 +1683,9 @@ Passing that through every method can become noisy. Mutable thread-local state c
 
 ## Run This First
 
-1. Run [IntroducingScopedValues.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/introducing_scoped_values/IntroducingScopedValues.java)
-2. Run [BindingRequestContext.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/binding_request_context/BindingRequestContext.java)
-3. Run [ScopedValuesVsThreadLocal.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java)
+1. Run [IntroducingScopedValues.java](topics/introducing_scoped_values/IntroducingScopedValues.java)
+2. Run [BindingRequestContext.java](topics/binding_request_context/BindingRequestContext.java)
+3. Run [ScopedValuesVsThreadLocal.java](topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java)
 
 ## What To Look For
 
@@ -1689,6 +1750,51 @@ Go back through the virtual-thread and structured-concurrency examples and notic
 - which Java tool or pattern expresses that idea
 - what common mistake to avoid
 - how to explain the idea in plain English
+
+### Concurrency Primitives And Futures
+
+
+This chapter covers the concurrency tools teams reach for after raw threads are no longer enough.
+
+## The Problem
+
+You may understand `Thread`, but real services also need visibility guarantees, safer coordination, and async result handling.
+
+## Study Order
+
+1. Run [VisibilityAndVolatile.java](topics/visibility_and_volatile/VisibilityAndVolatile.java)
+2. Run [LocksLatchesAndFutures.java](topics/locks_latches_and_futures/LocksLatchesAndFutures.java)
+
+## What This Chapter Covers
+
+- what `volatile` actually guarantees
+- `synchronized` vs `ReentrantLock`
+- `CountDownLatch`, `Semaphore`, and `CyclicBarrier` mental models
+- `CompletableFuture` chaining basics
+
+## After Reading This Chapter, You Should Know
+
+- why visibility and atomicity are different questions
+- why coordination primitives solve different waiting problems
+- why `CompletableFuture` is about workflow composition, not only background execution
+
+#### Revision
+
+
+## Remember
+
+- `volatile` helps visibility, not compound atomic updates
+- `ReentrantLock` gives explicit lock control beyond `synchronized`
+- `CountDownLatch` waits for tasks to finish
+- `Semaphore` limits concurrent permits
+- `CyclicBarrier` lets a group meet before continuing
+- `CompletableFuture` composes async steps
+
+## Interview Questions
+
+1. What does `volatile` guarantee and what does it not guarantee?
+2. When would you choose `ReentrantLock` over `synchronized`?
+3. How do `CountDownLatch`, `Semaphore`, and `CyclicBarrier` differ?
 
 ## Design Patterns
 
@@ -1774,7 +1880,7 @@ Checkout should run the purchase flow, not own every marketing rule.
 
 ## Run This First
 
-1. Run [ChoosingBehaviorWithStrategy.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
+1. Run [ChoosingBehaviorWithStrategy.java](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
 2. Notice that `applyDiscount()` does not change when you swap discount behavior
 3. Imagine adding one more campaign without touching checkout flow
 
@@ -1894,8 +2000,8 @@ That is where factory method and builder become useful.
 
 ## Run This First
 
-1. Run [CreatingObjectsWithFactoryMethod.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch02_creational_patterns/topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java)
-2. Run [AssemblingObjectsWithBuilder.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch02_creational_patterns/topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java)
+1. Run [CreatingObjectsWithFactoryMethod.java](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java)
+2. Run [AssemblingObjectsWithBuilder.java](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java)
 3. Ask which example hides implementation choice and which one improves call-site readability
 
 ## What To Look For
@@ -2014,8 +2120,8 @@ The pain is "how do these objects fit together cleanly?"
 
 ## Run This First
 
-1. Run [TranslatingIncompatibleApisWithAdapter.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch03_structural_patterns/topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java)
-2. Run [AddingFeaturesWithDecorator.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch03_structural_patterns/topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java)
+1. Run [TranslatingIncompatibleApisWithAdapter.java](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java)
+2. Run [AddingFeaturesWithDecorator.java](topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java)
 3. Ask whether the problem is interface mismatch or optional added behavior
 
 ## What To Look For
@@ -2121,8 +2227,8 @@ Observer and template method solve those two pressures in very different ways.
 
 ## Run This First
 
-1. Run [PublishingUpdatesWithObserver.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch04_behavioral_patterns/topics/publishing_updates_with_observer/PublishingUpdatesWithObserver.java)
-2. Run [CapturingWorkflowsWithTemplateMethod.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch04_behavioral_patterns/topics/capturing_workflows_with_template_method/CapturingWorkflowsWithTemplateMethod.java)
+1. Run [PublishingUpdatesWithObserver.java](topics/publishing_updates_with_observer/PublishingUpdatesWithObserver.java)
+2. Run [CapturingWorkflowsWithTemplateMethod.java](topics/capturing_workflows_with_template_method/CapturingWorkflowsWithTemplateMethod.java)
 3. Ask whether your problem is event fan-out or fixed workflow shape
 
 ## What To Look For
@@ -2234,7 +2340,7 @@ One long validation method becomes noisy, hard to reorder, and hard to extend.
 
 ## Run This First
 
-1. Run [RequestValidationChain.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/topics/request_validation_chain/RequestValidationChain.java)
+1. Run [RequestValidationChain.java](topics/request_validation_chain/RequestValidationChain.java)
 2. Notice how each handler owns one rule
 3. Imagine adding one more handler without rewriting the existing chain
 
@@ -2358,7 +2464,7 @@ This chapter teaches the concept of giving each class one clear responsibility.
 
 ## Study Order
 
-1. Run [SeparatingResponsibilities.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec07_principles_and_solid/ch01_designing_classes/topics/separating_responsibilities/SeparatingResponsibilities.java)
+1. Run [SeparatingResponsibilities.java](topics/separating_responsibilities/SeparatingResponsibilities.java)
 2. Focus on the concept first: classes should model roles, not piles of mixed behavior.
 
 #### Revision
@@ -2410,7 +2516,7 @@ This chapter teaches the concept of keeping important data stable and predictabl
 
 ## Study Order
 
-1. Run [ProtectingInvoiceData.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec07_principles_and_solid/ch02_immutability_and_value_objects/topics/protecting_invoice_data/ProtectingInvoiceData.java)
+1. Run [ProtectingInvoiceData.java](topics/protecting_invoice_data/ProtectingInvoiceData.java)
 2. Focus on the concept first: stable data is easier to trust and share.
 
 #### Revision
@@ -2461,6 +2567,8 @@ This chapter teaches the concept of keeping important data stable and predictabl
 Current chapters:
 
 - `ch01_memory_and_execution_basics`
+- `ch02_jvm_jdk_jre_and_class_loading`
+- `ch03_jit_and_garbage_collection`
 
 ## Before You Start
 
@@ -2489,7 +2597,7 @@ This chapter gives the first JVM-internals mental model: local variables live in
 
 ## Study Order
 
-1. Run [UnderstandingStackHeapAndReferences.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java)
+1. Run [UnderstandingStackHeapAndReferences.java](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java)
 
 ## Why This Chapter Matters
 
@@ -2541,6 +2649,92 @@ This chapter helps answer:
 - what common mistake to avoid
 - how to explain the idea in plain English
 
+### Jvm Jdk Jre And Class Loading
+
+
+This chapter covers the Java runtime layers people often mention without really separating them.
+
+## The Problem
+
+Many learners hear JVM, JRE, JDK, classpath, and class loading in one sentence and leave with blurred definitions.
+
+## Study Order
+
+1. Run [RuntimeLayers.java](topics/runtime_layers/RuntimeLayers.java)
+2. Run [ClassLoadingLifecycle.java](topics/class_loading_lifecycle/ClassLoadingLifecycle.java)
+
+## What This Chapter Covers
+
+- JVM vs JRE vs JDK
+- compile time vs runtime responsibilities
+- class loading stages: loading, linking, initialization
+- why static initialization timing matters
+
+## After Reading This Chapter, You Should Know
+
+- which tool belongs to development and which belongs to execution
+- why “the JVM runs bytecode” is true but incomplete
+- why class loading order explains some surprising static behavior
+
+#### Revision
+
+
+## Remember
+
+- JDK is the development toolkit
+- JVM is the runtime engine that executes bytecode
+- JRE historically bundled the runtime pieces needed to run Java programs
+- class loading and class initialization are related but not identical
+
+## Interview Questions
+
+1. What is the difference between JVM, JRE, and JDK?
+2. What happens before a class is ready for use?
+3. Why can static initialization order matter?
+
+### Jit And Garbage Collection
+
+
+This chapter introduces the runtime optimizations and cleanup work the JVM keeps doing while your code runs.
+
+## The Problem
+
+Developers often know the terms JIT and GC, but not what practical questions those terms answer.
+
+## Study Order
+
+1. Run [JitBasics.java](topics/jit_basics/JitBasics.java)
+2. Run [GcStrategies.java](topics/gc_strategies/GcStrategies.java)
+
+## What This Chapter Covers
+
+- what JIT compilation is trying to improve
+- why “hot code” matters
+- generational GC intuition
+- when people mention G1, ZGC, and Shenandoah
+
+## After Reading This Chapter, You Should Know
+
+- why Java code is not only interpreted forever
+- why GC is a family of strategies, not one fixed algorithm
+- how to talk about GC choices without pretending to be a JVM engineer
+
+#### Revision
+
+
+## Remember
+
+- the JIT compiles frequently executed bytecode into optimized machine code
+- GC reclaims memory from objects that are no longer reachable
+- G1 is the mainstream low-pause collector for many server workloads
+- ZGC and Shenandoah aim for very low pause times on larger heaps
+
+## Interview Questions
+
+1. What does the JIT compiler do in Java?
+2. Why do people care about pause time in garbage collection?
+3. When do G1, ZGC, and Shenandoah usually enter the discussion?
+
 ## Hidden Java Features
 
 
@@ -2575,7 +2769,7 @@ This chapter shows that some very small Java features remove a lot of boilerplat
 
 ## Study Order
 
-1. Run [UsingFactoryMethodsAndCopyOf.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec09_hidden_java_features/ch01_underused_core_utilities/topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java)
+1. Run [UsingFactoryMethodsAndCopyOf.java](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java)
 
 ## Why This Chapter Matters
 
@@ -2657,7 +2851,7 @@ This chapter teaches the concept of attaching meaning to code beyond plain state
 
 ## Study Order
 
-1. Run [MarkingApiContracts.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec10_reflection_and_metadata/ch01_metadata_and_annotations/topics/marking_api_contracts/MarkingApiContracts.java)
+1. Run [MarkingApiContracts.java](topics/marking_api_contracts/MarkingApiContracts.java)
 2. Focus on the concept first: metadata helps tools and teammates understand intent.
 
 #### Revision
@@ -2708,6 +2902,7 @@ This chapter teaches the concept of attaching meaning to code beyond plain state
 Current chapters:
 
 - `ch01_handling_errors`
+- `ch02_exception_design_and_resources`
 
 ## Before You Start
 
@@ -2736,7 +2931,7 @@ This chapter teaches the concept of turning failures into understandable program
 
 ## Study Order
 
-1. Run [HandlingPaymentFailures.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/HandlingPaymentFailures.java)
+1. Run [HandlingPaymentFailures.java](topics/handling_payment_failures/HandlingPaymentFailures.java)
 2. Focus on the concept first: errors are part of system behavior, not side notes.
 
 #### Revision
@@ -2781,6 +2976,51 @@ This chapter teaches the concept of turning failures into understandable program
 - what common mistake to avoid
 - how to explain the idea in plain English
 
+### Exception Design And Resources
+
+
+This chapter goes beyond “catch the exception” and focuses on designing exception flow well.
+
+## The Problem
+
+Teams often mix checked and unchecked exceptions without a clear rule, then lose context while handling files, network calls, or database work.
+
+## Study Order
+
+1. Run [CheckedUncheckedAndCustom.java](topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java)
+2. Run [TryWithResourcesAndChaining.java](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java)
+
+## What This Chapter Covers
+
+- checked vs unchecked design philosophy
+- custom exceptions that carry meaning
+- try-with-resources
+- exception chaining with causes
+- when not to catch an exception too early
+
+## After Reading This Chapter, You Should Know
+
+- why some failures belong in the type system and some do not
+- how resource handling became cleaner after try-with-resources
+- why wrapping an exception without context usually makes debugging worse
+
+#### Revision
+
+
+## Remember
+
+- checked exceptions force the caller to deal with recoverable failure paths
+- unchecked exceptions usually signal programming mistakes or unrecoverable flow
+- custom exceptions should add business meaning, not just new class names
+- try-with-resources closes resources automatically
+- causes preserve the original failure chain
+
+## Interview Questions
+
+1. When would you choose a checked exception?
+2. Why is try-with-resources safer than manual close logic?
+3. What is exception chaining and why does it matter?
+
 ## Networking
 
 
@@ -2815,7 +3055,7 @@ This chapter teaches the first networking idea in Java: build requests clearly a
 
 ## Study Order
 
-1. Run [BuildingRequestsWithHttpClient.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec12_networking/ch01_http_client_basics/topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java)
+1. Run [BuildingRequestsWithHttpClient.java](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java)
 
 ## Why This Chapter Matters
 
@@ -2869,6 +3109,7 @@ Many systems call external APIs. Before worrying about retries and resilience, t
 Current chapters:
 
 - `ch01_talking_to_databases`
+- `ch02_files_buffers_and_serialization`
 
 ## Before You Start
 
@@ -2897,7 +3138,7 @@ This chapter teaches the concept of moving data between Java code and persistent
 
 ## Study Order
 
-1. Run [QueryingStudentResults.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch01_talking_to_databases/topics/querying_student_results/QueryingStudentResults.java)
+1. Run [QueryingStudentResults.java](topics/querying_student_results/QueryingStudentResults.java)
 2. Focus on the concept first: code asks for data, then turns rows into domain meaning.
 
 #### Revision
@@ -2942,6 +3183,51 @@ This chapter teaches the concept of moving data between Java code and persistent
 - what common mistake to avoid
 - how to explain the idea in plain English
 
+### Files Buffers And Serialization
+
+
+This chapter explains the practical I/O questions beginners usually skip until file handling breaks in production.
+
+## The Problem
+
+People often learn `InputStream` or `File` in isolation and miss the bigger distinction between bytes, characters, buffering, paths, and serialization risk.
+
+## Study Order
+
+1. Run [BytesCharsAndFiles.java](topics/bytes_chars_and_files/BytesCharsAndFiles.java)
+2. Run [WatchServiceAndSerialization.java](topics/watch_service_and_serialization/WatchServiceAndSerialization.java)
+
+## What This Chapter Covers
+
+- bytes vs chars
+- buffered I/O intuition
+- modern `Path` and `Files`
+- `WatchService` at a concept level
+- serialization pitfalls
+
+## After Reading This Chapter, You Should Know
+
+- when character APIs are safer than raw byte APIs
+- why buffering improves practical I/O throughput
+- why serialization should be treated carefully rather than as a default persistence strategy
+
+#### Revision
+
+
+## Remember
+
+- `InputStream` works with bytes
+- `Reader` works with characters
+- `Path` and `Files` are the modern file API direction
+- buffering reduces repeated low-level I/O calls
+- Java serialization is powerful but easy to misuse
+
+## Interview Questions
+
+1. What is the difference between `InputStream` and `Reader`?
+2. Why does buffering matter?
+3. Why do many teams avoid default Java serialization for long-term formats?
+
 ## Famous Design Problems
 
 
@@ -2976,7 +3262,7 @@ This chapter introduces a famous design problem: keeping frequently used data cl
 
 ## Study Order
 
-1. Run [BuildingASimpleLruCache.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec14_famous_design_problems/ch01_cache_design_basics/topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java)
+1. Run [BuildingASimpleLruCache.java](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java)
 
 ## Why This Chapter Matters
 
@@ -3062,7 +3348,7 @@ This chapter teaches one practical clean-code idea: clarity improves when code n
 
 ## Study Order
 
-1. Run [RenamingAndExtractingMethods.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec15_clean_code_and_refactoring/ch01_readable_code_basics/topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java)
+1. Run [RenamingAndExtractingMethods.java](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java)
 
 ## Why This Chapter Matters
 
@@ -3121,6 +3407,7 @@ Current chapters:
 - `ch04_working_with_time`
 - `ch05_numbers_and_formatting`
 - `ch06_text_processing_and_regex`
+- `ch07_strings_in_depth`
 
 ## Before You Start
 
@@ -3157,9 +3444,9 @@ The goal is to understand how Java represents “value may be missing” in a cl
 
 ## Study Order
 
-1. Run [RepresentingOptionalValues.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch01_optional/topics/representing_optional_values/RepresentingOptionalValues.java)
-2. Run [TransformingOptionalValues.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch01_optional/topics/transforming_optional_values/TransformingOptionalValues.java)
-3. Run [ChoosingOptionalBoundaries.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch01_optional/topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java)
+1. Run [RepresentingOptionalValues.java](topics/representing_optional_values/RepresentingOptionalValues.java)
+2. Run [TransformingOptionalValues.java](topics/transforming_optional_values/TransformingOptionalValues.java)
+3. Run [ChoosingOptionalBoundaries.java](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java)
 
 ## Visual Map
 
@@ -3342,9 +3629,9 @@ Most bugs happen when teams mix these ideas together. A date without a zone is n
 
 ## Study Order
 
-1. Run [LocalDateTime.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch02_date_and_time/topics/local_date_time/LocalDateTime.java)
-2. Run [Zones.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch02_date_and_time/topics/zones/Zones.java)
-3. Run [Formatting.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch02_date_and_time/topics/formatting/Formatting.java)
+1. Run [LocalDateTime.java](topics/local_date_time/LocalDateTime.java)
+2. Run [Zones.java](topics/zones/Zones.java)
+3. Run [Formatting.java](topics/formatting/Formatting.java)
 
 ## Concept Map
 
@@ -3500,7 +3787,7 @@ This chapter teaches the concept of absence in data.
 
 ## Study Order
 
-1. Run [RepresentingAbsence.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch03_missing_values_and_optional/topics/representing_absence/RepresentingAbsence.java)
+1. Run [RepresentingAbsence.java](topics/representing_absence/RepresentingAbsence.java)
 2. Focus on the concept first: a value may exist or may be missing.
 
 #### Revision
@@ -3552,7 +3839,7 @@ This chapter teaches the concept of modeling dates, times, and schedules correct
 
 ## Study Order
 
-1. Run [SchedulingDeliveries.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch04_working_with_time/topics/scheduling_deliveries/SchedulingDeliveries.java)
+1. Run [SchedulingDeliveries.java](topics/scheduling_deliveries/SchedulingDeliveries.java)
 2. Focus on the concept first: business time is data, not just text.
 
 #### Revision
@@ -3604,7 +3891,7 @@ This chapter teaches the concept of presenting numeric values clearly and correc
 
 ## Study Order
 
-1. Run [FormattingPrices.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch05_numbers_and_formatting/topics/formatting_prices/FormattingPrices.java)
+1. Run [FormattingPrices.java](topics/formatting_prices/FormattingPrices.java)
 2. Focus on the concept first: internal numeric values and displayed values are not the same thing.
 
 #### Revision
@@ -3656,7 +3943,7 @@ This chapter teaches the concept of checking and transforming text data safely.
 
 ## Study Order
 
-1. Run [ValidatingUserInput.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch06_text_processing_and_regex/topics/validating_user_input/ValidatingUserInput.java)
+1. Run [ValidatingUserInput.java](topics/validating_user_input/ValidatingUserInput.java)
 2. Focus on the concept first: text from users must be checked before it is trusted.
 
 #### Revision
@@ -3700,6 +3987,50 @@ This chapter teaches the concept of checking and transforming text data safely.
 - which Java tool or pattern expresses that idea
 - what common mistake to avoid
 - how to explain the idea in plain English
+
+### Strings In Depth
+
+
+This chapter covers the string topics learners repeatedly stumble over in interviews and production code reviews.
+
+## The Problem
+
+Strings look simple until interning, `==`, builders, formatting, and regex all arrive in the same discussion.
+
+## Study Order
+
+1. Run [StringPoolAndEquals.java](topics/string_pool_and_equals/StringPoolAndEquals.java)
+2. Run [BuildersFormattingAndRegex.java](topics/builders_formatting_and_regex/BuildersFormattingAndRegex.java)
+
+## What This Chapter Covers
+
+- string pool and interning
+- `==` vs `.equals()`
+- `StringBuilder` vs `StringBuffer`
+- `String.format()` and text blocks
+- regular expressions in Java
+
+## After Reading This Chapter, You Should Know
+
+- why reference equality and value equality are different
+- why repeated string concatenation can become expensive
+- when regex helps and when it makes code harder to read
+
+#### Revision
+
+
+## Remember
+
+- `==` compares references, `.equals()` compares string content
+- the string pool lets identical string literals share storage
+- `StringBuilder` is the default mutable string builder in single-threaded code
+- `StringBuffer` is synchronized and usually not the first choice today
+
+## Interview Questions
+
+1. Why does `==` sometimes look like it works on strings and then fail later?
+2. When would you choose `StringBuilder` over `StringBuffer`?
+3. What role does the string pool play?
 
 ## Language Modeling And Modern Types
 
@@ -3749,9 +4080,9 @@ Older code often uses `instanceof`, then a cast, then more branching. Pattern ma
 
 ## Study Order
 
-1. Run [CheckingShapeWithInstanceof.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch01_pattern_matching/topics/checking_shape_with_instanceof/CheckingShapeWithInstanceof.java)
-2. Run [UnpackingRecordsWithPatterns.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch01_pattern_matching/topics/unpacking_records_with_patterns/UnpackingRecordsWithPatterns.java)
-3. Run [SwitchingOnRuntimeShape.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch01_pattern_matching/topics/switching_on_runtime_shape/SwitchingOnRuntimeShape.java)
+1. Run [CheckingShapeWithInstanceof.java](topics/checking_shape_with_instanceof/CheckingShapeWithInstanceof.java)
+2. Run [UnpackingRecordsWithPatterns.java](topics/unpacking_records_with_patterns/UnpackingRecordsWithPatterns.java)
+3. Run [SwitchingOnRuntimeShape.java](topics/switching_on_runtime_shape/SwitchingOnRuntimeShape.java)
 
 ## Concept Map
 
@@ -3905,9 +4236,9 @@ Without clear modeling, teams end up with verbose data classes, weak invariants,
 
 ## Study Order
 
-1. Run [ModelingImmutableDataWithRecords.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/topics/modeling_immutable_data_with_records/ModelingImmutableDataWithRecords.java)
-2. Run [ClosingHierarchiesWithSealedTypes.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/topics/closing_hierarchies_with_sealed_types/ClosingHierarchiesWithSealedTypes.java)
-3. Run [ExhaustiveSealedBranching.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/topics/exhaustive_sealed_branching/ExhaustiveSealedBranching.java)
+1. Run [ModelingImmutableDataWithRecords.java](topics/modeling_immutable_data_with_records/ModelingImmutableDataWithRecords.java)
+2. Run [ClosingHierarchiesWithSealedTypes.java](topics/closing_hierarchies_with_sealed_types/ClosingHierarchiesWithSealedTypes.java)
+3. Run [ExhaustiveSealedBranching.java](topics/exhaustive_sealed_branching/ExhaustiveSealedBranching.java)
 
 ## Concept Map
 
@@ -4093,9 +4424,9 @@ Modules help make those boundaries visible.
 
 ## Study Order
 
-1. Run [DeclaringModuleBoundaries.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/topics/declaring_module_boundaries/DeclaringModuleBoundaries.java)
-2. Run [ModuleBoundaries.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/topics/module_boundaries/ModuleBoundaries.java)
-3. Run [PluggableImplementations.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/topics/pluggable_implementations/PluggableImplementations.java)
+1. Run [DeclaringModuleBoundaries.java](topics/declaring_module_boundaries/DeclaringModuleBoundaries.java)
+2. Run [ModuleBoundaries.java](topics/module_boundaries/ModuleBoundaries.java)
+3. Run [PluggableImplementations.java](topics/pluggable_implementations/PluggableImplementations.java)
 
 ## Concept Map
 
@@ -4235,7 +4566,7 @@ This chapter teaches the concept of splitting a large system into understandable
 
 ## Study Order
 
-1. Run [SeparatingSystemBoundaries.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch02_modular_design/topics/separating_system_boundaries/SeparatingSystemBoundaries.java)
+1. Run [SeparatingSystemBoundaries.java](topics/separating_system_boundaries/SeparatingSystemBoundaries.java)
 2. Focus on the concept first: boundaries reduce coupling.
 
 #### Revision
@@ -4287,7 +4618,7 @@ This chapter teaches the concept of adapting software for users in different loc
 
 ## Study Order
 
-1. Run [ShowingMessagesByLocale.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch03_building_for_many_languages/topics/showing_messages_by_locale/ShowingMessagesByLocale.java)
+1. Run [ShowingMessagesByLocale.java](topics/showing_messages_by_locale/ShowingMessagesByLocale.java)
 2. Focus on the concept first: user-facing text depends on language and region.
 
 #### Revision
@@ -4339,7 +4670,7 @@ This chapter teaches the concept of validating inputs and reducing avoidable bug
 
 ## Study Order
 
-1. Run [ValidatingCheckoutInput.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch04_writing_safe_java/topics/validating_checkout_input/ValidatingCheckoutInput.java)
+1. Run [ValidatingCheckoutInput.java](topics/validating_checkout_input/ValidatingCheckoutInput.java)
 2. Focus on the concept first: trusted systems still need defensive boundaries.
 
 #### Revision
@@ -4390,6 +4721,7 @@ This chapter teaches the concept of validating inputs and reducing avoidable bug
 Current chapters:
 
 - `ch01_testing_and_quality`
+- `ch02_junit5_and_test_doubles`
 
 ## Before You Start
 
@@ -4431,9 +4763,9 @@ This chapter focuses on small, readable, repeatable verification.
 
 ## Study Order
 
-1. Run [DesigningTestsAroundBusinessRules.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch01_testing_and_quality/topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java)
-2. Run [WritingReadableJUnitTests.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch01_testing_and_quality/topics/writing_readable_junit_tests/WritingReadableJUnitTests.java)
-3. Run [CheckingOneRuleWithManyInputs.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch01_testing_and_quality/topics/checking_one_rule_with_many_inputs/CheckingOneRuleWithManyInputs.java)
+1. Run [DesigningTestsAroundBusinessRules.java](topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java)
+2. Run [WritingReadableJUnitTests.java](topics/writing_readable_junit_tests/WritingReadableJUnitTests.java)
+3. Run [CheckingOneRuleWithManyInputs.java](topics/checking_one_rule_with_many_inputs/CheckingOneRuleWithManyInputs.java)
 
 ## Concept Map
 
@@ -4566,6 +4898,51 @@ A: Because poor tests remain poor even if they use a good tool.
 - what common mistake to avoid
 - how to explain the idea in plain English
 
+### Junit5 And Test Doubles
+
+
+This chapter covers the testing tools and habits usually needed in real teams after the first “assert one value” examples.
+
+## The Problem
+
+Many learners know the idea of a test but still do not know lifecycle hooks, parameterized tests, or how to isolate collaborators cleanly.
+
+## Study Order
+
+1. Run [Junit5LifecycleAndParameters.java](topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java)
+2. Run [TestDoublesAndVerification.java](topics/test_doubles_and_verification/TestDoublesAndVerification.java)
+
+## What This Chapter Covers
+
+- JUnit 5 lifecycle ideas
+- parameterized tests
+- test doubles, stubbing, and verification
+- how Mockito fits into this mental model
+- code coverage as a signal, not a target by itself
+
+## After Reading This Chapter, You Should Know
+
+- why tests should express behavior rather than framework ceremony
+- how parameterized tests reduce duplicated assertion code
+- why mocks should support a test instead of dominating it
+
+#### Revision
+
+
+## Remember
+
+- JUnit 5 gives structure around setup, execution, and assertion
+- parameterized tests help when one rule needs many inputs
+- test doubles isolate dependencies
+- Mockito is a popular library for stubbing and verification, but the core idea is test doubles, not Mockito syntax
+- coverage numbers do not replace test quality judgment
+
+## Interview Questions
+
+1. When would you use a parameterized test?
+2. What is the difference between a stub and a mock?
+3. Why is high code coverage not enough by itself?
+
 ## Data Structures And Complexity
 
 
@@ -4657,7 +5034,7 @@ This chapter trains that question first.
 
 ## Study Order
 
-1. Run [MeasuringGrowthWithBigO.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch01_reasoning_about_time_and_space/topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java)
+1. Run [MeasuringGrowthWithBigO.java](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java)
 
 ## Quick Summary
 
@@ -4754,8 +5131,8 @@ This chapter turns those hidden costs into visible mental models.
 
 ## Study Order
 
-1. Run [ArrayListGrowthAndLookup.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java)
-2. Run [HashMapBucketsAndCollisions.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java)
+1. Run [ArrayListGrowthAndLookup.java](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java)
+2. Run [HashMapBucketsAndCollisions.java](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java)
 
 ## Quick Summary
 
@@ -4854,8 +5231,8 @@ Without a sorting/searching model, code either stays brute-force or uses binary 
 
 ## Study Order
 
-1. Run [SortingTradeoffs.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/topics/sorting_tradeoffs/SortingTradeoffs.java)
-2. Run [UsingBinarySearchCorrectly.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java)
+1. Run [SortingTradeoffs.java](topics/sorting_tradeoffs/SortingTradeoffs.java)
+2. Run [UsingBinarySearchCorrectly.java](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java)
 
 ## Quick Summary
 
@@ -4944,8 +5321,8 @@ Sliding window and two pointers are valuable because they reduce repeated work w
 
 ## Study Order
 
-1. Run [SlidingWindowProblems.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/sliding_window_problems/SlidingWindowProblems.java)
-2. Run [ScanningSortedDataWithTwoPointers.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java)
+1. Run [SlidingWindowProblems.java](topics/sliding_window_problems/SlidingWindowProblems.java)
+2. Run [ScanningSortedDataWithTwoPointers.java](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java)
 
 ## Quick Summary
 
@@ -5015,4 +5392,299 @@ Both tasks look like nested-loop problems at first. Both become simpler when you
 - which Java tool or pattern expresses that idea
 - what common mistake to avoid
 - how to explain the idea in plain English
+
+## Company Interview Tracks
+
+
+This section turns the company question bank into real study chapters with runnable Java examples.
+
+## Why This Section Exists
+
+Many learners prepare for "FAANG-style interviews" as if every company asks the same thing.
+
+That is wrong.
+
+- Google rewards structured problem solving and debugging discipline
+- Meta rewards practical product-scale engineering
+- Amazon adds strong ownership and tradeoff thinking
+- Coinbase cares deeply about idempotency and money correctness
+- Jane Street values precise reasoning and algorithm clarity
+- Netflix pushes reliability and operational judgment
+- MakeMyTrip and HotelTrader care about travel search, availability, freshness, and partner APIs
+
+## How To Read This Section
+
+- start with the chapter matching your target company style
+- run the Java file before reading the whole topic guide
+- explain the answer in your own words after each example
+- focus on the decision rule, not only the code syntax
+
+## Chapters
+
+- `ch01_google_meta_amazon`
+- `ch02_apple_coinbase_jane_street`
+- `ch03_netflix_makemytrip_hoteltrader`
+
+## What Makes This Section Different
+
+- each topic has a company lens
+- each example solves a realistic backend or systems problem
+- the goal is not memorized answers; the goal is strong engineering reasoning
+
+## Recommended Next Step
+
+Pair this section with:
+
+- `sec02_collections`
+- `sec04_streams_and_functional_style`
+- `sec05_multithreading_and_concurrency`
+- `sec20_data_structures_and_complexity`
+
+### Google Meta Amazon
+
+
+This chapter groups the most common backend interview pressure from Google, Meta, and Amazon.
+
+## The Problem
+
+These companies rarely care about Java syntax in isolation.
+They care whether you can:
+
+- model the problem clearly
+- choose the right data structure
+- design safe retry behavior
+- debug regressions methodically
+
+## Run This First
+
+1. Run [SearchAutocompleteDesign.java](topics/search_autocomplete_design/SearchAutocompleteDesign.java)
+2. Run [IdempotentReservations.java](topics/idempotent_reservations/IdempotentReservations.java)
+3. Run [LatencyDebugPlaybook.java](topics/latency_debug_playbook/LatencyDebugPlaybook.java)
+
+## What To Look For
+
+- autocomplete is about retrieval, ranking, and hot-prefix caching
+- reservations are about retry safety and business invariants
+- latency debugging is about narrowing the blast radius before guessing
+
+## Company Lens
+
+| Company | Strong signal |
+| --- | --- |
+| Google | clear problem decomposition and measurement |
+| Meta | practical product-scale judgment |
+| Amazon | idempotency, ownership, customer impact |
+
+## Interview Focus
+
+Q: What makes an answer strong here?  
+A: A strong answer explains the business risk, the data structure choice, the failure mode, and the metric you would watch.
+
+## Next Chapter
+
+Go next to `ch02_apple_coinbase_jane_street` if you want stronger API design, correctness, and algorithm pressure.
+
+#### Revision
+
+
+## Five Key Ideas
+
+- autocomplete answers need indexing, ranking, and caching
+- reservation flows must be idempotent under retry
+- debugging should narrow before it optimizes
+- metrics matter as much as design shape
+- strong interview answers connect code to user impact
+
+## Three Mistakes To Avoid
+
+- giving only class names without explaining the tradeoff
+- treating retries as a client problem instead of a system problem
+- talking about performance without naming a metric
+
+## Three Interview Questions
+
+1. How would you design low-latency search suggestions?
+2. Why must reservations be idempotent?
+3. How do you debug a release that caused latency regression?
+
+## After Reading This Chapter, You Should Know
+
+- how Google, Meta, and Amazon style backend questions differ
+- how to defend data-structure and retry choices
+- how to answer with metrics, not just buzzwords
+
+### Apple Coinbase Jane Street
+
+
+This chapter mixes three interview styles that push on correctness and thought quality from different angles.
+
+## The Problem
+
+- Apple pushes for safe APIs and high-quality engineering judgment
+- Coinbase pushes for correctness in money movement and retry handling
+- Jane Street pushes for precise reasoning and algorithm clarity
+
+## Run This First
+
+1. Run [SafeApiDesign.java](topics/safe_api_design/SafeApiDesign.java)
+2. Run [TransferIdempotency.java](topics/transfer_idempotency/TransferIdempotency.java)
+3. Run [RunningMedianPrices.java](topics/running_median_prices/RunningMedianPrices.java)
+
+## What To Look For
+
+- API design is about making misuse harder
+- transfer correctness is about idempotency and source of truth
+- running median is about invariants, not only code syntax
+
+## Company Lens
+
+| Company | Strong signal |
+| --- | --- |
+| Apple | API safety and correctness |
+| Coinbase | financial integrity and idempotency |
+| Jane Street | precise reasoning and clean invariants |
+
+## Next Chapter
+
+Go next to `ch03_netflix_makemytrip_hoteltrader` for resilience, caching, and travel-platform design.
+
+#### Revision
+
+
+## Five Key Ideas
+
+- good APIs reduce misuse
+- money flows must be retry-safe
+- algorithm answers should state invariants out loud
+- correctness often matters before availability
+- elegant reasoning beats vague confidence
+
+## Three Interview Questions
+
+1. How do you make an API hard to misuse?
+2. How do you prevent duplicate money movement?
+3. How do you maintain the median of a price stream?
+
+## After Reading This Chapter, You Should Know
+
+- how API safety, financial correctness, and algorithm discipline connect
+- how to defend answers with invariants and failure modes
+
+### Netflix Makemytrip Hoteltrader
+
+
+This chapter is about resilience, caching, and freshness in systems that serve users and partners continuously.
+
+## The Problem
+
+- Netflix-style questions care about resilience and graceful degradation
+- MakeMyTrip-style questions care about search, booking, pricing, and cache safety
+- HotelTrader-style questions care about hotel availability, partner APIs, and freshness
+
+## Run This First
+
+1. Run [ResilientSignupFlow.java](topics/resilient_signup_flow/ResilientSignupFlow.java)
+2. Run [HotelSearchCache.java](topics/hotel_search_cache/HotelSearchCache.java)
+3. Run [AvailabilityFreshness.java](topics/availability_freshness/AvailabilityFreshness.java)
+
+## What To Look For
+
+- resilience starts with explicit fallback boundaries
+- caching is powerful only when freshness rules are honest
+- marketplace APIs need metrics around mismatch and lag, not only latency
+
+## Company Lens
+
+| Company | Strong signal |
+| --- | --- |
+| Netflix | controlled failure handling |
+| MakeMyTrip | cache and booking correctness |
+| HotelTrader | inventory freshness and partner reliability |
+
+## Next Step
+
+Go back to the top-level company resource after this chapter and use it as a revision map instead of your main lesson page.
+
+#### Revision
+
+
+## Five Key Ideas
+
+- graceful degradation needs clear boundaries
+- caches need freshness rules, not only speed
+- booking systems must protect correctness under retry
+- partner platforms need mismatch and sync-lag metrics
+- operational transparency is part of product quality
+
+## Three Interview Questions
+
+1. How do you reduce damage from a failing dependency?
+2. How do you cache search results without lying to users?
+3. Which metrics matter for a travel or partner inventory platform?
+
+## After Reading This Chapter, You Should Know
+
+- how resilience, caching, and freshness connect
+- which metrics make these answers credible
+
+## Build And Tooling
+
+
+Current chapters:
+
+- `ch01_maven_and_gradle_basics`
+
+## Before You Start
+
+- Prerequisites: sec01_fundamentals. Testing and dependency management become easier after this section.
+- This section prepares you for: reading build files, understanding dependency scopes, and explaining packaging choices.
+- Suggested pace: 1 to 2 focused sessions.
+
+## Why This Section Matters
+
+A Java developer who cannot read `pom.xml` or `build.gradle` will struggle in real projects even with strong language knowledge.
+
+### Maven And Gradle Basics
+
+
+This chapter gives the practical build-system explanation many Java learners never get early enough.
+
+## The Problem
+
+You may know Java syntax but still feel lost when a project opens with `pom.xml`, `build.gradle`, scopes, plugins, jars, or Spring Boot packaging.
+
+## Study Order
+
+1. Run [BuildFilesAndDependencyScopes.java](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java)
+2. Run [JarWarAndSpringBootWhy.java](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java)
+
+## What This Chapter Covers
+
+- Maven vs Gradle
+- project build files
+- dependency scopes
+- jar vs war vs fat jar
+- why Spring Boot changed packaging conversations
+
+## After Reading This Chapter, You Should Know
+
+- what a build file is really responsible for
+- why dependency scopes affect runtime behavior
+- why many modern Java services ship as executable jars
+
+#### Revision
+
+
+## Remember
+
+- Maven is convention-heavy XML configuration
+- Gradle is code-oriented build configuration
+- dependency scopes decide where a library is available
+- jars package classes, wars package web apps, fat jars package an app with dependencies
+
+## Interview Questions
+
+1. What is the practical difference between Maven and Gradle?
+2. What does a dependency scope control?
+3. Why are executable jars common in Spring Boot projects?
 

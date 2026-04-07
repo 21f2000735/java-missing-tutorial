@@ -4,97 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AUTHORING_GUIDE.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BOOK.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/BOOK_MANUSCRIPT.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CHAPTER_QUALITY_CHECKLIST.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/COMPANY_QUESTION_BANK.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/COMPARE_COLLECTIONS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/COMPARE_CONCURRENCY.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/COMPARE_STREAMS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/CURRICULUM.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/DEEP_DIVE_STANDARD.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/HIGH_DEMAND_JAVA_TOPICS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/INTERVIEW_PROBLEM_APPROACH.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/JAVA_7_TO_25.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/JAVA_MIGRATION_GUIDES.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ROADMAP_099.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TOPIC_QUALITY_RUBRIC.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TOP_20_BOOKS.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/_baseUniq-CZb2FzZn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/arc-6ib1OHrY.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/architectureDiagram-IEHRJDOE-qX8M10JX.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/blockDiagram-JOT3LUYC-DQWyySzF.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/c4Diagram-VJAJSXHY-qvfJ1lyb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/channel-D9kmjqIq.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-4BMEZGHF-B8JSj07t.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-A2AXSNBT-gTx4Bvf7.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-AEK57VVT-BsYOat1U.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-D6G4REZN-CTrCZgjv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-RZ5BOZE2-CdUgiHUj.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-XZIHB7SX-B44mwor5.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-GIVACNV2-DjOtHOCX.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-v2-COTLJTTW-DjOtHOCX.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/clone-BlFxt54H.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/dagre-OKDRZEBW-vIniKbsr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-SSKATNLV-CxQvf3Gw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-VNBRO52H-CzemTZZp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/erDiagram-Q7BY3M3F-D6_XK4Um.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/flowDiagram-4HSFHLVR-Djm48mb9.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/ganttDiagram-APWFNJXF-DkVuFnxa.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/gitGraphDiagram-7IBYFJ6S-DMy_HQv-.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/graph-BIX_qqsH.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/index-CZAugqAa.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/index-DjoPx6vY.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/infoDiagram-PH2N3AL5-BB-x_kr-.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/journeyDiagram-U35MCT3I-DrxkWp-K.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/kanban-definition-NDS4AKOZ-CaA8_9eG.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/layout-Jvc11JYu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/linear-_OiNlUY1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/mermaid.core-7yfXo9iE.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/min-BqFNbjSh.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/mindmap-definition-ALO5MXBD-DNF0FSM2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/pieDiagram-IB7DONF6-Bzrb7qpE.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/prism-CN9wF-2A.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/prism-java-DFy20NIK.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/quadrantDiagram-7GDLP6J5-DLEzIRog.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/radar-MK3ICKWK-Bwlkl_li.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/requirementDiagram-KVF5MWMF-DB3-I9T1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/sankeyDiagram-QLVOVGJD-Dd5lRjTm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/sequenceDiagram-X6HHIX6F-Br2r83Et.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-DGXRK772-Cj8tcUHx.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-v2-YXO3MK2T-BVSgnIhX.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/timeline-definition-BDJGKUSR-DG--i-Ky.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/xychartDiagram-VJFVF3MP-Cum8oDVa.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/RunAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/RunAll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec02_collections/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec02_collections/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec08_internal_of_jvm/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec08_internal_of_jvm/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec11_exception_handling/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec11_exception_handling/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec13_io_and_data_access/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec13_io_and_data_access/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec16_core_data_time_and_text/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec16_core_data_time_and_text/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec19_testing_and_quality/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec19_testing_and_quality/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/BOOK.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/BOOK.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/CURRICULUM.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/CURRICULUM.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/ROADMAP_099.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/ROADMAP_099.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/build_site.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_site.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/bundle_chapter_guides.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/bundle_chapter_guides.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/site/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/RunAll.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/RunAll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec08_internal_of_jvm/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec08_internal_of_jvm/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec11_exception_handling/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec11_exception_handling/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec13_io_and_data_access/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec13_io_and_data_access/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec19_testing_and_quality/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec19_testing_and_quality/SectionGuide.md" afterDir="false" />
-    </list>
+    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -213,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775560834747</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update">
+      <option name="closed" value="true" />
+      <created>1775564999823</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1775564999823</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">

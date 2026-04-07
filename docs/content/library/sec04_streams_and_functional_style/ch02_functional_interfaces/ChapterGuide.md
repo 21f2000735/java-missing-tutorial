@@ -14,7 +14,7 @@ If a rule should be supplied from outside, Java needs a way to pass that rule ar
 
 ## Run This First
 
-1. Run [DefiningFunctions.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch02_functional_interfaces/topics/defining_functions/DefiningFunctions.java)
+1. Run [DefiningFunctions.java](topics/defining_functions/DefiningFunctions.java)
 
 ## What To Look For
 

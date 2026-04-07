@@ -14,9 +14,9 @@ If the code is really “take data, transform it, produce an answer,” streams 
 
 ## Run This First
 
-1. Run [StreamPipeline.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java)
-2. Run [Collectors.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java)
-3. Run [ParallelStreams.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/parallel_streams/ParallelStreams.java)
+1. Run [StreamPipeline.java](topics/stream_pipeline/StreamPipeline.java)
+2. Run [Collectors.java](topics/collectors/Collectors.java)
+3. Run [ParallelStreams.java](topics/parallel_streams/ParallelStreams.java)
 
 ## What To Look For
 

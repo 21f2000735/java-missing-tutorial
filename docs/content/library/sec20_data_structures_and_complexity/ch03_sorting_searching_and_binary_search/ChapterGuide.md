@@ -14,8 +14,8 @@ Without a sorting/searching model, code either stays brute-force or uses binary 
 
 ## Study Order
 
-1. Run [SortingTradeoffs.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/topics/sorting_tradeoffs/SortingTradeoffs.java)
-2. Run [UsingBinarySearchCorrectly.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java)
+1. Run [SortingTradeoffs.java](topics/sorting_tradeoffs/SortingTradeoffs.java)
+2. Run [UsingBinarySearchCorrectly.java](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java)
 
 ## Quick Summary
 

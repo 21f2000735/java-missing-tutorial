@@ -8,8 +8,8 @@ Many learners hear JVM, JRE, JDK, classpath, and class loading in one sentence a
 
 ## Study Order
 
-1. Run [RuntimeLayers.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/RuntimeLayers.java)
-2. Run [ClassLoadingLifecycle.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/ClassLoadingLifecycle.java)
+1. Run [RuntimeLayers.java](topics/runtime_layers/RuntimeLayers.java)
+2. Run [ClassLoadingLifecycle.java](topics/class_loading_lifecycle/ClassLoadingLifecycle.java)
 
 ## What This Chapter Covers
 

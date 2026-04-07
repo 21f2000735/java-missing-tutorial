@@ -14,9 +14,9 @@ They care whether you can:
 
 ## Run This First
 
-1. Run [SearchAutocompleteDesign.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/search_autocomplete_design/SearchAutocompleteDesign.java)
-2. Run [IdempotentReservations.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/idempotent_reservations/IdempotentReservations.java)
-3. Run [LatencyDebugPlaybook.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/topics/latency_debug_playbook/LatencyDebugPlaybook.java)
+1. Run [SearchAutocompleteDesign.java](topics/search_autocomplete_design/SearchAutocompleteDesign.java)
+2. Run [IdempotentReservations.java](topics/idempotent_reservations/IdempotentReservations.java)
+3. Run [LatencyDebugPlaybook.java](topics/latency_debug_playbook/LatencyDebugPlaybook.java)
 
 ## What To Look For
 
