@@ -321,6 +321,16 @@
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .learning-step-row {
+    grid-template-columns: 1fr;
+  }
+
+  .learning-path-summary-footer,
+  .flashcard-session-toggle {
+    display: grid;
+    justify-content: stretch;
+  }
 }
 
 html[data-theme="dark"],
@@ -1364,6 +1374,158 @@ input:focus-visible {
   gap: 1rem;
 }
 
+.learning-paths-card,
+.daily-challenge-card,
+.flashcard-shell {
+  height: 100%;
+}
+
+.learning-path-grid,
+.flashcard-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.9rem;
+}
+
+.learning-path-summary,
+.learning-week-card,
+.daily-challenge-prompt,
+.flashcard-card,
+.flashcard-empty,
+.flashcard-stat {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.learning-path-summary {
+  padding: 1rem;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.learning-path-summary:hover {
+  transform: translateY(-1px);
+  border-color: var(--line-strong);
+}
+
+.learning-path-summary-active {
+  border-color: rgba(175, 91, 12, 0.38);
+  background: linear-gradient(180deg, rgba(255, 245, 232, 0.92), rgba(247, 235, 213, 0.88));
+}
+
+.learning-path-percent {
+  font-family: "Fraunces", serif;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.learning-path-summary-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem;
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.learning-path-detail {
+  margin-top: 1.2rem;
+}
+
+.learning-week-list,
+.learning-step-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.learning-week-card,
+.flashcard-card,
+.flashcard-empty {
+  padding: 1rem;
+}
+
+.learning-step-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 0.9rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.52);
+}
+
+.learning-step-row-done {
+  background: rgba(58, 106, 87, 0.12);
+}
+
+.learning-step-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.learning-step-toggle-done {
+  border-color: rgba(58, 106, 87, 0.24);
+  background: rgba(58, 106, 87, 0.18);
+}
+
+.learning-step-copy {
+  min-width: 0;
+}
+
+.daily-challenge-prompt,
+.daily-challenge-answer,
+.flashcard-face,
+.flashcard-answer {
+  padding: 1rem 1.05rem;
+}
+
+.daily-challenge-input {
+  border-radius: 1rem;
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.86);
+  color: var(--text);
+}
+
+.daily-challenge-answer,
+.flashcard-answer {
+  background: rgba(58, 106, 87, 0.08);
+  border: 1px solid rgba(58, 106, 87, 0.14);
+  border-radius: 1rem;
+}
+
+.flashcard-session-toggle {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.flashcard-stat {
+  padding: 0.95rem 1rem;
+}
+
+.flashcard-stat strong {
+  display: block;
+  margin-top: 0.25rem;
+  font-family: "Fraunces", serif;
+  font-size: 1.35rem;
+}
+
+.flashcard-face {
+  border-radius: 1rem;
+  background: linear-gradient(180deg, rgba(255, 248, 237, 0.95), rgba(245, 232, 210, 0.82));
+}
+
 .company-card {
   padding: 1.35rem;
 }
@@ -1818,6 +1980,37 @@ input:focus-visible {
   color: var(--text);
 }
 
+.theme-dark .learning-path-summary,
+.theme-dark .learning-week-card,
+.theme-dark .daily-challenge-prompt,
+.theme-dark .flashcard-card,
+.theme-dark .flashcard-empty,
+.theme-dark .flashcard-stat,
+.theme-dark .learning-step-row,
+.theme-dark .daily-challenge-input {
+  background: rgba(40, 34, 28, 0.88);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+.theme-dark .learning-path-summary-active,
+.theme-dark .flashcard-face {
+  background: linear-gradient(180deg, rgba(33, 29, 25, 0.98), rgba(25, 21, 18, 0.94));
+}
+
+.theme-dark .daily-challenge-answer,
+.theme-dark .flashcard-answer,
+.theme-dark .learning-step-row-done {
+  background: rgba(107, 164, 141, 0.12);
+  border-color: rgba(107, 164, 141, 0.18);
+}
+
+.theme-dark .learning-step-toggle {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1896,6 +2089,10 @@ input:focus-visible {
   .prerequisite-grid,
   .topic-brief-grid {
     grid-template-columns: 1fr;
+  }
+
+  .learning-step-row {
+    grid-template-columns: auto minmax(0, 1fr);
   }
 
   .code-cta {

@@ -26,6 +26,12 @@ import {
   normalizeManifest,
   resolveRouteMetadata
 } from './lib/site-manifest.js';
+import { flattenCompanyQuestions } from './lib/study-tools.js';
+import { useLearningPathState } from './hooks/use-learning-path-state.js';
+import { useFlashcardState } from './hooks/use-flashcard-state.js';
+import LearningPathsBoard from './components/study/LearningPathsBoard.jsx';
+import DailyChallengeCard from './components/study/DailyChallengeCard.jsx';
+import FlashcardStudyPanel from './components/study/FlashcardStudyPanel.jsx';
 
 marked.setOptions({
   gfm: true,
@@ -991,7 +997,6 @@ function parseCompanyQuestionBank(raw = '') {
   flushCompany();
   return { overview, companies };
 }
-
 function useHashRoute() {
   const [route, setRoute] = useState(() => HOME_ROUTE);
 
@@ -1724,7 +1729,6 @@ function useReadingState() {
     saveQuizScore
   };
 }
-
 function useFeedbackState() {
   const [votes, setVotes] = useState(() => readStorageJson('java-book-feedback', {}));
 
@@ -2234,7 +2238,7 @@ function PrerequisiteMapCard({ title = 'Prerequisite Map', required = [], next =
   );
 }
 
-function CompanyQuestionBankPage({ raw, manifest, resource, routeKey, readingState, feedbackState }) {
+function CompanyQuestionBankPage({ raw, manifest, resource, routeKey, readingState, feedbackState, flashcardState }) {
   const parsed = useMemo(() => parseCompanyQuestionBank(raw), [raw]);
   const [companyFilter, setCompanyFilter] = useState('all');
   const [bucketFilter, setBucketFilter] = useState('all');
@@ -2261,6 +2265,7 @@ function CompanyQuestionBankPage({ raw, manifest, resource, routeKey, readingSta
     }
     return true;
   });
+  const filteredQuestions = useMemo(() => flattenCompanyQuestions({ ...parsed, companies: filteredCompanies }), [parsed, filteredCompanies]);
 
   return (
     <PageLayout
@@ -2288,6 +2293,8 @@ function CompanyQuestionBankPage({ raw, manifest, resource, routeKey, readingSta
           Filter one company, answer aloud before reading the sample answer, then jump into the linked company-interview section chapters for runnable code.
         </InsightCard>
       </div>
+
+      <FlashcardStudyPanel questions={filteredQuestions} flashcardState={flashcardState} />
 
       <div className="content-card mb-4">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
@@ -2376,7 +2383,35 @@ function CompanyQuestionBankPage({ raw, manifest, resource, routeKey, readingSta
   );
 }
 
-function HomePage({ manifest }) {
+function HomePage({ manifest, fetchText, learningPathState }) {
+  const [challengeQuestions, setChallengeQuestions] = useState([]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadChallengeQuestions() {
+      const questionResource = manifest.resources.find((resource) => resource.slug === 'COMPANY_QUESTION_BANK');
+      if (!questionResource) {
+        return;
+      }
+      try {
+        const raw = await fetchText(questionResource.contentPath);
+        if (!cancelled) {
+          setChallengeQuestions(flattenCompanyQuestions(parseCompanyQuestionBank(raw)));
+        }
+      } catch {
+        if (!cancelled) {
+          setChallengeQuestions([]);
+        }
+      }
+    }
+
+    loadChallengeQuestions();
+    return () => {
+      cancelled = true;
+    };
+  }, [manifest, fetchText]);
+
   const featuredSections = manifest.sections.filter((section) => (
     ['sec02_collections', 'sec04_streams_and_functional_style', 'sec05_multithreading_and_concurrency', 'sec08_internal_of_jvm', 'sec21_company_interview_tracks']
       .includes(section.slug)
@@ -2560,6 +2595,11 @@ function HomePage({ manifest }) {
           </div>
         </div>
       </section>
+
+      <div className="landing-two-column mb-4">
+        <LearningPathsBoard learningPathState={learningPathState} />
+        <DailyChallengeCard questions={challengeQuestions} />
+      </div>
 
       <div className="content-card landing-roadmap-card">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
@@ -2883,7 +2923,9 @@ export default function App() {
   const [error, setError] = useState('');
   const contentCache = useRef(new Map());
   const readingState = useReadingState();
+  const learningPathState = useLearningPathState();
   const feedbackState = useFeedbackState();
+  const flashcardState = useFlashcardState();
   const uiPreferences = useUiPreferences();
 
   useEffect(() => {
@@ -3094,7 +3136,16 @@ export default function App() {
 
         <section className="content-column">
           <div className="content-wrap">
-            <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} readingState={readingState} feedbackState={feedbackState} uiPreferences={uiPreferences} />
+            <RouteRenderer
+              route={route}
+              manifest={manifest}
+              fetchText={fetchText}
+              readingState={readingState}
+              learningPathState={learningPathState}
+              feedbackState={feedbackState}
+              flashcardState={flashcardState}
+              uiPreferences={uiPreferences}
+            />
           </div>
           <footer className="site-footer content-card">
             <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
@@ -3118,7 +3169,7 @@ export default function App() {
   );
 }
 
-function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState, uiPreferences }) {
+function RouteRenderer({ route, manifest, fetchText, readingState, learningPathState, feedbackState, flashcardState, uiPreferences }) {
   const [content, setContent] = useState({ status: 'loading', data: null, error: '' });
   const [quizOpen, setQuizOpen] = useState(false);
 
@@ -3290,7 +3341,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
 
   const data = content.data;
   if (data.type === 'home') {
-    return <HomePage manifest={manifest} />;
+    return <HomePage manifest={manifest} fetchText={fetchText} learningPathState={learningPathState} />;
   }
 
   if (data.type === 'progress') {
@@ -3308,6 +3359,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
           routeKey={routeKey}
           readingState={readingState}
           feedbackState={feedbackState}
+          flashcardState={flashcardState}
         />
       );
     }
