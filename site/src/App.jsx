@@ -26,9 +26,59 @@ import {
   normalizeManifest,
   resolveRouteMetadata
 } from './lib/site-manifest.js';
-import { flattenCompanyQuestions } from './lib/study-tools.js';
+import {
+  badgeClassForTone,
+  bulletItems,
+  effectiveRunner,
+  extractCodePreview,
+  extractTopicLessonFlow,
+  findGuideSection,
+  firstNonEmpty,
+  getSectionPrerequisiteInfo,
+  inferChapterJavaVersion,
+  inferTopicMode,
+  matchesVersionFilter,
+  modePresentation,
+  normalizeInterviewQuestions,
+  normalizeJavaVersion,
+  numberedItems,
+  parseCompanyQuestionBank,
+  parseFrontmatter,
+  parseGuide,
+  resolveVersionMeta,
+  scoreLabel,
+  statusTone,
+  titleFromSlug,
+  truncateText
+} from './lib/content-helpers.js';
+import {
+  HIGH_DEMAND_TOPICS,
+  PLAYGROUND_LINKS,
+  RESOURCE_DESCRIPTIONS,
+  SECTION_PROFILES,
+  resourceSummaryFromSlug
+} from './lib/site-data.js';
+import { SearchBox } from './components/layout/Sidebar.jsx';
+import Sidebar from './components/layout/Sidebar.jsx';
+import { CodeBlock, LessonSectionContent, MarkdownBlock } from './components/content/MarkdownContent.jsx';
+import {
+  BulletList,
+  CalloutCard,
+  FeedbackBar,
+  HeaderPanel,
+  InPageToc,
+  InsightCard,
+  PageLayout,
+  QuickLinkRail,
+  RandomTopicButton,
+  ReadingStateBar
+} from './components/common/AppChrome.jsx';
+import HomePage from './components/pages/HomePage.jsx';
+import CompanyQuestionBankPage from './components/pages/CompanyQuestionBankPage.jsx';
+import ProgressPage from './components/pages/ProgressPage.jsx';
 import { useLearningPathState } from './hooks/use-learning-path-state.js';
 import { useFlashcardState } from './hooks/use-flashcard-state.js';
+import { useFeedbackState, useHashRoute, useReadingState, useUiPreferences } from './hooks/use-app-state.js';
 import LearningPathsBoard from './components/study/LearningPathsBoard.jsx';
 import DailyChallengeCard from './components/study/DailyChallengeCard.jsx';
 import FlashcardStudyPanel from './components/study/FlashcardStudyPanel.jsx';
@@ -66,68 +116,6 @@ async function loadMermaid() {
   }
   return mermaidLoader;
 }
-
-const RESOURCE_DESCRIPTIONS = {
-  README: 'What this learning repo is trying to become and how to use it without getting lost.',
-  PLANNING: 'A short map of the planning, roadmap, quality, and book-building documents that support the site.',
-  BOOK: 'A book-style reading order for people who want narrative flow instead of random browsing.',
-  CURRICULUM: 'Section-by-section map so similar concepts stay together and the learning path feels intentional.',
-  ROADMAP_099: 'The longer curriculum direction and how this content can expand over time.',
-  TOP_20_BOOKS: 'The books and references shaping the code examples, tradeoffs, and deeper explanations.',
-  BOOK_MANUSCRIPT: 'A combined manuscript view when you want to read the material like one long book.',
-  OCJP_TRACK: 'A guided path for certification-focused readers who want objective coverage, revision order, and practice priorities.',
-  INTERVIEW_TRACK: 'A guided path for coding, backend, debugging, and company-style interview preparation across the repo.',
-  MODERN_JAVA_TRACK: 'A guided path for readers moving from older Java to modern Java 17, 21, and 25-era features.',
-  JAVA_7_TO_25: 'A release-by-release learning track so users can understand what changed from Java 7 through Java 25.',
-  JAVA_MIGRATION_GUIDES: 'Upgrade guides for the biggest Java jumps, with what to learn, what to watch, and what to modernize.',
-  HIGH_DEMAND_JAVA_TOPICS: 'A practical path through the Java topics people keep searching for: collections, streams, errors, concurrency, HTTP, and JVM basics.',
-  COMPANY_QUESTION_BANK: 'Company-wise interview tracks with original question-and-answer practice for Google, Meta, Amazon, Apple, Netflix, Coinbase, Jane Street, MakeMyTrip, and HotelTrader.',
-  INTERVIEW_PROBLEM_APPROACH: 'A step-by-step process for how to approach coding, backend, debugging, and system questions in interviews.',
-  INTERVIEW_INDEX: 'A fast lookup page for interview prep: topic index, company index, short study sprints, and a clean restart point when you need quick direction.',
-  VISUAL_LESSON_STANDARD: 'The repo standard for visual-first topics: use diagrams before code when the main confusion is internal working, memory shape, lifecycle, or architecture flow.',
-  COMPARE_COLLECTIONS: 'A quick compare page for List, Set, and Map: shape, performance, and common mistakes.',
-  COMPARE_STREAMS: 'A quick compare page for loops versus streams, focused on clarity, tradeoffs, and debugging.',
-  COMPARE_CONCURRENCY: 'A quick compare page for Thread, ExecutorService, and virtual threads.',
-  TOPIC_COVERAGE_MAP: 'A one-page map showing where strings, internals, generics, concurrency, testing, tooling, and other major Java topics live in the book.'
-};
-
-const HIGH_DEMAND_TOPICS = [
-  {
-    title: 'List, Set, Map',
-    route: './topics/list-set-map/',
-    why: 'People keep searching for the right collection choice because it affects correctness, readability, and performance.'
-  },
-  {
-    title: 'Stream Pipeline',
-    route: './topics/stream-pipeline/',
-    why: 'Streams remain one of the most searched Java topics because developers need a clear mental model for filter-map-collect flow.'
-  },
-  {
-    title: 'Collectors',
-    route: './topics/collectors/',
-    why: 'Collectors are where many stream users get stuck, especially around grouping, counting, and mapping results.'
-  },
-  {
-    title: 'Threads',
-    route: './topics/threads/',
-    why: 'Basic thread behavior is still the entry point for understanding executors, synchronization, and virtual threads.'
-  },
-  {
-    title: 'Handling Payment Failures',
-    route: './topics/handling-payment-failures/',
-    why: 'Exception handling stays highly searched because it directly affects debugging, user messaging, and reliability.'
-  },
-  {
-    title: 'HTTP Client Basics',
-    route: './topics/http-client-basics/',
-    why: 'Modern Java services frequently need outbound HTTP calls, so request-building basics matter immediately.'
-  },
-  {
-    title: 'Stack, Heap, and References',
-    route: './topics/stack-heap-and-references/',
-    why: 'JVM memory basics stay popular because they explain mutation surprises, debugging confusion, and interview questions.'
-  }
-];
 
 const SECTION_PROFILES = {
   sec01_fundamentals: {

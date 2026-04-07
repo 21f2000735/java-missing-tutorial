@@ -6,25 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next.__PAGE__.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next.__PAGE__.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next._full.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._full.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next._head.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._head.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next._index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._index.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/__next._tree.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/__next._tree.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._full.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._full.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._head.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._head.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._index.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._not-found.__PAGE__.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._not-found.__PAGE__.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._not-found.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._not-found.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/_not-found/__next._tree.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/_not-found/__next._tree.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.txt" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +212,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775585766841</updated>
       <workItem from="1775585771101" duration="3671000" />
-      <workItem from="1775591243727" duration="8480000" />
+      <workItem from="1775591243727" duration="10234000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <option name="closed" value="true" />
@@ -384,7 +366,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775599366675</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="update">
+      <option name="closed" value="true" />
+      <created>1775600903491</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1775600903491</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
