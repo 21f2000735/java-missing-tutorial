@@ -8,6 +8,7 @@ Current chapters:
 - `ch04_working_with_time`
 - `ch05_numbers_and_formatting`
 - `ch06_text_processing_and_regex`
+- `ch07_strings_in_depth`
 
 ## Before You Start
 

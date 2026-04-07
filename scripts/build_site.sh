@@ -11,6 +11,31 @@ meta_root="$content_root/meta"
 data_root="$site_root/data"
 manifest_file="$data_root/site.json"
 
+resource_files=(
+  "README.md"
+  "planning/BOOK.md"
+  "planning/CURRICULUM.md"
+  "planning/ROADMAP_099.md"
+  "planning/TOP_20_BOOKS.md"
+  "planning/AUTHORING_GUIDE.md"
+  "planning/CHAPTER_QUALITY_CHECKLIST.md"
+  "planning/TOPIC_QUALITY_RUBRIC.md"
+  "planning/DEEP_DIVE_STANDARD.md"
+  "planning/BOOK_MANUSCRIPT.md"
+  "planning/JAVA_7_TO_25.md"
+  "planning/JAVA_MIGRATION_GUIDES.md"
+  "planning/HIGH_DEMAND_JAVA_TOPICS.md"
+  "planning/COMPANY_QUESTION_BANK.md"
+  "planning/INTERVIEW_PROBLEM_APPROACH.md"
+  "planning/COMPARE_COLLECTIONS.md"
+  "planning/COMPARE_STREAMS.md"
+  "planning/COMPARE_CONCURRENCY.md"
+  "planning/TOPIC_COVERAGE_MAP.md"
+  "planning/OCJP_TRACK.md"
+  "planning/INTERVIEW_TRACK.md"
+  "planning/MODERN_JAVA_TRACK.md"
+)
+
 python3 "$root/scripts/validate_naming.py"
 
 json_escape() {
@@ -63,8 +88,10 @@ copy_content_tree() {
     cp "$file" "$library_root/$relative"
   done
 
-  for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md AUTHORING_GUIDE.md CHAPTER_QUALITY_CHECKLIST.md TOPIC_QUALITY_RUBRIC.md DEEP_DIVE_STANDARD.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md HIGH_DEMAND_JAVA_TOPICS.md COMPANY_QUESTION_BANK.md INTERVIEW_PROBLEM_APPROACH.md COMPARE_COLLECTIONS.md COMPARE_STREAMS.md COMPARE_CONCURRENCY.md; do
-    cp "$root/$file" "$meta_root/$file"
+  for file in "${resource_files[@]}"; do
+    relative="${file#planning/}"
+    mkdir -p "$meta_root/$(dirname "$relative")"
+    cp "$root/$file" "$meta_root/$relative"
   done
 }
 
@@ -87,16 +114,17 @@ generate_manifest() {
     echo '  "resources": ['
 
     local first_resource=1
-    for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md HIGH_DEMAND_JAVA_TOPICS.md COMPANY_QUESTION_BANK.md INTERVIEW_PROBLEM_APPROACH.md COMPARE_COLLECTIONS.md COMPARE_STREAMS.md COMPARE_CONCURRENCY.md; do
+    for file in "${resource_files[@]}"; do
       [[ $first_resource -eq 1 ]] || echo ','
       first_resource=0
-      slug="${file%.md}"
-      title="$(printf '%s' "${file%.md}" | tr '_' ' ')"
+      relative="${file#planning/}"
+      slug="$(basename "${file%.md}")"
+      title="$(printf '%s' "$slug" | tr '_' ' ')"
       printf '    {"slug": %s, "title": %s, "sourcePath": %s, "contentPath": %s, "type": "markdown"}' \
         "$(write_json_string "$slug")" \
         "$(write_json_string "$title")" \
         "$(write_json_string "$file")" \
-        "$(write_json_string "content/meta/$file")"
+        "$(write_json_string "content/meta/$relative")"
     done
     echo
     echo '  ],'

@@ -3,6 +3,7 @@
 Current chapters:
 
 - `ch01_testing_and_quality`
+- `ch02_junit5_and_test_doubles`
 
 ## Before You Start
 

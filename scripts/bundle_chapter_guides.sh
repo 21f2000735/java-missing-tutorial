@@ -4,7 +4,7 @@ set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 base="$root/src/main/java/com/learning/javamissing"
-output="$root/BOOK_MANUSCRIPT.md"
+output="$root/planning/BOOK_MANUSCRIPT.md"
 
 to_title() {
   local value="$1"

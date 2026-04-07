@@ -3,6 +3,7 @@
 Current chapters:
 
 - `ch01_talking_to_databases`
+- `ch02_files_buffers_and_serialization`
 
 ## Before You Start
 

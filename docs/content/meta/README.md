@@ -64,7 +64,7 @@ To keep the site readable and the learning flow clean, names should stay descrip
 - recommended full package limit: `120` characters
 - hard full package limit: `140` characters
 
-The validator is [validate_naming.py](/Users/indiadelhi/repo/career/java-missing-tutorial/code/scripts/validate_naming.py).  
+The validator is [scripts/validate_naming.py](scripts/validate_naming.py).  
 `scripts/build_site.sh` now runs it automatically.
 
 ## What Goes In One Topic File
@@ -147,9 +147,27 @@ The curriculum should now use a finer section model so major areas can grow inde
 - `Section 19: Testing And Quality`
 - `Section 20: Data Structures And Complexity`
 - `Section 21: Company Interview Tracks`
+- `Section 22: Build And Tooling`
 
 The source tree now follows this finer section layout.
-The full section map lives in [CURRICULUM.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/CURRICULUM.md).
+The full section map lives in [planning/CURRICULUM.md](planning/CURRICULUM.md).
+
+## Repo Layout
+
+The root stays intentionally small:
+
+- `README.md`
+- `CONTRIBUTING.md`
+- `LICENSE`
+- build and package config files
+- source directories like `src/`, `site/`, `scripts/`, and `docs/`
+
+Planning, roadmap, compare pages, release tracks, and book-manuscript files live in [planning/](planning/README.md).
+
+## Contributing And Legal
+
+- contribution guide: [CONTRIBUTING.md](CONTRIBUTING.md)
+- license: [LICENSE](LICENSE)
 
 ## Effective Java Coverage
 
@@ -184,18 +202,20 @@ The repo now uses book-style naming:
 - chapters inside each section use `chXX_*`
 - chapter numbering restarts inside each section
 
-Long-term curriculum planning is tracked in [ROADMAP_099.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/ROADMAP_099.md).
-Section-level grouping is tracked in [CURRICULUM.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/CURRICULUM.md).
-Book-style reading order is tracked in [BOOK.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/BOOK.md).
-The combined manuscript can be generated with `scripts/build_book.sh` and is written to [BOOK_MANUSCRIPT.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/BOOK_MANUSCRIPT.md).
+Long-term curriculum planning is tracked in [planning/ROADMAP_099.md](planning/ROADMAP_099.md).
+Section-level grouping is tracked in [planning/CURRICULUM.md](planning/CURRICULUM.md).
+Book-style reading order is tracked in [planning/BOOK.md](planning/BOOK.md).
+The combined manuscript can be generated with `scripts/build_book.sh` and is written to [planning/BOOK_MANUSCRIPT.md](planning/BOOK_MANUSCRIPT.md).
 The content manifest and copied markdown/source tree can be generated with `scripts/build_site.sh`.
-The React + Bootstrap static site is built with `npm run build` and written to [docs/index.html](/Users/indiadelhi/repo/career/java-missing-tutorial/code/docs/index.html).
+The React + Bootstrap static site is built with `npm run build` and written to [docs/index.html](docs/index.html).
 Use `npm run dev` for local development. The site fetches markdown, JSON, and Java source files, so opening `index.html` directly with `file://` is not reliable.
 The site is intentionally shifting from “repo browser” to “problem-first learning site”: section and chapter pages should lead with the real problem, study path, and expected outcomes before showing raw source.
 Topic pages now support a site-first lesson model: `TopicGuide.md` explains the concept, and the Java file stays runnable. Stable examples can be sent directly to JDoodle from the site, while preview-based chapters still need a local JDK 25 setup.
 Where possible, topic lessons should now teach visually: a quick diagram, a comparison snapshot, and a performance lens are usually more useful on the site than extra `System.out.println(...)` narration in the Java file.
-The release track is now split out into [JAVA_7_TO_25.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/JAVA_7_TO_25.md) and [JAVA_MIGRATION_GUIDES.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/JAVA_MIGRATION_GUIDES.md) so users can learn Java by era as well as by concept.
-Detailed authoring rules are tracked in [AUTHORING_GUIDE.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/AUTHORING_GUIDE.md).
-Topic quality is checked against [TOPIC_QUALITY_RUBRIC.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/TOPIC_QUALITY_RUBRIC.md).
-Book sources are tracked in [TOP_20_BOOKS.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/TOP_20_BOOKS.md).
-Chapter completion is checked against [CHAPTER_QUALITY_CHECKLIST.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/CHAPTER_QUALITY_CHECKLIST.md).
+The release track is now split out into [planning/JAVA_7_TO_25.md](planning/JAVA_7_TO_25.md) and [planning/JAVA_MIGRATION_GUIDES.md](planning/JAVA_MIGRATION_GUIDES.md) so users can learn Java by era as well as by concept.
+Dedicated user paths live in [planning/OCJP_TRACK.md](planning/OCJP_TRACK.md), [planning/INTERVIEW_TRACK.md](planning/INTERVIEW_TRACK.md), and [planning/MODERN_JAVA_TRACK.md](planning/MODERN_JAVA_TRACK.md).
+Detailed topic coverage is mapped in [planning/TOPIC_COVERAGE_MAP.md](planning/TOPIC_COVERAGE_MAP.md).
+Detailed authoring rules are tracked in [planning/AUTHORING_GUIDE.md](planning/AUTHORING_GUIDE.md).
+Topic quality is checked against [planning/TOPIC_QUALITY_RUBRIC.md](planning/TOPIC_QUALITY_RUBRIC.md).
+Book sources are tracked in [planning/TOP_20_BOOKS.md](planning/TOP_20_BOOKS.md).
+Chapter completion is checked against [planning/CHAPTER_QUALITY_CHECKLIST.md](planning/CHAPTER_QUALITY_CHECKLIST.md).

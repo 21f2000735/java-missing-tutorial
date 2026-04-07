@@ -37,11 +37,15 @@ async function loadMermaid() {
 
 const RESOURCE_DESCRIPTIONS = {
   README: 'What this learning repo is trying to become and how to use it without getting lost.',
+  PLANNING: 'A short map of the planning, roadmap, quality, and book-building documents that support the site.',
   BOOK: 'A book-style reading order for people who want narrative flow instead of random browsing.',
   CURRICULUM: 'Section-by-section map so similar concepts stay together and the learning path feels intentional.',
   ROADMAP_099: 'The longer curriculum direction and how this content can expand over time.',
   TOP_20_BOOKS: 'The books and references shaping the code examples, tradeoffs, and deeper explanations.',
   BOOK_MANUSCRIPT: 'A combined manuscript view when you want to read the material like one long book.',
+  OCJP_TRACK: 'A guided path for certification-focused readers who want objective coverage, revision order, and practice priorities.',
+  INTERVIEW_TRACK: 'A guided path for coding, backend, debugging, and company-style interview preparation across the repo.',
+  MODERN_JAVA_TRACK: 'A guided path for readers moving from older Java to modern Java 17, 21, and 25-era features.',
   JAVA_7_TO_25: 'A release-by-release learning track so users can understand what changed from Java 7 through Java 25.',
   JAVA_MIGRATION_GUIDES: 'Upgrade guides for the biggest Java jumps, with what to learn, what to watch, and what to modernize.',
   HIGH_DEMAND_JAVA_TOPICS: 'A practical path through the Java topics people keep searching for: collections, streams, errors, concurrency, HTTP, and JVM basics.',
@@ -49,7 +53,8 @@ const RESOURCE_DESCRIPTIONS = {
   INTERVIEW_PROBLEM_APPROACH: 'A step-by-step process for how to approach coding, backend, debugging, and system questions in interviews.',
   COMPARE_COLLECTIONS: 'A quick compare page for List, Set, and Map: shape, performance, and common mistakes.',
   COMPARE_STREAMS: 'A quick compare page for loops versus streams, focused on clarity, tradeoffs, and debugging.',
-  COMPARE_CONCURRENCY: 'A quick compare page for Thread, ExecutorService, and virtual threads.'
+  COMPARE_CONCURRENCY: 'A quick compare page for Thread, ExecutorService, and virtual threads.',
+  TOPIC_COVERAGE_MAP: 'A one-page map showing where strings, internals, generics, concurrency, testing, tooling, and other major Java topics live in the book.'
 };
 
 const HIGH_DEMAND_TOPICS = [
@@ -279,6 +284,15 @@ const SECTION_PROFILES = {
       'You need original company-style questions backed by complete Java examples.',
       'You want interview preparation that points back to the right sections of the Java book.'
     ]
+  },
+  sec22_build_and_tooling: {
+    icon: 'bi bi-tools',
+    hook: 'Learn the practical build-system and packaging ideas every working Java developer needs.',
+    problems: [
+      'You can write Java but still hesitate when a project opens with pom.xml or build.gradle.',
+      'Dependency scopes, jars, wars, and fat jars feel like build-tool trivia instead of deployment choices.',
+      'You want a clear explanation of why modern Java apps often ship as executable jars.'
+    ]
   }
 };
 
@@ -286,6 +300,10 @@ const PLAYGROUND_LINKS = {
   jdoodle: 'https://www.jdoodle.com/online-java-compiler/',
   onecompiler: 'https://onecompiler.com/studio/java'
 };
+
+const SITE_TITLE = 'Java Missing Tutorial';
+const SITE_DESCRIPTION = 'Learn Java with problem-first explanations, runnable code, compare guides, interview tracks, and Java 7 to 25 coverage.';
+const GITHUB_URL = 'https://github.com/21f2000735/java-missing-tutorial';
 
 function stripMarkdown(value = '') {
   return value
@@ -327,7 +345,7 @@ function sourcePathFromHref(href, repoRoot) {
   if (srcIndex !== -1) {
     return decoded.slice(srcIndex);
   }
-  const metaMatch = decoded.match(/(README\.md|BOOK\.md|CURRICULUM\.md|ROADMAP_099\.md|TOP_20_BOOKS\.md|BOOK_MANUSCRIPT\.md)$/);
+  const metaMatch = decoded.match(/((?:planning\/)?(?:README|BOOK|CURRICULUM|ROADMAP_099|TOP_20_BOOKS|BOOK_MANUSCRIPT|JAVA_7_TO_25|JAVA_MIGRATION_GUIDES|HIGH_DEMAND_JAVA_TOPICS|COMPANY_QUESTION_BANK|INTERVIEW_PROBLEM_APPROACH|COMPARE_COLLECTIONS|COMPARE_STREAMS|COMPARE_CONCURRENCY|TOPIC_COVERAGE_MAP|OCJP_TRACK|INTERVIEW_TRACK|MODERN_JAVA_TRACK)\.md)$/);
   if (metaMatch) {
     return metaMatch[1];
   }
@@ -339,7 +357,7 @@ function sourcePathToContentPath(sourcePath) {
     return `content/library/${sourcePath.replace('src/main/java/com/learning/javamissing/', '')}`;
   }
   if (sourcePath.endsWith('.md')) {
-    return `content/meta/${sourcePath}`;
+    return `content/meta/${sourcePath.replace(/^planning\//, '')}`;
   }
   return null;
 }
@@ -513,6 +531,13 @@ function useHashRoute() {
   }, []);
 
   return route;
+}
+
+function setMetaDescription(value) {
+  const meta = document.querySelector('meta[name="description"]');
+  if (meta) {
+    meta.setAttribute('content', value);
+  }
 }
 
 function parseTopicMeta(code) {
@@ -970,6 +995,26 @@ function useReadingState() {
   return { bookmarks, completed, toggleBookmark, toggleCompleted };
 }
 
+function useFeedbackState() {
+  const [votes, setVotes] = useState(() => {
+    try {
+      return JSON.parse(window.localStorage.getItem('java-book-feedback') || '{}');
+    } catch {
+      return {};
+    }
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem('java-book-feedback', JSON.stringify(votes));
+  }, [votes]);
+
+  function setVote(routeKey, vote) {
+    setVotes((current) => ({ ...current, [routeKey]: vote }));
+  }
+
+  return { votes, setVote };
+}
+
 function RandomTopicButton({ manifest, currentRoute }) {
   function goToRandomTopic() {
     const topics = [];
@@ -1037,12 +1082,37 @@ function InPageToc({ items, title = 'On This Page' }) {
   );
 }
 
+function FeedbackBar({ routeKey, feedbackState }) {
+  const vote = feedbackState.votes[routeKey];
+  return (
+    <div className="content-card feedback-bar">
+      <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+          <div className="eyebrow mb-1">Quick Feedback</div>
+          <div className="muted-copy mb-0">Was this page useful for learning the concept?</div>
+        </div>
+        <div className="d-flex gap-2">
+          <button type="button" className={`btn btn-sm rounded-pill ${vote === 'up' ? 'btn-dark' : 'btn-outline-dark'}`} onClick={() => feedbackState.setVote(routeKey, 'up')}>
+            <i className="bi bi-hand-thumbs-up me-1" />
+            Yes
+          </button>
+          <button type="button" className={`btn btn-sm rounded-pill ${vote === 'down' ? 'btn-dark' : 'btn-outline-dark'}`} onClick={() => feedbackState.setVote(routeKey, 'down')}>
+            <i className="bi bi-hand-thumbs-down me-1" />
+            Needs Work
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function HomePage({ manifest }) {
   const featuredSections = manifest.sections.slice(0, 6);
   const learningJourneys = [
     { title: 'I am starting from zero', sectionSlug: 'sec01_fundamentals' },
-    { title: 'I want Java 7 to 25 clarity', resourceSlug: 'JAVA_7_TO_25' },
-    { title: 'I want company-wise interview prep', resourceSlug: 'COMPANY_QUESTION_BANK' },
+    { title: 'I want OCJP prep', resourceSlug: 'OCJP_TRACK' },
+    { title: 'I want interview prep', resourceSlug: 'INTERVIEW_TRACK' },
+    { title: 'I want modern Java by era', resourceSlug: 'MODERN_JAVA_TRACK' },
     { title: 'I want data handling judgment', sectionSlug: 'sec02_collections' },
     { title: 'I want stream confidence', sectionSlug: 'sec04_streams_and_functional_style' },
     { title: 'I want concurrency clarity', sectionSlug: 'sec05_multithreading_and_concurrency' },
@@ -1070,7 +1140,8 @@ function HomePage({ manifest }) {
             <div className="d-flex flex-wrap gap-2">
               <a className="btn btn-dark rounded-pill px-4" href="#section/sec01_fundamentals">Start With Fundamentals</a>
               <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/BOOK">Read The Book Order</a>
-              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/INTERVIEW_PROBLEM_APPROACH">Learn Interview Approach</a>
+              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/OCJP_TRACK">Open OCJP Track</a>
+              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/INTERVIEW_TRACK">Open Interview Track</a>
               <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/BOOK_MANUSCRIPT">Open Combined Manuscript</a>
             </div>
           </div>
@@ -1102,30 +1173,62 @@ function HomePage({ manifest }) {
 
       <div className="content-card">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h2 className="page-title mb-0">What This Site Is</h2>
+          <span className="badge rounded-pill badge-soft">For first-time visitors</span>
+        </div>
+        <div className="insight-grid">
+          <InsightCard icon="bi bi-book" title="A Learning Book, Not A Repo Browser">
+            Start with the problem, then the example, then the explanation. The code should support the lesson, not replace it.
+          </InsightCard>
+          <InsightCard icon="bi bi-people" title="Useful For Freshers And Experienced Engineers">
+            Beginners can use the guides and examples. Experienced engineers can jump into compare pages, company tracks, JVM internals, and tradeoffs.
+          </InsightCard>
+          <InsightCard icon="bi bi-question-circle" title="What Readers Usually Want">
+            What problem does this solve, what output should I expect, when should I use it, and what mistake should I avoid.
+          </InsightCard>
+          <InsightCard icon="bi bi-signpost-split" title="How To Use It">
+            Pick a section, open a chapter, run a topic, then use the revision sheet and compare pages to lock in the idea.
+          </InsightCard>
+        </div>
+      </div>
+
+      <div className="content-card">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
           <h2 className="page-title mb-0">Pick A Learning Journey</h2>
           <span className="badge rounded-pill badge-soft">Problem-first paths</span>
         </div>
         <div className="journey-grid">
-          {learningJourneys.map(({ title, section }) => {
+          {learningJourneys.map(({ title, section, resource }) => {
             if (!section) {
-              const isCompanyBank = title === 'I want company-wise interview prep';
+              const isOcjp = resource.slug === 'OCJP_TRACK';
+              const isInterview = resource.slug === 'INTERVIEW_TRACK';
               return (
                 <a
                   className="journey-card text-decoration-none text-reset"
-                  href={isCompanyBank ? '#resource/COMPANY_QUESTION_BANK' : '#resource/JAVA_7_TO_25'}
-                  key={isCompanyBank ? 'COMPANY_QUESTION_BANK' : 'JAVA_7_TO_25'}
+                  href={`#resource/${resource.slug}`}
+                  key={resource.slug}
                 >
                   <div className="d-flex align-items-center gap-2 mb-2">
-                    <i className={`${isCompanyBank ? 'bi bi-buildings' : 'bi bi-clock-history'} section-icon`} />
-                    <span className="badge rounded-pill badge-soft">{isCompanyBank ? 'Interview Bank' : 'Release Track'}</span>
+                    <i className={`${isOcjp ? 'bi bi-mortarboard' : isInterview ? 'bi bi-buildings' : 'bi bi-clock-history'} section-icon`} />
+                    <span className="badge rounded-pill badge-soft">
+                      {isOcjp ? 'Certification Path' : isInterview ? 'Interview Path' : 'Modern Java Path'}
+                    </span>
                   </div>
                   <h3 className="h5 mb-2">{title}</h3>
                   <p className="muted-copy mb-3">
-                    {isCompanyBank
-                      ? 'Use company-style interview tracks so Google, Meta, Amazon, Jane Street, Coinbase, MakeMyTrip, and HotelTrader do not all blur into one generic prep list.'
+                    {isOcjp
+                      ? 'Use a certification-focused route so fundamentals, collections, generics, streams, exceptions, and testing build in the right order.'
+                      : isInterview
+                      ? 'Use company-style interview tracks, backend problem guidance, and core Java sections together instead of treating prep as disconnected lists.'
                       : 'Follow Java from 7 through 25, then use the migration guide to decide what to learn at each jump.'}
                   </p>
-                  <BulletList items={isCompanyBank
+                  <BulletList items={isOcjp
+                    ? [
+                        'Prioritize the topics most likely to appear first',
+                        'Use revision sheets to compress revision time',
+                        'Jump from concept coverage to compare pages quickly'
+                      ]
+                    : isInterview
                     ? [
                         'Practice original questions with sample answers',
                         'Prep by company pressure, not just by logo',
@@ -1225,6 +1328,27 @@ function HomePage({ manifest }) {
           ))}
         </div>
       </div>
+
+      <div className="content-card">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h2 className="page-title mb-0">Common Reader Questions</h2>
+          <span className="badge rounded-pill badge-soft">Asked all the time</span>
+        </div>
+        <div className="insight-grid">
+          <InsightCard icon="bi bi-1-circle" title="Where should I start?">
+            Start with Fundamentals if Java syntax still feels shaky. Start with Collections or Streams if you already write Java and want stronger judgment.
+          </InsightCard>
+          <InsightCard icon="bi bi-2-circle" title="Can I use this for interviews?">
+            Yes. Use the company interview tracks, compare pages, and the interview-approach guide alongside the core topic examples.
+          </InsightCard>
+          <InsightCard icon="bi bi-3-circle" title="Can I run the code online?">
+            Stable single-file examples can be sent to JDoodle. Preview-sensitive topics should be run locally on the right JDK.
+          </InsightCard>
+          <InsightCard icon="bi bi-4-circle" title="How current is the content?">
+            The release track covers Java 7 to 25, and the site shows when the content bundle was last generated.
+          </InsightCard>
+        </div>
+      </div>
     </>
   );
 }
@@ -1291,6 +1415,8 @@ function QuickLinkRail({ onRandomTopic }) {
   const links = [
     { label: 'Start Here', href: '#section/sec01_fundamentals' },
     { label: 'Java 7 to 25', href: '#resource/JAVA_7_TO_25' },
+    { label: 'OCJP Track', href: '#resource/OCJP_TRACK' },
+    { label: 'Interview Track', href: '#resource/INTERVIEW_TRACK' },
     { label: 'Interview Approach', href: '#resource/INTERVIEW_PROBLEM_APPROACH' },
     { label: 'Compare Collections', href: '#resource/COMPARE_COLLECTIONS' },
     { label: 'Compare Streams', href: '#resource/COMPARE_STREAMS' },
@@ -1373,6 +1499,7 @@ export default function App() {
   const [error, setError] = useState('');
   const contentCache = useRef(new Map());
   const readingState = useReadingState();
+  const feedbackState = useFeedbackState();
 
   useEffect(() => {
     async function loadManifest() {
@@ -1409,6 +1536,57 @@ export default function App() {
     }
     loadManifest();
   }, []);
+
+  useEffect(() => {
+    if (!manifest) {
+      document.title = `${SITE_TITLE} - Learn Java 7 to 25 with Real Examples`;
+      setMetaDescription(SITE_DESCRIPTION);
+      return;
+    }
+
+    if (route.type === 'home') {
+      document.title = `${SITE_TITLE} - Learn Java 7 to 25 with Real Examples`;
+      setMetaDescription(SITE_DESCRIPTION);
+      return;
+    }
+
+    if (route.type === 'resource') {
+      const resource = manifest.resources.find((item) => item.slug === route.slug);
+      document.title = `${resource?.title || 'Resource'} | ${SITE_TITLE}`;
+      setMetaDescription(resourceSummaryFromSlug(route.slug));
+      return;
+    }
+
+    const section = manifest.sections.find((item) => item.slug === route.sectionSlug);
+    if (!section) {
+      document.title = SITE_TITLE;
+      setMetaDescription(SITE_DESCRIPTION);
+      return;
+    }
+
+    if (route.type === 'section') {
+      document.title = `${section.title} | ${SITE_TITLE}`;
+      setMetaDescription(SECTION_PROFILES[section.slug]?.hook || `${section.title} section of the Java learning book.`);
+      return;
+    }
+
+    const chapter = section.chapters.find((item) => item.slug === route.chapterSlug);
+    if (!chapter) {
+      document.title = `${section.title} | ${SITE_TITLE}`;
+      setMetaDescription(SECTION_PROFILES[section.slug]?.hook || SITE_DESCRIPTION);
+      return;
+    }
+
+    if (route.type === 'chapter') {
+      document.title = `${chapter.title} | ${SITE_TITLE}`;
+      setMetaDescription(`${chapter.title} in ${section.title}. Runnable Java examples, guide, and revision notes.`);
+      return;
+    }
+
+    const topic = chapter.topics.find((item) => item.slug === route.topicSlug);
+    document.title = `${topic?.title || chapter.title} | ${SITE_TITLE}`;
+    setMetaDescription(`${topic?.title || chapter.title} in ${chapter.title}. Learn the concept through real-world Java examples and guided explanations.`);
+  }, [manifest, route]);
 
   const searchEntries = useMemo(() => {
     if (!manifest) {
@@ -1496,13 +1674,15 @@ export default function App() {
       <header className="site-header border-bottom">
         <nav className="navbar navbar-expand-lg px-3 px-lg-4 py-3">
           <div className="container-fluid px-0">
-            <a className="navbar-brand fw-semibold" href="#home">Java Missing Book</a>
+            <a className="navbar-brand fw-semibold" href="#home">{SITE_TITLE}</a>
             <div className="ms-lg-4 flex-grow-1 d-flex align-items-center gap-3">
               <SearchBox entries={searchEntries} />
               <div className="d-none d-lg-flex align-items-center gap-2">
                 <RandomTopicButton manifest={manifest} currentRoute={window.location.hash || '#home'} />
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/JAVA_7_TO_25">Java 7 To 25</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/OCJP_TRACK">OCJP Track</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_TRACK">Interview Track</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Interview Approach</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/COMPANY_QUESTION_BANK">Company Bank</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/COMPARE_COLLECTIONS">Compare</a>
@@ -1522,8 +1702,23 @@ export default function App() {
           <Sidebar sections={manifest.sections} activeRoute={activeRoute} />
           <section className="col-12 col-xl-9 content-column">
             <div className="content-wrap">
-              <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} readingState={readingState} />
+              <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} readingState={readingState} feedbackState={feedbackState} />
             </div>
+            <footer className="site-footer content-card">
+              <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                <div>
+                  <div className="eyebrow mb-1">Trust And Updates</div>
+                  <div className="muted-copy mb-0">
+                    Built from the repo content. Last generated: {manifest.generatedAt ? new Date(manifest.generatedAt).toLocaleString() : 'Unknown'}.
+                  </div>
+                </div>
+                <div className="d-flex flex-wrap gap-2">
+                  <a className="btn btn-outline-dark btn-sm rounded-pill" href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub Repo</a>
+                  <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
+                  <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/ROADMAP_099">Roadmap</a>
+                </div>
+              </div>
+            </footer>
           </section>
         </div>
       </main>
@@ -1531,7 +1726,7 @@ export default function App() {
   );
 }
 
-function RouteRenderer({ route, manifest, fetchText, readingState }) {
+function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState }) {
   const [content, setContent] = useState({ status: 'loading', data: null, error: '' });
 
   useEffect(() => {
@@ -1691,6 +1886,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState }) {
         <div className="content-card">
           <MarkdownBlock html={marked.parse(data.raw)} manifest={manifest} contentPath={data.resource.contentPath} />
         </div>
+        <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
       </PageLayout>
     );
   }
@@ -1829,6 +2025,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState }) {
             <InPageToc items={chapterToc} />
           </div>
         </div>
+        <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
       </PageLayout>
     );
   }
@@ -1999,6 +2196,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState }) {
           <InPageToc items={topicToc} />
         </div>
       </div>
+      <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
     </PageLayout>
   );
 }

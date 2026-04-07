@@ -3,6 +3,7 @@
 Current chapters:
 
 - `ch01_handling_errors`
+- `ch02_exception_design_and_resources`
 
 ## Before You Start
 

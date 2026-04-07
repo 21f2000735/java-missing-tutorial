@@ -3,6 +3,8 @@
 Current chapters:
 
 - `ch01_memory_and_execution_basics`
+- `ch02_jvm_jdk_jre_and_class_loading`
+- `ch03_jit_and_garbage_collection`
 
 ## Before You Start
 

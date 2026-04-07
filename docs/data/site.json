@@ -1,27 +1,35 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T11:42:38Z",
+  "generatedAt": "2026-04-07T12:18:13Z",
   "stats": {
-    "sections": 21,
-    "chapters": 47,
-    "topics": 89
+    "sections": 22,
+    "chapters": 56,
+    "topics": 107
   },
   "resources": [
     {"slug": "README", "title": "README", "sourcePath": "README.md", "contentPath": "content/meta/README.md", "type": "markdown"},
-    {"slug": "BOOK", "title": "BOOK", "sourcePath": "BOOK.md", "contentPath": "content/meta/BOOK.md", "type": "markdown"},
-    {"slug": "CURRICULUM", "title": "CURRICULUM", "sourcePath": "CURRICULUM.md", "contentPath": "content/meta/CURRICULUM.md", "type": "markdown"},
-    {"slug": "ROADMAP_099", "title": "ROADMAP 099", "sourcePath": "ROADMAP_099.md", "contentPath": "content/meta/ROADMAP_099.md", "type": "markdown"},
-    {"slug": "TOP_20_BOOKS", "title": "TOP 20 BOOKS", "sourcePath": "TOP_20_BOOKS.md", "contentPath": "content/meta/TOP_20_BOOKS.md", "type": "markdown"},
-    {"slug": "BOOK_MANUSCRIPT", "title": "BOOK MANUSCRIPT", "sourcePath": "BOOK_MANUSCRIPT.md", "contentPath": "content/meta/BOOK_MANUSCRIPT.md", "type": "markdown"},
-    {"slug": "JAVA_7_TO_25", "title": "JAVA 7 TO 25", "sourcePath": "JAVA_7_TO_25.md", "contentPath": "content/meta/JAVA_7_TO_25.md", "type": "markdown"},
-    {"slug": "JAVA_MIGRATION_GUIDES", "title": "JAVA MIGRATION GUIDES", "sourcePath": "JAVA_MIGRATION_GUIDES.md", "contentPath": "content/meta/JAVA_MIGRATION_GUIDES.md", "type": "markdown"},
-    {"slug": "HIGH_DEMAND_JAVA_TOPICS", "title": "HIGH DEMAND JAVA TOPICS", "sourcePath": "HIGH_DEMAND_JAVA_TOPICS.md", "contentPath": "content/meta/HIGH_DEMAND_JAVA_TOPICS.md", "type": "markdown"},
-    {"slug": "COMPANY_QUESTION_BANK", "title": "COMPANY QUESTION BANK", "sourcePath": "COMPANY_QUESTION_BANK.md", "contentPath": "content/meta/COMPANY_QUESTION_BANK.md", "type": "markdown"},
-    {"slug": "INTERVIEW_PROBLEM_APPROACH", "title": "INTERVIEW PROBLEM APPROACH", "sourcePath": "INTERVIEW_PROBLEM_APPROACH.md", "contentPath": "content/meta/INTERVIEW_PROBLEM_APPROACH.md", "type": "markdown"},
-    {"slug": "COMPARE_COLLECTIONS", "title": "COMPARE COLLECTIONS", "sourcePath": "COMPARE_COLLECTIONS.md", "contentPath": "content/meta/COMPARE_COLLECTIONS.md", "type": "markdown"},
-    {"slug": "COMPARE_STREAMS", "title": "COMPARE STREAMS", "sourcePath": "COMPARE_STREAMS.md", "contentPath": "content/meta/COMPARE_STREAMS.md", "type": "markdown"},
-    {"slug": "COMPARE_CONCURRENCY", "title": "COMPARE CONCURRENCY", "sourcePath": "COMPARE_CONCURRENCY.md", "contentPath": "content/meta/COMPARE_CONCURRENCY.md", "type": "markdown"}
+    {"slug": "BOOK", "title": "BOOK", "sourcePath": "planning/BOOK.md", "contentPath": "content/meta/BOOK.md", "type": "markdown"},
+    {"slug": "CURRICULUM", "title": "CURRICULUM", "sourcePath": "planning/CURRICULUM.md", "contentPath": "content/meta/CURRICULUM.md", "type": "markdown"},
+    {"slug": "ROADMAP_099", "title": "ROADMAP 099", "sourcePath": "planning/ROADMAP_099.md", "contentPath": "content/meta/ROADMAP_099.md", "type": "markdown"},
+    {"slug": "TOP_20_BOOKS", "title": "TOP 20 BOOKS", "sourcePath": "planning/TOP_20_BOOKS.md", "contentPath": "content/meta/TOP_20_BOOKS.md", "type": "markdown"},
+    {"slug": "AUTHORING_GUIDE", "title": "AUTHORING GUIDE", "sourcePath": "planning/AUTHORING_GUIDE.md", "contentPath": "content/meta/AUTHORING_GUIDE.md", "type": "markdown"},
+    {"slug": "CHAPTER_QUALITY_CHECKLIST", "title": "CHAPTER QUALITY CHECKLIST", "sourcePath": "planning/CHAPTER_QUALITY_CHECKLIST.md", "contentPath": "content/meta/CHAPTER_QUALITY_CHECKLIST.md", "type": "markdown"},
+    {"slug": "TOPIC_QUALITY_RUBRIC", "title": "TOPIC QUALITY RUBRIC", "sourcePath": "planning/TOPIC_QUALITY_RUBRIC.md", "contentPath": "content/meta/TOPIC_QUALITY_RUBRIC.md", "type": "markdown"},
+    {"slug": "DEEP_DIVE_STANDARD", "title": "DEEP DIVE STANDARD", "sourcePath": "planning/DEEP_DIVE_STANDARD.md", "contentPath": "content/meta/DEEP_DIVE_STANDARD.md", "type": "markdown"},
+    {"slug": "BOOK_MANUSCRIPT", "title": "BOOK MANUSCRIPT", "sourcePath": "planning/BOOK_MANUSCRIPT.md", "contentPath": "content/meta/BOOK_MANUSCRIPT.md", "type": "markdown"},
+    {"slug": "JAVA_7_TO_25", "title": "JAVA 7 TO 25", "sourcePath": "planning/JAVA_7_TO_25.md", "contentPath": "content/meta/JAVA_7_TO_25.md", "type": "markdown"},
+    {"slug": "JAVA_MIGRATION_GUIDES", "title": "JAVA MIGRATION GUIDES", "sourcePath": "planning/JAVA_MIGRATION_GUIDES.md", "contentPath": "content/meta/JAVA_MIGRATION_GUIDES.md", "type": "markdown"},
+    {"slug": "HIGH_DEMAND_JAVA_TOPICS", "title": "HIGH DEMAND JAVA TOPICS", "sourcePath": "planning/HIGH_DEMAND_JAVA_TOPICS.md", "contentPath": "content/meta/HIGH_DEMAND_JAVA_TOPICS.md", "type": "markdown"},
+    {"slug": "COMPANY_QUESTION_BANK", "title": "COMPANY QUESTION BANK", "sourcePath": "planning/COMPANY_QUESTION_BANK.md", "contentPath": "content/meta/COMPANY_QUESTION_BANK.md", "type": "markdown"},
+    {"slug": "INTERVIEW_PROBLEM_APPROACH", "title": "INTERVIEW PROBLEM APPROACH", "sourcePath": "planning/INTERVIEW_PROBLEM_APPROACH.md", "contentPath": "content/meta/INTERVIEW_PROBLEM_APPROACH.md", "type": "markdown"},
+    {"slug": "COMPARE_COLLECTIONS", "title": "COMPARE COLLECTIONS", "sourcePath": "planning/COMPARE_COLLECTIONS.md", "contentPath": "content/meta/COMPARE_COLLECTIONS.md", "type": "markdown"},
+    {"slug": "COMPARE_STREAMS", "title": "COMPARE STREAMS", "sourcePath": "planning/COMPARE_STREAMS.md", "contentPath": "content/meta/COMPARE_STREAMS.md", "type": "markdown"},
+    {"slug": "COMPARE_CONCURRENCY", "title": "COMPARE CONCURRENCY", "sourcePath": "planning/COMPARE_CONCURRENCY.md", "contentPath": "content/meta/COMPARE_CONCURRENCY.md", "type": "markdown"},
+    {"slug": "TOPIC_COVERAGE_MAP", "title": "TOPIC COVERAGE MAP", "sourcePath": "planning/TOPIC_COVERAGE_MAP.md", "contentPath": "content/meta/TOPIC_COVERAGE_MAP.md", "type": "markdown"},
+    {"slug": "OCJP_TRACK", "title": "OCJP TRACK", "sourcePath": "planning/OCJP_TRACK.md", "contentPath": "content/meta/OCJP_TRACK.md", "type": "markdown"},
+    {"slug": "INTERVIEW_TRACK", "title": "INTERVIEW TRACK", "sourcePath": "planning/INTERVIEW_TRACK.md", "contentPath": "content/meta/INTERVIEW_TRACK.md", "type": "markdown"},
+    {"slug": "MODERN_JAVA_TRACK", "title": "MODERN JAVA TRACK", "sourcePath": "planning/MODERN_JAVA_TRACK.md", "contentPath": "content/meta/MODERN_JAVA_TRACK.md", "type": "markdown"}
   ],
   "sections": [
     {
@@ -73,6 +81,18 @@
             {"slug": "comparator", "title": "Comparator", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/comparator/Comparator.java", "contentPath": "content/library/sec02_collections/ch01_collections/topics/comparator/Comparator.java", "concept": "Comparator"},
             {"slug": "immutability", "title": "Immutability", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/immutability/Immutability.java", "contentPath": "content/library/sec02_collections/ch01_collections/topics/immutability/Immutability.java", "concept": "Immutability"},
             {"slug": "list_set_map", "title": "List Set Map", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java", "contentPath": "content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java", "concept": "List Set Map", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md", "contentPath": "content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md"}}
+          ]
+        },
+        {
+          "slug": "ch02_maps_and_iterators_in_depth",
+          "title": "Maps And Iterators In Depth",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch02_maps_and_iterators_in_depth/ChapterGuide.md", "contentPath": "content/library/sec02_collections/ch02_maps_and_iterators_in_depth/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch02_maps_and_iterators_in_depth/ChapterRevision.md", "contentPath": "content/library/sec02_collections/ch02_maps_and_iterators_in_depth/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch02_maps_and_iterators_in_depth/RunChapter.java", "contentPath": "content/library/sec02_collections/ch02_maps_and_iterators_in_depth/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch02_maps_and_iterators_in_depth/RunAllTopics.java", "contentPath": "content/library/sec02_collections/ch02_maps_and_iterators_in_depth/RunAllTopics.java"},
+          "topics": [
+            {"slug": "concurrent_maps_and_iterators", "title": "Concurrent Maps And Iterators", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch02_maps_and_iterators_in_depth/topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java", "contentPath": "content/library/sec02_collections/ch02_maps_and_iterators_in_depth/topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java", "concept": "Concurrent Maps And Iterators"},
+            {"slug": "map_tradeoffs", "title": "Map Tradeoffs", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch02_maps_and_iterators_in_depth/topics/map_tradeoffs/MapTradeoffs.java", "contentPath": "content/library/sec02_collections/ch02_maps_and_iterators_in_depth/topics/map_tradeoffs/MapTradeoffs.java", "concept": "Map Tradeoffs"}
           ]
         }
       ]
@@ -206,6 +226,18 @@
             {"slug": "introducing_scoped_values", "title": "Introducing Scoped Values", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/introducing_scoped_values/IntroducingScopedValues.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/introducing_scoped_values/IntroducingScopedValues.java", "concept": "Introducing Scoped Values"},
             {"slug": "scoped_values_vs_thread_local", "title": "Scoped Values Vs Thread Local", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch04_scoped_values/topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java", "concept": "Scoped Values Vs Thread Local"}
           ]
+        },
+        {
+          "slug": "ch05_concurrency_primitives_and_futures",
+          "title": "Concurrency Primitives And Futures",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/ChapterGuide.md", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/ChapterRevision.md", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/RunChapter.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/RunAllTopics.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/RunAllTopics.java"},
+          "topics": [
+            {"slug": "locks_latches_and_futures", "title": "Locks Latches And Futures", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/topics/locks_latches_and_futures/LocksLatchesAndFutures.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/topics/locks_latches_and_futures/LocksLatchesAndFutures.java", "concept": "Locks Latches And Futures"},
+            {"slug": "visibility_and_volatile", "title": "Visibility And Volatile", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/topics/visibility_and_volatile/VisibilityAndVolatile.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch05_concurrency_primitives_and_futures/topics/visibility_and_volatile/VisibilityAndVolatile.java", "concept": "Visibility And Volatile"}
+          ]
         }
       ]
     },
@@ -318,6 +350,30 @@
           "topics": [
             {"slug": "understanding_stack_heap_and_references", "title": "Understanding Stack Heap And References", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java", "contentPath": "content/library/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java", "concept": "Understanding Stack Heap And References", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/TopicGuide.md", "contentPath": "content/library/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/TopicGuide.md"}}
           ]
+        },
+        {
+          "slug": "ch02_jvm_jdk_jre_and_class_loading",
+          "title": "JVM, JDK, JRE, And Class Loading",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/ChapterGuide.md", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/ChapterRevision.md", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/RunChapter.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/RunAllTopics.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/RunAllTopics.java"},
+          "topics": [
+            {"slug": "class_loading_lifecycle", "title": "Class Loading Lifecycle", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/ClassLoadingLifecycle.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/class_loading_lifecycle/ClassLoadingLifecycle.java", "concept": "Class Loading Lifecycle"},
+            {"slug": "runtime_layers", "title": "Runtime Layers", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/RuntimeLayers.java", "contentPath": "content/library/sec08_internal_of_jvm/ch02_jvm_jdk_jre_and_class_loading/topics/runtime_layers/RuntimeLayers.java", "concept": "Runtime Layers"}
+          ]
+        },
+        {
+          "slug": "ch03_jit_and_garbage_collection",
+          "title": "JIT And Garbage Collection",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/ChapterGuide.md", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/ChapterRevision.md", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/RunChapter.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/RunAllTopics.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/RunAllTopics.java"},
+          "topics": [
+            {"slug": "gc_strategies", "title": "Gc Strategies", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/GcStrategies.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/gc_strategies/GcStrategies.java", "concept": "Gc Strategies"},
+            {"slug": "jit_basics", "title": "Jit Basics", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/jit_basics/JitBasics.java", "contentPath": "content/library/sec08_internal_of_jvm/ch03_jit_and_garbage_collection/topics/jit_basics/JitBasics.java", "concept": "Jit Basics"}
+          ]
         }
       ]
     },
@@ -372,6 +428,18 @@
           "topics": [
             {"slug": "handling_payment_failures", "title": "Handling Payment Failures", "sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/HandlingPaymentFailures.java", "contentPath": "content/library/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/HandlingPaymentFailures.java", "concept": "Handling Payment Failures", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/TopicGuide.md", "contentPath": "content/library/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/TopicGuide.md"}}
           ]
+        },
+        {
+          "slug": "ch02_exception_design_and_resources",
+          "title": "Exception Design And Resources",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch02_exception_design_and_resources/ChapterGuide.md", "contentPath": "content/library/sec11_exception_handling/ch02_exception_design_and_resources/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch02_exception_design_and_resources/ChapterRevision.md", "contentPath": "content/library/sec11_exception_handling/ch02_exception_design_and_resources/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch02_exception_design_and_resources/RunChapter.java", "contentPath": "content/library/sec11_exception_handling/ch02_exception_design_and_resources/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch02_exception_design_and_resources/RunAllTopics.java", "contentPath": "content/library/sec11_exception_handling/ch02_exception_design_and_resources/RunAllTopics.java"},
+          "topics": [
+            {"slug": "checked_unchecked_and_custom", "title": "Checked Unchecked And Custom", "sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch02_exception_design_and_resources/topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java", "contentPath": "content/library/sec11_exception_handling/ch02_exception_design_and_resources/topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java", "concept": "Checked Unchecked And Custom"},
+            {"slug": "try_with_resources_and_chaining", "title": "Try With Resources And Chaining", "sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch02_exception_design_and_resources/topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java", "contentPath": "content/library/sec11_exception_handling/ch02_exception_design_and_resources/topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java", "concept": "Try With Resources And Chaining"}
+          ]
         }
       ]
     },
@@ -407,6 +475,18 @@
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch01_talking_to_databases/RunAllTopics.java", "contentPath": "content/library/sec13_io_and_data_access/ch01_talking_to_databases/RunAllTopics.java"},
           "topics": [
             {"slug": "querying_student_results", "title": "Querying Student Results", "sourcePath": "src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch01_talking_to_databases/topics/querying_student_results/QueryingStudentResults.java", "contentPath": "content/library/sec13_io_and_data_access/ch01_talking_to_databases/topics/querying_student_results/QueryingStudentResults.java", "concept": "Querying Student Results"}
+          ]
+        },
+        {
+          "slug": "ch02_files_buffers_and_serialization",
+          "title": "Files, Buffers, And Serialization",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch02_files_buffers_and_serialization/ChapterGuide.md", "contentPath": "content/library/sec13_io_and_data_access/ch02_files_buffers_and_serialization/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch02_files_buffers_and_serialization/ChapterRevision.md", "contentPath": "content/library/sec13_io_and_data_access/ch02_files_buffers_and_serialization/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch02_files_buffers_and_serialization/RunChapter.java", "contentPath": "content/library/sec13_io_and_data_access/ch02_files_buffers_and_serialization/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch02_files_buffers_and_serialization/RunAllTopics.java", "contentPath": "content/library/sec13_io_and_data_access/ch02_files_buffers_and_serialization/RunAllTopics.java"},
+          "topics": [
+            {"slug": "bytes_chars_and_files", "title": "Bytes Chars And Files", "sourcePath": "src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch02_files_buffers_and_serialization/topics/bytes_chars_and_files/BytesCharsAndFiles.java", "contentPath": "content/library/sec13_io_and_data_access/ch02_files_buffers_and_serialization/topics/bytes_chars_and_files/BytesCharsAndFiles.java", "concept": "Bytes Chars And Files"},
+            {"slug": "watch_service_and_serialization", "title": "Watch Service And Serialization", "sourcePath": "src/main/java/com/learning/javamissing/sec13_io_and_data_access/ch02_files_buffers_and_serialization/topics/watch_service_and_serialization/WatchServiceAndSerialization.java", "contentPath": "content/library/sec13_io_and_data_access/ch02_files_buffers_and_serialization/topics/watch_service_and_serialization/WatchServiceAndSerialization.java", "concept": "Watch Service And Serialization"}
           ]
         }
       ]
@@ -521,6 +601,18 @@
           "topics": [
             {"slug": "validating_user_input", "title": "Validating User Input", "sourcePath": "src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch06_text_processing_and_regex/topics/validating_user_input/ValidatingUserInput.java", "contentPath": "content/library/sec16_core_data_time_and_text/ch06_text_processing_and_regex/topics/validating_user_input/ValidatingUserInput.java", "concept": "Validating User Input"}
           ]
+        },
+        {
+          "slug": "ch07_strings_in_depth",
+          "title": "Strings In Depth",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch07_strings_in_depth/ChapterGuide.md", "contentPath": "content/library/sec16_core_data_time_and_text/ch07_strings_in_depth/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch07_strings_in_depth/ChapterRevision.md", "contentPath": "content/library/sec16_core_data_time_and_text/ch07_strings_in_depth/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch07_strings_in_depth/RunChapter.java", "contentPath": "content/library/sec16_core_data_time_and_text/ch07_strings_in_depth/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch07_strings_in_depth/RunAllTopics.java", "contentPath": "content/library/sec16_core_data_time_and_text/ch07_strings_in_depth/RunAllTopics.java"},
+          "topics": [
+            {"slug": "builders_formatting_and_regex", "title": "Builders Formatting And Regex", "sourcePath": "src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch07_strings_in_depth/topics/builders_formatting_and_regex/BuildersFormattingAndRegex.java", "contentPath": "content/library/sec16_core_data_time_and_text/ch07_strings_in_depth/topics/builders_formatting_and_regex/BuildersFormattingAndRegex.java", "concept": "Builders Formatting And Regex"},
+            {"slug": "string_pool_and_equals", "title": "String Pool And Equals", "sourcePath": "src/main/java/com/learning/javamissing/sec16_core_data_time_and_text/ch07_strings_in_depth/topics/string_pool_and_equals/StringPoolAndEquals.java", "contentPath": "content/library/sec16_core_data_time_and_text/ch07_strings_in_depth/topics/string_pool_and_equals/StringPoolAndEquals.java", "concept": "String Pool And Equals"}
+          ]
         }
       ]
     },
@@ -627,6 +719,18 @@
             {"slug": "designing_tests_around_business_rules", "title": "Designing Tests Around Business Rules", "sourcePath": "src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch01_testing_and_quality/topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java", "contentPath": "content/library/sec19_testing_and_quality/ch01_testing_and_quality/topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java", "concept": "Designing Tests Around Business Rules"},
             {"slug": "writing_readable_junit_tests", "title": "Writing Readable JUnit Tests", "sourcePath": "src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch01_testing_and_quality/topics/writing_readable_junit_tests/WritingReadableJUnitTests.java", "contentPath": "content/library/sec19_testing_and_quality/ch01_testing_and_quality/topics/writing_readable_junit_tests/WritingReadableJUnitTests.java", "concept": "Writing Readable Junit Tests"}
           ]
+        },
+        {
+          "slug": "ch02_junit5_and_test_doubles",
+          "title": "JUnit 5 And Test Doubles",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch02_junit5_and_test_doubles/ChapterGuide.md", "contentPath": "content/library/sec19_testing_and_quality/ch02_junit5_and_test_doubles/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch02_junit5_and_test_doubles/ChapterRevision.md", "contentPath": "content/library/sec19_testing_and_quality/ch02_junit5_and_test_doubles/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch02_junit5_and_test_doubles/RunChapter.java", "contentPath": "content/library/sec19_testing_and_quality/ch02_junit5_and_test_doubles/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch02_junit5_and_test_doubles/RunAllTopics.java", "contentPath": "content/library/sec19_testing_and_quality/ch02_junit5_and_test_doubles/RunAllTopics.java"},
+          "topics": [
+            {"slug": "junit5_lifecycle_and_parameters", "title": "Junit5 Lifecycle And Parameters", "sourcePath": "src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch02_junit5_and_test_doubles/topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java", "contentPath": "content/library/sec19_testing_and_quality/ch02_junit5_and_test_doubles/topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java", "concept": "Junit5 Lifecycle And Parameters"},
+            {"slug": "test_doubles_and_verification", "title": "Test Doubles And Verification", "sourcePath": "src/main/java/com/learning/javamissing/sec19_testing_and_quality/ch02_junit5_and_test_doubles/topics/test_doubles_and_verification/TestDoublesAndVerification.java", "contentPath": "content/library/sec19_testing_and_quality/ch02_junit5_and_test_doubles/topics/test_doubles_and_verification/TestDoublesAndVerification.java", "concept": "Test Doubles And Verification"}
+          ]
         }
       ]
     },
@@ -726,6 +830,25 @@
             {"slug": "availability_freshness", "title": "Availability Freshness", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/AvailabilityFreshness.java", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/AvailabilityFreshness.java", "concept": "Availability Freshness", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/availability_freshness/TopicGuide.md"}},
             {"slug": "hotel_search_cache", "title": "Hotel Search Cache", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/HotelSearchCache.java", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/HotelSearchCache.java", "concept": "Hotel Search Cache", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/hotel_search_cache/TopicGuide.md"}},
             {"slug": "resilient_signup_flow", "title": "Resilient Signup Flow", "sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/ResilientSignupFlow.java", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/ResilientSignupFlow.java", "concept": "Resilient Signup Flow", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/TopicGuide.md", "contentPath": "content/library/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/topics/resilient_signup_flow/TopicGuide.md"}}
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "sec22_build_and_tooling",
+      "title": "Build And Tooling",
+      "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec22_build_and_tooling/SectionGuide.md", "contentPath": "content/library/sec22_build_and_tooling/SectionGuide.md"},
+      "chapters": [
+        {
+          "slug": "ch01_maven_and_gradle_basics",
+          "title": "Maven And Gradle Basics",
+          "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec22_build_and_tooling/ch01_maven_and_gradle_basics/ChapterGuide.md", "contentPath": "content/library/sec22_build_and_tooling/ch01_maven_and_gradle_basics/ChapterGuide.md"},
+          "revision": {"sourcePath": "src/main/java/com/learning/javamissing/sec22_build_and_tooling/ch01_maven_and_gradle_basics/ChapterRevision.md", "contentPath": "content/library/sec22_build_and_tooling/ch01_maven_and_gradle_basics/ChapterRevision.md"},
+          "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec22_build_and_tooling/ch01_maven_and_gradle_basics/RunChapter.java", "contentPath": "content/library/sec22_build_and_tooling/ch01_maven_and_gradle_basics/RunChapter.java"},
+          "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec22_build_and_tooling/ch01_maven_and_gradle_basics/RunAllTopics.java", "contentPath": "content/library/sec22_build_and_tooling/ch01_maven_and_gradle_basics/RunAllTopics.java"},
+          "topics": [
+            {"slug": "build_files_and_dependency_scopes", "title": "Build Files And Dependency Scopes", "sourcePath": "src/main/java/com/learning/javamissing/sec22_build_and_tooling/ch01_maven_and_gradle_basics/topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java", "contentPath": "content/library/sec22_build_and_tooling/ch01_maven_and_gradle_basics/topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java", "concept": "Build Files And Dependency Scopes"},
+            {"slug": "jar_war_and_spring_boot_why", "title": "Jar War And Spring Boot Why", "sourcePath": "src/main/java/com/learning/javamissing/sec22_build_and_tooling/ch01_maven_and_gradle_basics/topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java", "contentPath": "content/library/sec22_build_and_tooling/ch01_maven_and_gradle_basics/topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java", "concept": "Jar War And Spring Boot Why"}
           ]
         }
       ]

@@ -3,6 +3,7 @@
 Current chapters:
 
 - `ch01_collections`
+- `ch02_maps_and_iterators_in_depth`
 
 ## Before You Start
 
