@@ -45,8 +45,12 @@ src/main/java/com/learning/javamissing/
           ConceptName.java
 ```
 
-`TopicGuide.md` is optional but preferred for strong topics. It should carry the hook, explanation, version notes, and next steps. `ConceptName.java` should stay runnable and focused on code.
-Where it helps, use `❌ Bad Code` and `✅ Better Code` sections in `TopicGuide.md` so learners can compare choices quickly. This fits both beginner learning and Clean Code-style contrast.
+`TopicGuide.md` is optional but preferred for strong topics. It should follow this ordered lesson shape:
+`Why This Matters`, `Intuition`, `Problem Statement`, `Core Idea`, `Mental Model`,
+`Simple Example`, `Step-by-Step Working`, `Rules / Syntax`, `Common Mistakes`,
+`When To Use / When Not To Use`, `Practice`, `Summary`.
+`ConceptName.java` should stay runnable and focused on code.
+Where it helps, use `### Bad Code`, `### Better Code`, `### Wrong Mental Model`, and `### Better Mental Model` inside the relevant topic-guide section so learners can compare choices quickly.
 For high-value topics, also add:
 
 - one quick visual (`.svg` preferred) that explains the concept at a glance
@@ -122,6 +126,22 @@ Every chapter should include:
 - runnable topic files with real code examples
 - `RunChapter.java` for quick chapter navigation
 
+Every `ChapterGuide.md` should follow this ordered chapter shape:
+
+- `Why This Chapter Matters`
+- `Intuition`
+- `Problem Statement`
+- `Core Ideas`
+- `Mental Model`
+- `Study Order`
+- `What To Notice`
+- `Common Mistakes`
+- `When To Use / When Not To Use`
+- `Practice`
+- `Summary`
+
+Appendix sections such as `Sources`, `Effective Java Mapping`, `OCJP Focus`, `Compare With`, and `Next Chapter` should come after `Summary`.
+
 ## Sections
 
 The curriculum should now use a finer section model so major areas can grow independently.
@@ -163,6 +183,7 @@ The root stays intentionally small:
 - source directories like `src/`, `site/`, `scripts/`, and `docs/`
 
 Planning, roadmap, compare pages, release tracks, and book-manuscript files live in [planning/](planning/README.md).
+Recent repo updates are tracked in [planning/CHANGELOG.md](planning/CHANGELOG.md).
 
 ## Contributing And Legal
 

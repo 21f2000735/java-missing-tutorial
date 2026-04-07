@@ -163,6 +163,7 @@ The root stays intentionally small:
 - source directories like `src/`, `site/`, `scripts/`, and `docs/`
 
 Planning, roadmap, compare pages, release tracks, and book-manuscript files live in [planning/](planning/README.md).
+Recent repo updates are tracked in [planning/CHANGELOG.md](planning/CHANGELOG.md).
 
 ## Contributing And Legal
 

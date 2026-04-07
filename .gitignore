@@ -2,6 +2,7 @@ build/
 target/
 out/
 .gradle/
+.idea/
 *.class
 node_modules/
 npm-debug.log*

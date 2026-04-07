@@ -19,6 +19,34 @@
   --radius: 1.35rem;
 }
 
+html[data-theme="dark"],
+body[data-theme="dark"] {
+  background:
+    radial-gradient(circle at top left, rgba(131, 87, 39, 0.22), transparent 28rem),
+    radial-gradient(circle at 85% 10%, rgba(58, 106, 87, 0.12), transparent 22rem),
+    linear-gradient(180deg, #161311 0%, #191611 46%, #12100d 100%);
+}
+
+.theme-dark {
+  --bg: #161311;
+  --bg-strong: #1f1a15;
+  --panel: rgba(30, 26, 21, 0.92);
+  --panel-strong: #241f19;
+  --ink-panel: #f4ecdf;
+  --line: rgba(230, 216, 194, 0.12);
+  --line-strong: rgba(245, 191, 121, 0.24);
+  --text: #efe4d2;
+  --muted: #baa88e;
+  --accent: #e29a4d;
+  --accent-strong: #f1b26a;
+  --accent-soft: rgba(226, 154, 77, 0.16);
+  --leaf: #6ba48d;
+  --leaf-soft: rgba(107, 164, 141, 0.12);
+  --warning-soft: rgba(219, 165, 41, 0.18);
+  --danger-soft: rgba(202, 97, 67, 0.18);
+  --shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
+}
+
 * {
   box-sizing: border-box;
 }
@@ -123,6 +151,15 @@ body {
 
 a {
   color: var(--accent-strong);
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+select:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 3px;
 }
 
 .site-shell {
@@ -563,6 +600,11 @@ a {
   color: #875f00;
 }
 
+.badge-success-soft {
+  background: rgba(58, 106, 87, 0.14);
+  color: #2f624f;
+}
+
 .reading-state-bar {
   background:
     linear-gradient(160deg, rgba(255, 250, 244, 0.96), rgba(243, 234, 218, 0.92)),
@@ -580,6 +622,52 @@ a {
 .playground-note {
   font-size: 0.88rem;
   color: var(--muted);
+}
+
+.filter-grid,
+.prerequisite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.filter-field {
+  display: block;
+}
+
+.filter-select {
+  border-radius: 1rem;
+  border-color: var(--line);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--text);
+}
+
+.prerequisite-panel {
+  padding: 1rem 1.05rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: linear-gradient(165deg, rgba(255, 250, 244, 0.96), rgba(246, 238, 221, 0.88));
+}
+
+.prerequisite-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.prerequisite-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.8rem;
+  border-radius: 999px;
+  text-decoration: none;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.68);
+  box-shadow: inset 0 0 0 1px rgba(49, 40, 29, 0.08);
+}
+
+.prerequisite-pill-next {
+  background: var(--leaf-soft);
 }
 
 .playground-note {
@@ -697,6 +785,51 @@ a {
   border: 1px solid rgba(54, 43, 28, 0.12);
   background: linear-gradient(180deg, rgba(255, 251, 245, 0.98), rgba(245, 236, 220, 0.95));
   box-shadow: var(--shadow);
+}
+
+.company-grid,
+.company-question-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.company-card {
+  padding: 1.35rem;
+}
+
+.company-question {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.52);
+  overflow: hidden;
+}
+
+.company-question summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.95rem 1rem;
+  font-weight: 600;
+}
+
+.company-question[open] summary {
+  border-bottom: 1px solid var(--line);
+}
+
+.company-question summary::-webkit-details-marker {
+  display: none;
+}
+
+.company-answer {
+  padding: 0 1rem 1rem;
+  color: var(--text);
+}
+
+.company-answer p,
+.company-answer li {
+  line-height: 1.75;
 }
 
 .topic-meta {
@@ -860,6 +993,107 @@ a {
 .reading-mode .content-card,
 .reading-mode .hero-panel {
   box-shadow: 0 12px 28px rgba(60, 42, 18, 0.06);
+}
+
+.theme-dark .site-header {
+  background: linear-gradient(180deg, rgba(24, 21, 18, 0.94), rgba(24, 21, 18, 0.8));
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.theme-dark .search-input,
+.theme-dark .filter-select,
+.theme-dark .toc-link,
+.theme-dark .quick-link-chip,
+.theme-dark .nav-link-card,
+.theme-dark .prerequisite-pill,
+.theme-dark .company-question {
+  background: rgba(40, 34, 28, 0.86);
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.theme-dark .hero-panel,
+.theme-dark .content-card,
+.theme-dark .topic-card,
+.theme-dark .resource-card,
+.theme-dark .chapter-card,
+.theme-dark .story-card,
+.theme-dark .journey-card,
+.theme-dark .insight-card,
+.theme-dark .topic-brief-card,
+.theme-dark .prerequisite-panel {
+  background:
+    linear-gradient(180deg, rgba(31, 27, 22, 0.96), rgba(27, 23, 19, 0.92)),
+    var(--panel);
+}
+
+.theme-dark .hero-home,
+.theme-dark .story-card-strong,
+.theme-dark .callout-story,
+.theme-dark .callout-explain,
+.theme-dark .callout-caution,
+.theme-dark .callout-next,
+.theme-dark .code-toolbar,
+.theme-dark .code-panel,
+.theme-dark .code-panel pre[class*="language-"] {
+  background: linear-gradient(180deg, rgba(28, 24, 20, 0.98), rgba(20, 17, 14, 0.96));
+}
+
+.theme-dark .story-card-strong .muted-copy,
+.theme-dark .story-card-strong .eyebrow,
+.theme-dark .story-card-strong h3,
+.theme-dark .company-answer,
+.theme-dark .content-markdown,
+.theme-dark .content-markdown p,
+.theme-dark .content-markdown li,
+.theme-dark .content-markdown h1,
+.theme-dark .content-markdown h2,
+.theme-dark .content-markdown h3 {
+  color: var(--text);
+}
+
+.theme-dark .code-panel pre[class*="language-"],
+.theme-dark .content-markdown pre,
+.theme-dark .content-markdown code {
+  color: #f7eddc;
+}
+
+.theme-dark .btn-outline-dark {
+  border-color: var(--line-strong);
+  color: var(--text);
+}
+
+.theme-dark .btn-outline-dark:hover,
+.theme-dark .btn-dark {
+  background: #efe4d2;
+  color: #1a140f;
+}
+
+.theme-dark .badge-soft {
+  background: rgba(226, 154, 77, 0.18);
+  color: #f3c58f;
+}
+
+.theme-dark .badge-warning-soft {
+  color: #f0ca82;
+}
+
+.theme-dark .badge-success-soft {
+  background: rgba(107, 164, 141, 0.2);
+  color: #b5e0cf;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 @media (max-width: 1199.98px) {

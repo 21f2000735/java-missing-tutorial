@@ -6,27 +6,96 @@
   <title>Interview Problem Approach - Java Missing Tutorial</title>
   <meta name="description" content="This guide is for coding, backend, and system-style interviews.">
   <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/guides/interview-problem-approach/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;}
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
-    main{max-width:54rem;margin:0 auto;padding:2rem 1.25rem 4rem}
-    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
-    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
-    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
-    p,li{line-height:1.7} a{color:var(--accent)} code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace} pre{overflow:auto;background:#2a2117;color:#fdf8f1;padding:1rem;border-radius:1rem}
-    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
-  </style>
+  :root{
+    --bg:#f5efe3;--panel:#fffaf2;--panel-strong:#fff6ea;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);
+    --accent:#8d4300;--accent-strong:#af5b0c;--shadow:0 18px 42px rgba(60,42,18,.08);--radius:1.35rem;
+  }
+  html[data-theme="dark"]{
+    --bg:#161311;--panel:#1f1a15;--panel-strong:#26201a;--text:#efe4d2;--muted:#baa88e;--line:rgba(230,216,194,.12);
+    --accent:#f1b26a;--accent-strong:#e29a4d;--shadow:0 18px 42px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:"IBM Plex Sans",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    background:
+      radial-gradient(circle at top left, rgba(244,194,126,.22), transparent 28rem),
+      radial-gradient(circle at 85% 10%, rgba(83,135,111,.12), transparent 22rem),
+      linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);
+    color:var(--text);
+  }
+  html[data-theme="dark"] body{
+    background:
+      radial-gradient(circle at top left, rgba(131,87,39,.22), transparent 28rem),
+      radial-gradient(circle at 85% 10%, rgba(58,106,87,.12), transparent 22rem),
+      linear-gradient(180deg,#161311 0%,#191611 46%,#12100d 100%);
+  }
+  a{color:var(--accent-strong)}
+  main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+  .static-shell{display:grid;gap:1rem}
+  .static-header,.panel{
+    background:linear-gradient(180deg,rgba(255,252,247,.96),rgba(255,249,240,.9)),var(--panel);
+    border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+  }
+  html[data-theme="dark"] .static-header,
+  html[data-theme="dark"] .panel{
+    background:linear-gradient(180deg,rgba(31,27,22,.96),rgba(27,23,19,.92)),var(--panel);
+  }
+  .static-header{padding:1.6rem 1.4rem}
+  .panel{padding:1.4rem 1.25rem}
+  .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+  h1,h2,h3{font-family:"Fraunces",Georgia,serif;line-height:1.08}
+  h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem}
+  h2{margin-top:1.8rem}
+  p,li{line-height:1.75}
+  .toolbar,.nav{display:flex;flex-wrap:wrap;gap:.75rem}
+  .toolbar{justify-content:space-between;align-items:center;margin-top:1rem}
+  .nav a,.theme-toggle{
+    display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.72rem .98rem;text-decoration:none;
+    background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(49,40,29,.08);color:var(--text);border:0;font:inherit;cursor:pointer;
+  }
+  html[data-theme="dark"] .nav a,
+  html[data-theme="dark"] .theme-toggle{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
+  .nav a:hover,.theme-toggle:hover{transform:translateY(-1px)}
+  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
+  .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+  .code-title,.lead,.muted{color:var(--muted)}
+  img{display:block;width:min(100%,56rem);margin:1.2rem auto;border-radius:1.15rem;border:1px solid var(--line);background:var(--panel-strong);box-shadow:var(--shadow)}
+  pre{overflow:auto;background:#241d15;color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+  html[data-theme="dark"] pre{background:#15110d;color:#f7eddc}
+  code{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace}
+  table{width:100%;border-collapse:collapse;margin:1rem 0;border-radius:1rem;overflow:hidden}
+  th,td{border:1px solid var(--line);padding:.8rem .85rem;vertical-align:top}
+  th{background:rgba(175,91,12,.08)}
+  blockquote{margin:1rem 0;padding:.95rem 1rem;border-left:4px solid rgba(58,106,87,.45);background:rgba(58,106,87,.08);border-radius:.9rem}
+  .back-link{display:inline-flex;align-items:center;gap:.4rem;text-decoration:none;color:var(--muted)}
+  .footer-note{margin-top:1rem;color:var(--muted);font-size:.95rem}
+  @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
   <main>
-    <div class="panel">
-      <p class="eyebrow">Static Guide</p>
-      <h1>Interview Problem Approach</h1>
-      <div class="nav">
-        <a href="../../index.html">Open site home</a>
-        <a href="../../index.html#resource/INTERVIEW_PROBLEM_APPROACH">Open app version</a>
-      </div>
-      <p>This guide is for coding, backend, and system-style interviews.</p>
+    <div class="static-shell">
+      <section class="static-header">
+        <p class="eyebrow">Static Guide</p>
+        <h1>Interview Problem Approach</h1>
+        <p class="lead">A crawlable article view of this guide, with the same reading direction as the main app.</p>
+        <div class="toolbar">
+          <div class="nav">
+            <a href="../../index.html">Open site home</a>
+            <a href="../../index.html#resource/INTERVIEW_PROBLEM_APPROACH">Open app version</a>
+          </div>
+          <button id="theme-toggle" class="theme-toggle" type="button">Dark Mode</button>
+        </div>
+      </section>
+      <article class="panel">
+        <a class="back-link" href="../../index.html#resource/INTERVIEW_PROBLEM_APPROACH">← Back to interactive view</a>
+        <p>This guide is for coding, backend, and system-style interviews.</p>
 <p>The goal is not to sound clever.
 The goal is to show clear engineering thinking under time pressure.</p>
 <h2>The Core Process</h2>
@@ -194,7 +263,27 @@ The goal is to show clear engineering thinking under time pressure.</p>
 <li>the company-specific styles you should practice against</li>
 </ul>
 
+        <p class="footer-note">Prefer the app version when you want search, bookmarks, progress, or random-topic navigation.</p>
+      </article>
     </div>
   </main>
+  <script>
+  const key = 'java-book-theme';
+  const root = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+  function apply(theme){
+    root.dataset.theme = theme;
+    if(toggle) toggle.textContent = theme === 'dark' ? 'Light Mode' : 'Dark Mode';
+  }
+  const current = localStorage.getItem(key) || 'light';
+  apply(current);
+  if(toggle){
+    toggle.addEventListener('click', () => {
+      const next = (root.dataset.theme || 'light') === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(key, next);
+      apply(next);
+    });
+  }
+</script>
 </body>
 </html>

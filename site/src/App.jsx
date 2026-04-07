@@ -296,6 +296,96 @@ const SECTION_PROFILES = {
   }
 };
 
+const SECTION_PREREQUISITES = {
+  sec01_fundamentals: {
+    before: [],
+    next: ['sec02_collections', 'sec03_generics', 'sec15_clean_code_and_refactoring']
+  },
+  sec02_collections: {
+    before: ['sec01_fundamentals'],
+    next: ['sec03_generics', 'sec04_streams_and_functional_style', 'sec20_data_structures_and_complexity']
+  },
+  sec03_generics: {
+    before: ['sec01_fundamentals', 'sec02_collections'],
+    next: ['sec04_streams_and_functional_style']
+  },
+  sec04_streams_and_functional_style: {
+    before: ['sec02_collections', 'sec03_generics'],
+    next: ['sec05_multithreading_and_concurrency', 'sec19_testing_and_quality']
+  },
+  sec05_multithreading_and_concurrency: {
+    before: ['sec01_fundamentals', 'sec02_collections', 'sec04_streams_and_functional_style'],
+    next: ['sec08_internal_of_jvm', 'sec21_company_interview_tracks']
+  },
+  sec08_internal_of_jvm: {
+    before: ['sec01_fundamentals', 'sec05_multithreading_and_concurrency'],
+    next: ['sec11_exception_handling', 'sec21_company_interview_tracks']
+  },
+  sec11_exception_handling: {
+    before: ['sec01_fundamentals'],
+    next: ['sec12_networking', 'sec13_io_and_data_access', 'sec21_company_interview_tracks']
+  },
+  sec16_core_data_time_and_text: {
+    before: ['sec01_fundamentals', 'sec02_collections'],
+    next: ['sec18_architecture_and_integration']
+  },
+  sec17_language_modeling_and_modern_types: {
+    before: ['sec01_fundamentals', 'sec07_principles_and_solid'],
+    next: ['sec18_architecture_and_integration']
+  },
+  sec19_testing_and_quality: {
+    before: ['sec01_fundamentals', 'sec11_exception_handling'],
+    next: ['sec21_company_interview_tracks']
+  },
+  sec20_data_structures_and_complexity: {
+    before: ['sec01_fundamentals', 'sec02_collections'],
+    next: ['sec21_company_interview_tracks']
+  },
+  sec21_company_interview_tracks: {
+    before: ['sec02_collections', 'sec04_streams_and_functional_style', 'sec05_multithreading_and_concurrency', 'sec11_exception_handling', 'sec20_data_structures_and_complexity'],
+    next: ['sec22_build_and_tooling']
+  },
+  sec22_build_and_tooling: {
+    before: ['sec01_fundamentals'],
+    next: []
+  }
+};
+
+const VERSION_HINTS = {
+  sec02_collections: { introduced: 'Java 1.2', status: 'stable' },
+  sec03_generics: { introduced: 'Java 5', status: 'stable' },
+  sec04_streams_and_functional_style: { introduced: 'Java 8', status: 'stable' },
+  sec05_multithreading_and_concurrency: { introduced: 'Modern Java', status: 'mixed' },
+  'sec05_multithreading_and_concurrency/ch02_virtual_threads': { introduced: 'Java 21', status: 'final' },
+  'sec05_multithreading_and_concurrency/ch03_structured_concurrency': { introduced: 'Java 25', status: 'preview' },
+  'sec05_multithreading_and_concurrency/ch04_scoped_values': { introduced: 'Java 25', status: 'preview' },
+  sec10_reflection_and_metadata: { introduced: 'Java 5+', status: 'stable' },
+  sec12_networking: { introduced: 'Java 11', status: 'stable' },
+  sec16_core_data_time_and_text: { introduced: 'Mixed Java', status: 'stable' },
+  'sec16_core_data_time_and_text/ch01_optional': { introduced: 'Java 8', status: 'stable' },
+  'sec16_core_data_time_and_text/ch02_working_with_time': { introduced: 'Java 8', status: 'stable' },
+  'sec16_core_data_time_and_text/ch07_strings_in_depth': { introduced: 'Mixed Java', status: 'stable' },
+  sec17_language_modeling_and_modern_types: { introduced: 'Modern Java', status: 'stable' },
+  'sec17_language_modeling_and_modern_types/ch01_pattern_matching': { introduced: 'Java 21', status: 'stable' },
+  'sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types': { introduced: 'Java 17', status: 'stable' },
+  sec18_architecture_and_integration: { introduced: 'Mixed Java', status: 'stable' },
+  'sec18_architecture_and_integration/ch01_modules': { introduced: 'Java 9', status: 'stable' },
+  sec19_testing_and_quality: { introduced: 'JUnit 5 era', status: 'stable' },
+  sec22_build_and_tooling: { introduced: 'Ecosystem', status: 'stable' }
+};
+
+const COMPANY_INTERVIEW_PROFILES = {
+  Google: { slug: 'google', bucket: 'FAANG', focus: ['algorithms', 'debugging', 'system design'] },
+  Meta: { slug: 'meta', bucket: 'FAANG', focus: ['product systems', 'coding speed', 'impact'] },
+  Amazon: { slug: 'amazon', bucket: 'FAANG', focus: ['ownership', 'system design', 'customer focus'] },
+  Apple: { slug: 'apple', bucket: 'FAANG', focus: ['api design', 'correctness', 'performance'] },
+  Netflix: { slug: 'netflix', bucket: 'FAANG+', focus: ['distributed systems', 'observability', 'reliability'] },
+  Coinbase: { slug: 'coinbase', bucket: 'High-paying product', focus: ['idempotency', 'money correctness', 'consistency'] },
+  'Jane Street': { slug: 'jane-street', bucket: 'High-paying quant', focus: ['algorithms', 'invariants', 'clean reasoning'] },
+  MakeMyTrip: { slug: 'makemytrip', bucket: 'Travel tech', focus: ['caching', 'booking flows', 'latency'] },
+  HotelTrader: { slug: 'hoteltrader', bucket: 'Travel tech', focus: ['graphql', 'data freshness', 'partner APIs'] }
+};
+
 const PLAYGROUND_LINKS = {
   jdoodle: 'https://www.jdoodle.com/online-java-compiler/',
   onecompiler: 'https://onecompiler.com/studio/java'
@@ -498,6 +588,145 @@ function titleFromSlug(value) {
     .replace(/^ch\d+_/, '')
     .replace(/_/g, ' ')
     .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function resolveVersionMeta(sectionSlug, chapterSlug, lessonMeta = {}, preview = {}) {
+  const chapterKey = `${sectionSlug}/${chapterSlug}`;
+  const hinted = VERSION_HINTS[chapterKey] || VERSION_HINTS[sectionSlug] || {};
+  const introduced = lessonMeta.introduced || hinted.introduced || '';
+  const status = lessonMeta.status || (preview.previewRequired ? 'preview' : hinted.status) || '';
+  const display = status === 'preview' && introduced ? `${introduced} preview` : introduced || '';
+  return { introduced, status, display };
+}
+
+function statusTone(status = '') {
+  const normalized = status.toLowerCase();
+  if (normalized === 'preview') {
+    return 'warning';
+  }
+  if (normalized === 'final' || normalized === 'stable') {
+    return 'success';
+  }
+  return 'soft';
+}
+
+function badgeClassForTone(tone) {
+  if (tone === 'warning') {
+    return 'badge-warning-soft';
+  }
+  if (tone === 'success') {
+    return 'badge-success-soft';
+  }
+  return 'badge-soft';
+}
+
+function getSectionPrerequisiteInfo(sectionSlug) {
+  return SECTION_PREREQUISITES[sectionSlug] || { before: [], next: [] };
+}
+
+function parseCompanyQuestionBank(raw = '') {
+  const lines = raw.split('\n');
+  const companies = [];
+  let currentCompany = null;
+  let currentQuestion = null;
+  let mode = '';
+  const overview = { howToUse: [] };
+
+  function flushQuestion() {
+    if (currentCompany && currentQuestion) {
+      currentQuestion.prompt = currentQuestion.prompt.trim();
+      currentQuestion.answer = currentQuestion.answer.trim();
+      currentCompany.questions.push(currentQuestion);
+      currentQuestion = null;
+    }
+  }
+
+  function flushCompany() {
+    flushQuestion();
+    if (currentCompany) {
+      companies.push(currentCompany);
+      currentCompany = null;
+    }
+  }
+
+  lines.forEach((rawLine) => {
+    const line = rawLine.trim();
+    if (!line) {
+      if (mode === 'answer' && currentQuestion) {
+        currentQuestion.answer += '\n\n';
+      }
+      return;
+    }
+
+    const h2 = line.match(/^##\s+(.*)/);
+    if (h2) {
+      const title = h2[1].trim();
+      if (COMPANY_INTERVIEW_PROFILES[title]) {
+        flushCompany();
+        currentCompany = {
+          name: title,
+          profile: COMPANY_INTERVIEW_PROFILES[title],
+          prepare: [],
+          questions: []
+        };
+        mode = '';
+        return;
+      }
+      flushCompany();
+      mode = title === 'How To Use This Page' ? 'overview' : '';
+      return;
+    }
+
+    if (mode === 'overview' && /^\d+\.\s+/.test(line)) {
+      overview.howToUse.push(stripMarkdown(line.replace(/^\d+\.\s+/, '')));
+      return;
+    }
+
+    if (!currentCompany) {
+      return;
+    }
+
+    const h3 = line.match(/^###\s+(.*)/);
+    if (h3) {
+      const title = h3[1].trim();
+      if (title === 'What to prepare for') {
+        flushQuestion();
+        mode = 'prepare';
+        return;
+      }
+      if (title.startsWith('Question')) {
+        flushQuestion();
+        currentQuestion = {
+          title,
+          prompt: '',
+          answer: ''
+        };
+        mode = 'question';
+        return;
+      }
+      if (title === 'Answer') {
+        mode = 'answer';
+      }
+      return;
+    }
+
+    if (mode === 'prepare' && /^-\s+/.test(line)) {
+      currentCompany.prepare.push(stripMarkdown(line.replace(/^-\s+/, '')));
+      return;
+    }
+
+    if (mode === 'question' && currentQuestion) {
+      currentQuestion.prompt = `${currentQuestion.prompt}${currentQuestion.prompt ? '\n' : ''}${line}`;
+      return;
+    }
+
+    if (mode === 'answer' && currentQuestion) {
+      currentQuestion.answer = `${currentQuestion.answer}${currentQuestion.answer ? '\n' : ''}${line}`;
+    }
+  });
+
+  flushCompany();
+  return { overview, companies };
 }
 
 function parseRoute() {
@@ -1023,16 +1252,37 @@ function useUiPreferences() {
       return false;
     }
   });
+  const [theme, setTheme] = useState(() => {
+    try {
+      return window.localStorage.getItem('java-book-theme') || 'light';
+    } catch {
+      return 'light';
+    }
+  });
 
   useEffect(() => {
     window.localStorage.setItem('java-book-reading-mode', readingMode ? 'on' : 'off');
   }, [readingMode]);
 
+  useEffect(() => {
+    window.localStorage.setItem('java-book-theme', theme);
+    document.documentElement.dataset.theme = theme;
+    document.body.dataset.theme = theme;
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', theme === 'dark' ? '#161311' : '#af5b0c');
+    }
+  }, [theme]);
+
   function toggleReadingMode() {
     setReadingMode((current) => !current);
   }
 
-  return { readingMode, toggleReadingMode };
+  function toggleTheme() {
+    setTheme((current) => current === 'dark' ? 'light' : 'dark');
+  }
+
+  return { readingMode, toggleReadingMode, theme, toggleTheme, isDark: theme === 'dark' };
 }
 
 function RandomTopicButton({ manifest, currentRoute }) {
@@ -1123,6 +1373,193 @@ function FeedbackBar({ routeKey, feedbackState }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function PrerequisiteMapCard({ title = 'Prerequisite Map', required = [], next = [], manifest }) {
+  const sectionTitle = (slug) => manifest.sections.find((section) => section.slug === slug)?.title || titleFromSlug(slug);
+  const requiredItems = required.map((slug) => ({ slug, title: sectionTitle(slug) }));
+  const nextItems = next.map((slug) => ({ slug, title: sectionTitle(slug) }));
+
+  return (
+    <div className="content-card prerequisite-card">
+      <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+        <h2 className="page-title mb-0">{title}</h2>
+        <span className="badge rounded-pill badge-soft">Study path</span>
+      </div>
+      <div className="prerequisite-grid">
+        <div className="prerequisite-panel">
+          <div className="eyebrow mb-2">Read Before This</div>
+          {requiredItems.length ? (
+            <div className="prerequisite-list">
+              {requiredItems.map((item) => (
+                <a key={item.slug} className="prerequisite-pill" href={`#section/${item.slug}`}>
+                  {item.title}
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p className="muted-copy mb-0">You can start here directly.</p>
+          )}
+        </div>
+        <div className="prerequisite-panel">
+          <div className="eyebrow mb-2">Unlocks Next</div>
+          {nextItems.length ? (
+            <div className="prerequisite-list">
+              {nextItems.map((item) => (
+                <a key={item.slug} className="prerequisite-pill prerequisite-pill-next" href={`#section/${item.slug}`}>
+                  {item.title}
+                </a>
+              ))}
+            </div>
+          ) : (
+            <p className="muted-copy mb-0">Use this as a stable anchor before you branch out.</p>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CompanyQuestionBankPage({ raw, manifest, resource, routeKey, readingState, feedbackState }) {
+  const parsed = useMemo(() => parseCompanyQuestionBank(raw), [raw]);
+  const [companyFilter, setCompanyFilter] = useState('all');
+  const [bucketFilter, setBucketFilter] = useState('all');
+  const [focusFilter, setFocusFilter] = useState('all');
+
+  const availableBuckets = useMemo(
+    () => [...new Set(parsed.companies.map((company) => company.profile.bucket))],
+    [parsed.companies]
+  );
+  const availableFocus = useMemo(
+    () => [...new Set(parsed.companies.flatMap((company) => company.profile.focus))],
+    [parsed.companies]
+  );
+
+  const filteredCompanies = parsed.companies.filter((company) => {
+    if (companyFilter !== 'all' && company.profile.slug !== companyFilter) {
+      return false;
+    }
+    if (bucketFilter !== 'all' && company.profile.bucket !== bucketFilter) {
+      return false;
+    }
+    if (focusFilter !== 'all' && !company.profile.focus.includes(focusFilter)) {
+      return false;
+    }
+    return true;
+  });
+
+  return (
+    <PageLayout
+      header={(
+        <HeaderPanel
+          title={resource.title}
+          eyebrow="Interview Resource"
+          summary={RESOURCE_DESCRIPTIONS[resource.slug]}
+          sourcePath={resource.sourcePath}
+        />
+      )}
+    >
+      <ReadingStateBar routeKey={routeKey} {...readingState} />
+      <div className="insight-grid mb-4">
+        <InsightCard icon="bi bi-buildings" title="What This Page Helps With">
+          Company pressure differs. This page lets you filter by company tier, interview focus, and question style without losing the deeper runnable chapters behind it.
+        </InsightCard>
+        <InsightCard icon="bi bi-list-check" title="How To Use It">
+          <BulletList items={parsed.overview.howToUse} />
+        </InsightCard>
+        <InsightCard icon="bi bi-diagram-3" title="Question Count">
+          {parsed.companies.length} company tracks and {parsed.companies.reduce((sum, company) => sum + company.questions.length, 0)} original question-answer pairs are available right now.
+        </InsightCard>
+        <InsightCard icon="bi bi-arrow-right-circle" title="Best Next Move">
+          Filter one company, answer aloud before reading the sample answer, then jump into the linked company-interview section chapters for runnable code.
+        </InsightCard>
+      </div>
+
+      <div className="content-card mb-4">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h2 className="page-title mb-0">Filter The Question Bank</h2>
+          <span className="badge rounded-pill badge-soft">{filteredCompanies.length} company track{filteredCompanies.length === 1 ? '' : 's'}</span>
+        </div>
+        <div className="filter-grid">
+          <label className="filter-field">
+            <span className="eyebrow mb-2">Company</span>
+            <select className="form-select filter-select" value={companyFilter} onChange={(event) => setCompanyFilter(event.target.value)}>
+              <option value="all">All companies</option>
+              {parsed.companies.map((company) => (
+                <option key={company.profile.slug} value={company.profile.slug}>{company.name}</option>
+              ))}
+            </select>
+          </label>
+          <label className="filter-field">
+            <span className="eyebrow mb-2">Company Group</span>
+            <select className="form-select filter-select" value={bucketFilter} onChange={(event) => setBucketFilter(event.target.value)}>
+              <option value="all">All groups</option>
+              {availableBuckets.map((bucket) => (
+                <option key={bucket} value={bucket}>{bucket}</option>
+              ))}
+            </select>
+          </label>
+          <label className="filter-field">
+            <span className="eyebrow mb-2">Interview Focus</span>
+            <select className="form-select filter-select" value={focusFilter} onChange={(event) => setFocusFilter(event.target.value)}>
+              <option value="all">All focus areas</option>
+              {availableFocus.map((focus) => (
+                <option key={focus} value={focus}>{focus}</option>
+              ))}
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div className="company-grid">
+        {filteredCompanies.length ? filteredCompanies.map((company) => (
+          <div key={company.profile.slug} className="content-card company-card">
+            <div className="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
+              <div>
+                <h2 className="page-title mb-2">{company.name}</h2>
+                <div className="topic-meta mb-0">
+                  <span className="badge rounded-pill badge-soft">{company.profile.bucket}</span>
+                  {company.profile.focus.map((focus) => (
+                    <span key={focus} className="badge rounded-pill badge-success-soft">{focus}</span>
+                  ))}
+                </div>
+              </div>
+              <a className="btn btn-outline-dark btn-sm rounded-pill" href="#section/sec21_company_interview_tracks">
+                Open Company Section
+              </a>
+            </div>
+
+            <div className="insight-grid mb-4">
+              <InsightCard icon="bi bi-bullseye" title="What To Prepare For">
+                <BulletList items={company.prepare} />
+              </InsightCard>
+              <InsightCard icon="bi bi-lightning-charge" title="Interview Pressure">
+                {company.profile.focus.join(', ')} are the dominant follow-up directions for this company track.
+              </InsightCard>
+            </div>
+
+            <div className="company-question-list">
+              {company.questions.map((question) => (
+                <details key={`${company.profile.slug}-${question.title}`} className="company-question">
+                  <summary>
+                    <span className="badge rounded-pill badge-soft">{question.title}</span>
+                    <span>{question.prompt}</span>
+                  </summary>
+                  <div className="company-answer" dangerouslySetInnerHTML={{ __html: marked.parse(question.answer) }} />
+                </details>
+              ))}
+            </div>
+          </div>
+        )) : (
+          <div className="content-card empty-state">
+            No company track matches this filter combination. Clear one filter and try again.
+          </div>
+        )}
+      </div>
+
+      <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
+    </PageLayout>
   );
 }
 
@@ -1320,6 +1757,7 @@ function ChapterStoryCards({ guide }) {
 }
 
 function TopicPreviewCard({ section, chapter, topic }) {
+  const versionMeta = resolveVersionMeta(section.slug, chapter.slug, topic.lessonMeta, topic.preview);
   const summary = truncateText(
     topic.preview.storyHook
       || topic.preview.problem
@@ -1333,8 +1771,7 @@ function TopicPreviewCard({ section, chapter, topic }) {
     <a className="topic-card topic-teaser text-decoration-none text-reset" href={`#topic/${section.slug}/${chapter.slug}/${topic.slug}`} key={topic.slug}>
       <div className="d-flex justify-content-between align-items-start gap-3 mb-2">
         <span className="badge rounded-pill badge-soft">{topic.preview.concept || topic.concept}</span>
-        {topic.lessonMeta?.introduced ? <span className="badge rounded-pill badge-soft">{topic.lessonMeta.introduced}</span> : null}
-        {topic.preview.previewRequired ? <span className="badge rounded-pill badge-warning-soft">JDK 25 preview</span> : null}
+        {versionMeta.display ? <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>{versionMeta.display}</span> : null}
       </div>
       <h3 className="h5 mb-2">{topic.title}</h3>
       <p className="muted-copy mb-3">{summary}</p>
@@ -1344,7 +1781,7 @@ function TopicPreviewCard({ section, chapter, topic }) {
   );
 }
 
-function QuickLinkRail({ onRandomTopic }) {
+function QuickLinkRail({ onRandomTopic, onToggleTheme, themeLabel, onToggleReadingMode, readingLabel }) {
   const links = [
     { label: 'Start Here', href: '#section/sec01_fundamentals' },
     { label: 'Interview Track', href: '#resource/INTERVIEW_TRACK' },
@@ -1358,6 +1795,12 @@ function QuickLinkRail({ onRandomTopic }) {
     <div className="quick-link-rail">
       <button type="button" className="quick-link-chip quick-link-button" onClick={onRandomTopic}>
         Random Topic
+      </button>
+      <button type="button" className="quick-link-chip quick-link-button" onClick={onToggleTheme}>
+        {themeLabel}
+      </button>
+      <button type="button" className="quick-link-chip quick-link-button" onClick={onToggleReadingMode}>
+        {readingLabel}
       </button>
       {links.map((link) => (
         <a key={link.href} className="quick-link-chip" href={link.href}>{link.label}</a>
@@ -1598,7 +2041,7 @@ export default function App() {
   }
 
   return (
-    <div className={`site-shell ${uiPreferences.readingMode ? 'reading-mode' : ''}`}>
+    <div className={`site-shell ${uiPreferences.readingMode ? 'reading-mode' : ''} ${uiPreferences.isDark ? 'theme-dark' : ''}`}>
       <header className="site-header border-bottom">
         <nav className="navbar navbar-expand-lg px-3 px-lg-4 py-3">
           <div className="container-fluid px-0">
@@ -1606,6 +2049,9 @@ export default function App() {
             <div className="ms-lg-4 flex-grow-1 d-flex align-items-center gap-3">
               <SearchBox entries={searchEntries} />
               <div className="d-none d-lg-flex align-items-center gap-2">
+                <button className={`btn btn-sm rounded-pill ${uiPreferences.isDark ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleTheme}>
+                  {uiPreferences.isDark ? 'Light Mode' : 'Dark Mode'}
+                </button>
                 <button className={`btn btn-sm rounded-pill ${uiPreferences.readingMode ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleReadingMode}>
                   {uiPreferences.readingMode ? 'Exit Reading Mode' : 'Reading Mode'}
                 </button>
@@ -1618,7 +2064,13 @@ export default function App() {
           </div>
         </nav>
         <div className="px-3 px-lg-4 pb-3 app-quick-links">
-          <QuickLinkRail onRandomTopic={goToRandomTopic} />
+          <QuickLinkRail
+            onRandomTopic={goToRandomTopic}
+            onToggleTheme={uiPreferences.toggleTheme}
+            themeLabel={uiPreferences.isDark ? 'Light Mode' : 'Dark Mode'}
+            onToggleReadingMode={uiPreferences.toggleReadingMode}
+            readingLabel={uiPreferences.readingMode ? 'Exit Reading' : 'Reading Mode'}
+          />
         </div>
       </header>
 
@@ -1796,6 +2248,18 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
 
   if (data.type === 'resource') {
     const routeKey = `#resource/${data.resource.slug}`;
+    if (data.resource.slug === 'COMPANY_QUESTION_BANK') {
+      return (
+        <CompanyQuestionBankPage
+          raw={data.raw}
+          manifest={manifest}
+          resource={data.resource}
+          routeKey={routeKey}
+          readingState={readingState}
+          feedbackState={feedbackState}
+        />
+      );
+    }
     return (
       <PageLayout
         header={(
@@ -1819,6 +2283,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
   if (data.type === 'section') {
     const guide = parseGuide(data.raw);
     const profile = SECTION_PROFILES[data.section.slug] || {};
+    const prereqs = getSectionPrerequisiteInfo(data.section.slug);
     const why = findGuideSection(guide, ['Why This Section Matters', 'What Real Problems This Section Solves', 'The Story']);
     const beforeStart = findGuideSection(guide, ['Before You Start', 'Start Here If']);
     const howToRead = findGuideSection(guide, ['How To Read This Section', 'How To Read This Section']);
@@ -1848,6 +2313,12 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
             {truncateText(findGuideSection(guide, ['Recommended Next Step'])?.plain || 'Pick the chapter that matches the problem you are trying to solve right now.', 220)}
           </InsightCard>
         </div>
+        <PrerequisiteMapCard
+          title="Prerequisite Map"
+          required={prereqs.before}
+          next={prereqs.next}
+          manifest={manifest}
+        />
         <div className="content-card">
           <MarkdownBlock html={marked.parse(data.raw)} manifest={manifest} contentPath={data.section.guide.contentPath} />
         </div>
@@ -1876,6 +2347,10 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
   if (data.type === 'chapter') {
     const guide = parseGuide(data.guideRaw);
     const revision = parseGuide(data.revisionRaw);
+    const chapterIndex = data.section.chapters.findIndex((chapter) => chapter.slug === data.chapter.slug);
+    const sectionPrereqs = getSectionPrerequisiteInfo(data.section.slug);
+    const priorChapters = data.section.chapters.slice(0, chapterIndex).map((chapter) => `${data.section.title} / ${chapter.title}`);
+    const nextChapters = data.section.chapters.slice(chapterIndex + 1, chapterIndex + 3).map((chapter) => `${data.section.title} / ${chapter.title}`);
     const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story']);
     const quickSummary = findGuideSection(guide, ['Quick Summary', 'What To Look For']);
     const avoidSection = findGuideSection(guide, ['When Not To Use', 'Avoid This Pattern When', 'Avoid This When', 'Watch Out']);
@@ -1920,6 +2395,35 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
                 {truncateText(nextSection?.plain || 'Run the first topic file, compare the output, then use the revision sheet to lock in the decision rule.', 220)}
               </CalloutCard>
             </div>
+            <div className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Prerequisite Map</h2>
+                <span className="badge rounded-pill badge-soft">Study order</span>
+              </div>
+              <div className="prerequisite-grid">
+                <div className="prerequisite-panel">
+                  <div className="eyebrow mb-2">Read Before This Chapter</div>
+                  <div className="prerequisite-list">
+                    {priorChapters.length ? priorChapters.map((label) => (
+                      <span key={label} className="prerequisite-pill">{label}</span>
+                    )) : <span className="prerequisite-pill">Start here inside this section</span>}
+                    {sectionPrereqs.before.map((slug) => (
+                      <a key={slug} className="prerequisite-pill" href={`#section/${slug}`}>
+                        {manifest.sections.find((section) => section.slug === slug)?.title || titleFromSlug(slug)}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+                <div className="prerequisite-panel">
+                  <div className="eyebrow mb-2">Best Next Chapter</div>
+                  <div className="prerequisite-list">
+                    {nextChapters.length ? nextChapters.map((label) => (
+                      <span key={label} className="prerequisite-pill prerequisite-pill-next">{label}</span>
+                    )) : <span className="prerequisite-pill prerequisite-pill-next">Use the revision sheet, then move to the next section</span>}
+                  </div>
+                </div>
+              </div>
+            </div>
             <div id="start-with-examples" className="content-card">
               <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                 <h2 className="page-title mb-0">Start With These Examples</h2>
@@ -1959,6 +2463,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
 
   const topicSummary = data.preview;
   const topicRunner = effectiveRunner(topicSummary, data.lessonMeta);
+  const versionMeta = resolveVersionMeta(data.section.slug, data.chapter.slug, data.lessonMeta, topicSummary);
   const routeKey = `#topic/${data.section.slug}/${data.chapter.slug}/${data.topic.slug}`;
   const topicToc = [
     ...(data.lessonRaw ? [{ href: '#topic-lesson', label: 'Topic Lesson' }] : []),
@@ -2015,11 +2520,17 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
             </InsightCard>
           </div>
 
-          {(data.lessonMeta.introduced || data.lessonMeta.status || data.lessonMeta.runner || data.lessonMeta.estimated) ? (
+          {(versionMeta.display || versionMeta.status || data.lessonMeta.runner || data.lessonMeta.estimated) ? (
             <div className="content-card mb-4">
               <div className="topic-meta">
-                {data.lessonMeta.introduced ? <span className="badge rounded-pill badge-soft">Introduced: {data.lessonMeta.introduced}</span> : null}
-                {data.lessonMeta.status ? <span className="badge rounded-pill badge-soft">Status: {data.lessonMeta.status}</span> : null}
+                {versionMeta.display ? (
+                  <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>
+                    {versionMeta.status === 'preview' ? versionMeta.display : `Introduced: ${versionMeta.display}`}
+                  </span>
+                ) : null}
+                {versionMeta.status && versionMeta.status !== 'preview' ? (
+                  <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>Status: {versionMeta.status}</span>
+                ) : null}
                 <span className="badge rounded-pill badge-soft">Runner: {topicRunner}</span>
                 {data.lessonMeta.estimated ? <span className="badge rounded-pill badge-soft">Read time: {data.lessonMeta.estimated}</span> : null}
               </div>

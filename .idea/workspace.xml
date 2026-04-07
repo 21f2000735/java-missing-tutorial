@@ -4,11 +4,116 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update" />
+    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/404.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/_baseUniq-zRi1edId.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/arc-DF5CfRSG.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/architectureDiagram-IEHRJDOE-DcpaeFa_.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/blockDiagram-JOT3LUYC-CBg9pyZ_.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/c4Diagram-VJAJSXHY-DNwsYhlb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/channel-DtqmGXb0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-4BMEZGHF-CYf63tKO.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-A2AXSNBT-D85bCjK8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-AEK57VVT-D-bv_bF1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-D6G4REZN-BHtOEqmF.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-RZ5BOZE2-y99eunlr.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-XZIHB7SX-C7f5J5QE.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-GIVACNV2-DOLgBgFx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-v2-COTLJTTW-DOLgBgFx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/clone-CCiDzdEQ.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/dagre-OKDRZEBW-mq5jEv6F.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-SSKATNLV-vvfSJXyf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-VNBRO52H-CShoAIki.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/erDiagram-Q7BY3M3F-Bp05ygXm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/flowDiagram-4HSFHLVR-yQT1uoCW.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/ganttDiagram-APWFNJXF-CZBf3UWR.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/gitGraphDiagram-7IBYFJ6S-BM71762W.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/graph-BP4zyTx1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/index-BfI-_uMv.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/index-CZei77zc.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/infoDiagram-PH2N3AL5-0hsPXQhp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/journeyDiagram-U35MCT3I-DXn1972c.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/kanban-definition-NDS4AKOZ-DiqI8TuX.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/layout-CVHUL-Cq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/linear-DWP9Lav6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/mermaid.core-DhZsM3sp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/min-c8afUDOd.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/mindmap-definition-ALO5MXBD-m0UhGYIn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/pieDiagram-IB7DONF6-BpJygzRu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/prism-Bc6h86kN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/prism-java-B12xlhWY.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/quadrantDiagram-7GDLP6J5-DoSic0MH.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/radar-MK3ICKWK-CsJLab-h.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/requirementDiagram-KVF5MWMF-CmLmk_rv.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/sankeyDiagram-QLVOVGJD-CQUkuPBK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/sequenceDiagram-X6HHIX6F-nJEDaj1r.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-DGXRK772-CdWsOLQs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-v2-YXO3MK2T-of0jaKPl.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/timeline-definition-BDJGKUSR-Bn95JCUb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/xychartDiagram-VJFVF3MP-WpykATeJ.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/meta/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/company-question-bank/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/company-question-bank/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/compare-collections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/compare-collections/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/compare-concurrency/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/compare-concurrency/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/compare-streams/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/compare-streams/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/high-demand-java-topics/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/high-demand-java-topics/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/interview-problem-approach/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/interview-problem-approach/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/interview-track/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/interview-track/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/java-7-to-25/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/java-7-to-25/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/java-migration-guides/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/java-migration-guides/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/modern-java-track/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/modern-java-track/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/guides/ocjp-track/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/ocjp-track/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/arraylist-growth-and-lookup/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/arraylist-growth-and-lookup/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/collectors/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/collectors/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/handling-payment-failures/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/handling-payment-failures/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/hashmap-buckets-and-collisions/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/hashmap-buckets-and-collisions/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/http-client-basics/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/http-client-basics/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/list-set-map/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/list-set-map/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/stack-heap-and-references/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/stack-heap-and-references/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/stream-pipeline/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/stream-pipeline/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/threads/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/threads/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/topics/virtual-threads/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/virtual-threads/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CopilotPersistence">
+    <persistenceIdMap>
+      <entry key="_/Users/indiadelhi/repo/career/java-missing-tutorial/code" value="3C2Zk34Ot0LVkQiOaVFlUfEs3fj" />
+    </persistenceIdMap>
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="957" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <projects_view>
+          <tree_state>
+            <expand />
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -16,6 +121,15 @@
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 5
+}]]></component>
+  <component name="ProjectId" id="3C2Zk34Ot0LVkQiOaVFlUfEs3fj" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
@@ -25,9 +139,18 @@
     "Application.RunAllTopics.executor": "Run",
     "Application.Zones.executor": "Run",
     "Application.com.learning.javamissing.sec01_fundamentals.ch01_java_basics.RunAllTopics.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "SHELLCHECK.PATH": "/Users/indiadelhi/Library/Application Support/JetBrains/IntelliJIdea2026.1/plugins/Shell Script/shellcheck",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
-    "node.js.selected.package.tslint": "(autodetect)"
+    "kotlin-language-version-configured": "true",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
   <component name="RunManager" selected="Application.RunAll">
@@ -131,12 +254,31 @@
       <option name="project" value="LOCAL" />
       <updated>1775564999823</updated>
     </task>
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update" />
+      <created>1775585766841</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1775585766841</updated>
+      <workItem from="1775585771101" duration="72000" />
+    </task>
     <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
     <MESSAGE value="update" />
     <option name="LAST_COMMIT_MESSAGE" value="update" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>
