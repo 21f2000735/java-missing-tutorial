@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" fill="none">
+  <rect width="960" height="520" rx="28" fill="#FFF8EE"/>
+  <rect x="24" y="24" width="912" height="472" rx="24" fill="#F6ECDE" stroke="#D9B38C"/>
+  <text x="48" y="76" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="34" font-weight="700">Stream pipeline at a glance</text>
+  <text x="48" y="112" fill="#6C5843" font-family="IBM Plex Sans, Arial, sans-serif" font-size="19">Think in stages: filter → map → collect.</text>
+
+  <rect x="64" y="172" width="170" height="150" rx="20" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="88" y="212" fill="#8D4300" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700">INPUT</text>
+  <text x="88" y="250" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">orders:</text>
+  <text x="88" y="282" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">[1200, 80, 450, 60]</text>
+
+  <path d="M254 246H352" stroke="#AF5B0C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M340 230L364 246L340 262" stroke="#AF5B0C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="372" y="172" width="170" height="150" rx="20" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="400" y="212" fill="#3A6A57" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700">FILTER</text>
+  <text x="400" y="250" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">keep value &gt; 100</text>
+  <text x="400" y="282" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">[1200, 450]</text>
+
+  <path d="M562 246H660" stroke="#AF5B0C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M648 230L672 246L648 262" stroke="#AF5B0C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="680" y="172" width="216" height="150" rx="20" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="708" y="212" fill="#475CB8" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700">MAP + COLLECT</text>
+  <text x="708" y="250" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">double values, then list</text>
+  <text x="708" y="282" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">[2400, 900]</text>
+
+  <rect x="64" y="362" width="832" height="92" rx="18" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="92" y="400" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22" font-weight="700">Rule of thumb</text>
+  <text x="92" y="432" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="19">Use streams when the code reads like a data story. If a loop is easier to explain, keep the loop.</text>
+</svg>

@@ -47,6 +47,11 @@ src/main/java/com/learning/javamissing/
 
 `TopicGuide.md` is optional but preferred for strong topics. It should carry the hook, explanation, version notes, and next steps. `ConceptName.java` should stay runnable and focused on code.
 Where it helps, use `❌ Bad Code` and `✅ Better Code` sections in `TopicGuide.md` so learners can compare choices quickly. This fits both beginner learning and Clean Code-style contrast.
+For high-value topics, also add:
+
+- one quick visual (`.svg` preferred) that explains the concept at a glance
+- one comparison table
+- one performance or complexity lens when the topic has real cost tradeoffs
 
 ## Naming Length Rule
 
@@ -187,6 +192,7 @@ The React + Bootstrap static site is built with `npm run build` and written to [
 Use `npm run dev` for local development. The site fetches markdown, JSON, and Java source files, so opening `index.html` directly with `file://` is not reliable.
 The site is intentionally shifting from “repo browser” to “problem-first learning site”: section and chapter pages should lead with the real problem, study path, and expected outcomes before showing raw source.
 Topic pages now support a site-first lesson model: `TopicGuide.md` explains the concept, and the Java file stays runnable. Stable examples can be sent directly to JDoodle from the site, while preview-based chapters still need a local JDK 25 setup.
+Where possible, topic lessons should now teach visually: a quick diagram, a comparison snapshot, and a performance lens are usually more useful on the site than extra `System.out.println(...)` narration in the Java file.
 The release track is now split out into [JAVA_7_TO_25.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/JAVA_7_TO_25.md) and [JAVA_MIGRATION_GUIDES.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/JAVA_MIGRATION_GUIDES.md) so users can learn Java by era as well as by concept.
 Detailed authoring rules are tracked in [AUTHORING_GUIDE.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/AUTHORING_GUIDE.md).
 Topic quality is checked against [TOPIC_QUALITY_RUBRIC.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/TOPIC_QUALITY_RUBRIC.md).

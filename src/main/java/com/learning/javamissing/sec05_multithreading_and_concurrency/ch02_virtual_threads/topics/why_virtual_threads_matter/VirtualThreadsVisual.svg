@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" fill="none">
+  <rect width="960" height="520" rx="28" fill="#FFF8EE"/>
+  <rect x="24" y="24" width="912" height="472" rx="24" fill="#F6ECDE" stroke="#D9B38C"/>
+  <text x="48" y="76" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="34" font-weight="700">Virtual threads in one look</text>
+  <text x="48" y="112" fill="#6C5843" font-family="IBM Plex Sans, Arial, sans-serif" font-size="19">The big win is simpler thread-per-task style for many waiting tasks.</text>
+
+  <rect x="60" y="160" width="360" height="264" rx="22" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="86" y="202" fill="#8D4300" font-family="IBM Plex Sans, Arial, sans-serif" font-size="25" font-weight="700">Old pressure</text>
+  <text x="86" y="244" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="20">Few expensive platform threads</text>
+  <text x="86" y="282" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">→ pools</text>
+  <text x="86" y="312" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">→ callbacks</text>
+  <text x="86" y="342" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">→ complexity around waiting I/O</text>
+
+  <path d="M448 292H512" stroke="#AF5B0C" stroke-width="8" stroke-linecap="round"/>
+  <path d="M500 276L524 292L500 308" stroke="#AF5B0C" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <rect x="540" y="160" width="360" height="264" rx="22" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="566" y="202" fill="#3A6A57" font-family="IBM Plex Sans, Arial, sans-serif" font-size="25" font-weight="700">New option</text>
+  <text x="566" y="244" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="20">Many cheaper virtual threads</text>
+  <text x="566" y="282" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">→ one task per thread becomes practical</text>
+  <text x="566" y="316" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">→ waiting-heavy code stays simpler</text>
+  <text x="566" y="350" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">→ shared-state bugs still exist</text>
+
+  <text x="76" y="458" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="19">Virtual threads reduce the cost of threads. They do not remove the need for safe coordination.</text>
+</svg>

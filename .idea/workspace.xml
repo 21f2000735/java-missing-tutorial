@@ -5,31 +5,76 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="first commit">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/AUTHORING_GUIDE.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/_baseUniq-C36d_NF5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/arc-CG3YzanY.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/architectureDiagram-IEHRJDOE-lErG7ulC.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/blockDiagram-JOT3LUYC-_OuAnc3m.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/bootstrap-icons-BOrJxbIo.woff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/bootstrap-icons-BtvjY1KL.woff2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/c4Diagram-VJAJSXHY-Eb1cf7gA.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/channel-BOAsS3jW.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-4BMEZGHF-Bw39zcHn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-A2AXSNBT-Bw6y8qZ0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-AEK57VVT-CjAiAOPI.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-D6G4REZN-DcRC9dQp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-RZ5BOZE2-DIQUoKQ3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-XZIHB7SX-DfFss9tA.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-GIVACNV2-Bbeq7MBK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-v2-COTLJTTW-Bbeq7MBK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/clone-Dub2qkaW.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/cytoscape.esm-DxGcaOPV.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/dagre-OKDRZEBW-CtGwqElS.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-SSKATNLV-PZgmd65E.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-VNBRO52H-DvrDuAtL.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/erDiagram-Q7BY3M3F-D-1451s5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/flowDiagram-4HSFHLVR-BAzeftXN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/ganttDiagram-APWFNJXF-D05le4-K.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/gitGraphDiagram-7IBYFJ6S-DfYatNs1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/graph-CxvcxCRX.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/index-CvCT-Akz.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/index-DUGF40lb.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/infoDiagram-PH2N3AL5-CpPFeR-p.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/init-Gi6I4Gst.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/journeyDiagram-U35MCT3I-1M4sz73s.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/kanban-definition-NDS4AKOZ-kPSXLpr7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/katex-DkKDou_j.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/layout-Dg5Ic9gk.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/linear-Cj73rXcY.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/mermaid.core-BZKWRI-8.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/min-gkE1mH4I.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/mindmap-definition-ALO5MXBD-BdK79k-M.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/ordinal-Cboi1Yqb.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/pieDiagram-IB7DONF6-CZ0JHXzJ.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/prism-DdDWqax5.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/prism-java-CIuEmu7N.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/quadrantDiagram-7GDLP6J5-BIW5ZFtn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/radar-MK3ICKWK-BZnEchCQ.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/requirementDiagram-KVF5MWMF-6tOREOMw.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/sankeyDiagram-QLVOVGJD-DvXC38CU.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/sequenceDiagram-X6HHIX6F-r1FWHDTx.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-DGXRK772-CI2QI3Nf.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-v2-YXO3MK2T-ypV4Gwu1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/timeline-definition-BDJGKUSR-CWgCInC6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/xychartDiagram-VJFVF3MP-Bw0Z2odF.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/meta/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/build_site.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_site.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/RunAllTopics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/RunAllTopics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/topics/request_validation_chain/RequestValidationChain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/topics/request_validation_chain/RequestValidationChain.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/RunAllTopics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/RunAllTopics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/topics/exhaustive_sealed_branching/ExhaustiveSealedBranching.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec17_language_modeling_and_modern_types/ch02_records_and_sealed_types/topics/exhaustive_sealed_branching/ExhaustiveSealedBranching.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/RunAllTopics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/RunAllTopics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/topics/choosing_dependencies_and_exposed_packages/ChoosingDependenciesAndExposedPackages.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/RunAllTopics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/RunAllTopics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/RunAllTopics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/RunAllTopics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch03_sorting_searching_and_binary_search/topics/understanding_sorting_tradeoffs/UnderstandingSortingTradeoffs.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/RunAllTopics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/RunAllTopics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/sliding_window_problems/SlidingWindowProblems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch04_problem_solving_patterns/topics/sliding_window_problems/SlidingWindowProblems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/learning/javamissing/sec18_architecture_and_integration/ch01_modules/topics/choosing_dependencies_and_exposed_packages/ChoosingDependenciesAndExposedPackagesTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisionsTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisionsTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

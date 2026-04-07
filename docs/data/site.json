@@ -1,7 +1,7 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T10:31:56Z",
+  "generatedAt": "2026-04-07T10:48:27Z",
   "stats": {
     "sections": 20,
     "chapters": 44,
@@ -650,7 +650,7 @@
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/RunAllTopics.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/RunAllTopics.java"},
           "topics": [
             {"slug": "arraylist_growth_and_lookup", "title": "Array List Growth And Lookup", "sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java", "concept": "Arraylist Growth And Lookup", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md"}},
-            {"slug": "hashmap_buckets_and_collisions", "title": "Hash Map Buckets And Collisions", "sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java", "concept": "Hashmap Buckets And Collisions"}
+            {"slug": "hashmap_buckets_and_collisions", "title": "Hash Map Buckets And Collisions", "sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java", "concept": "Hashmap Buckets And Collisions", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/TopicGuide.md", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/TopicGuide.md"}}
           ]
         },
         {

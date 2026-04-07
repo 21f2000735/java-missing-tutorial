@@ -17,6 +17,16 @@ Traditional threads are expensive enough that teams started designing around the
 
 Virtual threads change that tradeoff for many request-per-task workloads.
 
+## Quick Visual
+
+![Virtual threads single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/VirtualThreadsVisual.svg)
+
+One glance should tell you the real story:
+
+- platform threads are limited, expensive workers
+- virtual threads are much lighter for waiting-heavy tasks
+- the business code can stay direct and blocking-style
+
 ## Run This Code
 
 This example is best run locally on a modern JDK because it depends on newer Java support.
@@ -49,6 +59,37 @@ They do not remove the need for safe coordination, clear ownership, or good shar
 Virtual threads make thread-per-task style practical again for many I/O-heavy workflows.  
 That often improves clarity because the code can read in straight lines instead of callback chains.
 
+## Comparison Snapshot
+
+| Question | Platform thread | Virtual thread |
+| --- | --- | --- |
+| Best for | long-lived heavier worker threads | many waiting tasks |
+| Cost per thread | higher | much lower |
+| Blocking style code | possible but costly at scale | practical again |
+| Removes race conditions | no | no |
+
+## Performance Lens
+
+The most useful benchmark question is not "which thread is faster?"
+
+It is:
+
+- how many waiting tasks can I model clearly
+- what happens to throughput when many requests block on I/O
+- does the simpler thread-per-task model lower code complexity
+
+Virtual threads shine when most time is spent waiting, not burning CPU.
+
+## Benchmark Checklist
+
+When you compare executor pools and virtual threads, measure:
+
+- total concurrent requests handled
+- average and tail latency
+- memory growth
+- blocked or pinned behavior
+- code complexity and failure handling, not just raw timing
+
 ## Use This When
 
 - your tasks spend time waiting on I/O
@@ -65,6 +106,12 @@ That often improves clarity because the code can read in straight lines instead 
 
 Virtual threads became final in Java 21.  
 They are one of the most important changes in modern Java concurrency.
+
+## After Reading This, You Should Know
+
+- virtual threads are still threads, not magic background jobs
+- they reduce thread cost for waiting-heavy workloads
+- they improve the cost model, but not the need for safe shared-state design
 
 ## Next Topic
 

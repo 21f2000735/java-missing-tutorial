@@ -19,6 +19,17 @@ You want to:
 The question is not "can Java do this?"  
 The question is "how do I express that flow clearly?"
 
+## Quick Visual
+
+![Stream pipeline single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipelineVisual.svg)
+
+Read the picture left to right:
+
+- raw data goes in
+- filters remove what does not qualify
+- map reshapes what remains
+- collect produces the final answer
+
 ## Run This Code
 
 Run the Java example and read the pipeline left to right.
@@ -58,6 +69,35 @@ then a stream is probably a good fit.
 Streams separate *what should happen* from the low-level loop mechanics.  
 That can make business rules easier to scan, especially for filtering, mapping, grouping, and aggregating.
 
+## Comparison Snapshot
+
+| Question | Plain loop | Stream pipeline |
+| --- | --- | --- |
+| Best for | explicit step-by-step local state | data transformation flow |
+| Easier to debug line by line | usually yes | sometimes no |
+| Easier to read for filter-map-collect work | sometimes no | often yes |
+| Safer for side effects | clearer because mutation is visible | risky when side effects are hidden in pipeline stages |
+
+## Performance Lens
+
+Do not teach streams with "always faster" language. The useful rule is:
+
+- stream readability is the first reason to use streams
+- allocation, boxing, and pipeline overhead can matter in hot loops
+- side effects and poor collector choices usually hurt clarity before they hurt speed
+
+If performance is critical, benchmark the real pipeline with realistic data size instead of arguing from style.
+
+## Benchmark Checklist
+
+When you compare a loop and a stream, keep these conditions the same:
+
+- same input size
+- same result shape
+- warm-up before measuring
+- no logging inside the measured code
+- do not confuse parallel work with simple sequential transformation
+
 ## Use This When
 
 - the code is mainly about transforming data
@@ -73,6 +113,12 @@ That can make business rules easier to scan, especially for filtering, mapping, 
 ## Version Notes
 
 Streams were introduced in Java 8 and remain one of the core modern Java features every engineer should understand well.
+
+## After Reading This, You Should Know
+
+- a stream pipeline is a good fit when the business rule naturally reads as filter, map, then finish
+- stream clarity is more important than stream cleverness
+- performance discussions should start with measurement, not assumption
 
 ## Next Topic
 

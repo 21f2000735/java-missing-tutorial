@@ -564,6 +564,16 @@ a {
   overflow-x: auto;
 }
 
+.content-markdown img {
+  display: block;
+  width: min(100%, 56rem);
+  margin: 1.2rem auto;
+  border-radius: 1.15rem;
+  border: 1px solid rgba(54, 43, 28, 0.12);
+  background: linear-gradient(180deg, rgba(255, 251, 245, 0.98), rgba(245, 236, 220, 0.95));
+  box-shadow: var(--shadow);
+}
+
 .topic-meta {
   display: flex;
   flex-wrap: wrap;

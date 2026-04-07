@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" fill="none">
+  <rect width="960" height="520" rx="28" fill="#FFF8EE"/>
+  <rect x="24" y="24" width="912" height="472" rx="24" fill="#F7EBD8" stroke="#D9B38C"/>
+  <text x="48" y="76" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="34" font-weight="700">One-look guide: List vs Set vs Map</text>
+  <text x="48" y="112" fill="#6C5843" font-family="IBM Plex Sans, Arial, sans-serif" font-size="19">Choose by data shape, not by habit.</text>
+
+  <rect x="52" y="148" width="252" height="300" rx="20" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="76" y="188" fill="#8D4300" font-family="IBM Plex Sans, Arial, sans-serif" font-size="26" font-weight="700">LIST</text>
+  <text x="76" y="224" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="20">Story:</text>
+  <text x="76" y="252" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">Cart items in order</text>
+  <rect x="76" y="276" width="160" height="36" rx="10" fill="#F4D9BC"/>
+  <text x="88" y="300" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">USB Cable</text>
+  <rect x="76" y="322" width="160" height="36" rx="10" fill="#F4D9BC"/>
+  <text x="88" y="346" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">USB Cable</text>
+  <rect x="76" y="368" width="180" height="36" rx="10" fill="#F4D9BC"/>
+  <text x="88" y="392" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">Wireless Mouse</text>
+  <text x="76" y="432" fill="#6C5843" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17">Keeps order. Allows duplicates.</text>
+
+  <rect x="354" y="148" width="252" height="300" rx="20" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="378" y="188" fill="#3A6A57" font-family="IBM Plex Sans, Arial, sans-serif" font-size="26" font-weight="700">SET</text>
+  <text x="378" y="224" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="20">Story:</text>
+  <text x="378" y="252" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">Coupon codes</text>
+  <rect x="378" y="286" width="164" height="42" rx="12" fill="#DCEADF"/>
+  <text x="394" y="313" fill="#214737" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">WELCOME10</text>
+  <rect x="378" y="338" width="164" height="42" rx="12" fill="#DCEADF"/>
+  <text x="401" y="365" fill="#214737" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">FREESHIP</text>
+  <text x="378" y="410" fill="#6C5843" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17">Keeps unique values only.</text>
+  <text x="378" y="436" fill="#6C5843" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17">No duplicate coupon surprise.</text>
+
+  <rect x="656" y="148" width="252" height="300" rx="20" fill="#FFFDF8" stroke="#D9B38C"/>
+  <text x="680" y="188" fill="#475CB8" font-family="IBM Plex Sans, Arial, sans-serif" font-size="26" font-weight="700">MAP</text>
+  <text x="680" y="224" fill="#3A2B1B" font-family="IBM Plex Sans, Arial, sans-serif" font-size="20">Story:</text>
+  <text x="680" y="252" fill="#5F4E3C" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18">SKU → quantity</text>
+  <rect x="680" y="286" width="196" height="42" rx="12" fill="#DDE4FA"/>
+  <text x="696" y="312" fill="#22306E" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17">SKU-USB  →  2</text>
+  <rect x="680" y="338" width="196" height="42" rx="12" fill="#DDE4FA"/>
+  <text x="696" y="364" fill="#22306E" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17">SKU-MOUSE → 1</text>
+  <text x="680" y="410" fill="#6C5843" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17">Use when lookup by key matters.</text>
+  <text x="680" y="436" fill="#6C5843" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17">The type itself explains the rule.</text>
+</svg>

@@ -13,6 +13,16 @@ Many developers can use `ArrayList`, but fewer can explain why it is usually fas
 
 That gap matters because performance problems often begin with the wrong mental model, not the wrong syntax.
 
+## Quick Visual
+
+![ArrayList growth single-look visual](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookupVisual.svg)
+
+The picture tells the whole story:
+
+- items sit in an array
+- index lookup jumps straight to a slot
+- growth occasionally copies old items into a larger array
+
 ## Run This Code
 
 Run the example and focus on these ideas:
@@ -44,6 +54,37 @@ The better mental model is:
 `ArrayList` stores elements in an array.  
 That gives fast index access, but growth sometimes needs a bigger array and element copying.
 
+## Comparison Snapshot
+
+| Need | `ArrayList` | `LinkedList` |
+| --- | --- | --- |
+| Read by index | strong fit | weak fit |
+| Append often | strong fit | fine, but rarely worth the tradeoff |
+| Insert in middle often | can be costly | can help if you already have the node position |
+| Cache-friendly iteration | usually better | usually worse |
+
+## Performance Lens
+
+The key metric is not "does resize happen?"  
+It is "how often does the expensive resize happen compared with cheap appends?"
+
+That is why the right phrase is:
+
+- append is amortized `O(1)`
+- indexed lookup is `O(1)`
+- middle insertion is often `O(n)`
+
+## Benchmark Lens
+
+If you measure `ArrayList`, watch these operations separately:
+
+- append at end
+- read by index
+- insert in middle
+- remove in middle
+
+Those four numbers teach more than one generic "ArrayList benchmark" ever will.
+
 ## Use This When
 
 - order matters
@@ -60,6 +101,12 @@ That gives fast index access, but growth sometimes needs a bigger array and elem
 ## Version Notes
 
 `ArrayList` has existed since the Java Collections Framework arrived in Java 1.2, so this is a concept every Java engineer should understand no matter which Java version they use.
+
+## After Reading This, You Should Know
+
+- `ArrayList` is fast because it uses an array, not because it is magically optimized for everything
+- occasional resize cost is the tradeoff behind usually-cheap append
+- complexity language becomes much easier once you connect it to actual storage shape
 
 ## Next Topic
 

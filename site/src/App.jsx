@@ -766,6 +766,18 @@ function MarkdownBlock({ html, manifest }) {
         }
       });
 
+      ref.current.querySelectorAll('img[src]').forEach((image) => {
+        const src = image.getAttribute('src');
+        const sourcePath = sourcePathFromHref(src, manifest.repoRoot);
+        if (!sourcePath) {
+          return;
+        }
+        const contentPath = sourcePathToContentPath(sourcePath);
+        if (contentPath) {
+          image.setAttribute('src', contentPath);
+        }
+      });
+
       const mermaidBlocks = ref.current.querySelectorAll('pre > code.language-mermaid');
       if (mermaidBlocks.length) {
         mermaidBlocks.forEach((code) => {

@@ -57,7 +57,7 @@ copy_content_tree() {
   rm -rf "$library_root" "$meta_root" "$data_root" "$site_root/assets"
   mkdir -p "$library_root" "$meta_root" "$data_root"
 
-  find "$source_root" -type f \( -name '*.md' -o -name '*.java' \) | while read -r file; do
+  find "$source_root" -type f \( -name '*.md' -o -name '*.java' -o -name '*.svg' -o -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.webp' \) | while read -r file; do
     relative="${file#$source_root/}"
     mkdir -p "$library_root/$(dirname "$relative")"
     cp "$file" "$library_root/$relative"

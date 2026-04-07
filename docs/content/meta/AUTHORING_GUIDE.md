@@ -94,6 +94,8 @@ estimated: 8 min
 ## ❌ Bad Code
 ## ✅ Better Code
 ## Why This Works
+## Comparison Snapshot
+## Performance Lens
 ## Use This When
 ## Avoid This When
 ## Version Notes
@@ -103,6 +105,13 @@ estimated: 8 min
 Use `runner: embedded` for stable single-file examples that can be pushed to JDoodle from the site.  
 Use `runner: local` for preview-sensitive or multi-file examples.
 Use `❌` and `✅` sections when you want to teach contrast quickly, especially for Clean Code, concurrency, collections, exception handling, and API design topics.
+For topics with clear mental-model value, prefer adding:
+
+- one `.svg` visual that explains the idea in a single look
+- one comparison table
+- one performance or complexity lens
+
+Keep those explanations in `TopicGuide.md` instead of bloating the runnable Java file with too much teaching narration.
 
 ## Naming Limits
 
