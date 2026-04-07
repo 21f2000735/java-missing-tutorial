@@ -895,6 +895,105 @@ input:focus-visible {
   justify-content: flex-start;
 }
 
+.learning-focus,
+.eureka-banner,
+.section-panel {
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.learning-focus {
+  padding: 1rem 1.05rem;
+  background: linear-gradient(160deg, rgba(255, 250, 244, 0.98), rgba(244, 234, 211, 0.9));
+}
+
+.learning-step-grid,
+.compact-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.learning-step-grid {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.learning-step-card,
+.section-panel {
+  background: linear-gradient(165deg, rgba(255, 250, 244, 0.96), rgba(246, 238, 221, 0.88));
+}
+
+.learning-step-card {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.learning-step-number {
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-weight: 700;
+  color: #fffaf1;
+  background: linear-gradient(135deg, #8d4300, #bb6a1d);
+  box-shadow: 0 10px 24px rgba(141, 67, 0, 0.2);
+}
+
+.eureka-banner,
+.section-panel {
+  padding: 1rem 1.05rem;
+}
+
+.eureka-banner {
+  background: linear-gradient(160deg, rgba(243, 248, 244, 0.98), rgba(224, 237, 230, 0.92));
+}
+
+.section-panel-soft {
+  background: linear-gradient(160deg, rgba(243, 248, 244, 0.98), rgba(224, 237, 230, 0.92));
+}
+
+.section-panel-strong {
+  background: linear-gradient(145deg, rgba(35, 26, 17, 0.95), rgba(78, 54, 24, 0.95));
+  color: #f8f3ea;
+}
+
+.section-panel-strong .eyebrow,
+.section-panel-strong .content-markdown,
+.section-panel-strong .content-markdown h1,
+.section-panel-strong .content-markdown h2,
+.section-panel-strong .content-markdown h3,
+.section-panel-strong .content-markdown p,
+.section-panel-strong .content-markdown li,
+.section-panel-strong .content-markdown strong {
+  color: #f8f3ea;
+}
+
+.section-panel .content-markdown > :first-child,
+.section-panel .content-markdown h1:first-child,
+.section-panel .content-markdown h2:first-child,
+.section-panel .content-markdown h3:first-child,
+.section-panel .content-markdown p:first-child {
+  margin-top: 0;
+}
+
+.section-panel .content-markdown h2 {
+  font-size: 1.32rem;
+}
+
+.section-panel .content-markdown h3 {
+  font-size: 1.05rem;
+}
+
+.compact-grid {
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
 .topic-brief-grid {
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
@@ -1075,6 +1174,10 @@ input:focus-visible {
 .theme-dark .callout-explain,
 .theme-dark .callout-caution,
 .theme-dark .callout-next,
+.theme-dark .learning-focus,
+.theme-dark .learning-step-card,
+.theme-dark .eureka-banner,
+.theme-dark .section-panel,
 .theme-dark .code-cta,
 .theme-dark .code-toolbar,
 .theme-dark .code-panel,
@@ -1198,6 +1301,12 @@ input:focus-visible {
     align-items: stretch;
   }
 
+  .learning-step-number {
+    width: 1.85rem;
+    height: 1.85rem;
+    flex-basis: 1.85rem;
+  }
+
   .content-markdown h1 {
     font-size: 1.8rem;
   }
@@ -1277,6 +1386,13 @@ input:focus-visible {
 
   .code-cta {
     padding: 0.85rem;
+  }
+
+  .learning-focus,
+  .learning-step-card,
+  .eureka-banner,
+  .section-panel {
+    padding: 0.9rem;
   }
 
   .topic-actions {

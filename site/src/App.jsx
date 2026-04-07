@@ -564,6 +564,10 @@ function findGuideSection(guide, titles) {
   return guide.sections.find((section) => normalizedTitles.includes(section.title.toLowerCase()));
 }
 
+function firstNonEmpty(...values) {
+  return values.find((value) => typeof value === 'string' && value.trim()) || '';
+}
+
 function bulletItems(raw = '') {
   return raw
     .split('\n')
@@ -890,6 +894,45 @@ function effectiveRunner(preview, lessonMeta = {}) {
   return preview.previewRequired ? 'local' : 'embedded';
 }
 
+function extractTopicLessonFlow(raw = '') {
+  if (!raw.trim()) {
+    return {
+      guide: null,
+      whyExists: null,
+      pain: null,
+      creatorMindset: null,
+      inventIt: null,
+      naiveAttempt: null,
+      whyBreaks: null,
+      finalSolution: null,
+      walkthrough: null,
+      mentalModel: null,
+      mistakes: null,
+      tradeoffs: null,
+      useAvoid: null,
+      summary: null
+    };
+  }
+
+  const guide = parseGuide(raw);
+  return {
+    guide,
+    whyExists: findGuideSection(guide, ['Why This Exists', 'Why This Matters']),
+    pain: findGuideSection(guide, ['The Pain Before It', 'Problem Statement']),
+    creatorMindset: findGuideSection(guide, ['Java Creator Mindset', 'Core Idea']),
+    inventIt: findGuideSection(guide, ['How You Might Invent It', 'Intuition']),
+    naiveAttempt: findGuideSection(guide, ['Naive Attempt']),
+    whyBreaks: findGuideSection(guide, ['Why It Breaks']),
+    finalSolution: findGuideSection(guide, ['Final Java Solution']),
+    walkthrough: findGuideSection(guide, ['Walkthrough', 'Step-by-Step Working']),
+    mentalModel: findGuideSection(guide, ['Mental Model']),
+    mistakes: findGuideSection(guide, ['Mistakes', 'Common Mistakes']),
+    tradeoffs: findGuideSection(guide, ['Tradeoffs', 'Rules / Syntax']),
+    useAvoid: findGuideSection(guide, ['Use / Avoid', 'When To Use / When Not To Use']),
+    summary: findGuideSection(guide, ['Summary'])
+  };
+}
+
 function SearchBox({ entries }) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
@@ -1124,6 +1167,13 @@ function MarkdownBlock({ html, manifest, contentPath }) {
   }, [html, manifest]);
 
   return <div ref={ref} className="content-markdown" dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+function LessonSectionContent({ section, manifest, contentPath }) {
+  if (!section?.raw) {
+    return null;
+  }
+  return <MarkdownBlock html={marked.parse(section.raw)} manifest={manifest} contentPath={contentPath} />;
 }
 
 function CodeBlock({ code }) {
@@ -2398,14 +2448,64 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
   }
 
   const topicSummary = data.preview;
+  const lessonFlow = extractTopicLessonFlow(data.lessonRaw);
   const topicRunner = effectiveRunner(topicSummary, data.lessonMeta);
   const versionMeta = resolveVersionMeta(data.section.slug, data.chapter.slug, data.lessonMeta, topicSummary);
   const routeKey = `#topic/${data.section.slug}/${data.chapter.slug}/${data.topic.slug}`;
+  const conceptLabel = topicSummary.concept || data.topic.concept || titleFromSlug(data.topic.slug);
+  const topicSummaryLine = firstNonEmpty(
+    lessonFlow.whyExists?.plain,
+    lessonFlow.pain?.plain,
+    topicSummary.problem,
+    topicSummary.realWorld,
+    topicSummary.mentalModel,
+    'Understand the pressure first, then jump into the Java code.'
+  );
+  const ideaSummary = firstNonEmpty(
+    lessonFlow.finalSolution?.plain,
+    lessonFlow.creatorMindset?.plain,
+    topicSummary.whyThisWorks,
+    topicSummary.mentalModel,
+    topicSummary.why,
+    'The Java shape should feel like the natural answer to the problem.'
+  );
+  const eurekaLine = firstNonEmpty(
+    lessonFlow.summary?.plain,
+    topicSummary.takeaways[0],
+    topicSummary.whyThisWorks,
+    topicSummary.mentalModel,
+    'By the end, you should be able to explain why Java chose this shape and when to use it.'
+  );
+  const takeaways = topicSummary.takeaways.length
+    ? topicSummary.takeaways
+    : bulletItems(lessonFlow.summary?.raw || '');
   const topicToc = [
-    ...(data.lessonRaw ? [{ href: '#topic-lesson', label: 'Topic Lesson' }] : []),
-    { href: '#how-to-code', label: 'How To Code It' },
-    ...(topicSummary.takeaways.length ? [{ href: '#takeaways', label: 'Takeaways' }] : []),
-    { href: '#source-code', label: 'Source Code' }
+    { href: '#start-here', label: 'Start Here' },
+    { href: '#invent-it', label: 'Invent It' },
+    { href: '#source-code', label: 'Try The Code' },
+    ...(lessonFlow.walkthrough || lessonFlow.mentalModel ? [{ href: '#understand-it', label: 'Understand It' }] : []),
+    ...(lessonFlow.mistakes || lessonFlow.tradeoffs || lessonFlow.useAvoid || topicSummary.commonMistake || topicSummary.useWhen || topicSummary.avoidWhen
+      ? [{ href: '#use-it-well', label: 'Use It Well' }]
+      : []),
+    ...(takeaways.length || lessonFlow.summary ? [{ href: '#takeaways', label: 'Takeaways' }] : [])
+  ];
+  const quickSteps = [
+    {
+      title: 'See the pressure',
+      detail: truncateText(firstNonEmpty(lessonFlow.pain?.plain, topicSummary.problem, topicSummary.realWorld, topicSummary.storyHook, topicSummaryLine), 145)
+    },
+    {
+      title: 'Catch the Java idea',
+      detail: truncateText(firstNonEmpty(lessonFlow.creatorMindset?.plain, lessonFlow.finalSolution?.plain, ideaSummary), 145)
+    },
+    {
+      title: 'Run the example',
+      detail: truncateText(firstNonEmpty(topicSummary.howToCode, lessonFlow.walkthrough?.plain, 'Run the example, compare the output, then trace the code line by line.'), 145)
+    },
+    {
+      title: 'Lock the insight',
+      detail: truncateText(firstNonEmpty(topicSummary.expectedOutput, lessonFlow.summary?.plain, eurekaLine), 145)
+    }
   ];
   return (
     <PageLayout
@@ -2413,7 +2513,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
         <HeaderPanel
           title={data.topic.title}
           eyebrow={`${data.section.title} · ${data.chapter.title}`}
-          summary={truncateText(topicSummary.problem || topicSummary.why || topicSummary.realWorld || topicSummary.mentalModel || 'Read the setup first, then scroll into the Java code.', 240)}
+          summary={truncateText(topicSummaryLine, 240)}
           sourcePath={data.topic.sourcePath}
           actions={(
             <>
@@ -2427,33 +2527,77 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
       <ReadingStateBar routeKey={routeKey} {...readingState} />
       <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
         <div className="content-main">
-          {topicSummary.storyHook || topicSummary.whyThisWorks || topicSummary.watchOut ? (
-            <div className="callout-grid mb-4">
-              <CalloutCard tone="story" eyebrow="Story Hook" title="Why You Would Reach For This">
-                {topicSummary.storyHook || topicSummary.problem || topicSummary.realWorld || 'This example starts with a small real-world pressure before showing the Java shape.'}
-              </CalloutCard>
-              <CalloutCard tone="explain" eyebrow="Why This Works" title="What Java Is Doing">
-                {topicSummary.whyThisWorks || topicSummary.mentalModel || topicSummary.why || 'Read the code with the mental model first, then compare it with the output.'}
-              </CalloutCard>
-              <CalloutCard tone="caution" eyebrow="Watch Out" title="Easy Way To Misuse It">
-                {topicSummary.watchOut || topicSummary.commonMistake || 'The common mistake line in the code shows where this concept gets overused or misunderstood.'}
-              </CalloutCard>
+          <div id="start-here" className="content-card mb-4">
+            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <h2 className="page-title mb-0">Start Here</h2>
+              <span className="badge rounded-pill badge-soft">Understand fast, then run code</span>
             </div>
-          ) : null}
+            <div className="learning-focus mb-3">
+              <div className="eyebrow mb-2">Concept In One Line</div>
+              <h3 className="h4 mb-2">{conceptLabel}</h3>
+              <p className="mb-0">{topicSummaryLine}</p>
+            </div>
+            <div className="learning-step-grid mb-3">
+              {quickSteps.map((step, index) => (
+                <div className="learning-step-card" key={step.title}>
+                  <div className="learning-step-number">{index + 1}</div>
+                  <div>
+                    <h3 className="h6 mb-2">{step.title}</h3>
+                    <p className="mb-0 muted-copy">{step.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="eureka-banner">
+              <div className="eyebrow mb-1">Eureka Goal</div>
+              <p className="mb-0">{truncateText(eurekaLine, 220)}</p>
+            </div>
+          </div>
 
-          <div className="insight-grid mb-4">
-            <InsightCard icon="bi bi-bookmark-star" title="Concept">
-              {topicSummary.concept || titleFromSlug(data.topic.slug)}
-            </InsightCard>
-            <InsightCard icon="bi bi-bullseye" title="What Problem This Solves">
-              {topicSummary.problem || 'Open the code and read the explanation printed before the example runs.'}
-            </InsightCard>
-            <InsightCard icon="bi bi-building" title="Real-World Setup">
-              {topicSummary.realWorld || 'The code file explains the business scenario before showing the implementation.'}
-            </InsightCard>
-            <InsightCard icon="bi bi-diagram-2" title="Mental Model">
-              {topicSummary.mentalModel || topicSummary.why || 'Use the example to build the right intuition before memorizing APIs.'}
-            </InsightCard>
+          <div id="invent-it" className="content-card mb-4">
+            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <h2 className="page-title mb-0">How The Idea Emerges</h2>
+              <span className="badge rounded-pill badge-soft">Problem to invention</span>
+            </div>
+            <div className="insight-grid mb-4">
+              <InsightCard icon="bi bi-bullseye" title="Problem Pressure">
+                {lessonFlow.pain?.plain || topicSummary.problem || topicSummary.realWorld || 'Start with the real pressure before reading APIs.'}
+              </InsightCard>
+              <InsightCard icon="bi bi-lightbulb" title="Java Creator Mindset">
+                {lessonFlow.creatorMindset?.plain || topicSummary.why || topicSummary.mentalModel || 'Ask what Java is trying to simplify, protect, or make clearer.'}
+              </InsightCard>
+              <InsightCard icon="bi bi-stars" title="Final Java Idea">
+                {ideaSummary}
+              </InsightCard>
+            </div>
+            {lessonFlow.inventIt ? (
+              <div className="section-panel section-panel-soft mb-4">
+                <div className="eyebrow mb-2">How You Might Invent It</div>
+                <LessonSectionContent section={lessonFlow.inventIt} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+              </div>
+            ) : null}
+            {(lessonFlow.naiveAttempt || lessonFlow.whyBreaks || lessonFlow.finalSolution) ? (
+              <div className="journey-grid journey-grid-primary">
+                {lessonFlow.naiveAttempt ? (
+                  <div className="section-panel">
+                    <div className="eyebrow mb-2">Naive Attempt</div>
+                    <LessonSectionContent section={lessonFlow.naiveAttempt} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                  </div>
+                ) : null}
+                {lessonFlow.whyBreaks ? (
+                  <div className="section-panel">
+                    <div className="eyebrow mb-2">Why It Breaks</div>
+                    <LessonSectionContent section={lessonFlow.whyBreaks} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                  </div>
+                ) : null}
+                {lessonFlow.finalSolution ? (
+                  <div className="section-panel section-panel-strong">
+                    <div className="eyebrow mb-2">Final Java Solution</div>
+                    <LessonSectionContent section={lessonFlow.finalSolution} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
           </div>
 
           {(versionMeta.display || versionMeta.status || data.lessonMeta.runner || data.lessonMeta.estimated) ? (
@@ -2473,37 +2617,16 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
             </div>
           ) : null}
 
-          {data.lessonRaw ? (
-            <div id="topic-lesson" className="content-card mb-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Topic Lesson</h2>
-                <span className="badge rounded-pill badge-soft">Site-first explanation</span>
-              </div>
-              <MarkdownBlock html={marked.parse(data.lessonRaw)} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+          <div id="source-code" className="content-card mb-4">
+            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <h2 className="page-title mb-0">Try The Code</h2>
+              <span className="badge rounded-pill badge-soft">See the Java shape early</span>
             </div>
-          ) : null}
-
-          {(topicSummary.useWhen || topicSummary.avoidWhen || topicSummary.commonMistake) ? (
-            <div className="insight-grid mb-4">
-              {topicSummary.useWhen ? (
-                <InsightCard icon="bi bi-check2-circle" title="Use This When">
-                  {topicSummary.useWhen}
-                </InsightCard>
-              ) : null}
-              {topicSummary.avoidWhen ? (
-                <InsightCard icon="bi bi-slash-circle" title="Avoid This When">
-                  {topicSummary.avoidWhen}
-                </InsightCard>
-              ) : null}
-              {topicSummary.commonMistake ? (
-                <InsightCard icon="bi bi-exclamation-triangle" title="Common Mistake">
-                  {topicSummary.commonMistake}
-                </InsightCard>
-              ) : null}
+            <div className="topic-meta">
+              <span className="badge rounded-pill badge-soft">{conceptLabel}</span>
+              <span className="badge rounded-pill badge-soft">Java Source</span>
+              {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
             </div>
-          ) : null}
-
-          <div id="how-to-code" className="content-card mb-4">
             <div className="topic-brief-grid">
               <div className="topic-brief-card">
                 <div className="eyebrow mb-2">How To Code It</div>
@@ -2526,39 +2649,20 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
                   </p>
                 ) : null}
               </div>
-            </div>
-          </div>
-
-          {topicSummary.takeaways.length ? (
-            <div id="takeaways" className="content-card mb-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">After Reading This Example, You Should Know</h2>
-                <span className="badge rounded-pill badge-soft">Takeaways</span>
+              <div className="topic-brief-card">
+                <div className="eyebrow mb-2">What Changed</div>
+                <p className="mb-0">{firstNonEmpty(lessonFlow.finalSolution?.plain, topicSummary.whyThisWorks, ideaSummary)}</p>
               </div>
-              <BulletList items={topicSummary.takeaways} />
             </div>
-          ) : null}
-
-          {topicSummary.tryThisNext ? (
-            <div className="content-card mb-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Try This Next</h2>
-                <span className="badge rounded-pill badge-soft">Stretch the example</span>
-              </div>
-              <p className="mb-0 muted-copy">{topicSummary.tryThisNext}</p>
-            </div>
-          ) : null}
-
-          <div id="source-code" className="content-card">
             <div className="topic-meta">
-              <span className="badge rounded-pill badge-soft">{topicSummary.concept || data.topic.concept}</span>
-              <span className="badge rounded-pill badge-soft">Java Source</span>
-              {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
+              {topicSummary.storyHook || lessonFlow.whyExists?.plain ? (
+                <span className="badge rounded-pill badge-soft">{truncateText(firstNonEmpty(topicSummary.storyHook, lessonFlow.whyExists?.plain), 90)}</span>
+              ) : null}
             </div>
             <div className="code-cta mb-3">
               <div>
                 <div className="eyebrow mb-1">Copy Or Try This Code</div>
-                <div className="muted-copy mb-0">Copy the snippet directly or open it in an online playground before reading line by line.</div>
+                <div className="muted-copy mb-0">Copy the snippet directly or open it in an online playground before reading line by line. The goal is to connect the code to the idea immediately.</div>
               </div>
               <TopicActionButtons code={data.raw} runner={topicRunner} copyLabel="Copy Code Snippet" />
             </div>
@@ -2572,6 +2676,117 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
               <CodeBlock code={data.raw} />
             </div>
           </div>
+
+          {(lessonFlow.walkthrough || lessonFlow.mentalModel) ? (
+            <div id="understand-it" className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Understand What Happened</h2>
+                <span className="badge rounded-pill badge-soft">Build the mental model</span>
+              </div>
+              <div className="journey-grid journey-grid-primary">
+                {lessonFlow.walkthrough ? (
+                  <div className="section-panel">
+                    <div className="eyebrow mb-2">Walkthrough</div>
+                    <LessonSectionContent section={lessonFlow.walkthrough} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                  </div>
+                ) : null}
+                {lessonFlow.mentalModel ? (
+                  <div className="section-panel section-panel-soft">
+                    <div className="eyebrow mb-2">Mental Model</div>
+                    <LessonSectionContent section={lessonFlow.mentalModel} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
+
+          {(lessonFlow.mistakes || lessonFlow.tradeoffs || lessonFlow.useAvoid || topicSummary.commonMistake || topicSummary.useWhen || topicSummary.avoidWhen) ? (
+            <div id="use-it-well" className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Use It Well</h2>
+                <span className="badge rounded-pill badge-soft">Mistakes and tradeoffs</span>
+              </div>
+              <div className="journey-grid journey-grid-primary">
+                {(lessonFlow.mistakes || topicSummary.commonMistake) ? (
+                  <div className="section-panel">
+                    <div className="eyebrow mb-2">Common Mistakes</div>
+                    {lessonFlow.mistakes ? (
+                      <LessonSectionContent section={lessonFlow.mistakes} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                    ) : (
+                      <p className="mb-0 muted-copy">{topicSummary.commonMistake}</p>
+                    )}
+                  </div>
+                ) : null}
+                {(lessonFlow.tradeoffs || topicSummary.useWhen || topicSummary.avoidWhen) ? (
+                  <div className="section-panel">
+                    <div className="eyebrow mb-2">Tradeoffs</div>
+                    {lessonFlow.tradeoffs ? (
+                      <LessonSectionContent section={lessonFlow.tradeoffs} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                    ) : (
+                      <div className="insight-grid compact-grid">
+                        {topicSummary.useWhen ? (
+                          <InsightCard icon="bi bi-check2-circle" title="Use This When">
+                            {topicSummary.useWhen}
+                          </InsightCard>
+                        ) : null}
+                        {topicSummary.avoidWhen ? (
+                          <InsightCard icon="bi bi-slash-circle" title="Avoid This When">
+                            {topicSummary.avoidWhen}
+                          </InsightCard>
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+                {(lessonFlow.useAvoid || topicSummary.useWhen || topicSummary.avoidWhen) ? (
+                  <div className="section-panel section-panel-soft">
+                    <div className="eyebrow mb-2">Use / Avoid</div>
+                    {lessonFlow.useAvoid ? (
+                      <LessonSectionContent section={lessonFlow.useAvoid} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                    ) : (
+                      <div className="insight-grid compact-grid">
+                        {topicSummary.useWhen ? (
+                          <InsightCard icon="bi bi-check2-circle" title="Use This When">
+                            {topicSummary.useWhen}
+                          </InsightCard>
+                        ) : null}
+                        {topicSummary.avoidWhen ? (
+                          <InsightCard icon="bi bi-slash-circle" title="Avoid This When">
+                            {topicSummary.avoidWhen}
+                          </InsightCard>
+                        ) : null}
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
+
+          {(takeaways.length || lessonFlow.summary) ? (
+            <div id="takeaways" className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Leave With This</h2>
+                <span className="badge rounded-pill badge-soft">Eureka checkpoint</span>
+              </div>
+              {lessonFlow.summary ? (
+                <div className="section-panel section-panel-strong mb-3">
+                  <LessonSectionContent section={lessonFlow.summary} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+                </div>
+              ) : null}
+              {takeaways.length ? <BulletList items={takeaways} /> : null}
+            </div>
+          ) : null}
+
+          {topicSummary.tryThisNext ? (
+            <div className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Try This Next</h2>
+                <span className="badge rounded-pill badge-soft">Stretch the example</span>
+              </div>
+              <p className="mb-0 muted-copy">{topicSummary.tryThisNext}</p>
+            </div>
+          ) : null}
         </div>
         {!uiPreferences.readingMode ? (
           <div className="content-side">
