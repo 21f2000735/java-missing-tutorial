@@ -35,6 +35,11 @@ chapter_title() {
   fi
 }
 
+topic_guide_exists() {
+  local topic_dir="$1"
+  [[ -f "$topic_dir/TopicGuide.md" ]]
+}
+
 topic_title() {
   local java_file="$1"
   local value
@@ -56,7 +61,7 @@ copy_content_tree() {
     cp "$file" "$library_root/$relative"
   done
 
-  for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md AUTHORING_GUIDE.md CHAPTER_QUALITY_CHECKLIST.md TOPIC_QUALITY_RUBRIC.md DEEP_DIVE_STANDARD.md BOOK_MANUSCRIPT.md; do
+  for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md AUTHORING_GUIDE.md CHAPTER_QUALITY_CHECKLIST.md TOPIC_QUALITY_RUBRIC.md DEEP_DIVE_STANDARD.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md; do
     cp "$root/$file" "$meta_root/$file"
   done
 }
@@ -80,7 +85,7 @@ generate_manifest() {
     echo '  "resources": ['
 
     local first_resource=1
-    for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md BOOK_MANUSCRIPT.md; do
+    for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md; do
       [[ $first_resource -eq 1 ]] || echo ','
       first_resource=0
       slug="${file%.md}"
@@ -151,17 +156,32 @@ generate_manifest() {
           [[ $first_topic -eq 1 ]] || echo ','
           first_topic=0
           local topic_slug topic_java topic_title_value topic_source topic_content
+          local topic_guide_source="" topic_guide_content=""
           topic_slug="$(basename "$topic_dir")"
           topic_java="$(basename "$java_file")"
           topic_title_value="$(topic_title "$java_file")"
           topic_source="src/main/java/com/learning/javamissing/$chapter_rel/topics/$topic_slug/$topic_java"
           topic_content="content/library/$chapter_rel/topics/$topic_slug/$topic_java"
-          printf '            {"slug": %s, "title": %s, "sourcePath": %s, "contentPath": %s, "concept": %s}' \
+
+          if topic_guide_exists "$topic_dir"; then
+            topic_guide_source="src/main/java/com/learning/javamissing/$chapter_rel/topics/$topic_slug/TopicGuide.md"
+            topic_guide_content="content/library/$chapter_rel/topics/$topic_slug/TopicGuide.md"
+            printf '            {"slug": %s, "title": %s, "sourcePath": %s, "contentPath": %s, "concept": %s, "guide": {"sourcePath": %s, "contentPath": %s}}' \
+              "$(write_json_string "$topic_slug")" \
+              "$(write_json_string "$topic_title_value")" \
+              "$(write_json_string "$topic_source")" \
+              "$(write_json_string "$topic_content")" \
+              "$(write_json_string "$(to_title "$topic_slug")")" \
+              "$(write_json_string "$topic_guide_source")" \
+              "$(write_json_string "$topic_guide_content")"
+          else
+            printf '            {"slug": %s, "title": %s, "sourcePath": %s, "contentPath": %s, "concept": %s}' \
             "$(write_json_string "$topic_slug")" \
             "$(write_json_string "$topic_title_value")" \
             "$(write_json_string "$topic_source")" \
             "$(write_json_string "$topic_content")" \
             "$(write_json_string "$(to_title "$topic_slug")")"
+          fi
         done
 
         echo

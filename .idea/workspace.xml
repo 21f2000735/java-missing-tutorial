@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="first commit">
-      <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/SectionGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/SectionGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch02_creational_patterns/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch02_creational_patterns/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch03_structural_patterns/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch03_structural_patterns/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch04_behavioral_patterns/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch04_behavioral_patterns/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/ChapterGuide.md" afterDir="false" />
-    </list>
+    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="first commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

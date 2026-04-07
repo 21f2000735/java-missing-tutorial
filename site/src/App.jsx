@@ -41,7 +41,9 @@ const RESOURCE_DESCRIPTIONS = {
   CURRICULUM: 'Section-by-section map so similar concepts stay together and the learning path feels intentional.',
   ROADMAP_099: 'The longer curriculum direction and how this content can expand over time.',
   TOP_20_BOOKS: 'The books and references shaping the code examples, tradeoffs, and deeper explanations.',
-  BOOK_MANUSCRIPT: 'A combined manuscript view when you want to read the material like one long book.'
+  BOOK_MANUSCRIPT: 'A combined manuscript view when you want to read the material like one long book.',
+  JAVA_7_TO_25: 'A release-by-release learning track so users can understand what changed from Java 7 through Java 25.',
+  JAVA_MIGRATION_GUIDES: 'Upgrade guides for the biggest Java jumps, with what to learn, what to watch, and what to modernize.'
 };
 
 const SECTION_PROFILES = {
@@ -334,6 +336,31 @@ function parseGuide(raw) {
   };
 }
 
+function parseFrontmatter(raw = '') {
+  const match = raw.match(/^---\n([\s\S]*?)\n---\n?/);
+  if (!match) {
+    return { meta: {}, body: raw };
+  }
+
+  const meta = {};
+  match[1].split('\n').forEach((line) => {
+    const separator = line.indexOf(':');
+    if (separator === -1) {
+      return;
+    }
+    const key = line.slice(0, separator).trim();
+    const value = line.slice(separator + 1).trim();
+    if (key) {
+      meta[key] = value;
+    }
+  });
+
+  return {
+    meta,
+    body: raw.slice(match[0].length)
+  };
+}
+
 function findGuideSection(guide, titles) {
   const normalizedTitles = titles.map((title) => title.toLowerCase());
   return guide.sections.find((section) => normalizedTitles.includes(section.title.toLowerCase()));
@@ -510,6 +537,13 @@ function extractCodePreview(raw) {
     tryThisNext: extractPrintedValue(raw, 'Try this next'),
     previewRequired: /StructuredTaskScope|ScopedValue/.test(raw)
   };
+}
+
+function effectiveRunner(preview, lessonMeta = {}) {
+  if (lessonMeta.runner) {
+    return lessonMeta.runner;
+  }
+  return preview.previewRequired ? 'local' : 'embedded';
 }
 
 function SearchBox({ entries }) {
@@ -951,6 +985,7 @@ function TopicPreviewCard({ section, chapter, topic }) {
     <a className="topic-card topic-teaser text-decoration-none text-reset" href={`#topic/${section.slug}/${chapter.slug}/${topic.slug}`} key={topic.slug}>
       <div className="d-flex justify-content-between align-items-start gap-3 mb-2">
         <span className="badge rounded-pill badge-soft">{topic.preview.concept || topic.concept}</span>
+        {topic.lessonMeta?.introduced ? <span className="badge rounded-pill badge-soft">{topic.lessonMeta.introduced}</span> : null}
         {topic.preview.previewRequired ? <span className="badge rounded-pill badge-warning-soft">JDK 25 preview</span> : null}
       </div>
       <h3 className="h5 mb-2">{topic.title}</h3>
@@ -964,6 +999,7 @@ function TopicPreviewCard({ section, chapter, topic }) {
 function QuickLinkRail() {
   const links = [
     { label: 'Start Here', href: '#section/sec01_fundamentals' },
+    { label: 'Java 7 to 25', href: '#resource/JAVA_7_TO_25' },
     { label: 'Streams', href: '#section/sec04_streams_and_functional_style' },
     { label: 'Concurrency', href: '#section/sec05_multithreading_and_concurrency' },
     { label: 'Design Patterns', href: '#section/sec06_design_patterns' },
@@ -979,7 +1015,24 @@ function QuickLinkRail() {
   );
 }
 
-function TopicActionButtons({ code, previewRequired }) {
+function submitToJdoodle(code) {
+  const form = document.createElement('form');
+  form.method = 'post';
+  form.action = 'https://www.jdoodle.com/api/redirect-to-post/online-java-compiler';
+  form.target = '_blank';
+  form.style.display = 'none';
+
+  const textarea = document.createElement('textarea');
+  textarea.name = 'initScript';
+  textarea.value = code;
+  form.appendChild(textarea);
+
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+}
+
+function TopicActionButtons({ code, previewRequired, runner }) {
   const [copyState, setCopyState] = useState('idle');
 
   async function onCopy() {
@@ -998,13 +1051,19 @@ function TopicActionButtons({ code, previewRequired }) {
       <button className="btn btn-dark btn-sm rounded-pill" type="button" onClick={onCopy}>
         {copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed' : 'Copy code'}
       </button>
-      <a className="btn btn-outline-dark btn-sm rounded-pill" href={PLAYGROUND_LINKS.jdoodle} target="_blank" rel="noreferrer">
-        Open JDoodle
-      </a>
+      {runner === 'embedded' ? (
+        <button className="btn btn-outline-dark btn-sm rounded-pill" type="button" onClick={() => submitToJdoodle(code)}>
+          Run In JDoodle
+        </button>
+      ) : (
+        <a className="btn btn-outline-dark btn-sm rounded-pill" href={PLAYGROUND_LINKS.jdoodle} target="_blank" rel="noreferrer">
+          Open JDoodle
+        </a>
+      )}
       <a className="btn btn-outline-dark btn-sm rounded-pill" href={PLAYGROUND_LINKS.onecompiler} target="_blank" rel="noreferrer">
         Open OneCompiler
       </a>
-      {previewRequired ? <span className="playground-note">This example may need local JDK 25 preview support.</span> : null}
+      {runner === 'local' ? <span className="playground-note">This example is best run locally, usually because of newer or preview Java features.</span> : null}
     </>
   );
 }
@@ -1035,6 +1094,9 @@ export default function App() {
             sourceToRoute.set(chapter.runAllTopics.sourcePath, `#chapter/${section.slug}/${chapter.slug}`);
             chapter.topics.forEach((topic) => {
               sourceToRoute.set(topic.sourcePath, `#topic/${section.slug}/${chapter.slug}/${topic.slug}`);
+              if (topic.guide) {
+                sourceToRoute.set(topic.guide.sourcePath, `#topic/${section.slug}/${chapter.slug}/${topic.slug}`);
+              }
             });
           });
         });
@@ -1184,17 +1246,39 @@ function RouteRenderer({ route, manifest, fetchText }) {
         }
 
         if (route.type === 'chapter') {
-          const [guideRaw, revisionRaw, ...topicRaws] = await Promise.all([
+          const topicRequests = chapter.topics.flatMap((topic) => (
+            topic.guide
+              ? [fetchText(topic.contentPath), fetchText(topic.guide.contentPath)]
+              : [fetchText(topic.contentPath)]
+          ));
+
+          const [guideRaw, revisionRaw, ...topicPayloads] = await Promise.all([
             fetchText(chapter.guide.contentPath),
             fetchText(chapter.revision.contentPath),
-            ...chapter.topics.map((topic) => fetchText(topic.contentPath))
+            ...topicRequests
           ]);
 
-          const topics = chapter.topics.map((topic, index) => ({
-            ...topic,
-            raw: topicRaws[index],
-            preview: extractCodePreview(topicRaws[index])
-          }));
+          let pointer = 0;
+          const topics = chapter.topics.map((topic) => {
+            const raw = topicPayloads[pointer];
+            pointer += 1;
+            let lessonRaw = '';
+            let lessonMeta = {};
+            if (topic.guide) {
+              const lesson = parseFrontmatter(topicPayloads[pointer]);
+              lessonRaw = lesson.body;
+              lessonMeta = lesson.meta;
+              pointer += 1;
+            }
+
+            return {
+              ...topic,
+              raw,
+              lessonRaw,
+              lessonMeta,
+              preview: extractCodePreview(raw)
+            };
+          });
 
           if (!cancelled) {
             setContent({
@@ -1210,11 +1294,25 @@ function RouteRenderer({ route, manifest, fetchText }) {
         if (!topic) {
           throw new Error(`Unknown topic: ${route.topicSlug}`);
         }
-        const raw = await fetchText(topic.contentPath);
+        const topicPayloads = [fetchText(topic.contentPath)];
+        if (topic.guide) {
+          topicPayloads.push(fetchText(topic.guide.contentPath));
+        }
+        const [raw, lessonSource = ''] = await Promise.all(topicPayloads);
+        const lesson = parseFrontmatter(lessonSource);
         if (!cancelled) {
           setContent({
             status: 'ready',
-            data: { type: 'topic', section, chapter, topic, raw, preview: extractCodePreview(raw) },
+            data: {
+              type: 'topic',
+              section,
+              chapter,
+              topic,
+              raw,
+              lessonRaw: lesson.body,
+              lessonMeta: lesson.meta,
+              preview: extractCodePreview(raw)
+            },
             error: ''
           });
         }
@@ -1399,7 +1497,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
           actions={(
             <>
               <a className="btn btn-outline-dark btn-sm rounded-pill" href={`#chapter/${data.section.slug}/${data.chapter.slug}`}>Back To Chapter</a>
-              <TopicActionButtons code={data.raw} previewRequired={topicSummary.previewRequired} />
+              <TopicActionButtons code={data.raw} previewRequired={topicSummary.previewRequired} runner={effectiveRunner(topicSummary, data.lessonMeta)} />
             </>
           )}
         />
@@ -1433,6 +1531,27 @@ function RouteRenderer({ route, manifest, fetchText }) {
           {topicSummary.mentalModel || topicSummary.why || 'Use the example to build the right intuition before memorizing APIs.'}
         </InsightCard>
       </div>
+
+      {(data.lessonMeta.introduced || data.lessonMeta.status || data.lessonMeta.runner || data.lessonMeta.estimated) ? (
+        <div className="content-card mb-4">
+          <div className="topic-meta">
+            {data.lessonMeta.introduced ? <span className="badge rounded-pill badge-soft">Introduced: {data.lessonMeta.introduced}</span> : null}
+            {data.lessonMeta.status ? <span className="badge rounded-pill badge-soft">Status: {data.lessonMeta.status}</span> : null}
+            <span className="badge rounded-pill badge-soft">Runner: {effectiveRunner(topicSummary, data.lessonMeta)}</span>
+            {data.lessonMeta.estimated ? <span className="badge rounded-pill badge-soft">Read time: {data.lessonMeta.estimated}</span> : null}
+          </div>
+        </div>
+      ) : null}
+
+      {data.lessonRaw ? (
+        <div className="content-card mb-4">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <h2 className="page-title mb-0">Topic Lesson</h2>
+            <span className="badge rounded-pill badge-soft">Site-first explanation</span>
+          </div>
+          <MarkdownBlock html={marked.parse(data.lessonRaw)} manifest={manifest} />
+        </div>
+      ) : null}
 
       {(topicSummary.useWhen || topicSummary.avoidWhen || topicSummary.commonMistake) ? (
         <div className="insight-grid mb-4">
