@@ -1,6 +1,7 @@
 export const SITE_TITLE = 'Java Missing Tutorial';
 export const SITE_DESCRIPTION = 'Learn Java with problem-first explanations, runnable code, compare guides, interview tracks, and Java 7 to 25 coverage.';
 export const GITHUB_URL = 'https://github.com/21f2000735/java-missing-tutorial';
+export const SITE_BASE_PATH = '/java-missing-tutorial/';
 
 export const NEXT_METADATA = {
   title: 'Java Missing Tutorial - Learn Java 7 to 25 with Real Examples',

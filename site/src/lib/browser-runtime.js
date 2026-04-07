@@ -1,4 +1,5 @@
 import { HOME_HASH, parseHashRoute } from './hash-route.js';
+import { SITE_BASE_PATH } from './site-config.js';
 
 function safeWindow() {
   return typeof window === 'undefined' ? null : window;
@@ -82,6 +83,18 @@ export async function loadBootstrapBundle() {
   await import('bootstrap/dist/js/bootstrap.bundle.min.js');
 }
 
+function resolveRuntimePath(path) {
+  if (/^(?:[a-z]+:)?\/\//i.test(path) || path.startsWith('data:')) {
+    return path;
+  }
+
+  const normalizedPath = path.replace(/^\/+/, '');
+  const base = typeof window === 'undefined'
+    ? `https://21f2000735.github.io${SITE_BASE_PATH}`
+    : `${window.location.origin}${SITE_BASE_PATH}`;
+  return new URL(normalizedPath, base).toString();
+}
+
 export function applyTheme(theme) {
   const documentRef = safeDocument();
   if (!documentRef) {
@@ -115,17 +128,19 @@ export function applyDocumentMetadata({ title, description }) {
 }
 
 export async function fetchJson(path) {
-  const response = await fetch(path);
+  const resolvedPath = resolveRuntimePath(path);
+  const response = await fetch(resolvedPath);
   if (!response.ok) {
-    throw new Error(`Failed to fetch ${path}`);
+    throw new Error(`Failed to fetch ${resolvedPath}`);
   }
   return response.json();
 }
 
 export async function fetchText(path) {
-  const response = await fetch(path);
+  const resolvedPath = resolveRuntimePath(path);
+  const response = await fetch(resolvedPath);
   if (!response.ok) {
-    throw new Error(`Failed to fetch ${path}`);
+    throw new Error(`Failed to fetch ${resolvedPath}`);
   }
   return response.text();
 }
