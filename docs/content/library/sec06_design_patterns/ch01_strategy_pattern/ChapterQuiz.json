@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": "strategy-1",
+      "question": "Which change pressure most strongly suggests Strategy?",
+      "options": [
+        "A workflow step stays stable while one rule keeps changing",
+        "A class has too few methods",
+        "A class needs private helper methods",
+        "The constructor has too many fields"
+      ],
+      "answerIndex": 0,
+      "explanation": "Strategy is the fit when the outer flow stays the same but one decision or algorithm varies independently."
+    },
+    {
+      "id": "strategy-2",
+      "question": "What is the main problem with keeping every discount rule in checkout via if or switch?",
+      "options": [
+        "It prevents unit testing completely",
+        "It mixes stable purchase flow with changing rule logic",
+        "It makes interfaces impossible to use",
+        "It stops polymorphism from compiling"
+      ],
+      "answerIndex": 1,
+      "explanation": "The checkout flow should orchestrate the purchase, not own every campaign formula and its future growth."
+    },
+    {
+      "id": "strategy-3",
+      "question": "What usually becomes easier after extracting strategies?",
+      "options": [
+        "Every class becomes smaller than 10 lines",
+        "Each rule can be tested and extended independently",
+        "The program no longer needs constructors",
+        "All business rules become enums"
+      ],
+      "answerIndex": 1,
+      "explanation": "Independent strategy implementations give each rule its own place to evolve and be tested."
+    },
+    {
+      "id": "strategy-4",
+      "question": "When is Strategy likely the wrong tool?",
+      "options": [
+        "When one behavior varies and will keep growing",
+        "When the caller should not know every rule formula",
+        "When there are only one or two tiny stable branches",
+        "When you need to refer to behavior through an interface"
+      ],
+      "answerIndex": 2,
+      "explanation": "If the variation is tiny and stable, adding extra classes can be ceremony instead of design clarity."
+    },
+    {
+      "id": "strategy-5",
+      "question": "Which Effective Java idea lines up most directly with Strategy?",
+      "options": [
+        "Favor composition over inheritance",
+        "Minimize mutability",
+        "Prefer primitives to boxed primitives",
+        "Avoid unnecessary strings"
+      ],
+      "answerIndex": 0,
+      "explanation": "Strategy typically applies composition and interface-based collaboration instead of subclassing one large workflow."
+    }
+  ]
+}

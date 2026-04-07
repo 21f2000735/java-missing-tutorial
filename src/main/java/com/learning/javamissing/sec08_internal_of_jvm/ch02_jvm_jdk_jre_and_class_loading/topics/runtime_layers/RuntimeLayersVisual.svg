@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 360" role="img" aria-labelledby="title desc">
+  <title id="title">JDK, JRE, and JVM layers</title>
+  <desc id="desc">Nested boxes show the JDK containing development tools and runtime pieces, with the JVM inside as the execution engine.</desc>
+  <rect width="760" height="360" fill="#fbf6ee"/>
+  <rect x="60" y="44" width="640" height="272" rx="26" fill="#fff5e8" stroke="#af5b0c" stroke-width="2"/>
+  <text x="92" y="88" font-family="IBM Plex Sans, Arial, sans-serif" font-size="30" font-weight="700" fill="#6b3707">JDK</text>
+  <text x="92" y="116" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#6d5a46">Tools for building Java: javac, javadoc, packaging, debugging</text>
+  <rect x="126" y="140" width="514" height="138" rx="24" fill="#eef7f2" stroke="#3a6a57" stroke-width="2"/>
+  <text x="156" y="184" font-family="IBM Plex Sans, Arial, sans-serif" font-size="28" font-weight="700" fill="#203d33">JRE</text>
+  <text x="156" y="212" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#315848">Runtime pieces needed to run Java applications</text>
+  <rect x="238" y="228" width="292" height="70" rx="20" fill="#d8ece3" stroke="#3a6a57" stroke-width="2"/>
+  <text x="270" y="270" font-family="IBM Plex Sans, Arial, sans-serif" font-size="28" font-weight="700" fill="#203d33">JVM</text>
+  <text x="344" y="270" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#315848">executes bytecode</text>
+  <text x="60" y="338" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#6d5a46">Ask three different questions: build, run, execute. The layers separate those answers.</text>
+</svg>

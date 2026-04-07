@@ -1,0 +1,64 @@
+{
+  "questions": [
+    {
+      "id": "jvm-memory-1",
+      "question": "Which statement is correct about local variables in Java?",
+      "options": [
+        "They always store full object copies",
+        "They store either primitive values or reference values for the current frame",
+        "They live permanently in the heap",
+        "They are shared across all threads"
+      ],
+      "answerIndex": 1,
+      "explanation": "A stack frame stores local slots. Object instances remain elsewhere; the slot only holds the reference needed to reach them."
+    },
+    {
+      "id": "jvm-memory-2",
+      "question": "Why can two variables observe the same object mutation?",
+      "options": [
+        "Because Java duplicates heap objects automatically",
+        "Because the JVM reuses primitive slots for all objects",
+        "Because both variables can point at the same heap object",
+        "Because method calls force all objects into static memory"
+      ],
+      "answerIndex": 2,
+      "explanation": "The shared mutation comes from shared reference identity, not from the variable names themselves."
+    },
+    {
+      "id": "jvm-memory-3",
+      "question": "What confusion does the stack vs heap lesson try to remove first?",
+      "options": [
+        "Why generics use angle brackets",
+        "Why thread pools need queues",
+        "Why changing one alias can affect another alias",
+        "Why streams are lazy"
+      ],
+      "answerIndex": 2,
+      "explanation": "The initial mental-model fix is separating variable slots from heap objects so aliasing surprises make sense."
+    },
+    {
+      "id": "jvm-memory-4",
+      "question": "What usually lives on the heap?",
+      "options": [
+        "Object instances and their fields",
+        "Only primitive ints",
+        "Only method parameters",
+        "Only class names"
+      ],
+      "answerIndex": 0,
+      "explanation": "Heap storage is where object instances live; stack frames only hold the data needed for the active call."
+    },
+    {
+      "id": "jvm-memory-5",
+      "question": "Which interview answer is strongest when asked why first and second both changed?",
+      "options": [
+        "Because Java passes objects by reference",
+        "Because the compiler cloned the object twice",
+        "Because both variables store references to the same heap object and the mutation happened on shared state",
+        "Because the stack frame forced the values to merge"
+      ],
+      "answerIndex": 2,
+      "explanation": "The precise explanation is shared object identity through references; saying 'pass by reference' is the common but sloppy shortcut."
+    }
+  ]
+}

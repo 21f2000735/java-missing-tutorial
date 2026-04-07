@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" role="img" aria-labelledby="title desc">
+  <title id="title">Stack and heap references</title>
+  <desc id="desc">Two local variables in one stack frame both point to the same Cart object on the heap.</desc>
+  <rect width="760" height="380" fill="#fbf6ee"/>
+  <rect x="34" y="34" width="250" height="312" rx="24" fill="#fffdf8" stroke="#c8b8a0" stroke-width="2"/>
+  <text x="60" y="74" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700" fill="#2d2418">Stack frame: main()</text>
+  <rect x="60" y="108" width="198" height="72" rx="16" fill="#f2d7b8" stroke="#af5b0c" stroke-width="2"/>
+  <text x="82" y="138" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#402b12">first</text>
+  <text x="82" y="166" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#5f4630">reference value</text>
+  <rect x="60" y="206" width="198" height="72" rx="16" fill="#f2d7b8" stroke="#af5b0c" stroke-width="2"/>
+  <text x="82" y="236" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#402b12">second</text>
+  <text x="82" y="264" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#5f4630">same reference value</text>
+  <rect x="446" y="80" width="276" height="182" rx="24" fill="#eef7f2" stroke="#3a6a57" stroke-width="2"/>
+  <text x="474" y="118" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700" fill="#203d33">Heap object</text>
+  <rect x="474" y="142" width="220" height="84" rx="18" fill="#d8ece3" stroke="#3a6a57" stroke-width="2"/>
+  <text x="496" y="174" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#203d33">Cart</text>
+  <text x="496" y="204" font-family="IBM Plex Sans, Arial, sans-serif" font-size="19" fill="#315848">itemCount = 5 after mutation</text>
+  <path d="M258 144 C338 144, 346 132, 446 164" fill="none" stroke="#af5b0c" stroke-width="4"/>
+  <polygon points="440,154 456,164 440,174" fill="#af5b0c"/>
+  <path d="M258 242 C338 242, 346 224, 446 194" fill="none" stroke="#af5b0c" stroke-width="4"/>
+  <polygon points="439,184 456,190 443,204" fill="#af5b0c"/>
+  <text x="36" y="364" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#6d5a46">Two labels, one object. Mutating the object is visible through both references.</text>
+</svg>
