@@ -6,6 +6,11 @@ estimated: 8 min
 mode: interview
 visual: required
 visual_asset: StackHeapReferencesVisual.svg
+interviewQ:
+  - question: Why does mutating one reference sometimes affect another variable?
+    answer: Because both variables can hold references to the same heap object, so the mutation happens on shared state, not on the local variable itself.
+  - question: What lives on the stack in a normal method call?
+    answer: Local variable slots and primitive values for that frame; object instances themselves still live on the heap.
 ---
 
 # Understanding Stack, Heap, And References

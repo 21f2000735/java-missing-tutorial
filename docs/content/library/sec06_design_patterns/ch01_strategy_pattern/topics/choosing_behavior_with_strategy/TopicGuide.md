@@ -4,6 +4,11 @@ status: stable
 runner: embedded
 estimated: 7 min
 mode: interview
+interviewQ:
+  - question: What problem does Strategy solve in one sentence?
+    answer: It separates one changing behavior from a stable workflow so the caller stops growing conditionals.
+  - question: When is Strategy overkill?
+    answer: When there are only one or two tiny stable cases and the behavior is unlikely to vary independently.
 ---
 
 # Choosing Behavior With Strategy

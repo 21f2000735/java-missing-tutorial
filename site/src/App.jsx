@@ -19,7 +19,13 @@ import {
 } from './lib/browser-runtime.js';
 import { HOME_ROUTE, parseHashRoute } from './lib/hash-route.js';
 import { GITHUB_URL, SITE_DESCRIPTION, SITE_TITLE } from './lib/site-config.js';
-import { buildSearchEntries, collectTopicRoutes, normalizeManifest, resolveRouteMetadata } from './lib/site-manifest.js';
+import {
+  buildSearchEntries,
+  collectChapterRoutes,
+  collectTopicRoutes,
+  normalizeManifest,
+  resolveRouteMetadata
+} from './lib/site-manifest.js';
 
 marked.setOptions({
   gfm: true,
@@ -419,6 +425,16 @@ const MODE_COPY = {
   shared: { label: 'Shared Core', badgeClass: 'badge-success-soft' }
 };
 
+const JAVA_VERSION_FILTERS = ['All', 'Java 8', 'Java 11', 'Java 17', 'Java 21', 'Java 25'];
+
+const JAVA_VERSION_RANK = {
+  'Java 8': 8,
+  'Java 11': 11,
+  'Java 17': 17,
+  'Java 21': 21,
+  'Java 25': 25
+};
+
 function stripMarkdown(value = '') {
   return value
     .replace(/```[\s\S]*?```/g, ' ')
@@ -565,22 +581,197 @@ function parseFrontmatter(raw = '') {
   }
 
   const meta = {};
-  match[1].split('\n').forEach((line) => {
+  const lines = match[1].split('\n');
+  let index = 0;
+
+  function parseScalar(value = '') {
+    const trimmed = value.trim();
+    if (!trimmed) {
+      return '';
+    }
+    if ((trimmed.startsWith('"') && trimmed.endsWith('"')) || (trimmed.startsWith("'") && trimmed.endsWith("'"))) {
+      return trimmed.slice(1, -1);
+    }
+    if (trimmed === 'true') {
+      return true;
+    }
+    if (trimmed === 'false') {
+      return false;
+    }
+    if (/^-?\d+(?:\.\d+)?$/.test(trimmed)) {
+      return Number(trimmed);
+    }
+    if (trimmed.startsWith('[') || trimmed.startsWith('{')) {
+      try {
+        return JSON.parse(trimmed);
+      } catch {
+        return trimmed;
+      }
+    }
+    return trimmed;
+  }
+
+  function parseBlockValue(blockLines) {
+    const trimmed = blockLines.map((line) => line.trimEnd()).filter(Boolean);
+    if (!trimmed.length) {
+      return '';
+    }
+
+    const joined = trimmed.join('\n').trim();
+    if (joined.startsWith('[') || joined.startsWith('{')) {
+      try {
+        return JSON.parse(joined);
+      } catch {
+        return joined;
+      }
+    }
+
+    if (trimmed.every((line) => line.trim().startsWith('-'))) {
+      const items = [];
+      let currentObject = null;
+      trimmed.forEach((line) => {
+        const current = line.trim();
+        if (/^-\s+/.test(current)) {
+          const itemValue = current.replace(/^-+\s*/, '');
+          if (itemValue.includes(':')) {
+            const separator = itemValue.indexOf(':');
+            currentObject = {
+              [itemValue.slice(0, separator).trim()]: parseScalar(itemValue.slice(separator + 1))
+            };
+            items.push(currentObject);
+          } else {
+            currentObject = null;
+            items.push(parseScalar(itemValue));
+          }
+          return;
+        }
+        if (currentObject && current.includes(':')) {
+          const separator = current.indexOf(':');
+          currentObject[current.slice(0, separator).trim()] = parseScalar(current.slice(separator + 1));
+        }
+      });
+      return items;
+    }
+
+    return joined;
+  }
+
+  while (index < lines.length) {
+    const line = lines[index];
     const separator = line.indexOf(':');
     if (separator === -1) {
-      return;
+      index += 1;
+      continue;
     }
+
     const key = line.slice(0, separator).trim();
     const value = line.slice(separator + 1).trim();
-    if (key) {
-      meta[key] = value;
+    if (!key) {
+      index += 1;
+      continue;
     }
-  });
+
+    if (value) {
+      meta[key] = parseScalar(value);
+      index += 1;
+      continue;
+    }
+
+    const block = [];
+    index += 1;
+    while (index < lines.length && (/^\s+/.test(lines[index]) || /^\s*-\s*/.test(lines[index]))) {
+      block.push(lines[index]);
+      index += 1;
+    }
+    meta[key] = parseBlockValue(block);
+  }
 
   return {
     meta,
     body: raw.slice(match[0].length)
   };
+}
+
+function normalizeJavaVersion(value = '') {
+  const normalized = String(value).trim().toLowerCase();
+  if (!normalized || normalized === 'all') {
+    return 'All';
+  }
+  if (normalized.includes('25')) {
+    return 'Java 25';
+  }
+  if (normalized.includes('21')) {
+    return 'Java 21';
+  }
+  if (normalized.includes('17')) {
+    return 'Java 17';
+  }
+  if (normalized.includes('11')) {
+    return 'Java 11';
+  }
+  if (normalized.includes('8') || normalized.includes('1.0') || normalized.includes('1.2') || normalized.includes('5') || normalized.includes('9')) {
+    return 'Java 8';
+  }
+  if (normalized.includes('mixed') || normalized.includes('modern') || normalized.includes('ecosystem') || normalized.includes('junit')) {
+    return 'Java 8';
+  }
+  return '';
+}
+
+function javaVersionRank(value = '') {
+  const normalized = normalizeJavaVersion(value);
+  if (!normalized || normalized === 'All') {
+    return 0;
+  }
+  return JAVA_VERSION_RANK[normalized] || 0;
+}
+
+function inferChapterJavaVersion(sectionSlug, chapter) {
+  const explicit = normalizeJavaVersion(chapter?.javaVersion);
+  if (explicit) {
+    return explicit;
+  }
+  const hinted = VERSION_HINTS[`${sectionSlug}/${chapter.slug}`]?.introduced || VERSION_HINTS[sectionSlug]?.introduced || '';
+  return normalizeJavaVersion(hinted);
+}
+
+function matchesVersionFilter(chapterVersion, filter) {
+  if (!filter || filter === 'All') {
+    return true;
+  }
+  const filterRank = javaVersionRank(filter);
+  const chapterRank = javaVersionRank(chapterVersion);
+  if (!chapterRank) {
+    return true;
+  }
+  return chapterRank <= filterRank;
+}
+
+function normalizeInterviewQuestions(value) {
+  if (!Array.isArray(value)) {
+    return [];
+  }
+  return value
+    .map((item) => {
+      if (typeof item === 'string') {
+        return { question: item, answer: '' };
+      }
+      if (!item || typeof item !== 'object') {
+        return null;
+      }
+      return {
+        question: String(item.question || item.q || '').trim(),
+        answer: String(item.answer || item.a || item.explanation || '').trim()
+      };
+    })
+    .filter((item) => item?.question);
+}
+
+function scoreLabel(score) {
+  if (!score || typeof score.score !== 'number' || typeof score.total !== 'number') {
+    return '';
+  }
+  return `${score.score}/${score.total}`;
 }
 
 function findGuideSection(guide, titles) {
@@ -976,6 +1167,7 @@ function SearchBox({ entries }) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const wrapRef = useRef(null);
+  const inputRef = useRef(null);
 
   const matches = useMemo(() => {
     if (!query.trim()) {
@@ -983,7 +1175,11 @@ function SearchBox({ entries }) {
     }
     const normalized = query.trim().toLowerCase();
     return entries
-      .filter((entry) => entry.label.toLowerCase().includes(normalized) || entry.meta.toLowerCase().includes(normalized))
+      .filter((entry) => (
+        entry.label.toLowerCase().includes(normalized)
+        || entry.meta.toLowerCase().includes(normalized)
+        || entry.snippet.toLowerCase().includes(normalized)
+      ))
       .slice(0, 12);
   }, [entries, query]);
 
@@ -997,11 +1193,30 @@ function SearchBox({ entries }) {
     return () => document.removeEventListener('click', onDocumentClick);
   }, []);
 
+  useEffect(() => {
+    function onOverlayClose() {
+      setOpen(false);
+    }
+
+    function onSearchFocus() {
+      inputRef.current?.focus();
+      setOpen(true);
+    }
+
+    document.addEventListener('reader:close-overlays', onOverlayClose);
+    document.addEventListener('reader:focus-search', onSearchFocus);
+    return () => {
+      document.removeEventListener('reader:close-overlays', onOverlayClose);
+      document.removeEventListener('reader:focus-search', onSearchFocus);
+    };
+  }, []);
+
   return (
     <div ref={wrapRef} className="position-relative search-wrap flex-grow-1">
       <i className="bi bi-search search-icon" />
       <input
         id="site-search"
+        ref={inputRef}
         className="form-control search-input"
         type="search"
         placeholder="Search a problem, chapter, topic, or section"
@@ -1010,6 +1225,12 @@ function SearchBox({ entries }) {
         onChange={(event) => {
           setQuery(event.target.value);
           setOpen(true);
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Escape') {
+            setOpen(false);
+            inputRef.current?.blur();
+          }
         }}
       />
       {open && query.trim() ? (
@@ -1022,7 +1243,8 @@ function SearchBox({ entries }) {
               onClick={() => setOpen(false)}
             >
               <div className="fw-semibold">{entry.label}</div>
-              <small className="text-muted">{entry.meta}</small>
+              <small className="text-muted d-block">{entry.meta}</small>
+              <small className="search-snippet">{entry.snippet}</small>
             </a>
           )) : (
             <div className="list-group-item text-muted">No matches found.</div>
@@ -1033,9 +1255,46 @@ function SearchBox({ entries }) {
   );
 }
 
-function Sidebar({ sections, activeRoute }) {
+function CompletionMeter({ completedCount, chapterCount }) {
+  const percent = chapterCount ? Math.round((completedCount / chapterCount) * 100) : 0;
   return (
-    <aside className="col-12 col-xl-3 sidebar-column border-end">
+    <div className="sidebar-progress">
+      <div className="d-flex justify-content-between align-items-center gap-2 mb-2">
+        <div>
+          <div className="eyebrow mb-1">Overall Progress</div>
+          <div className="sidebar-progress-copy">{completedCount} / {chapterCount} chapters</div>
+        </div>
+        <a className="btn btn-outline-dark btn-sm rounded-pill" href="#progress">My Progress</a>
+      </div>
+      <div className="progress" role="progressbar" aria-valuenow={percent} aria-valuemin="0" aria-valuemax="100">
+        <div className="progress-bar bg-primary" style={{ width: `${percent}%` }} />
+      </div>
+    </div>
+  );
+}
+
+function VersionFilterBar({ value, onChange }) {
+  return (
+    <div className="version-filter-bar">
+      {JAVA_VERSION_FILTERS.map((filter) => (
+        <button
+          key={filter}
+          type="button"
+          className={`btn btn-sm rounded-pill ${value === filter ? 'btn-primary' : 'btn-outline-primary'}`}
+          onClick={() => onChange(filter)}
+        >
+          {filter}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+function Sidebar({ sections, activeRoute, completedChapters, quizScores, versionFilter, onVersionChange, chapterCount }) {
+  const completedCount = completedChapters.length;
+
+  return (
+    <aside className="sidebar-panel">
       <div className="sidebar-panel">
         <div className="sidebar-intro">
           <p className="eyebrow mb-2">Learning Book</p>
@@ -1045,57 +1304,66 @@ function Sidebar({ sections, activeRoute }) {
             how to code it, and what to expect when you run it.
           </p>
         </div>
-        <div className="accordion accordion-flush sidebar-accordion" id="sidebar-nav">
+        <CompletionMeter completedCount={completedCount} chapterCount={chapterCount} />
+        <div className="sidebar-filter-block">
+          <div className="eyebrow mb-2">Java Version</div>
+          <VersionFilterBar value={versionFilter} onChange={onVersionChange} />
+        </div>
+        <div className="sidebar-tree">
           {sections.map((section, index) => {
             const profile = SECTION_PROFILES[section.slug] || {};
+            const visibleChapters = section.chapters.filter((chapter) => {
+              const route = `#chapter/${section.slug}/${chapter.slug}`;
+              return activeRoute === route || matchesVersionFilter(chapter.javaVersion, versionFilter);
+            });
+            if (!visibleChapters.length) {
+              return null;
+            }
+            const sectionRoute = `#section/${section.slug}`;
+            const isOpen = activeRoute === sectionRoute || visibleChapters.some((chapter) => activeRoute === `#chapter/${section.slug}/${chapter.slug}`) || index === 0;
             return (
-              <div className="accordion-item" key={section.slug}>
-                <h2 className="accordion-header" id={`heading-${section.slug}`}>
-                  <button
-                    className={`accordion-button ${index === 0 ? '' : 'collapsed'}`}
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target={`#collapse-${section.slug}`}
-                    aria-expanded={index === 0 ? 'true' : 'false'}
-                  >
+              <details className="sidebar-tree-section" key={section.slug} defaultOpen={isOpen}>
+                <summary>
+                  <span className="d-flex align-items-center gap-2">
+                    {profile.icon ? <i className={`${profile.icon} section-icon`} /> : null}
                     <span>{section.title}</span>
-                  </button>
-                </h2>
-                <div
-                  id={`collapse-${section.slug}`}
-                  className={`accordion-collapse collapse ${index === 0 ? 'show' : ''}`}
-                  data-bs-parent="#sidebar-nav"
-                >
-                  <div className="accordion-body">
-                    <a
-                      className={`nav-link-card nav-link-section mb-3 ${activeRoute === `#section/${section.slug}` ? 'active' : ''}`}
-                      href={`#section/${section.slug}`}
-                    >
-                      <div className="d-flex align-items-center gap-2 mb-2">
-                        {profile.icon ? <i className={`${profile.icon} section-icon`} /> : null}
-                        <div className="fw-semibold">{section.title}</div>
-                      </div>
-                      <small>{profile.hook || 'Open the section guide and chapter roadmap.'}</small>
-                    </a>
-                    <div className="nav-link-list">
-                      {section.chapters.map((chapter) => {
-                        const route = `#chapter/${section.slug}/${chapter.slug}`;
-                        return (
-                          <a className={`nav-link-card ${activeRoute === route ? 'active' : ''}`} href={route} key={chapter.slug}>
-                            <div className="d-flex justify-content-between align-items-start gap-3">
-                              <div>
-                                <div className="fw-semibold">{chapter.title}</div>
-                                <small>{chapter.topics.length} topic{chapter.topics.length === 1 ? '' : 's'}</small>
+                  </span>
+                  <span className="badge rounded-pill badge-soft">{visibleChapters.length}</span>
+                </summary>
+                <div className="sidebar-tree-body">
+                  <a
+                    className={`nav-link-card nav-link-section mb-3 ${activeRoute === sectionRoute ? 'active' : ''}`}
+                    href={sectionRoute}
+                  >
+                    <div className="fw-semibold mb-1">{section.title}</div>
+                    <small>{profile.hook || 'Open the section guide and chapter roadmap.'}</small>
+                  </a>
+                  <div className="nav-link-list">
+                    {visibleChapters.map((chapter) => {
+                      const route = `#chapter/${section.slug}/${chapter.slug}`;
+                      const isDone = completedChapters.includes(route);
+                      const score = quizScores[route];
+                      return (
+                        <a className={`nav-link-card ${activeRoute === route ? 'active' : ''}`} href={route} key={chapter.slug}>
+                          <div className="d-flex justify-content-between align-items-start gap-3">
+                            <div className="sidebar-chapter-copy">
+                              <div className="fw-semibold d-flex align-items-center gap-2">
+                                {isDone ? <i className="bi bi-check-circle-fill text-success" /> : <i className="bi bi-circle text-muted" />}
+                                <span>{chapter.title}</span>
                               </div>
-                              <span className="badge rounded-pill badge-soft">{chapter.slug}</span>
+                              <small>{chapter.topics.length} topic{chapter.topics.length === 1 ? '' : 's'}</small>
                             </div>
-                          </a>
-                        );
-                      })}
-                    </div>
+                            <div className="sidebar-chapter-badges">
+                              {scoreLabel(score) ? <span className="badge rounded-pill text-bg-warning">{scoreLabel(score)}</span> : null}
+                              {chapter.javaVersion ? <span className="badge rounded-pill badge-soft">{chapter.javaVersion}</span> : null}
+                            </div>
+                          </div>
+                        </a>
+                      );
+                    })}
                   </div>
                 </div>
-              </div>
+              </details>
             );
           })}
         </div>
@@ -1118,6 +1386,114 @@ function HeaderPanel({ title, eyebrow, summary, sourcePath, actions }) {
       </div>
     </div>
   );
+}
+
+function codeVariantFromText(value = '') {
+  const firstLine = String(value).split('\n')[0].trim().toUpperCase();
+  if (firstLine === '// BAD') {
+    return 'bad';
+  }
+  if (firstLine === '// GOOD') {
+    return 'good';
+  }
+  return '';
+}
+
+function stripCodeVariantMarker(value = '') {
+  return String(value).replace(/^\/\/\s*(?:BAD|GOOD)\s*\n?/i, '');
+}
+
+async function copyTextToClipboard(value) {
+  if (navigator?.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const textArea = document.createElement('textarea');
+  textArea.value = value;
+  document.body.appendChild(textArea);
+  textArea.select();
+  document.execCommand('copy');
+  textArea.remove();
+}
+
+function transformBadGoodCodeDiffs(root) {
+  Array.from(root.querySelectorAll('pre')).forEach((pre) => {
+    if (!pre.parentElement || pre.parentElement.classList.contains('code-diff-panel')) {
+      return;
+    }
+
+    const code = pre.querySelector('code');
+    if (!code || codeVariantFromText(code.textContent) !== 'bad') {
+      return;
+    }
+
+    const next = pre.nextElementSibling;
+    if (!next || next.tagName !== 'PRE') {
+      return;
+    }
+
+    const nextCode = next.querySelector('code');
+    if (!nextCode || codeVariantFromText(nextCode.textContent) !== 'good') {
+      return;
+    }
+
+    code.textContent = stripCodeVariantMarker(code.textContent);
+    nextCode.textContent = stripCodeVariantMarker(nextCode.textContent);
+
+    const container = document.createElement('div');
+    container.className = 'code-diff-grid';
+
+    const badPanel = document.createElement('div');
+    badPanel.className = 'code-diff-panel code-diff-bad';
+    const badBadge = document.createElement('span');
+    badBadge.className = 'badge text-bg-danger code-diff-badge';
+    badBadge.textContent = 'Avoid this';
+    badPanel.appendChild(badBadge);
+    badPanel.appendChild(pre);
+
+    const goodPanel = document.createElement('div');
+    goodPanel.className = 'code-diff-panel code-diff-good';
+    const goodBadge = document.createElement('span');
+    goodBadge.className = 'badge text-bg-success code-diff-badge';
+    goodBadge.textContent = 'Do this instead';
+    goodPanel.appendChild(goodBadge);
+    goodPanel.appendChild(next);
+
+    pre.replaceWith(container);
+    container.appendChild(badPanel);
+    container.appendChild(goodPanel);
+  });
+}
+
+function attachCopyButtons(root) {
+  root.querySelectorAll('pre').forEach((pre) => {
+    if (pre.parentElement?.classList.contains('markdown-code-shell')) {
+      return;
+    }
+
+    const shell = document.createElement('div');
+    shell.className = 'markdown-code-shell';
+    pre.replaceWith(shell);
+    shell.appendChild(pre);
+
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'btn btn-sm btn-outline-dark code-copy-button';
+    button.textContent = 'Copy';
+    button.addEventListener('click', async () => {
+      const code = pre.querySelector('code');
+      if (!code) {
+        return;
+      }
+      await copyTextToClipboard(code.textContent || '');
+      button.textContent = 'Copied!';
+      window.setTimeout(() => {
+        button.textContent = 'Copy';
+      }, 2000);
+    });
+    shell.appendChild(button);
+  });
 }
 
 function MarkdownBlock({ html, manifest, contentPath }) {
@@ -1192,6 +1568,9 @@ function MarkdownBlock({ html, manifest, contentPath }) {
         }
       }
 
+      transformBadGoodCodeDiffs(ref.current);
+      attachCopyButtons(ref.current);
+
       const prism = await loadPrism();
       if (!cancelled && ref.current) {
         prism.highlightAllUnder(ref.current);
@@ -1203,7 +1582,7 @@ function MarkdownBlock({ html, manifest, contentPath }) {
     return () => {
       cancelled = true;
     };
-  }, [html, manifest]);
+  }, [html, manifest, contentPath]);
 
   return <div ref={ref} className="content-markdown" dangerouslySetInnerHTML={{ __html: html }} />;
 }
@@ -1217,6 +1596,7 @@ function LessonSectionContent({ section, manifest, contentPath }) {
 
 function CodeBlock({ code }) {
   const ref = useRef(null);
+  const [copyLabel, setCopyLabel] = useState('Copy');
 
   useEffect(() => {
     let cancelled = false;
@@ -1234,7 +1614,22 @@ function CodeBlock({ code }) {
     };
   }, [code]);
 
-  return <pre className="mb-0"><code ref={ref} className="language-java">{code}</code></pre>;
+  return (
+    <div className="markdown-code-shell">
+      <button
+        type="button"
+        className="btn btn-sm btn-outline-dark code-copy-button"
+        onClick={async () => {
+          await copyTextToClipboard(code);
+          setCopyLabel('Copied!');
+          window.setTimeout(() => setCopyLabel('Copy'), 2000);
+        }}
+      >
+        {copyLabel}
+      </button>
+      <pre className="mb-0"><code ref={ref} className="language-java">{code}</code></pre>
+    </div>
+  );
 }
 
 function InsightCard({ icon, title, children }) {
@@ -1277,6 +1672,8 @@ function resourceSummaryFromSlug(slug) {
 function useReadingState() {
   const [bookmarks, setBookmarks] = useState(() => readStorageJson('java-book-bookmarks', []));
   const [completed, setCompleted] = useState(() => readStorageJson('java-book-completed', []));
+  const [completedChapters, setCompletedChapters] = useState(() => readStorageJson('java-book-completed-chapters', []));
+  const [quizScores, setQuizScores] = useState(() => readStorageJson('java-book-quiz-scores', {}));
 
   useEffect(() => {
     writeStorageJson('java-book-bookmarks', bookmarks);
@@ -1285,6 +1682,14 @@ function useReadingState() {
   useEffect(() => {
     writeStorageJson('java-book-completed', completed);
   }, [completed]);
+
+  useEffect(() => {
+    writeStorageJson('java-book-completed-chapters', completedChapters);
+  }, [completedChapters]);
+
+  useEffect(() => {
+    writeStorageJson('java-book-quiz-scores', quizScores);
+  }, [quizScores]);
 
   function toggleBookmark(route) {
     setBookmarks((current) => current.includes(route)
@@ -1298,7 +1703,26 @@ function useReadingState() {
       : [...current, route]);
   }
 
-  return { bookmarks, completed, toggleBookmark, toggleCompleted };
+  function toggleChapterCompleted(route) {
+    setCompletedChapters((current) => current.includes(route)
+      ? current.filter((item) => item !== route)
+      : [...current, route]);
+  }
+
+  function saveQuizScore(route, score) {
+    setQuizScores((current) => ({ ...current, [route]: score }));
+  }
+
+  return {
+    bookmarks,
+    completed,
+    completedChapters,
+    quizScores,
+    toggleBookmark,
+    toggleCompleted,
+    toggleChapterCompleted,
+    saveQuizScore
+  };
 }
 
 function useFeedbackState() {
@@ -1318,6 +1742,7 @@ function useFeedbackState() {
 function useUiPreferences() {
   const [readingMode, setReadingMode] = useState(() => readStorageValue('java-book-reading-mode', 'off') === 'on');
   const [theme, setTheme] = useState(() => readStorageValue('java-book-theme', 'light'));
+  const [versionFilter, setVersionFilter] = useState(() => normalizeJavaVersion(readStorageValue('java-book-version-filter', 'All')) || 'All');
 
   useEffect(() => {
     writeStorageValue('java-book-reading-mode', readingMode ? 'on' : 'off');
@@ -1328,6 +1753,10 @@ function useUiPreferences() {
     applyTheme(theme);
   }, [theme]);
 
+  useEffect(() => {
+    writeStorageValue('java-book-version-filter', versionFilter);
+  }, [versionFilter]);
+
   function toggleReadingMode() {
     setReadingMode((current) => !current);
   }
@@ -1336,7 +1765,15 @@ function useUiPreferences() {
     setTheme((current) => current === 'dark' ? 'light' : 'dark');
   }
 
-  return { readingMode, toggleReadingMode, theme, toggleTheme, isDark: theme === 'dark' };
+  return {
+    readingMode,
+    toggleReadingMode,
+    theme,
+    toggleTheme,
+    isDark: theme === 'dark',
+    versionFilter,
+    setVersionFilter
+  };
 }
 
 function RandomTopicButton({ manifest, currentRoute }) {
@@ -1427,6 +1864,328 @@ function FeedbackBar({ routeKey, feedbackState }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function normalizeQuizQuestions(value) {
+  const questions = Array.isArray(value?.questions) ? value.questions : Array.isArray(value) ? value : [];
+  return questions
+    .map((question, index) => {
+      const options = Array.isArray(question.options) ? question.options : [];
+      const answerIndex = typeof question.answerIndex === 'number'
+        ? question.answerIndex
+        : Math.max(0, options.findIndex((option) => option === question.answer));
+      return {
+        id: question.id || `q-${index + 1}`,
+        question: String(question.question || `Question ${index + 1}`).trim(),
+        options,
+        answerIndex,
+        explanation: String(question.explanation || '').trim()
+      };
+    })
+    .filter((question) => question.question && question.options.length >= 2);
+}
+
+function ChapterPager({ previousChapter, nextChapter, isCompleted, onToggleDone }) {
+  return (
+    <div className="content-card chapter-nav-card">
+      <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+          <div className="eyebrow mb-1">Keep Reading</div>
+          <div className="muted-copy mb-0">Use chapter navigation to move through the book without reopening the sidebar.</div>
+        </div>
+        <div className="d-flex flex-wrap gap-2">
+          <button className={`btn btn-sm rounded-pill ${isCompleted ? 'btn-success' : 'btn-outline-success'}`} type="button" onClick={onToggleDone}>
+            {isCompleted ? 'Marked as done' : 'Mark as done'}
+          </button>
+          <a className={`btn btn-outline-dark btn-sm rounded-pill ${previousChapter ? '' : 'disabled'}`} href={previousChapter?.route || '#'} aria-disabled={!previousChapter}>
+            <i className="bi bi-arrow-left me-1" />
+            Prev
+          </a>
+          <a className={`btn btn-dark btn-sm rounded-pill ${nextChapter ? '' : 'disabled'}`} href={nextChapter?.route || '#'} aria-disabled={!nextChapter}>
+            Next
+            <i className="bi bi-arrow-right ms-1" />
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InterviewQuestionsPanel({ questions }) {
+  const [openIndex, setOpenIndex] = useState(-1);
+
+  if (!questions.length) {
+    return null;
+  }
+
+  return (
+    <div className="content-card interview-panel mb-4">
+      <details open>
+        <summary className="interview-panel-summary">
+          <div>
+            <h2 className="page-title mb-1">Interview Questions</h2>
+            <div className="muted-copy mb-0">Quick follow-up questions and concise answers for this topic.</div>
+          </div>
+          <span className="badge rounded-pill text-bg-warning">{questions.length}</span>
+        </summary>
+        <div className="accordion interview-accordion" id="topic-interview-questions">
+          {questions.map((item, index) => {
+            const isOpen = index === openIndex;
+            return (
+              <div className="accordion-item interview-question-item" key={`${item.question}-${index}`}>
+                <h3 className="accordion-header">
+                  <button
+                    className={`accordion-button ${isOpen ? '' : 'collapsed'}`}
+                    type="button"
+                    onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                  >
+                    {item.question}
+                  </button>
+                </h3>
+                <div className={`accordion-collapse collapse ${isOpen ? 'show' : ''}`}>
+                  <div className="accordion-body">
+                    <button
+                      type="button"
+                      className="btn btn-link btn-sm px-0 mb-2 interview-toggle"
+                      onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                    >
+                      {isOpen ? 'Hide answer' : 'Show answer'}
+                    </button>
+                    {isOpen ? <p className="mb-0">{item.answer || 'Answer not added yet.'}</p> : null}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </details>
+    </div>
+  );
+}
+
+function ChapterQuizModal({ isOpen, onClose, chapterTitle, quiz, routeKey, onSaveScore }) {
+  const questions = useMemo(() => normalizeQuizQuestions(quiz), [quiz]);
+  const [answers, setAnswers] = useState([]);
+  const [index, setIndex] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+    setAnswers(new Array(questions.length).fill(null));
+    setIndex(0);
+    setSubmitted(false);
+  }, [isOpen, questions.length, routeKey]);
+
+  useEffect(() => {
+    function onEscape() {
+      onClose();
+    }
+
+    if (isOpen) {
+      document.addEventListener('reader:close-overlays', onEscape);
+    }
+    return () => document.removeEventListener('reader:close-overlays', onEscape);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) {
+    return null;
+  }
+
+  const total = questions.length;
+  const currentQuestion = questions[index];
+  const allAnswered = answers.length === total && answers.every((answer) => answer !== null);
+  const score = submitted
+    ? answers.reduce((sum, answer, currentIndex) => sum + (answer === questions[currentIndex]?.answerIndex ? 1 : 0), 0)
+    : 0;
+
+  function chooseAnswer(answerIndex) {
+    setAnswers((current) => {
+      const next = [...current];
+      next[index] = answerIndex;
+      return next;
+    });
+  }
+
+  function submitQuiz() {
+    if (!allAnswered) {
+      return;
+    }
+    const nextScore = {
+      score: answers.reduce((sum, answer, currentIndex) => sum + (answer === questions[currentIndex]?.answerIndex ? 1 : 0), 0),
+      total,
+      at: new Date().toISOString()
+    };
+    onSaveScore(routeKey, nextScore);
+    setSubmitted(true);
+  }
+
+  return (
+    <div className="modal fade show reader-modal" style={{ display: 'block' }} role="dialog" aria-modal="true">
+      <div className="modal-dialog modal-dialog-centered modal-lg">
+        <div className="modal-content">
+          <div className="modal-header">
+            <div>
+              <h2 className="modal-title h5 mb-1">{chapterTitle} Quiz</h2>
+              <div className="muted-copy mb-0">5-question OCJP-style chapter check.</div>
+            </div>
+            <button type="button" className="btn-close" aria-label="Close" onClick={onClose} />
+          </div>
+          <div className="modal-body">
+            {!questions.length ? (
+              <div className="empty-state border rounded-4 p-4">
+                Quiz content has not been added for this chapter yet.
+              </div>
+            ) : submitted ? (
+              <div className="quiz-summary">
+                <div className="quiz-score-card mb-4">
+                  <div className="eyebrow mb-2">Your Score</div>
+                  <h3 className="display-6 mb-1">{score}/{total}</h3>
+                  <p className="mb-0 muted-copy">Review the wrong answers below and rerun the quiz whenever you want.</p>
+                </div>
+                <div className="quiz-review-list">
+                  {questions.map((question, questionIndex) => {
+                    const chosen = answers[questionIndex];
+                    const correct = chosen === question.answerIndex;
+                    return (
+                      <div className={`quiz-review-item ${correct ? 'quiz-review-correct' : 'quiz-review-wrong'}`} key={question.id}>
+                        <div className="fw-semibold mb-2">{question.question}</div>
+                        <div className="mb-1">Your answer: {question.options[chosen] || 'Not answered'}</div>
+                        {!correct ? <div className="mb-1">Correct answer: {question.options[question.answerIndex]}</div> : null}
+                        {question.explanation ? <div className="muted-copy mb-0">{question.explanation}</div> : null}
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className="d-flex justify-content-between align-items-center gap-3 mb-3">
+                  <span className="badge rounded-pill badge-soft">Question {index + 1} of {total}</span>
+                  <span className="badge rounded-pill badge-soft">{answers.filter((answer) => answer !== null).length} answered</span>
+                </div>
+                <div className="quiz-question-card">
+                  <h3 className="h5 mb-3">{currentQuestion.question}</h3>
+                  <div className="quiz-options">
+                    {currentQuestion.options.map((option, optionIndex) => (
+                      <button
+                        key={`${currentQuestion.id}-${option}`}
+                        type="button"
+                        className={`btn text-start quiz-option ${answers[index] === optionIndex ? 'quiz-option-active' : ''}`}
+                        onClick={() => chooseAnswer(optionIndex)}
+                      >
+                        <span className="quiz-option-marker">{String.fromCharCode(65 + optionIndex)}</span>
+                        <span>{option}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+          <div className="modal-footer">
+            {!submitted ? (
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 w-100">
+                <div className="d-flex gap-2">
+                  <button type="button" className="btn btn-outline-dark" onClick={() => setIndex((current) => Math.max(0, current - 1))} disabled={index === 0 || !questions.length}>
+                    Prev question
+                  </button>
+                  <button type="button" className="btn btn-outline-dark" onClick={() => setIndex((current) => Math.min(total - 1, current + 1))} disabled={index === total - 1 || !questions.length}>
+                    Next question
+                  </button>
+                </div>
+                <div className="d-flex gap-2">
+                  <button type="button" className="btn btn-outline-secondary" onClick={onClose}>Close</button>
+                  <button type="button" className="btn btn-primary" onClick={submitQuiz} disabled={!questions.length || !allAnswered}>
+                    Finish quiz
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="d-flex justify-content-end gap-2 w-100">
+                <button type="button" className="btn btn-outline-dark" onClick={() => {
+                  setAnswers(new Array(questions.length).fill(null));
+                  setIndex(0);
+                  setSubmitted(false);
+                }}>
+                  Retake
+                </button>
+                <button type="button" className="btn btn-primary" onClick={onClose}>Done</button>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+      <div className="modal-backdrop fade show" onClick={onClose} aria-hidden="true" />
+    </div>
+  );
+}
+
+function ProgressPage({ manifest, completedChapters, quizScores }) {
+  const groups = manifest.sections.map((section) => {
+    const chapters = section.chapters.map((chapter) => ({
+      route: chapter.route,
+      title: chapter.title,
+      quizScore: quizScores[chapter.route],
+      completed: completedChapters.includes(chapter.route)
+    }));
+    return {
+      ...section,
+      chapters,
+      completedCount: chapters.filter((chapter) => chapter.completed).length
+    };
+  });
+  const total = manifest.chapterOrder.length;
+  const done = completedChapters.length;
+
+  return (
+    <PageLayout
+      header={(
+        <HeaderPanel
+          title="My Progress"
+          eyebrow="Reader Progress"
+          summary="Track completed chapters section by section and revisit weak quiz scores before interviews or revision sessions."
+        />
+      )}
+    >
+      <div className="content-card mb-4">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <div>
+            <div className="eyebrow mb-1">Overall Completion</div>
+            <div className="muted-copy mb-0">{done} / {total} chapters marked done.</div>
+          </div>
+          <span className="badge rounded-pill text-bg-primary">{Math.round((done / Math.max(1, total)) * 100)}%</span>
+        </div>
+      </div>
+      <div className="progress-section-list">
+        {groups.map((section) => (
+          <div className="content-card mb-4" key={section.slug}>
+            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <h2 className="page-title mb-0">{section.title}</h2>
+              <span className="badge rounded-pill badge-soft">{section.completedCount} / {section.chapters.length}</span>
+            </div>
+            <div className="progress-chapter-list">
+              {section.chapters.map((chapter) => (
+                <a className="progress-chapter-row" href={chapter.route} key={chapter.route}>
+                  <div className="d-flex align-items-center gap-2">
+                    {chapter.completed ? <i className="bi bi-check-circle-fill text-success" /> : <i className="bi bi-circle text-muted" />}
+                    <span>{chapter.title}</span>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    {scoreLabel(chapter.quizScore) ? <span className="badge rounded-pill text-bg-warning">{scoreLabel(chapter.quizScore)}</span> : null}
+                    <span className={`badge rounded-pill ${chapter.completed ? 'text-bg-success' : 'badge-soft'}`}>
+                      {chapter.completed ? 'Done' : 'Pending'}
+                    </span>
+                  </div>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </PageLayout>
   );
 }
 
@@ -2031,6 +2790,7 @@ function QuickLinkRail({ onRandomTopic, onToggleTheme, themeLabel, onToggleReadi
     { label: 'Interview Index', href: '#resource/INTERVIEW_INDEX' },
     { label: 'Problem Approach', href: '#resource/INTERVIEW_PROBLEM_APPROACH' },
     { label: 'Company Bank', href: '#resource/COMPANY_QUESTION_BANK' },
+    { label: 'My Progress', href: '#progress' },
     { label: 'High-Demand', href: '#resource/HIGH_DEMAND_JAVA_TOPICS' },
     { label: 'Certification', href: '#resource/OCJP_TRACK' },
     { label: 'Streams', href: '#section/sec04_streams_and_functional_style' },
@@ -2135,7 +2895,22 @@ export default function App() {
     async function loadManifest() {
       try {
         const data = await fetchJson('data/site.json');
-        setManifest(normalizeManifest(data));
+        const normalizedManifest = normalizeManifest(data);
+        const chapterOrder = [];
+        const routeToChapter = new Map();
+        const sections = normalizedManifest.sections.map((section) => ({
+          ...section,
+          chapters: section.chapters.map((chapter) => {
+            const nextChapter = {
+              ...chapter,
+              javaVersion: inferChapterJavaVersion(section.slug, chapter)
+            };
+            chapterOrder.push(nextChapter);
+            routeToChapter.set(nextChapter.route, nextChapter);
+            return nextChapter;
+          })
+        }));
+        setManifest({ ...normalizedManifest, sections, chapterOrder, routeToChapter });
       } catch (loadError) {
         setError(loadError.message);
       } finally {
@@ -2159,6 +2934,7 @@ export default function App() {
   const searchEntries = useMemo(() => buildSearchEntries(manifest), [manifest]);
 
   const allTopicRoutes = useMemo(() => collectTopicRoutes(manifest), [manifest]);
+  const allChapterRoutes = useMemo(() => collectChapterRoutes(manifest), [manifest]);
 
   function goToRandomTopic() {
     if (!allTopicRoutes.length) {
@@ -2188,7 +2964,52 @@ export default function App() {
       ? `#chapter/${route.sectionSlug}/${route.chapterSlug}`
       : route.type === 'topic'
         ? `#chapter/${route.sectionSlug}/${route.chapterSlug}`
-        : '';
+        : route.type === 'progress'
+          ? '#progress'
+          : '';
+  const activeChapterRoute = route.type === 'chapter'
+    ? `#chapter/${route.sectionSlug}/${route.chapterSlug}`
+    : route.type === 'topic'
+      ? `#chapter/${route.sectionSlug}/${route.chapterSlug}`
+      : '';
+  const chapterIndex = activeChapterRoute ? allChapterRoutes.indexOf(activeChapterRoute) : -1;
+  const previousChapterRoute = chapterIndex > 0 ? allChapterRoutes[chapterIndex - 1] : '';
+  const nextChapterRoute = chapterIndex >= 0 && chapterIndex < allChapterRoutes.length - 1 ? allChapterRoutes[chapterIndex + 1] : '';
+
+  useEffect(() => {
+    function onKeyDown(event) {
+      const activeTag = document.activeElement?.tagName;
+      const isTypingContext = document.activeElement?.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(activeTag);
+
+      if (event.key === 'Escape') {
+        document.dispatchEvent(new CustomEvent('reader:close-overlays'));
+        return;
+      }
+
+      if (event.key === '/' && !isTypingContext) {
+        event.preventDefault();
+        document.dispatchEvent(new CustomEvent('reader:focus-search'));
+        return;
+      }
+
+      if (isTypingContext) {
+        return;
+      }
+
+      if ((event.key === 'ArrowRight' || event.key === ']') && nextChapterRoute) {
+        event.preventDefault();
+        navigateToHash(nextChapterRoute);
+      }
+
+      if ((event.key === 'ArrowLeft' || event.key === '[') && previousChapterRoute) {
+        event.preventDefault();
+        navigateToHash(previousChapterRoute);
+      }
+    }
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [nextChapterRoute, previousChapterRoute]);
 
   if (loading) {
     return <div className="content-card empty-state m-4">Loading content…</div>;
@@ -2203,11 +3024,17 @@ export default function App() {
       <header className="site-header border-bottom">
         <nav className="navbar navbar-expand-lg px-3 px-lg-4 py-3">
           <div className="container-fluid px-0">
-            <a className="navbar-brand fw-semibold" href="#home">{SITE_TITLE}</a>
+            <div className="d-flex align-items-center gap-2">
+              <button className="btn btn-outline-dark btn-sm d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#reader-sidebar-mobile" aria-controls="reader-sidebar-mobile">
+                <i className="bi bi-list" />
+              </button>
+              <a className="navbar-brand fw-semibold" href="#home">{SITE_TITLE}</a>
+            </div>
             <div className="ms-lg-4 flex-grow-1 d-flex flex-wrap flex-lg-nowrap align-items-center gap-3 header-actions">
               <SearchBox entries={searchEntries} />
               <div className="d-none d-lg-flex align-items-center gap-2">
                 <button className={`btn btn-sm rounded-pill ${uiPreferences.isDark ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleTheme}>
+                  <i className={`bi ${uiPreferences.isDark ? 'bi-sun-fill' : 'bi-moon-stars-fill'} me-1`} />
                   {uiPreferences.isDark ? 'Light Mode' : 'Dark Mode'}
                 </button>
                 <button className={`btn btn-sm rounded-pill ${uiPreferences.readingMode ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleReadingMode}>
@@ -2218,6 +3045,7 @@ export default function App() {
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_INDEX">Interview Index</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Problem Approach</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/OCJP_TRACK">Certification</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#progress">My Progress</a>
               </div>
             </div>
           </div>
@@ -2233,30 +3061,58 @@ export default function App() {
         </div>
       </header>
 
-      <main className="container-fluid">
-        <div className="row gx-0">
-          {!uiPreferences.readingMode ? <Sidebar sections={manifest.sections} activeRoute={activeRoute} /> : null}
-          <section className={uiPreferences.readingMode ? 'col-12 content-column' : 'col-12 col-xl-9 content-column'}>
-            <div className="content-wrap">
-              <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} readingState={readingState} feedbackState={feedbackState} uiPreferences={uiPreferences} />
-            </div>
-            <footer className="site-footer content-card">
-              <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                <div>
-                  <div className="eyebrow mb-1">Trust And Updates</div>
-                  <div className="muted-copy mb-0">
-                    Built from the repo content. Last generated: {manifest.generatedAt ? new Date(manifest.generatedAt).toLocaleString() : 'Unknown'}.
-                  </div>
-                </div>
-                <div className="d-flex flex-wrap gap-2">
-                  <a className="btn btn-outline-dark btn-sm rounded-pill" href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub Repo</a>
-                  <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
-                  <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/ROADMAP_099">Roadmap</a>
-                </div>
-              </div>
-            </footer>
-          </section>
+      <main className="reader-shell">
+        <div className="offcanvas offcanvas-start reader-offcanvas d-lg-none" tabIndex="-1" id="reader-sidebar-mobile" aria-labelledby="reader-sidebar-mobile-label">
+          <div className="offcanvas-header">
+            <h2 className="offcanvas-title h5 mb-0" id="reader-sidebar-mobile-label">Chapter Navigation</h2>
+            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" />
+          </div>
+          <div className="offcanvas-body">
+            <Sidebar
+              sections={manifest.sections}
+              activeRoute={activeRoute}
+              completedChapters={readingState.completedChapters}
+              quizScores={readingState.quizScores}
+              versionFilter={uiPreferences.versionFilter}
+              onVersionChange={uiPreferences.setVersionFilter}
+              chapterCount={manifest.chapterOrder.length}
+            />
+          </div>
         </div>
+
+        <aside className={`reader-sidebar d-none d-lg-block ${uiPreferences.readingMode ? 'reader-sidebar-reading' : ''}`}>
+          <Sidebar
+            sections={manifest.sections}
+            activeRoute={activeRoute}
+            completedChapters={readingState.completedChapters}
+            quizScores={readingState.quizScores}
+            versionFilter={uiPreferences.versionFilter}
+            onVersionChange={uiPreferences.setVersionFilter}
+            chapterCount={manifest.chapterOrder.length}
+          />
+        </aside>
+
+        <section className="content-column">
+          <div className="content-wrap">
+            <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} readingState={readingState} feedbackState={feedbackState} uiPreferences={uiPreferences} />
+          </div>
+          <footer className="site-footer content-card">
+            <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
+              <div>
+                <div className="eyebrow mb-1">Trust And Updates</div>
+                <div className="muted-copy mb-1">
+                  Built from the repo content. Last generated: {manifest.generatedAt ? new Date(manifest.generatedAt).toLocaleString() : 'Unknown'}.
+                </div>
+                <div className="footer-shortcuts">Shortcuts: `[` prev, `]` next, `/` search, `Esc` close.</div>
+              </div>
+              <div className="d-flex flex-wrap gap-2">
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub Repo</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/ROADMAP_099">Roadmap</a>
+              </div>
+            </div>
+          </footer>
+        </section>
       </main>
     </div>
   );
@@ -2264,6 +3120,11 @@ export default function App() {
 
 function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState, uiPreferences }) {
   const [content, setContent] = useState({ status: 'loading', data: null, error: '' });
+  const [quizOpen, setQuizOpen] = useState(false);
+
+  useEffect(() => {
+    setQuizOpen(false);
+  }, [route]);
 
   useEffect(() => {
     let cancelled = false;
@@ -2274,6 +3135,13 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
         if (route.type === 'home') {
           if (!cancelled) {
             setContent({ status: 'ready', data: { type: 'home' }, error: '' });
+          }
+          return;
+        }
+
+        if (route.type === 'progress') {
+          if (!cancelled) {
+            setContent({ status: 'ready', data: { type: 'progress' }, error: '' });
           }
           return;
         }
@@ -2315,9 +3183,10 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
               : [fetchText(topic.contentPath)]
           ));
 
-          const [guideRaw, revisionRaw, ...topicPayloads] = await Promise.all([
+          const [guideRaw, revisionRaw, quizRaw, ...topicPayloads] = await Promise.all([
             fetchText(chapter.guide.contentPath),
             fetchText(chapter.revision.contentPath),
+            chapter.quiz ? fetchText(chapter.quiz.contentPath).catch(() => '') : Promise.resolve(''),
             ...topicRequests
           ]);
 
@@ -2343,10 +3212,29 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
             };
           });
 
+          let quiz = null;
+          if (quizRaw) {
+            try {
+              quiz = JSON.parse(quizRaw);
+            } catch {
+              quiz = null;
+            }
+          }
+
           if (!cancelled) {
             setContent({
               status: 'ready',
-              data: { type: 'chapter', section, chapter: { ...chapter, topics }, guideRaw, revisionRaw },
+              data: {
+                type: 'chapter',
+                section,
+                chapter: {
+                  ...chapter,
+                  topics,
+                  quiz
+                },
+                guideRaw,
+                revisionRaw
+              },
               error: ''
             });
           }
@@ -2405,6 +3293,10 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
     return <HomePage manifest={manifest} />;
   }
 
+  if (data.type === 'progress') {
+    return <ProgressPage manifest={manifest} completedChapters={readingState.completedChapters} quizScores={readingState.quizScores} />;
+  }
+
   if (data.type === 'resource') {
     const routeKey = `#resource/${data.resource.slug}`;
     if (data.resource.slug === 'COMPANY_QUESTION_BANK') {
@@ -2446,6 +3338,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
     const why = findGuideSection(guide, ['Why This Section Matters', 'What Real Problems This Section Solves', 'The Story']);
     const beforeStart = findGuideSection(guide, ['Before You Start', 'Start Here If']);
     const howToRead = findGuideSection(guide, ['How To Read This Section', 'How To Read This Section']);
+    const visibleChapters = data.section.chapters.filter((chapter) => matchesVersionFilter(chapter.javaVersion, uiPreferences.versionFilter));
 
     return (
       <PageLayout
@@ -2484,13 +3377,16 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
         <div className="content-card">
           <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
             <h2 className="page-title mb-0">Chapters In This Section</h2>
-            <span className="badge rounded-pill badge-soft">{data.section.chapters.length} total</span>
+            <div className="d-flex flex-wrap gap-2">
+              <span className="badge rounded-pill badge-soft">Filter: {uiPreferences.versionFilter}</span>
+              <span className="badge rounded-pill badge-soft">{visibleChapters.length} shown</span>
+            </div>
           </div>
           <div className="chapter-grid">
-            {data.section.chapters.map((chapter) => (
+            {visibleChapters.map((chapter) => (
               <a className="chapter-card text-decoration-none text-reset" href={`#chapter/${data.section.slug}/${chapter.slug}`} key={chapter.slug}>
                 <div className="d-flex justify-content-between align-items-start gap-3 mb-2">
-                  <span className="badge rounded-pill badge-soft">{chapter.slug}</span>
+                  <span className="badge rounded-pill badge-soft">{chapter.javaVersion || chapter.slug}</span>
                   <small className="text-muted">{chapter.topics.length} topic{chapter.topics.length === 1 ? '' : 's'}</small>
                 </div>
                 <h3 className="h5 mb-2">{chapter.title}</h3>
@@ -2509,6 +3405,10 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
     const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story']);
     const quickSummary = findGuideSection(guide, ['Quick Summary', 'What To Look For']);
     const routeKey = `#chapter/${data.section.slug}/${data.chapter.slug}`;
+    const chapterIndex = manifest.chapterOrder.findIndex((chapter) => chapter.route === routeKey);
+    const previousChapter = chapterIndex > 0 ? manifest.chapterOrder[chapterIndex - 1] : null;
+    const nextChapter = chapterIndex >= 0 && chapterIndex < manifest.chapterOrder.length - 1 ? manifest.chapterOrder[chapterIndex + 1] : null;
+    const isChapterDone = readingState.completedChapters.includes(routeKey);
     const chapterToc = [
       { href: '#start-with-examples', label: 'Start With Examples' },
       { href: '#chapter-guide', label: 'Chapter Guide' },
@@ -2516,60 +3416,80 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
     ];
 
     return (
-      <PageLayout
-        header={(
-          <HeaderPanel
-            title={data.chapter.title}
-            eyebrow={`${data.section.title} · Chapter`}
-            summary={truncateText(problem?.plain || guide.intro || quickSummary?.plain || 'Use this chapter to understand the concept, then run the topic files.', 240)}
-            sourcePath={data.chapter.guide.sourcePath}
-            actions={(
-              <>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href={data.chapter.runChapter.contentPath} target="_blank" rel="noreferrer">RunChapter.java</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href={data.chapter.runAllTopics.contentPath} target="_blank" rel="noreferrer">RunAllTopics.java</a>
-                <a className="btn btn-dark btn-sm rounded-pill" href={`#section/${data.section.slug}`}>Back To Section</a>
-              </>
-            )}
-          />
-        )}
-      >
-        <ReadingStateBar routeKey={routeKey} {...readingState} />
-        <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
-          <div className="content-main">
-            <div id="start-with-examples" className="content-card">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Start With These Examples</h2>
-                <span className="badge rounded-pill badge-soft">{data.chapter.topics.length} runnable topic{data.chapter.topics.length === 1 ? '' : 's'}</span>
+      <>
+        <PageLayout
+          header={(
+            <HeaderPanel
+              title={data.chapter.title}
+              eyebrow={`${data.section.title} · Chapter`}
+              summary={truncateText(problem?.plain || guide.intro || quickSummary?.plain || 'Use this chapter to understand the concept, then run the topic files.', 240)}
+              sourcePath={data.chapter.guide.sourcePath}
+              actions={(
+                <>
+                  <button className="btn btn-primary btn-sm rounded-pill" type="button" onClick={() => setQuizOpen(true)}>Take Quiz</button>
+                  <a className="btn btn-outline-dark btn-sm rounded-pill" href={data.chapter.runChapter.contentPath} target="_blank" rel="noreferrer">RunChapter.java</a>
+                  <a className="btn btn-outline-dark btn-sm rounded-pill" href={data.chapter.runAllTopics.contentPath} target="_blank" rel="noreferrer">RunAllTopics.java</a>
+                  <a className="btn btn-dark btn-sm rounded-pill" href={`#section/${data.section.slug}`}>Back To Section</a>
+                </>
+              )}
+            />
+          )}
+        >
+          <ReadingStateBar routeKey={routeKey} {...readingState} />
+          <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
+            <div className="content-main">
+              <div id="start-with-examples" className="content-card">
+                <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                  <h2 className="page-title mb-0">Start With These Examples</h2>
+                  <div className="d-flex flex-wrap gap-2">
+                    {scoreLabel(readingState.quizScores[routeKey]) ? <span className="badge rounded-pill text-bg-warning">Last score: {scoreLabel(readingState.quizScores[routeKey])}</span> : null}
+                    <span className="badge rounded-pill badge-soft">{data.chapter.topics.length} runnable topic{data.chapter.topics.length === 1 ? '' : 's'}</span>
+                  </div>
+                </div>
+                <div className="topic-grid">
+                  {data.chapter.topics.map((topic) => (
+                    <TopicPreviewCard section={data.section} chapter={data.chapter} topic={topic} key={topic.slug} />
+                  ))}
+                </div>
               </div>
-              <div className="topic-grid">
-                {data.chapter.topics.map((topic) => (
-                  <TopicPreviewCard section={data.section} chapter={data.chapter} topic={topic} key={topic.slug} />
-                ))}
+              <div id="chapter-guide" className="content-card">
+                <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                  <h2 className="page-title mb-0">Chapter Guide</h2>
+                  <span className="badge rounded-pill badge-soft">Read this after the first example</span>
+                </div>
+                <MarkdownBlock html={marked.parse(data.guideRaw)} manifest={manifest} contentPath={data.chapter.guide.contentPath} />
               </div>
+              <div id="revision-sheet" className="content-card">
+                <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                  <h2 className="page-title mb-0">Revision Sheet</h2>
+                  <span className="badge rounded-pill badge-soft">{truncateText(revision.intro || 'Use this for quick recap after running the examples.', 100)}</span>
+                </div>
+                <MarkdownBlock html={marked.parse(data.revisionRaw)} manifest={manifest} contentPath={data.chapter.revision.contentPath} />
+              </div>
+              <ChapterPager
+                previousChapter={previousChapter}
+                nextChapter={nextChapter}
+                isCompleted={isChapterDone}
+                onToggleDone={() => readingState.toggleChapterCompleted(routeKey)}
+              />
             </div>
-            <div id="chapter-guide" className="content-card">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Chapter Guide</h2>
-                <span className="badge rounded-pill badge-soft">Read this after the first example</span>
+            {!uiPreferences.readingMode ? (
+              <div className="content-side">
+                <InPageToc items={chapterToc} />
               </div>
-              <MarkdownBlock html={marked.parse(data.guideRaw)} manifest={manifest} contentPath={data.chapter.guide.contentPath} />
-            </div>
-            <div id="revision-sheet" className="content-card">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Revision Sheet</h2>
-                <span className="badge rounded-pill badge-soft">{truncateText(revision.intro || 'Use this for quick recap after running the examples.', 100)}</span>
-              </div>
-              <MarkdownBlock html={marked.parse(data.revisionRaw)} manifest={manifest} contentPath={data.chapter.revision.contentPath} />
-            </div>
+            ) : null}
           </div>
-          {!uiPreferences.readingMode ? (
-            <div className="content-side">
-              <InPageToc items={chapterToc} />
-            </div>
-          ) : null}
-        </div>
-        <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
-      </PageLayout>
+          <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
+        </PageLayout>
+        <ChapterQuizModal
+          isOpen={quizOpen}
+          onClose={() => setQuizOpen(false)}
+          chapterTitle={data.chapter.title}
+          quiz={data.chapter.quiz}
+          routeKey={routeKey}
+          onSaveScore={readingState.saveQuizScore}
+        />
+      </>
     );
   }
 
@@ -2607,6 +3527,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
   const takeaways = topicSummary.takeaways.length
     ? topicSummary.takeaways
     : bulletItems(lessonFlow.summary?.raw || '');
+  const interviewQuestions = normalizeInterviewQuestions(data.lessonMeta.interviewQ);
   const topicToc = [
     { href: '#start-here', label: 'Start Here' },
     { href: '#invent-it', label: 'Invent It' },
@@ -2916,6 +3837,8 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
               <p className="mb-0 muted-copy">{topicSummary.tryThisNext}</p>
             </div>
           ) : null}
+
+          <InterviewQuestionsPanel questions={interviewQuestions} />
         </div>
         {!uiPreferences.readingMode ? (
           <div className="content-side">

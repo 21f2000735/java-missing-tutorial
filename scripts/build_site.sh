@@ -82,6 +82,29 @@ topic_title() {
   printf '%s' "$value" | perl -pe 's/([a-z0-9])([A-Z])/$1 $2/g'
 }
 
+frontmatter_value() {
+  local file="$1"
+  local key="$2"
+
+  [[ -f "$file" ]] || return 0
+  awk -v lookup="$key" '
+    BEGIN { in_meta = 0 }
+    NR == 1 && $0 == "---" { in_meta = 1; next }
+    in_meta && $0 == "---" { exit }
+    in_meta {
+      split($0, pair, ":")
+      current = pair[1]
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", current)
+      if (current == lookup) {
+        value = substr($0, index($0, ":") + 1)
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "", value)
+        print value
+        exit
+      }
+    }
+  ' "$file"
+}
+
 write_json_string() {
   printf '"%s"' "$(json_escape "$1")"
 }
@@ -90,7 +113,7 @@ copy_content_tree() {
   rm -rf "$library_root" "$meta_root" "$data_root" "$site_root/assets"
   mkdir -p "$library_root" "$meta_root" "$data_root"
 
-  find "$source_root" -type f \( -name '*.md' -o -name '*.java' -o -name '*.svg' -o -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.webp' \) | while read -r file; do
+  find "$source_root" -type f \( -name '*.md' -o -name '*.java' -o -name '*.json' -o -name '*.svg' -o -name '*.png' -o -name '*.jpg' -o -name '*.jpeg' -o -name '*.webp' \) | while read -r file; do
     relative="${file#$source_root/}"
     mkdir -p "$library_root/$(dirname "$relative")"
     cp "$file" "$library_root/$relative"
@@ -165,19 +188,33 @@ generate_manifest() {
         first_chapter=0
 
         local chapter_slug chapter_title_value chapter_rel
+        local chapter_guide_file chapter_quiz_file chapter_java_version
         chapter_slug="$(basename "$chapter_dir")"
         chapter_title_value="$(chapter_title "$chapter_dir")"
         chapter_rel="$section_slug/$chapter_slug"
+        chapter_guide_file="$chapter_dir/ChapterGuide.md"
+        chapter_quiz_file="$chapter_dir/ChapterQuiz.json"
+        chapter_java_version="$(frontmatter_value "$chapter_guide_file" "javaVersion")"
 
         echo '        {'
         printf '          "slug": %s,\n' "$(write_json_string "$chapter_slug")"
         printf '          "title": %s,\n' "$(write_json_string "$chapter_title_value")"
+        if [[ -n "$chapter_java_version" ]]; then
+          printf '          "javaVersion": %s,\n' "$(write_json_string "$chapter_java_version")"
+        fi
         printf '          "guide": {"sourcePath": %s, "contentPath": %s},\n' \
           "$(write_json_string "src/main/java/com/learning/javamissing/$chapter_rel/ChapterGuide.md")" \
           "$(write_json_string "content/library/$chapter_rel/ChapterGuide.md")"
         printf '          "revision": {"sourcePath": %s, "contentPath": %s},\n' \
           "$(write_json_string "src/main/java/com/learning/javamissing/$chapter_rel/ChapterRevision.md")" \
           "$(write_json_string "content/library/$chapter_rel/ChapterRevision.md")"
+        if [[ -f "$chapter_quiz_file" ]]; then
+          printf '          "quiz": {"sourcePath": %s, "contentPath": %s},\n' \
+            "$(write_json_string "src/main/java/com/learning/javamissing/$chapter_rel/ChapterQuiz.json")" \
+            "$(write_json_string "content/library/$chapter_rel/ChapterQuiz.json")"
+        else
+          echo '          "quiz": null,'
+        fi
         printf '          "runChapter": {"sourcePath": %s, "contentPath": %s},\n' \
           "$(write_json_string "src/main/java/com/learning/javamissing/$chapter_rel/RunChapter.java")" \
           "$(write_json_string "content/library/$chapter_rel/RunChapter.java")"

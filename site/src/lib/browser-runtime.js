@@ -102,6 +102,7 @@ export function applyTheme(theme) {
   }
 
   documentRef.documentElement.dataset.theme = theme;
+  documentRef.documentElement.setAttribute('data-bs-theme', theme);
   documentRef.body.dataset.theme = theme;
   const meta = documentRef.querySelector('meta[name="theme-color"]');
   if (meta) {
