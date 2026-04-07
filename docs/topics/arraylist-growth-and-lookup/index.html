@@ -97,7 +97,114 @@
       <div class="layout">
         <article class="panel">
           <a class="back-link" href="../../index.html#topic/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/arraylist_growth_and_lookup">← Back to interactive topic view</a>
-          <h2>The Problem</h2>
+          <h2>Why This Matters</h2>
+<p>Many developers can use <code>ArrayList</code>, but fewer can explain why it is usually fast and where it becomes costly.</p>
+<h2>Intuition</h2>
+<p><img src="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookupVisual.svg" alt="ArrayList growth single-look visual"></p>
+<p>The picture tells the whole story:</p>
+<ul>
+<li>items sit in an array</li>
+<li>index lookup jumps straight to a slot</li>
+<li>growth occasionally copies old items into a larger array</li>
+</ul>
+<h2>Problem Statement</h2>
+<p>Many developers can use <code>ArrayList</code>, but fewer can explain why it is usually fast and where it becomes costly.</p>
+<p>That gap matters because performance problems often begin with the wrong mental model, not the wrong syntax.</p>
+<h2>Core Idea</h2>
+<p><code>ArrayList</code> stores elements in an array.<br>That gives fast index access, but growth sometimes needs a bigger array and element copying.</p>
+<h2>Mental Model</h2>
+<p><img src="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookupVisual.svg" alt="ArrayList growth single-look visual"></p>
+<p>The picture tells the whole story:</p>
+<ul>
+<li>items sit in an array</li>
+<li>index lookup jumps straight to a slot</li>
+<li>growth occasionally copies old items into a larger array</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th><code>ArrayList</code></th>
+<th><code>LinkedList</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Read by index</td>
+<td>strong fit</td>
+<td>weak fit</td>
+</tr>
+<tr>
+<td>Append often</td>
+<td>strong fit</td>
+<td>fine, but rarely worth the tradeoff</td>
+</tr>
+<tr>
+<td>Insert in middle often</td>
+<td>can be costly</td>
+<td>can help if you already have the node position</td>
+</tr>
+<tr>
+<td>Cache-friendly iteration</td>
+<td>usually better</td>
+<td>usually worse</td>
+</tr>
+</tbody></table>
+<h2>Simple Example</h2>
+<h3>Run It</h3>
+<p>Run the example and focus on these ideas:</p>
+<ul>
+<li>indexed lookup</li>
+<li>append behavior</li>
+<li>resizing cost</li>
+</ul>
+<h3>Expected Result</h3>
+<p>The printed output should make it clear that:</p>
+<ul>
+<li>lookup by index is direct</li>
+<li>appending is usually cheap</li>
+<li>occasional growth has a larger one-time cost</li>
+</ul>
+<h2>Step-by-Step Working</h2>
+<p><code>ArrayList</code> stores elements in an array.<br>That gives fast index access, but growth sometimes needs a bigger array and element copying.</p>
+<h2>Rules / Syntax</h2>
+<p><code>ArrayList</code> has existed since the Java Collections Framework arrived in Java 1.2, so this is a concept every Java engineer should understand no matter which Java version they use.</p>
+<ul>
+<li>Prefer the smallest correct rule over cleverness.</li>
+<li>Connect the rule back to the runnable example.</li>
+</ul>
+<h2>Common Mistakes</h2>
+<p>The wrong mental model is &quot;every append is always O(1) with no caveat.&quot;</p>
+<p>The better mental model is:</p>
+<ul>
+<li>most appends are cheap</li>
+<li>resizing is occasional</li>
+<li>average append cost stays good because the expensive resize does not happen every time</li>
+</ul>
+<h2>When To Use / When Not To Use</h2>
+<h3>Use It When</h3>
+<ul>
+<li>order matters</li>
+<li>index-based lookup matters</li>
+<li>duplicates are fine</li>
+<li>append-heavy workloads are common</li>
+</ul>
+<h3>Avoid It When</h3>
+<ul>
+<li>frequent middle insertions dominate</li>
+<li>uniqueness is the main requirement</li>
+<li>key-based lookup is the real problem</li>
+</ul>
+<h2>Practice</h2>
+<p>Change one part of the runnable example, rerun it, and explain whether arraylist growth and lookup still behaves the way you expected.</p>
+<h3>After That</h3>
+<p>Read the HashMap buckets and collisions topic next. Together, these two topics form the base of practical Java collection judgment.</p>
+<h2>Summary</h2>
+<ul>
+<li><code>ArrayList</code> is fast because it uses an array, not because it is magically optimized for everything</li>
+<li>occasional resize cost is the tradeoff behind usually-cheap append</li>
+<li>complexity language becomes much easier once you connect it to actual storage shape</li>
+</ul>
+<h2>The Problem</h2>
 <p>Many developers can use <code>ArrayList</code>, but fewer can explain why it is usually fast and where it becomes costly.</p>
 <p>That gap matters because performance problems often begin with the wrong mental model, not the wrong syntax.</p>
 <h2>Quick Visual</h2>

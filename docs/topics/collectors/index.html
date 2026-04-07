@@ -97,7 +97,115 @@
       <div class="layout">
         <article class="panel">
           <a class="back-link" href="../../index.html#topic/sec04_streams_and_functional_style/ch01_streams/collectors">← Back to interactive topic view</a>
-          <h2>The Problem</h2>
+          <h2>Why This Matters</h2>
+<p>Filtering and mapping are only half the story.</p>
+<h2>Intuition</h2>
+<p>Use the collector that matches the final result shape:</p>
+<h2>Problem Statement</h2>
+<p>Filtering and mapping are only half the story.</p>
+<p>Most business code eventually wants a final result like:</p>
+<ul>
+<li>a grouped map</li>
+<li>a count</li>
+<li>a summary</li>
+<li>a joined string</li>
+<li>a partitioned result</li>
+</ul>
+<p>That is where many stream users get stuck.</p>
+<h2>Core Idea</h2>
+<p>Use the collector that matches the final result shape:</p>
+<ul>
+<li><code>toList()</code> when order matters</li>
+<li><code>toSet()</code> when uniqueness matters</li>
+<li><code>groupingBy(...)</code> when many values belong to one key</li>
+<li><code>partitioningBy(...)</code> when the answer is naturally yes/no</li>
+<li><code>summarizingInt(...)</code> when you need count, sum, min, max, and average together</li>
+</ul>
+<h2>Mental Model</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Collector</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Keep all values in a list</td>
+<td><code>toList()</code></td>
+</tr>
+<tr>
+<td>Remove duplicates</td>
+<td><code>toSet()</code></td>
+</tr>
+<tr>
+<td>Group many values by key</td>
+<td><code>groupingBy(...)</code></td>
+</tr>
+<tr>
+<td>Split into true/false groups</td>
+<td><code>partitioningBy(...)</code></td>
+</tr>
+<tr>
+<td>Count per group</td>
+<td><code>groupingBy(..., counting())</code></td>
+</tr>
+<tr>
+<td>Summarize numeric values</td>
+<td><code>summarizingInt(...)</code></td>
+</tr>
+</tbody></table>
+<h2>Simple Example</h2>
+<h3>Run It</h3>
+<p>Run the example and focus on four shapes:</p>
+<ul>
+<li>list/set output</li>
+<li>grouped map output</li>
+<li>true/false partition output</li>
+<li>summary output</li>
+</ul>
+<h3>Expected Result</h3>
+<ul>
+<li>uppercase category names in list and set form</li>
+<li>grouped product names by category</li>
+<li>pass/fail partition for scores</li>
+<li>summary statistics for order prices</li>
+</ul>
+<h2>Step-by-Step Working</h2>
+<p>Collectors make the <em>shape of the answer</em> explicit.</p>
+<p>That improves readability because a reviewer can often understand the result structure without reading low-level mutation code.</p>
+<h2>Rules / Syntax</h2>
+<ul>
+<li>Prefer the smallest correct rule over cleverness.</li>
+<li>Connect the rule back to the runnable example.</li>
+</ul>
+<h2>Common Mistakes</h2>
+<p>Two common mistakes:</p>
+<ul>
+<li>using <code>toMap()</code> when duplicate keys are possible</li>
+<li>building complex mutable maps by hand when the collector already expresses the intent</li>
+</ul>
+<h2>When To Use / When Not To Use</h2>
+<h3>Use It When</h3>
+<ul>
+<li>the final result has a clear structure</li>
+<li>grouping, counting, partitioning, or summarizing is the main goal</li>
+</ul>
+<h3>Avoid It When</h3>
+<ul>
+<li>a plain loop is much easier to explain</li>
+<li>duplicate-key behavior is unclear and unhandled</li>
+</ul>
+<h2>Practice</h2>
+<p>Change one part of the runnable example, rerun it, and explain whether collectors still behaves the way you expected.</p>
+<h3>After That</h3>
+<p>Return to the stream pipeline topic if the full filter-map-collect flow still feels unclear, then compare streams with loops in the compare guide.</p>
+<h2>Summary</h2>
+<ul>
+<li>collectors describe the final result shape of a stream</li>
+<li><code>groupingBy</code> and <code>partitioningBy</code> solve different kinds of result grouping</li>
+<li><code>toMap()</code> needs extra care when duplicate keys are possible</li>
+</ul>
+<h2>The Problem</h2>
 <p>Filtering and mapping are only half the story.</p>
 <p>Most business code eventually wants a final result like:</p>
 <ul>

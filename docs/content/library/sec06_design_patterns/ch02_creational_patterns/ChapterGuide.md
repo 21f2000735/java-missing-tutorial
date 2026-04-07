@@ -1,6 +1,85 @@
 # Creational Patterns
 
+## Why This Chapter Matters
+
 This chapter is about one question: how should object creation read once construction starts hiding business intent?
+
+## Intuition
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
+## Problem Statement
+
+This chapter is about one question: how should object creation read once construction starts hiding business intent?
+
+## Core Ideas
+
+Read the chapter as a small set of related ideas around creational Patterns, not as isolated trivia.
+
+## Mental Model
+
+Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+
+## Study Order
+
+1. Run [CreatingObjectsWithFactoryMethod.java](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java)
+2. Run [AssemblingObjectsWithBuilder.java](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java)
+3. Ask which example hides implementation choice and which one improves call-site readability
+
+## What To Notice
+
+- factory hides *which type* gets created
+- builder improves *how creation reads*
+- constructors are still fine when the object is small and obvious
+
+### Compare With
+
+| Compare | Use Left When | Use Right When |
+| --- | --- | --- |
+| constructor vs factory | one concrete type is obvious | implementation choice should stay hidden |
+| constructor vs builder | only a few required values exist | optional values and readability matter |
+| factory vs builder | you need the right implementation | you already know the type but need readable assembly |
+
+### Interview Focus
+
+Q: When is a factory method better than a constructor?  
+A: When the caller should depend on a capability while the implementation choice stays inside one creation point.
+
+Q: When is a builder better than telescoping constructors?  
+A: When many optional values make positional arguments unreadable and error-prone.
+
+## Common Mistakes
+
+- avoid factory if there is no real selection logic
+- avoid builder for tiny value objects with obvious parameters
+- avoid any creational pattern that makes construction harder to follow than before
+
+## When To Use / When Not To Use
+
+### Use It When
+
+- use factory when callers should ask for behavior, not concrete classes
+- use builder when optional inputs make constructors hard to read
+- use plain constructors when the object is still tiny and direct
+
+## Practice
+
+### Case Study
+
+Imagine a reporting module.
+
+- report type is required
+- delivery email is optional
+- charts are optional
+- row limit is optional
+
+Builder makes the call look like a checklist.  
+Now imagine payment methods.  
+The caller should ask for `"CARD"` or `"UPI"` behavior and not construct those classes directly. That is factory territory.
+
+## Summary
+
+After this chapter, you should be able to explain the main decisions behind creational patterns and connect them back to the runnable examples.
 
 ## The Story
 

@@ -110,6 +110,7 @@ CHAPTER_APPENDIX = {
     "Mini Case Study",
     "Small Case Study",
     "Concept Map",
+    "Quick Summary",
     "Visual Map",
     "Learning Flow",
     "Core Notes",
@@ -139,6 +140,7 @@ CHAPTER_APPENDIX = {
     "Next Chapter",
     "Next Step",
     "Slide-Ready Outline",
+    "Run This First",
 }
 
 

@@ -97,7 +97,114 @@
       <div class="layout">
         <article class="panel">
           <a class="back-link" href="../../index.html#topic/sec05_multithreading_and_concurrency/ch02_virtual_threads/why_virtual_threads_matter">← Back to interactive topic view</a>
-          <h2>The Problem</h2>
+          <h2>Why This Matters</h2>
+<p>Traditional threads are expensive enough that teams started designing around the cost:</p>
+<ul>
+<li>thread pools</li>
+<li>callback-heavy code</li>
+<li>reactive complexity even when the business logic is simple</li>
+</ul>
+<h2>Intuition</h2>
+<p><img src="../../content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/VirtualThreadsVisual.svg" alt="Virtual threads single-look visual"></p>
+<p>One glance should tell you the real story:</p>
+<ul>
+<li>platform threads are limited, expensive workers</li>
+<li>virtual threads are much lighter for waiting-heavy tasks</li>
+<li>the business code can stay direct and blocking-style</li>
+</ul>
+<h2>Problem Statement</h2>
+<p>Traditional threads are expensive enough that teams started designing around the cost:</p>
+<ul>
+<li>thread pools</li>
+<li>callback-heavy code</li>
+<li>reactive complexity even when the business logic is simple</li>
+</ul>
+<p>Virtual threads change that tradeoff for many request-per-task workloads.</p>
+<h2>Core Idea</h2>
+<p>Virtual threads reduce thread cost for many waiting tasks.<br>They do not remove the need for safe coordination, clear ownership, or good shared-state design.</p>
+<h2>Mental Model</h2>
+<p><img src="../../content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/VirtualThreadsVisual.svg" alt="Virtual threads single-look visual"></p>
+<p>One glance should tell you the real story:</p>
+<ul>
+<li>platform threads are limited, expensive workers</li>
+<li>virtual threads are much lighter for waiting-heavy tasks</li>
+<li>the business code can stay direct and blocking-style</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Platform thread</th>
+<th>Virtual thread</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Best for</td>
+<td>long-lived heavier worker threads</td>
+<td>many waiting tasks</td>
+</tr>
+<tr>
+<td>Cost per thread</td>
+<td>higher</td>
+<td>much lower</td>
+</tr>
+<tr>
+<td>Blocking style code</td>
+<td>possible but costly at scale</td>
+<td>practical again</td>
+</tr>
+<tr>
+<td>Removes race conditions</td>
+<td>no</td>
+<td>no</td>
+</tr>
+</tbody></table>
+<h2>Simple Example</h2>
+<h3>Run It</h3>
+<p>This example is best run locally on a modern JDK because it depends on newer Java support.</p>
+<h3>Expected Result</h3>
+<p>The main point is not a flashy output string.<br>The point is that many blocking tasks can be modeled with a much simpler one-task-per-thread style again.</p>
+<h2>Step-by-Step Working</h2>
+<p>Virtual threads make thread-per-task style practical again for many I/O-heavy workflows.<br>That often improves clarity because the code can read in straight lines instead of callback chains.</p>
+<h2>Rules / Syntax</h2>
+<p>Virtual threads became final in Java 21.<br>They are one of the most important changes in modern Java concurrency.</p>
+<ul>
+<li>Prefer the smallest correct rule over cleverness.</li>
+<li>Connect the rule back to the runnable example.</li>
+</ul>
+<h2>Common Mistakes</h2>
+<p>The wrong mental model is &quot;virtual threads make concurrency problems disappear.&quot;</p>
+<p>They do not.</p>
+<p>They reduce the cost of threads.<br>They do not remove:</p>
+<ul>
+<li>race conditions</li>
+<li>bad shared-state design</li>
+<li>blocking calls that pin platform resources in the wrong places</li>
+</ul>
+<h2>When To Use / When Not To Use</h2>
+<h3>Use It When</h3>
+<ul>
+<li>your tasks spend time waiting on I/O</li>
+<li>the one-request-one-thread model fits the business flow</li>
+<li>readability matters more than low-level concurrency tricks</li>
+</ul>
+<h3>Avoid It When</h3>
+<ul>
+<li>the workload is dominated by heavy CPU computation</li>
+<li>you still have unsafe shared mutable state</li>
+<li>you have not checked whether frameworks and libraries are ready for the new model</li>
+</ul>
+<h2>Practice</h2>
+<p>Change one part of the runnable example, rerun it, and explain whether why virtual threads matter still behaves the way you expected.</p>
+<h3>After That</h3>
+<p>Read the executor-based virtual thread example next, then compare it with structured concurrency.</p>
+<h2>Summary</h2>
+<ul>
+<li>virtual threads are still threads, not magic background jobs</li>
+<li>they reduce thread cost for waiting-heavy workloads</li>
+<li>they improve the cost model, but not the need for safe shared-state design</li>
+</ul>
+<h2>The Problem</h2>
 <p>Traditional threads are expensive enough that teams started designing around the cost:</p>
 <ul>
 <li>thread pools</li>

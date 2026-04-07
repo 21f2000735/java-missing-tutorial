@@ -7,6 +7,111 @@ estimated: 10 min
 
 # Collectors
 
+## Why This Matters
+
+Filtering and mapping are only half the story.
+
+## Intuition
+
+Use the collector that matches the final result shape:
+
+## Problem Statement
+
+Filtering and mapping are only half the story.
+
+Most business code eventually wants a final result like:
+
+- a grouped map
+- a count
+- a summary
+- a joined string
+- a partitioned result
+
+That is where many stream users get stuck.
+
+## Core Idea
+
+Use the collector that matches the final result shape:
+
+- `toList()` when order matters
+- `toSet()` when uniqueness matters
+- `groupingBy(...)` when many values belong to one key
+- `partitioningBy(...)` when the answer is naturally yes/no
+- `summarizingInt(...)` when you need count, sum, min, max, and average together
+
+## Mental Model
+
+| Need | Collector |
+| --- | --- |
+| Keep all values in a list | `toList()` |
+| Remove duplicates | `toSet()` |
+| Group many values by key | `groupingBy(...)` |
+| Split into true/false groups | `partitioningBy(...)` |
+| Count per group | `groupingBy(..., counting())` |
+| Summarize numeric values | `summarizingInt(...)` |
+
+## Simple Example
+
+### Run It
+
+Run the example and focus on four shapes:
+
+- list/set output
+- grouped map output
+- true/false partition output
+- summary output
+
+### Expected Result
+
+- uppercase category names in list and set form
+- grouped product names by category
+- pass/fail partition for scores
+- summary statistics for order prices
+
+## Step-by-Step Working
+
+Collectors make the *shape of the answer* explicit.
+
+That improves readability because a reviewer can often understand the result structure without reading low-level mutation code.
+
+## Rules / Syntax
+
+- Prefer the smallest correct rule over cleverness.
+- Connect the rule back to the runnable example.
+
+## Common Mistakes
+
+Two common mistakes:
+
+- using `toMap()` when duplicate keys are possible
+- building complex mutable maps by hand when the collector already expresses the intent
+
+## When To Use / When Not To Use
+
+### Use It When
+
+- the final result has a clear structure
+- grouping, counting, partitioning, or summarizing is the main goal
+
+### Avoid It When
+
+- a plain loop is much easier to explain
+- duplicate-key behavior is unclear and unhandled
+
+## Practice
+
+Change one part of the runnable example, rerun it, and explain whether collectors still behaves the way you expected.
+
+### After That
+
+Return to the stream pipeline topic if the full filter-map-collect flow still feels unclear, then compare streams with loops in the compare guide.
+
+## Summary
+
+- collectors describe the final result shape of a stream
+- `groupingBy` and `partitioningBy` solve different kinds of result grouping
+- `toMap()` needs extra care when duplicate keys are possible
+
 ## The Problem
 
 Filtering and mapping are only half the story.

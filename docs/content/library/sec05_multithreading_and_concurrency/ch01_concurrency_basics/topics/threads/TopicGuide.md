@@ -7,6 +7,110 @@ estimated: 8 min
 
 # Threads
 
+## Why This Matters
+
+Sometimes one flow of work is not enough.
+
+## Intuition
+
+![Threads single-look visual](./ThreadsVisual.svg)
+
+At one glance:
+
+- the main thread keeps moving
+- a worker thread handles a separate task
+- as soon as both touch shared state, design risk appears
+
+## Problem Statement
+
+Sometimes one flow of work is not enough.
+
+Examples:
+
+- send a report while the main request continues
+- process many independent tasks
+- keep the UI or API responsive
+
+Threads are the oldest Java tool for that problem.
+
+## Core Idea
+
+Call `start()` when you want the JVM to schedule a new thread.
+
+## Mental Model
+
+![Threads single-look visual](./ThreadsVisual.svg)
+
+At one glance:
+
+- the main thread keeps moving
+- a worker thread handles a separate task
+- as soon as both touch shared state, design risk appears
+
+| Need | Raw `Thread` | `ExecutorService` | Virtual thread |
+| --- | --- | --- | --- |
+| Learn the mental model | best starting point | hides some basics | builds on thread mental model |
+| Run many managed tasks | weak fit | strong fit | strong fit for waiting-heavy work |
+| One-off demo | simple | more setup | needs newer JDK |
+| Production task orchestration | usually not ideal | common choice | increasingly useful |
+
+## Simple Example
+
+### Run It
+
+Run the example and watch the main flow and worker flow both print output.
+
+### Expected Result
+
+You should see work happening from more than one thread, but not necessarily in the same order every time.
+
+That non-deterministic order is part of the lesson.
+
+## Step-by-Step Working
+
+Threads let the JVM schedule separate units of execution.  
+That gives you concurrency, but it also introduces coordination and shared-state risks.
+
+## Rules / Syntax
+
+The thread concept is old, but it still matters because newer concurrency tools build on the same core ideas: scheduling, coordination, visibility, and shared state.
+
+- Prefer the smallest correct rule over cleverness.
+- Connect the rule back to the runnable example.
+
+## Common Mistakes
+
+A very common beginner mistake is to call `run()` directly and think a new thread started.
+
+It did not.  
+That just ran the method on the current thread.
+
+## When To Use / When Not To Use
+
+### Use It When
+
+- you are learning the basic mental model of concurrency
+- you need to understand what executors and virtual threads build on top of
+
+### Avoid It When
+
+- production task orchestration would be clearer with executors or structured concurrency
+- shared mutable state is not well controlled
+
+## Practice
+
+Change one part of the runnable example, rerun it, and explain whether threads still behaves the way you expected.
+
+### After That
+
+Move to executors after this one. That is the practical next step for most production code.
+
+## Summary
+
+- `start()` and `run()` are not interchangeable
+- thread ordering is not guaranteed just because the source code has one order
+- concurrency problems usually begin when multiple threads share mutable state
+
 ## The Problem
 
 Sometimes one flow of work is not enough.

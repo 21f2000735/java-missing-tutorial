@@ -1,8 +1,146 @@
 # Pattern Matching Learning Kit
 
-This chapter teaches a modeling idea: code becomes safer and clearer when the program can check shape and unpack data in one step.
+## Why This Chapter Matters
 
-Read the examples with one question in mind: "What do I know about the value after this check succeeds?" After reading this chapter, you should know why pattern matching reduces manual casting noise and why it works best with well-modeled data.
+Java programs often receive mixed input:
+
+- event objects
+- API payload variants
+- different payment types
+- different command shapes
+
+Older code often uses `instanceof`, then a cast, then more branching. Pattern matching makes the check and the usable variable part of the same statement.
+
+## Intuition
+
+```mermaid
+mindmap
+  root((Pattern Matching))
+    instanceof patterns
+    record patterns
+    switch patterns
+    safer branching
+    less casting
+```
+
+## Problem Statement
+
+Java programs often receive mixed input:
+
+- event objects
+- API payload variants
+- different payment types
+- different command shapes
+
+Older code often uses `instanceof`, then a cast, then more branching. Pattern matching makes the check and the usable variable part of the same statement.
+
+## Core Ideas
+
+### `instanceof` Patterns
+
+- the check and the typed variable appear together
+- code becomes shorter and less error-prone
+
+### Record Patterns
+
+- record patterns unpack data while matching shape
+- they are strongest when records model stable data clearly
+
+### Switch Patterns
+
+- switch can choose behavior based on the runtime shape of data
+- guarded cases add more precise branching
+
+## Mental Model
+
+```mermaid
+mindmap
+  root((Pattern Matching))
+    instanceof patterns
+    record patterns
+    switch patterns
+    safer branching
+    less casting
+```
+
+## Study Order
+
+1. Run [CheckingShapeWithInstanceof.java](topics/checking_shape_with_instanceof/CheckingShapeWithInstanceof.java)
+2. Run [UnpackingRecordsWithPatterns.java](topics/unpacking_records_with_patterns/UnpackingRecordsWithPatterns.java)
+3. Run [SwitchingOnRuntimeShape.java](topics/switching_on_runtime_shape/SwitchingOnRuntimeShape.java)
+
+## What To Notice
+
+### Compare With
+
+- old `instanceof` plus cast vs pattern matching:
+  pattern matching removes duplicated type information
+- manual getter extraction vs record patterns:
+  record patterns unpack the structure directly in the match
+- `if-else` chains vs switch patterns:
+  switch patterns can centralize branching more clearly
+
+### Interview Focus
+
+Q: What is the main gain from pattern matching for `instanceof`?  
+A: It combines type test and typed variable binding, reducing boilerplate and cast noise.
+
+Q: When do record patterns shine most?  
+A: When records represent stable structured data that must be unpacked often.
+
+Q: What is the real prerequisite for good pattern-matching code?  
+A: A well-designed data model.
+
+## Common Mistakes
+
+The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+
+## When To Use / When Not To Use
+
+### Use It When
+
+- use pattern matching when behavior depends on the runtime shape of data
+- use record patterns when records already express the domain well
+- use switch patterns when one branching point should describe all supported shapes
+
+### Avoid It When
+
+- do not use pattern matching to compensate for a badly modeled domain
+- do not add complex nested patterns when ordinary method calls are clearer
+- do not forget that maintainability matters more than language cleverness
+
+## Practice
+
+1. Why is pattern matching better than separate check-and-cast code?
+2. Why do record patterns work best with clearly structured data?
+3. When would a normal method call be clearer than a complex pattern?
+
+### Mini Case Study
+
+An event-processing service receives different event shapes:
+
+- login event
+- payment event
+- shipping event
+
+The service needs to inspect the type, extract fields, and decide behavior. Pattern matching keeps that branching readable when the domain is modeled well.
+
+## Summary
+
+### `instanceof` Patterns
+
+- the check and the typed variable appear together
+- code becomes shorter and less error-prone
+
+### Record Patterns
+
+- record patterns unpack data while matching shape
+- they are strongest when records model stable data clearly
+
+### Switch Patterns
+
+- switch can choose behavior based on the runtime shape of data
+- guarded cases add more precise branching
 
 ## What Problem This Chapter Solves
 
@@ -14,12 +152,6 @@ Java programs often receive mixed input:
 - different command shapes
 
 Older code often uses `instanceof`, then a cast, then more branching. Pattern matching makes the check and the usable variable part of the same statement.
-
-## Study Order
-
-1. Run [CheckingShapeWithInstanceof.java](topics/checking_shape_with_instanceof/CheckingShapeWithInstanceof.java)
-2. Run [UnpackingRecordsWithPatterns.java](topics/unpacking_records_with_patterns/UnpackingRecordsWithPatterns.java)
-3. Run [SwitchingOnRuntimeShape.java](topics/switching_on_runtime_shape/SwitchingOnRuntimeShape.java)
 
 ## Concept Map
 
