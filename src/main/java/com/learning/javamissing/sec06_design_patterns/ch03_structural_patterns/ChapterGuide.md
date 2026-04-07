@@ -1,53 +1,62 @@
-# Structural Patterns Learning Kit
+# Structural Patterns
 
-This chapter is about making code shapes fit together cleanly. Structural patterns matter when your design is mostly correct, but the boundaries between objects or APIs are getting awkward.
+Structural patterns help when the business logic is mostly fine, but the edges between parts of the code are awkward.
 
-## What Problem This Chapter Solves
+## The Story
 
-You often have code that almost works together:
+Two common frustrations show up in mature codebases:
 
-- your service expects one interface, but a legacy library gives another
-- you want to add auditing, caching, retries, or logging without changing the original class
+- new code wants one interface, but a legacy library gives another
+- a stable class needs extra behavior like logging, auditing, retries, or caching
 
-Structural patterns help when the problem is the *shape* of collaboration rather than business logic itself.
+The pain is not "what should the business rule be?"  
+The pain is "how do these objects fit together cleanly?"
 
-## Study Order
+## Run This First
 
 1. Run [TranslatingIncompatibleApisWithAdapter.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch03_structural_patterns/topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java)
 2. Run [AddingFeaturesWithDecorator.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch03_structural_patterns/topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java)
+3. Ask whether the problem is interface mismatch or optional added behavior
 
-## Quick Summary
+## What To Look For
 
-- adapter changes one API shape into another
-- decorator keeps the same interface and adds behavior around it
-- structural patterns are strongest at boundaries: integrations, wrappers, and extension layers
+- adapter changes the shape of collaboration
+- decorator preserves the interface and adds behavior around it
+- both patterns are strongest near integration boundaries
+
+## Use This Pattern When
+
+- use adapter when you cannot or should not rewrite a dependency
+- use decorator when you want optional behavior around a stable interface
+- use these patterns when changing the original type would spread risk
+
+## Avoid This Pattern When
+
+- avoid adapter if you control both sides and can align the interface directly
+- avoid decorator if the "extra behavior" is really a different service with a different responsibility
+- avoid creating wrappers that hide where the real work happens
 
 ## Compare With
 
-| Compare | Prefer Left When | Prefer Right When |
+| Compare | Use Left When | Use Right When |
 | --- | --- | --- |
-| adapter | your code and an existing dependency speak different interfaces | you already have the same interface and want extra behavior |
-| decorator | the base object should keep the same public contract | you truly need a different public contract |
-| subclassing | the base class is meant for extension and change is intrinsic | you want optional add-on behavior without editing the base type |
+| adapter vs decorator | interfaces do not match | interfaces match and you need extra behavior |
+| subclassing vs decorator | extension is intrinsic to the base class | behavior should be optional and composable |
 
-## Mini Case Study
+## Small Case Study
 
-Imagine a payment service migration.
-
-- old gateway exposes `makePayment`
-- new code expects `pay`
-- you cannot rewrite the old library
-
-Adapter solves the mismatch.  
-Now imagine you need to add auditing around every notification without editing the stable email notifier. Decorator solves that.
+You migrate a payment gateway but still depend on an old vendor API.  
+Adapter lets new code talk through a cleaner interface.  
+Later operations asks for audit logging around notifications without editing the stable notifier.  
+Decorator adds that feature without changing callers.
 
 ## Interview Focus
 
 Q: Adapter vs decorator?  
-A: Adapter changes the interface shape. Decorator preserves the interface and adds behavior around it.
+A: Adapter changes the interface shape. Decorator keeps the same interface and adds behavior around it.
 
-Q: Why use decorator instead of subclassing?  
-A: Because it adds behavior without modifying or tightly coupling to the base implementation hierarchy.
+Q: Why are these patterns common in framework code?  
+A: Because framework code often integrates third-party APIs and layers optional cross-cutting behavior.
 
 ## Sources
 

@@ -25,6 +25,7 @@ package com.learning.javamissing.sec06_design_patterns.ch05_request_routing_patt
 public class PassingRequestsWithChainOfResponsibility {
     public static void main(String[] args) {
         System.out.println("Concept: chain of responsibility");
+        System.out.println("Story hook: checkout validation keeps gaining new guardrails, and one giant validation method is turning unreadable.");
         System.out.println("Problem: checkout validation should keep each rule separate and stop early on failure.");
         System.out.println();
 
@@ -34,7 +35,11 @@ public class PassingRequestsWithChainOfResponsibility {
         // checkout validation = READY
         System.out.println("checkout validation = " + chain.handle(new CheckoutRequest(true, true, true)));
         System.out.println("Why it works: each handler owns one decision and the chain controls the request flow.");
+        System.out.println("Use this when: request handling is a sequence of independent checks that may stop early.");
+        System.out.println("Avoid this when: the rules are tiny, fixed, and clearer in one short validation method.");
         System.out.println("Common mistake: hiding one simple validation method behind too many handlers when the rules are tiny and stable.");
+        System.out.println("Watch out: if handlers secretly depend on each other, the chain looks modular but behaves like tangled hidden flow.");
+        System.out.println("Try this next: add an InventoryAvailableHandler before payment and see how easy it is to insert a new rule.");
         System.out.println("After reading this example, you should know:");
         System.out.println("- each handler checks one rule");
         System.out.println("- the request moves down the chain until a rule fails or the chain finishes");

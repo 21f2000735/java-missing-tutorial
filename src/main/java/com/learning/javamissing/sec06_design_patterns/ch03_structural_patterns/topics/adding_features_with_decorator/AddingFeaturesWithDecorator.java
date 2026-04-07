@@ -26,6 +26,7 @@ package com.learning.javamissing.sec06_design_patterns.ch03_structural_patterns.
 public class AddingFeaturesWithDecorator {
     public static void main(String[] args) {
         System.out.println("Concept: decorator");
+        System.out.println("Story hook: operations want audit logging around every notification, but the stable email sender should stay untouched.");
         System.out.println("Problem: add auditing without changing the stable email notifier.");
         System.out.println();
 
@@ -37,7 +38,11 @@ public class AddingFeaturesWithDecorator {
         // EMAIL: order shipped
         notifier.send("order shipped");
         System.out.println("Why it works: the wrapped object keeps the same interface, so callers do not change.");
+        System.out.println("Use this when: you need optional add-on behavior around an object that already has a stable interface.");
+        System.out.println("Avoid this when: the extra behavior is really a different workflow and should live in a separate service.");
         System.out.println("Common mistake: using inheritance for every add-on feature and creating a class explosion.");
+        System.out.println("Watch out: if decorators become hard to order or reason about, you may be stacking too many responsibilities.");
+        System.out.println("Try this next: add a RetryNotifierDecorator and decide in which order retry and audit should wrap the base notifier.");
         System.out.println("After reading this example, you should know:");
         System.out.println("- decorator keeps the same interface");
         System.out.println("- new behavior wraps the original behavior");

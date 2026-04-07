@@ -1,72 +1,65 @@
-# Strategy Pattern Learning Kit
+# Strategy Pattern
 
-This chapter teaches one of the most practical design moves in Java: separate changing behavior behind a small contract so the caller does not keep choosing logic with conditionals.
+Strategy is the pattern you reach for when the workflow stays stable but one decision keeps changing.
 
-## What Problem This Chapter Solves
+## The Story
 
-Teams often start with one rule:
+An online store starts with one discount rule.  
+Then the business adds:
 
-- one discount rule
-- one tax rule
-- one shipping rule
+- festival discounts
+- student discounts
+- premium-member discounts
+- region-specific rules
 
-Then the business grows:
+The dangerous move is to keep adding branches inside checkout.  
+Checkout should run the purchase flow, not own every marketing rule.
 
-- festival discount
-- student discount
-- premium-customer discount
-- region-specific pricing
-
-The usual bad path is a growing `if` or `switch` inside checkout or billing code. Strategy moves that changing behavior behind an interface so the calling code stays stable.
-
-## Study Order
+## Run This First
 
 1. Run [ChoosingBehaviorWithStrategy.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
+2. Notice that `applyDiscount()` does not change when you swap discount behavior
+3. Imagine adding one more campaign without touching checkout flow
 
-## Quick Summary
+## What To Look For
 
-- strategy is for choosing one behavior from a family of behaviors
-- the caller depends on a contract, not a concrete rule
-- strategy reduces branching in the part of the code that uses the behavior
-- strategy is strongest when new behavior is expected to appear over time
+- the stable workflow depends on an interface, not a concrete rule
+- each rule gets its own focused implementation
+- the design pressure is "changing behavior", not "creating more classes"
+
+## Use This Pattern When
+
+- one small part of the workflow changes often
+- each rule should be tested independently
+- callers should stop knowing every rule formula
+
+## Avoid This Pattern When
+
+- there are only one or two tiny stable cases
+- a short method is still more readable than introducing new classes
+- the rule will never vary separately from the workflow
 
 ## Compare With
 
-| Compare | Prefer Left When | Prefer Right When |
+| Compare | Use Left When | Use Right When |
 | --- | --- | --- |
-| `if/switch` | there are only one or two stable cases and they are unlikely to grow | the behavior changes often, new cases appear, or testing each rule separately matters |
-| inheritance | the variation is core identity and the whole type truly changes | only one part of the behavior changes while the rest of the workflow stays the same |
-| enum-based branching | the logic is tiny and stable | different implementations need their own code, tests, and growth path |
+| `if/switch` | there are few stable cases | new rules will keep appearing |
+| inheritance | the whole type meaning changes | only one behavior changes |
+| enum branching | logic is tiny and static | rules need their own tests and growth path |
 
-## Mini Case Study
+## Small Case Study
 
-Imagine an e-commerce checkout service.
-
-- the checkout flow should not know every discount rule
-- the marketing team keeps adding campaigns
-- tests should verify each discount rule without running the whole checkout flow
-
-This is exactly where strategy helps.
-
-## When To Use
-
-- use it when one behavior changes independently from the rest of the workflow
-- use it when you want to test each rule in isolation
-- use it when callers should not know concrete implementation details
-
-## When Not To Use
-
-- do not add strategy for two tiny cases that will never grow
-- do not create ten classes when one clear method would do
-- do not hide business rules so deeply that readers cannot find them
+Think about a pricing engine used by checkout, order preview, and analytics.  
+If discount logic lives inside checkout, those other flows will either duplicate it or call checkout for the wrong reason.  
+Strategy keeps discount logic reusable and local.
 
 ## Interview Focus
 
 Q: What problem does strategy solve?  
-A: It separates interchangeable behavior behind a common contract so callers stop hard-coding branching logic.
+A: It isolates interchangeable behavior behind a contract so the caller stops growing branching logic.
 
-Q: Why is strategy often better than a long `switch`?  
-A: Because new rules can be added and tested independently without changing the calling flow.
+Q: What is the most common misuse?  
+A: Introducing strategy when the behavior is too small and stable to justify extra structure.
 
 ## Effective Java Mapping
 

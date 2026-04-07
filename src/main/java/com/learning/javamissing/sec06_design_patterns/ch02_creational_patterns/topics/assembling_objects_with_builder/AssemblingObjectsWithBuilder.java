@@ -25,6 +25,7 @@ package com.learning.javamissing.sec06_design_patterns.ch02_creational_patterns.
 public class AssemblingObjectsWithBuilder {
     public static void main(String[] args) {
         System.out.println("Concept: builder");
+        System.out.println("Story hook: reporting options keep growing, and the constructor call is turning into a guessing game.");
         System.out.println("Problem: a report request has required and optional fields, and the call should stay readable.");
         System.out.println("Mental model: optional choices should read like named decisions, not positional guessing.");
         System.out.println();
@@ -39,7 +40,11 @@ public class AssemblingObjectsWithBuilder {
         // request = ReportRequest[name=sales-summary, email=ops@example.com, includeCharts=true, limit=50]
         System.out.println("request = " + request);
         System.out.println("Why it works: each optional decision is named, so the call remains readable when fields grow.");
+        System.out.println("Use this when: an object has a few required values and several optional settings that should stay readable.");
+        System.out.println("Avoid this when: the object has only a small obvious constructor and the builder would add ceremony.");
         System.out.println("Common mistake: using a builder for tiny objects that only need one or two obvious values.");
+        System.out.println("Watch out: a builder should protect readability, not become a second mutable domain object that floats around everywhere.");
+        System.out.println("Try this next: add an exportFormat option and see that the call site still reads like a checklist.");
         System.out.println("After reading this example, you should know:");
         System.out.println("- builders make optional settings explicit");
         System.out.println("- builders avoid long constructor calls full of positional arguments");

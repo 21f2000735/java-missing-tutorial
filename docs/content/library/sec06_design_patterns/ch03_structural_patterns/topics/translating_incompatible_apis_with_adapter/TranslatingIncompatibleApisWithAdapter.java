@@ -25,6 +25,7 @@ package com.learning.javamissing.sec06_design_patterns.ch03_structural_patterns.
 public class TranslatingIncompatibleApisWithAdapter {
     public static void main(String[] args) {
         System.out.println("Concept: adapter");
+        System.out.println("Story hook: your new service speaks one interface, but the old gateway everyone still depends on speaks another.");
         System.out.println("Problem: new code expects pay(), but the legacy gateway exposes makePayment().");
         System.out.println();
 
@@ -34,7 +35,11 @@ public class TranslatingIncompatibleApisWithAdapter {
         // result = legacy gateway paid 2300
         System.out.println("result = " + processor.pay(2_300));
         System.out.println("Why it works: only the adapter knows about the legacy API shape.");
+        System.out.println("Use this when: a dependency is useful but its interface does not match what your current code wants.");
+        System.out.println("Avoid this when: you control both sides and can simply align the interface directly.");
         System.out.println("Common mistake: leaking the old API into the new code instead of keeping the translation local.");
+        System.out.println("Watch out: if the adapter starts carrying business rules, it has stopped being a translator and become a hidden service.");
+        System.out.println("Try this next: add request logging inside the adapter and decide whether that belongs there or in a decorator.");
         System.out.println("After reading this example, you should know:");
         System.out.println("- adapter lets new code depend on a cleaner interface");
         System.out.println("- legacy code stays untouched");

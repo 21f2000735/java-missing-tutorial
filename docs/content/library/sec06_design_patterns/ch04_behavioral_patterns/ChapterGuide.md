@@ -1,57 +1,61 @@
-# Behavioral Patterns Learning Kit
+# Behavioral Patterns
 
-Behavioral patterns help when the difficult part is not object creation or object shape, but how work moves through the system.
+Behavioral patterns are about flow: who reacts, what order work happens in, and how much of that flow stays visible.
 
-## What Problem This Chapter Solves
+## The Story
 
-Many systems struggle with flow problems:
+Two very common flow problems appear in business systems:
 
-- many listeners should react to one event
-- one workflow should keep the same outer steps while allowing a few internal variations
+- one event should trigger several listeners
+- one workflow should keep the same outer steps while allowing a few variations
 
-Behavioral patterns give structure to those interactions so the flow stays explainable.
+Observer and template method solve those two pressures in very different ways.
 
-## Study Order
+## Run This First
 
 1. Run [PublishingUpdatesWithObserver.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch04_behavioral_patterns/topics/publishing_updates_with_observer/PublishingUpdatesWithObserver.java)
 2. Run [CapturingWorkflowsWithTemplateMethod.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch04_behavioral_patterns/topics/capturing_workflows_with_template_method/CapturingWorkflowsWithTemplateMethod.java)
+3. Ask whether your problem is event fan-out or fixed workflow shape
 
-## Quick Summary
+## What To Look For
 
-- observer lets one publisher notify many listeners
-- template method fixes workflow order while allowing small steps to vary
-- behavioral patterns show up in event systems, exports, pipelines, and framework hooks
+- observer is about many listeners reacting to one event
+- template method is about keeping one workflow order stable
+- both patterns affect readability because they influence where control flow lives
+
+## Use This Pattern When
+
+- use observer when one event should notify many independent listeners
+- use template method when the algorithm order is stable but a few steps vary
+- use either pattern only if the flow stays explainable to the next reader
+
+## Avoid This Pattern When
+
+- avoid observer when one direct collaborator would be simpler
+- avoid template method when composition can vary behavior more clearly than inheritance
+- avoid hidden control flow that readers cannot trace from the caller
 
 ## Compare With
 
-| Compare | Prefer Left When | Prefer Right When |
+| Compare | Use Left When | Use Right When |
 | --- | --- | --- |
-| observer | many listeners must react to one event | one direct caller just needs one result |
-| template method | the overall process is stable but some steps vary | each step should be passed in more freely, often through composition or strategy |
+| observer | one event fans out to many listeners | one caller needs one direct response |
+| template method | process order is fixed | flexible composition is more important than inheritance |
 
-## Mini Case Study
+## Small Case Study
 
-Imagine an e-commerce order update.
-
-- shipping status changes once
-- email, SMS, and analytics listeners should all react
-
-Observer fits naturally.  
-Now imagine export jobs.
-
-- fetch data
-- format it
-- deliver it
-
-That outer workflow stays stable even if CSV and JSON formatting vary. Template method fits.
+Shipping status changes once, but email, SMS, and analytics should all react.  
+Observer matches that shape.  
+Now imagine export jobs.  
+Every export fetches data, formats it, and delivers it, but CSV and JSON exports vary in one step. Template method matches that shape.
 
 ## Interview Focus
 
-Q: When is observer useful?  
-A: When one event should notify multiple listeners without the publisher knowing their concrete implementations.
+Q: When does observer become risky?  
+A: When too many listeners create hidden control flow, unclear ordering, or unclear failure behavior.
 
-Q: When is template method useful?  
-A: When the overall algorithm order is fixed but some steps vary between implementations.
+Q: When is template method the wrong fit?  
+A: When subclassing starts varying too many steps and composition would be clearer.
 
 ## Sources
 

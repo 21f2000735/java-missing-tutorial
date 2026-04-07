@@ -1,52 +1,65 @@
-# Request Routing Patterns Learning Kit
+# Request Routing Patterns
 
-This chapter focuses on one practical pattern that appears everywhere in middleware, validation pipelines, and request handling: chain of responsibility.
+This chapter focuses on chain of responsibility because request processing is where design patterns stop feeling theoretical very quickly.
 
-## What Problem This Chapter Solves
+## The Story
 
-Request processing often needs several checks:
+Checkout validation starts with one rule:
 
-- cart is not empty
-- address is present
-- payment method is ready
-- user is authorized
+- cart must not be empty
 
-If all checks live in one method, the code becomes long and hard to extend. Chain of responsibility lets each handler own one rule and pass the request onward when it succeeds.
+Then more rules arrive:
 
-## Study Order
+- address must be present
+- payment must be ready
+- inventory may need to be checked
+- user may need authorization
+
+One long validation method becomes noisy, hard to reorder, and hard to extend.
+
+## Run This First
 
 1. Run [PassingRequestsWithChainOfResponsibility.java](/Users/indiadelhi/repo/career/java-missing-tutorial/code/src/main/java/com/learning/javamissing/sec06_design_patterns/ch05_request_routing_patterns/topics/passing_requests_with_chain_of_responsibility/PassingRequestsWithChainOfResponsibility.java)
+2. Notice how each handler owns one rule
+3. Imagine adding one more handler without rewriting the existing chain
 
-## Quick Summary
+## What To Look For
 
 - each handler owns one decision
-- the request travels until something fails or the chain completes
-- this pattern is common in validation, middleware, servlet filters, and request interception
+- the request moves in sequence
+- the chain may stop early when a rule fails
+
+## Use This Pattern When
+
+- request handling is a series of independent checks
+- you need to insert, remove, or reorder stages over time
+- middleware or validation should read as a pipeline
+
+## Avoid This Pattern When
+
+- the rules are tiny and very stable
+- one short method is still easier to explain
+- handlers secretly depend on each other and stop being independent
 
 ## Compare With
 
-| Compare | Prefer Left When | Prefer Right When |
+| Compare | Use Left When | Use Right When |
 | --- | --- | --- |
-| one long validation method | the rules are tiny and stable | rules grow independently or should be reordered, removed, or extended |
-| chain of responsibility | each step can decide and pass forward | the workflow must always run every step with no early exit |
+| one method | validation is short and stable | rules will grow and change independently |
+| chain of responsibility | stages may stop early or be reordered | every step must always run in one fixed batch |
 
-## Mini Case Study
+## Small Case Study
 
-Think about a checkout request in an online store.
-
-- if the cart is empty, stop early
-- if the address is missing, stop early
-- if payment is missing, stop early
-
-Each rule is simple, but the sequence matters. A chain keeps each rule local and the overall path readable.
+A servlet filter chain, Spring interceptor chain, or checkout validation pipeline all share the same basic pressure:  
+small stages, local decisions, and forward movement until something fails or the request is done.
 
 ## Interview Focus
 
 Q: What problem does chain of responsibility solve?  
-A: It breaks request handling into small handlers so each rule stays separate and the request can pass through a sequence of checks.
+A: It separates request handling into small handlers so rules can evolve independently and the request can move stage by stage.
 
-Q: Where do engineers see it in real systems?  
-A: In middleware pipelines, validation chains, filters, authentication stages, and request interceptors.
+Q: What is the most common misuse?  
+A: Turning a very small fixed validation method into many handlers that add ceremony without adding flexibility.
 
 ## Sources
 

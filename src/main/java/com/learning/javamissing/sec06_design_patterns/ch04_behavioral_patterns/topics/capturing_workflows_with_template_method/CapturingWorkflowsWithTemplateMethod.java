@@ -27,6 +27,7 @@ package com.learning.javamissing.sec06_design_patterns.ch04_behavioral_patterns.
 public class CapturingWorkflowsWithTemplateMethod {
     public static void main(String[] args) {
         System.out.println("Concept: template method");
+        System.out.println("Story hook: every export job follows the same outer steps, but the formatting step changes by report type.");
         System.out.println("Problem: export jobs share the same outer workflow but differ in formatting.");
         System.out.println();
 
@@ -38,7 +39,11 @@ public class CapturingWorkflowsWithTemplateMethod {
         // send file to reporting bucket
         exporter.export();
         System.out.println("Why it works: the outer workflow order stays fixed while one step varies safely.");
+        System.out.println("Use this when: the overall algorithm order is stable and only a few steps vary between implementations.");
+        System.out.println("Avoid this when: composition or strategy would let you vary steps more cleanly than subclassing.");
         System.out.println("Common mistake: forcing inheritance when composition would give more freedom and less coupling.");
+        System.out.println("Watch out: if subclasses keep overriding many hooks, the base template is not really stable anymore.");
+        System.out.println("Try this next: add a JsonOrderExporter and notice that export() still owns the workflow order.");
         System.out.println("After reading this example, you should know:");
         System.out.println("- template method fixes the workflow order");
         System.out.println("- subclasses fill in only the varying steps");

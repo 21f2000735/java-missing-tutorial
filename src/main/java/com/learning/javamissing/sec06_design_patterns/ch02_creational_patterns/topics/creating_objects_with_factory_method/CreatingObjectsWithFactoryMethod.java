@@ -26,6 +26,7 @@ package com.learning.javamissing.sec06_design_patterns.ch02_creational_patterns.
 public class CreatingObjectsWithFactoryMethod {
     public static void main(String[] args) {
         System.out.println("Concept: factory method");
+        System.out.println("Story hook: your checkout service should ask for a payment capability, not know every gateway class by name.");
         System.out.println("Problem: checkout code should request a payment gateway without branching everywhere.");
         System.out.println("Mental model: callers request behavior, factories choose implementation.");
         System.out.println();
@@ -39,7 +40,11 @@ public class CreatingObjectsWithFactoryMethod {
         System.out.println("card result = " + cardGateway.charge(1_500));
         System.out.println("upi result = " + upiGateway.charge(800));
         System.out.println("Why it works: object creation stays in one place and the caller depends on the PaymentGateway contract.");
+        System.out.println("Use this when: callers should ask for a behavior or capability while concrete implementation choice stays hidden.");
+        System.out.println("Avoid this when: object creation is obvious and there is no meaningful selection logic.");
         System.out.println("Common mistake: hiding simple constructor calls behind a factory when no real selection logic exists.");
+        System.out.println("Watch out: if every factory branch leaks into the caller anyway, the factory is not simplifying anything.");
+        System.out.println("Try this next: add a WalletGateway branch and keep the caller code unchanged.");
         System.out.println("After reading this example, you should know:");
         System.out.println("- the caller asks for a type of behavior");
         System.out.println("- the factory decides the concrete class");

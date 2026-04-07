@@ -1,8 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { marked } from 'marked';
-import Prism from 'prismjs';
-import 'prismjs/components/prism-java';
-import mermaid from 'mermaid';
 
 marked.setOptions({
   gfm: true,
@@ -11,10 +8,32 @@ marked.setOptions({
   headerIds: false
 });
 
-mermaid.initialize({
-  startOnLoad: false,
-  securityLevel: 'loose'
-});
+let prismLoader;
+let mermaidLoader;
+
+async function loadPrism() {
+  if (!prismLoader) {
+    prismLoader = import('prismjs').then(async (module) => {
+      await import('prismjs/components/prism-java');
+      return module.default || module;
+    });
+  }
+  return prismLoader;
+}
+
+async function loadMermaid() {
+  if (!mermaidLoader) {
+    mermaidLoader = import('mermaid').then((module) => {
+      const mermaid = module.default || module;
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'loose'
+      });
+      return mermaid;
+    });
+  }
+  return mermaidLoader;
+}
 
 const RESOURCE_DESCRIPTIONS = {
   README: 'What this learning repo is trying to become and how to use it without getting lost.',
@@ -482,9 +501,13 @@ function extractCodePreview(raw) {
   return {
     ...meta,
     takeaways: extractAfterReadingTakeaways(raw),
+    storyHook: extractPrintedValue(raw, 'Story hook'),
     useWhen: extractPrintedValue(raw, 'Use this when'),
     avoidWhen: extractPrintedValue(raw, 'Avoid this when'),
     commonMistake: extractPrintedValue(raw, 'Common mistake'),
+    watchOut: extractPrintedValue(raw, 'Watch out'),
+    whyThisWorks: extractPrintedValue(raw, 'Why this works'),
+    tryThisNext: extractPrintedValue(raw, 'Try this next'),
     previewRequired: /StructuredTaskScope|ScopedValue/.test(raw)
   };
 }
@@ -641,46 +664,87 @@ function MarkdownBlock({ html, manifest }) {
   const ref = useRef(null);
 
   useEffect(() => {
-    if (!ref.current) {
-      return;
-    }
+    let cancelled = false;
 
-    ref.current.querySelectorAll('a[href]').forEach((anchor) => {
-      const href = anchor.getAttribute('href');
-      const sourcePath = sourcePathFromHref(href, manifest.repoRoot);
-      if (!sourcePath) {
-        if (/^https?:\/\//.test(href)) {
-          anchor.target = '_blank';
-          anchor.rel = 'noreferrer';
-        }
+    async function enhanceBlock() {
+      if (!ref.current) {
         return;
       }
-      if (manifest.sourceToRoute.has(sourcePath)) {
-        anchor.setAttribute('href', manifest.sourceToRoute.get(sourcePath));
-      } else {
-        const contentPath = sourcePathToContentPath(sourcePath);
-        if (contentPath) {
-          anchor.setAttribute('href', contentPath);
-          anchor.setAttribute('target', '_blank');
-          anchor.setAttribute('rel', 'noreferrer');
+
+      ref.current.querySelectorAll('a[href]').forEach((anchor) => {
+        const href = anchor.getAttribute('href');
+        const sourcePath = sourcePathFromHref(href, manifest.repoRoot);
+        if (!sourcePath) {
+          if (/^https?:\/\//.test(href)) {
+            anchor.target = '_blank';
+            anchor.rel = 'noreferrer';
+          }
+          return;
+        }
+        if (manifest.sourceToRoute.has(sourcePath)) {
+          anchor.setAttribute('href', manifest.sourceToRoute.get(sourcePath));
+        } else {
+          const contentPath = sourcePathToContentPath(sourcePath);
+          if (contentPath) {
+            anchor.setAttribute('href', contentPath);
+            anchor.setAttribute('target', '_blank');
+            anchor.setAttribute('rel', 'noreferrer');
+          }
+        }
+      });
+
+      const mermaidBlocks = ref.current.querySelectorAll('pre > code.language-mermaid');
+      if (mermaidBlocks.length) {
+        mermaidBlocks.forEach((code) => {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'mermaid';
+          wrapper.textContent = code.textContent;
+          code.parentElement.replaceWith(wrapper);
+        });
+        const mermaid = await loadMermaid();
+        if (!cancelled) {
+          mermaid.run({
+            querySelector: '.mermaid'
+          }).catch(() => {});
         }
       }
-    });
 
-    ref.current.querySelectorAll('pre > code.language-mermaid').forEach((code) => {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'mermaid';
-      wrapper.textContent = code.textContent;
-      code.parentElement.replaceWith(wrapper);
-    });
+      const prism = await loadPrism();
+      if (!cancelled && ref.current) {
+        prism.highlightAllUnder(ref.current);
+      }
+    }
 
-    mermaid.run({
-      querySelector: '.mermaid'
-    }).catch(() => {});
-    Prism.highlightAllUnder(ref.current);
+    enhanceBlock();
+
+    return () => {
+      cancelled = true;
+    };
   }, [html, manifest]);
 
   return <div ref={ref} className="content-markdown" dangerouslySetInnerHTML={{ __html: html }} />;
+}
+
+function CodeBlock({ code }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function highlight() {
+      const prism = await loadPrism();
+      if (!cancelled && ref.current) {
+        prism.highlightElement(ref.current);
+      }
+    }
+
+    highlight();
+    return () => {
+      cancelled = true;
+    };
+  }, [code]);
+
+  return <pre className="mb-0"><code ref={ref} className="language-java">{code}</code></pre>;
 }
 
 function InsightCard({ icon, title, children }) {
@@ -690,6 +754,16 @@ function InsightCard({ icon, title, children }) {
         {icon ? <i className={`${icon} insight-icon`} /> : null}
         <h3 className="h6 mb-0">{title}</h3>
       </div>
+      <div className="muted-copy mb-0">{children}</div>
+    </div>
+  );
+}
+
+function CalloutCard({ tone = 'story', eyebrow, title, children }) {
+  return (
+    <div className={`callout-card callout-${tone}`}>
+      <div className="eyebrow mb-2">{eyebrow}</div>
+      <h3 className="h5 mb-2">{title}</h3>
       <div className="muted-copy mb-0">{children}</div>
     </div>
   );
@@ -840,7 +914,7 @@ function PageLayout({ header, children }) {
 }
 
 function ChapterStoryCards({ guide }) {
-  const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study']);
+  const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story']);
   const studyOrder = findGuideSection(guide, ['Study Order', 'Run This First']);
   const whenToUse = findGuideSection(guide, ['When To Use', 'Use This Chapter When', 'Use This When']);
   const compare = findGuideSection(guide, ['Compare With', 'Common Confusion', 'What To Look For']);
@@ -864,7 +938,15 @@ function ChapterStoryCards({ guide }) {
 }
 
 function TopicPreviewCard({ section, chapter, topic }) {
-  const summary = truncateText(topic.preview.problem || topic.preview.why || topic.preview.realWorld || topic.preview.mentalModel || topic.sourcePath.split('/topics/')[1], 180);
+  const summary = truncateText(
+    topic.preview.storyHook
+      || topic.preview.problem
+      || topic.preview.why
+      || topic.preview.realWorld
+      || topic.preview.mentalModel
+      || topic.sourcePath.split('/topics/')[1],
+    180
+  );
   return (
     <a className="topic-card topic-teaser text-decoration-none text-reset" href={`#topic/${section.slug}/${chapter.slug}/${topic.slug}`} key={topic.slug}>
       <div className="d-flex justify-content-between align-items-start gap-3 mb-2">
@@ -873,6 +955,7 @@ function TopicPreviewCard({ section, chapter, topic }) {
       </div>
       <h3 className="h5 mb-2">{topic.title}</h3>
       <p className="muted-copy mb-3">{summary}</p>
+      {topic.preview.storyHook ? <div className="topic-story-hook mb-2">{topic.preview.storyHook}</div> : null}
       <div className="topic-kicker">Real-world setup: {topic.preview.realWorld || 'Open the file to see the scenario and code walkthrough.'}</div>
     </a>
   );
@@ -1183,7 +1266,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
   if (data.type === 'section') {
     const guide = parseGuide(data.raw);
     const profile = SECTION_PROFILES[data.section.slug] || {};
-    const why = findGuideSection(guide, ['Why This Section Matters', 'What Real Problems This Section Solves']);
+    const why = findGuideSection(guide, ['Why This Section Matters', 'What Real Problems This Section Solves', 'The Story']);
     const beforeStart = findGuideSection(guide, ['Before You Start', 'Start Here If']);
     const howToRead = findGuideSection(guide, ['How To Read This Section', 'How To Read This Section']);
 
@@ -1240,8 +1323,10 @@ function RouteRenderer({ route, manifest, fetchText }) {
   if (data.type === 'chapter') {
     const guide = parseGuide(data.guideRaw);
     const revision = parseGuide(data.revisionRaw);
-    const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study']);
+    const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story']);
     const quickSummary = findGuideSection(guide, ['Quick Summary', 'What To Look For']);
+    const avoidSection = findGuideSection(guide, ['When Not To Use', 'Avoid This Pattern When', 'Avoid This When', 'Watch Out']);
+    const nextSection = findGuideSection(guide, ['Recommended Next Step', 'Try This Next']);
 
     return (
       <PageLayout
@@ -1262,6 +1347,17 @@ function RouteRenderer({ route, manifest, fetchText }) {
         )}
       >
         <ChapterStoryCards guide={guide} />
+        <div className="callout-grid mb-4">
+          <CalloutCard tone="story" eyebrow="Problem Pressure" title="The Story">
+            {truncateText(problem?.plain || guide.intro || 'Start by understanding the design pressure before thinking about pattern names.', 260)}
+          </CalloutCard>
+          <CalloutCard tone="caution" eyebrow="Watch Out" title="Avoid Ceremony">
+            {truncateText(avoidSection?.plain || 'Do not add a pattern if the simpler code is already readable and stable.', 240)}
+          </CalloutCard>
+          <CalloutCard tone="next" eyebrow="Next Step" title="Read Forward">
+            {truncateText(nextSection?.plain || 'Run the first topic file, compare the output, then use the revision sheet to lock in the decision rule.', 220)}
+          </CalloutCard>
+        </div>
         <div className="content-card">
           <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
             <h2 className="page-title mb-0">Start With These Examples</h2>
@@ -1308,7 +1404,21 @@ function RouteRenderer({ route, manifest, fetchText }) {
           )}
         />
       )}
-    >
+      >
+      {topicSummary.storyHook || topicSummary.whyThisWorks || topicSummary.watchOut ? (
+        <div className="callout-grid mb-4">
+          <CalloutCard tone="story" eyebrow="Story Hook" title="Why You Would Reach For This">
+            {topicSummary.storyHook || topicSummary.problem || topicSummary.realWorld || 'This example starts with a small real-world pressure before showing the Java shape.'}
+          </CalloutCard>
+          <CalloutCard tone="explain" eyebrow="Why This Works" title="What Java Is Doing">
+            {topicSummary.whyThisWorks || topicSummary.mentalModel || topicSummary.why || 'Read the code with the mental model first, then compare it with the output.'}
+          </CalloutCard>
+          <CalloutCard tone="caution" eyebrow="Watch Out" title="Easy Way To Misuse It">
+            {topicSummary.watchOut || topicSummary.commonMistake || 'The common mistake line in the code shows where this concept gets overused or misunderstood.'}
+          </CalloutCard>
+        </div>
+      ) : null}
+
       <div className="insight-grid mb-4">
         <InsightCard icon="bi bi-bookmark-star" title="Concept">
           {topicSummary.concept || titleFromSlug(data.topic.slug)}
@@ -1379,6 +1489,16 @@ function RouteRenderer({ route, manifest, fetchText }) {
         </div>
       ) : null}
 
+      {topicSummary.tryThisNext ? (
+        <div className="content-card mb-4">
+          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+            <h2 className="page-title mb-0">Try This Next</h2>
+            <span className="badge rounded-pill badge-soft">Stretch the example</span>
+          </div>
+          <p className="mb-0 muted-copy">{topicSummary.tryThisNext}</p>
+        </div>
+      ) : null}
+
       <div className="content-card">
         <div className="topic-meta">
           <span className="badge rounded-pill badge-soft">{topicSummary.concept || data.topic.concept}</span>
@@ -1392,7 +1512,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
               <div className="source-path">{data.topic.sourcePath}</div>
             </div>
           </div>
-          <pre className="mb-0"><code className="language-java">{data.raw}</code></pre>
+          <CodeBlock code={data.raw} />
         </div>
       </div>
     </PageLayout>
