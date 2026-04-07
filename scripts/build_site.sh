@@ -29,7 +29,7 @@ chapter_title() {
   local chapter_dir="$1"
   local guide="$chapter_dir/ChapterGuide.md"
   local title
-  title="$(sed -n '1s/^# \(.*\) Learning Kit$/\1/p' "$guide" | head -n 1)"
+  title="$(sed -n '1s/^# \(.*\) Learning Kit$/\1/p' "$guide")"
   if [[ -n "$title" ]]; then
     printf '%s' "$title"
   else
@@ -63,7 +63,7 @@ copy_content_tree() {
     cp "$file" "$library_root/$relative"
   done
 
-  for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md AUTHORING_GUIDE.md CHAPTER_QUALITY_CHECKLIST.md TOPIC_QUALITY_RUBRIC.md DEEP_DIVE_STANDARD.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md HIGH_DEMAND_JAVA_TOPICS.md COMPANY_QUESTION_BANK.md INTERVIEW_PROBLEM_APPROACH.md; do
+  for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md AUTHORING_GUIDE.md CHAPTER_QUALITY_CHECKLIST.md TOPIC_QUALITY_RUBRIC.md DEEP_DIVE_STANDARD.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md HIGH_DEMAND_JAVA_TOPICS.md COMPANY_QUESTION_BANK.md INTERVIEW_PROBLEM_APPROACH.md COMPARE_COLLECTIONS.md COMPARE_STREAMS.md COMPARE_CONCURRENCY.md; do
     cp "$root/$file" "$meta_root/$file"
   done
 }
@@ -87,7 +87,7 @@ generate_manifest() {
     echo '  "resources": ['
 
     local first_resource=1
-    for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md HIGH_DEMAND_JAVA_TOPICS.md COMPANY_QUESTION_BANK.md INTERVIEW_PROBLEM_APPROACH.md; do
+    for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md HIGH_DEMAND_JAVA_TOPICS.md COMPANY_QUESTION_BANK.md INTERVIEW_PROBLEM_APPROACH.md COMPARE_COLLECTIONS.md COMPARE_STREAMS.md COMPARE_CONCURRENCY.md; do
       [[ $first_resource -eq 1 ]] || echo ','
       first_resource=0
       slug="${file%.md}"
@@ -153,7 +153,7 @@ generate_manifest() {
         local first_topic=1
         for topic_dir in "$chapter_dir"/topics/*; do
           [[ -d "$topic_dir" ]] || continue
-          java_file="$(find "$topic_dir" -maxdepth 1 -type f -name '*.java' | sort | head -n 1)"
+          java_file="$(find "$topic_dir" -maxdepth 1 -type f -name '*.java' | sort | sed -n '1p')"
           [[ -n "$java_file" ]] || continue
           [[ $first_topic -eq 1 ]] || echo ','
           first_topic=0

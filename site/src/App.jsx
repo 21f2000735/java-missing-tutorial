@@ -46,7 +46,10 @@ const RESOURCE_DESCRIPTIONS = {
   JAVA_MIGRATION_GUIDES: 'Upgrade guides for the biggest Java jumps, with what to learn, what to watch, and what to modernize.',
   HIGH_DEMAND_JAVA_TOPICS: 'A practical path through the Java topics people keep searching for: collections, streams, errors, concurrency, HTTP, and JVM basics.',
   COMPANY_QUESTION_BANK: 'Company-wise interview tracks with original question-and-answer practice for Google, Meta, Amazon, Apple, Netflix, Coinbase, Jane Street, MakeMyTrip, and HotelTrader.',
-  INTERVIEW_PROBLEM_APPROACH: 'A step-by-step process for how to approach coding, backend, debugging, and system questions in interviews.'
+  INTERVIEW_PROBLEM_APPROACH: 'A step-by-step process for how to approach coding, backend, debugging, and system questions in interviews.',
+  COMPARE_COLLECTIONS: 'A quick compare page for List, Set, and Map: shape, performance, and common mistakes.',
+  COMPARE_STREAMS: 'A quick compare page for loops versus streams, focused on clarity, tradeoffs, and debugging.',
+  COMPARE_CONCURRENCY: 'A quick compare page for Thread, ExecutorService, and virtual threads.'
 };
 
 const HIGH_DEMAND_TOPICS = [
@@ -924,6 +927,116 @@ function BulletList({ items }) {
   );
 }
 
+function resourceSummaryFromSlug(slug) {
+  return RESOURCE_DESCRIPTIONS[slug] || 'Open the original markdown behind this learning site.';
+}
+
+function useReadingState() {
+  const [bookmarks, setBookmarks] = useState(() => {
+    try {
+      return JSON.parse(window.localStorage.getItem('java-book-bookmarks') || '[]');
+    } catch {
+      return [];
+    }
+  });
+  const [completed, setCompleted] = useState(() => {
+    try {
+      return JSON.parse(window.localStorage.getItem('java-book-completed') || '[]');
+    } catch {
+      return [];
+    }
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem('java-book-bookmarks', JSON.stringify(bookmarks));
+  }, [bookmarks]);
+
+  useEffect(() => {
+    window.localStorage.setItem('java-book-completed', JSON.stringify(completed));
+  }, [completed]);
+
+  function toggleBookmark(route) {
+    setBookmarks((current) => current.includes(route)
+      ? current.filter((item) => item !== route)
+      : [...current, route]);
+  }
+
+  function toggleCompleted(route) {
+    setCompleted((current) => current.includes(route)
+      ? current.filter((item) => item !== route)
+      : [...current, route]);
+  }
+
+  return { bookmarks, completed, toggleBookmark, toggleCompleted };
+}
+
+function RandomTopicButton({ manifest, currentRoute }) {
+  function goToRandomTopic() {
+    const topics = [];
+    manifest.sections.forEach((section) => {
+      section.chapters.forEach((chapter) => {
+        chapter.topics.forEach((topic) => {
+          const route = `#topic/${section.slug}/${chapter.slug}/${topic.slug}`;
+          if (route !== currentRoute) {
+            topics.push(route);
+          }
+        });
+      });
+    });
+    if (!topics.length) {
+      window.location.hash = '#home';
+      return;
+    }
+    const index = Math.floor(Math.random() * topics.length);
+    window.location.hash = topics[index];
+  }
+
+  return (
+    <button className="btn btn-outline-dark btn-sm rounded-pill" type="button" onClick={goToRandomTopic}>
+      Random Topic
+    </button>
+  );
+}
+
+function ReadingStateBar({ routeKey, bookmarks, completed, toggleBookmark, toggleCompleted }) {
+  const isBookmarked = bookmarks.includes(routeKey);
+  const isCompleted = completed.includes(routeKey);
+  return (
+    <div className="reading-state-bar content-card mb-4">
+      <div className="d-flex flex-wrap gap-2 align-items-center justify-content-between">
+        <div>
+          <div className="eyebrow mb-1">Your Progress</div>
+          <div className="muted-copy mb-0">Bookmark this page or mark it complete after you finish the example.</div>
+        </div>
+        <div className="d-flex flex-wrap gap-2">
+          <button className={`btn btn-sm rounded-pill ${isBookmarked ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={() => toggleBookmark(routeKey)}>
+            {isBookmarked ? 'Bookmarked' : 'Bookmark'}
+          </button>
+          <button className={`btn btn-sm rounded-pill ${isCompleted ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={() => toggleCompleted(routeKey)}>
+            {isCompleted ? 'Completed' : 'Mark Complete'}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function InPageToc({ items, title = 'On This Page' }) {
+  if (!items.length) {
+    return null;
+  }
+  return (
+    <aside className="toc-panel content-card">
+      <div className="eyebrow mb-2">{title}</div>
+      <div className="toc-links">
+        {items.map((item) => (
+          <a key={item.href} className="toc-link" href={item.href}>{item.label}</a>
+        ))}
+      </div>
+    </aside>
+  );
+}
+
 function HomePage({ manifest }) {
   const featuredSections = manifest.sections.slice(0, 6);
   const learningJourneys = [
@@ -957,6 +1070,7 @@ function HomePage({ manifest }) {
             <div className="d-flex flex-wrap gap-2">
               <a className="btn btn-dark rounded-pill px-4" href="#section/sec01_fundamentals">Start With Fundamentals</a>
               <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/BOOK">Read The Book Order</a>
+              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/INTERVIEW_PROBLEM_APPROACH">Learn Interview Approach</a>
               <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/BOOK_MANUSCRIPT">Open Combined Manuscript</a>
             </div>
           </div>
@@ -1083,6 +1197,22 @@ function HomePage({ manifest }) {
 
       <div className="content-card">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h2 className="page-title mb-0">Compare Fast</h2>
+          <span className="badge rounded-pill badge-soft">One-look tradeoffs</span>
+        </div>
+        <div className="resource-grid">
+          {['COMPARE_COLLECTIONS', 'COMPARE_STREAMS', 'COMPARE_CONCURRENCY'].map((slug) => (
+            <a className="resource-card text-decoration-none text-reset" href={`#resource/${slug}`} key={slug}>
+              <div className="eyebrow mb-2">Compare</div>
+              <h3 className="h5 mb-2">{slug.replace('COMPARE_', '').replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())}</h3>
+              <p className="muted-copy mb-0">{resourceSummaryFromSlug(slug)}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div className="content-card">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
           <h2 className="page-title mb-0">Most Asked Java Topics</h2>
           <a className="badge rounded-pill badge-soft text-decoration-none" href="#resource/HIGH_DEMAND_JAVA_TOPICS">See why these matter</a>
         </div>
@@ -1157,12 +1287,14 @@ function TopicPreviewCard({ section, chapter, topic }) {
   );
 }
 
-function QuickLinkRail() {
+function QuickLinkRail({ onRandomTopic }) {
   const links = [
     { label: 'Start Here', href: '#section/sec01_fundamentals' },
     { label: 'Java 7 to 25', href: '#resource/JAVA_7_TO_25' },
-    { label: 'Random Topic', href: '#random-topic' },
     { label: 'Interview Approach', href: '#resource/INTERVIEW_PROBLEM_APPROACH' },
+    { label: 'Compare Collections', href: '#resource/COMPARE_COLLECTIONS' },
+    { label: 'Compare Streams', href: '#resource/COMPARE_STREAMS' },
+    { label: 'Compare Concurrency', href: '#resource/COMPARE_CONCURRENCY' },
     { label: 'Streams', href: '#section/sec04_streams_and_functional_style' },
     { label: 'Concurrency', href: '#section/sec05_multithreading_and_concurrency' },
     { label: 'Design Patterns', href: '#section/sec06_design_patterns' },
@@ -1171,6 +1303,9 @@ function QuickLinkRail() {
 
   return (
     <div className="quick-link-rail">
+      <button type="button" className="quick-link-chip quick-link-button" onClick={onRandomTopic}>
+        Random Topic
+      </button>
       {links.map((link) => (
         <a key={link.href} className="quick-link-chip" href={link.href}>{link.label}</a>
       ))}
@@ -1237,6 +1372,7 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const contentCache = useRef(new Map());
+  const readingState = useReadingState();
 
   useEffect(() => {
     async function loadManifest() {
@@ -1298,9 +1434,9 @@ export default function App() {
     return entries;
   }, [manifest]);
 
-  const randomTopicRoute = useMemo(() => {
+  const allTopicRoutes = useMemo(() => {
     if (!manifest) {
-      return '#home';
+      return [];
     }
     const topics = [];
     manifest.sections.forEach((section) => {
@@ -1310,12 +1446,21 @@ export default function App() {
         });
       });
     });
-    if (!topics.length) {
-      return '#home';
-    }
-    const index = Math.floor(Math.random() * topics.length);
-    return topics[index];
+    return topics;
   }, [manifest, route]);
+
+  function goToRandomTopic() {
+    if (!allTopicRoutes.length) {
+      window.location.hash = '#home';
+      return;
+    }
+
+    const currentHash = window.location.hash || '#home';
+    const candidates = allTopicRoutes.filter((item) => item !== currentHash);
+    const pool = candidates.length ? candidates : allTopicRoutes;
+    const index = Math.floor(Math.random() * pool.length);
+    window.location.hash = pool[index];
+  }
 
   async function fetchText(path) {
     if (contentCache.current.has(path)) {
@@ -1355,11 +1500,12 @@ export default function App() {
             <div className="ms-lg-4 flex-grow-1 d-flex align-items-center gap-3">
               <SearchBox entries={searchEntries} />
               <div className="d-none d-lg-flex align-items-center gap-2">
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href={randomTopicRoute}>Random Topic</a>
+                <RandomTopicButton manifest={manifest} currentRoute={window.location.hash || '#home'} />
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/JAVA_7_TO_25">Java 7 To 25</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Interview Approach</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/COMPANY_QUESTION_BANK">Company Bank</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/COMPARE_COLLECTIONS">Compare</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/CURRICULUM">Curriculum</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/TOP_20_BOOKS">Sources</a>
               </div>
@@ -1367,7 +1513,7 @@ export default function App() {
           </div>
         </nav>
         <div className="px-3 px-lg-4 pb-3">
-          <QuickLinkRail />
+          <QuickLinkRail onRandomTopic={goToRandomTopic} />
         </div>
       </header>
 
@@ -1376,7 +1522,7 @@ export default function App() {
           <Sidebar sections={manifest.sections} activeRoute={activeRoute} />
           <section className="col-12 col-xl-9 content-column">
             <div className="content-wrap">
-              <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} />
+              <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} readingState={readingState} />
             </div>
           </section>
         </div>
@@ -1385,7 +1531,7 @@ export default function App() {
   );
 }
 
-function RouteRenderer({ route, manifest, fetchText }) {
+function RouteRenderer({ route, manifest, fetchText, readingState }) {
   const [content, setContent] = useState({ status: 'loading', data: null, error: '' });
 
   useEffect(() => {
@@ -1529,6 +1675,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
   }
 
   if (data.type === 'resource') {
+    const routeKey = `#resource/${data.resource.slug}`;
     return (
       <PageLayout
         header={(
@@ -1540,6 +1687,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
           />
         )}
       >
+        <ReadingStateBar routeKey={routeKey} {...readingState} />
         <div className="content-card">
           <MarkdownBlock html={marked.parse(data.raw)} manifest={manifest} contentPath={data.resource.contentPath} />
         </div>
@@ -1611,6 +1759,12 @@ function RouteRenderer({ route, manifest, fetchText }) {
     const quickSummary = findGuideSection(guide, ['Quick Summary', 'What To Look For']);
     const avoidSection = findGuideSection(guide, ['When Not To Use', 'Avoid This Pattern When', 'Avoid This When', 'Watch Out']);
     const nextSection = findGuideSection(guide, ['Recommended Next Step', 'Try This Next']);
+    const routeKey = `#chapter/${data.section.slug}/${data.chapter.slug}`;
+    const chapterToc = [
+      { href: '#start-with-examples', label: 'Start With Examples' },
+      { href: '#chapter-guide', label: 'Chapter Guide' },
+      { href: '#revision-sheet', label: 'Revision Sheet' }
+    ];
 
     return (
       <PageLayout
@@ -1630,42 +1784,50 @@ function RouteRenderer({ route, manifest, fetchText }) {
           />
         )}
       >
-        <ChapterStoryCards guide={guide} />
-        <div className="callout-grid mb-4">
-          <CalloutCard tone="story" eyebrow="Problem Pressure" title="The Story">
-            {truncateText(problem?.plain || guide.intro || 'Start by understanding the design pressure before thinking about pattern names.', 260)}
-          </CalloutCard>
-          <CalloutCard tone="caution" eyebrow="Watch Out" title="Avoid Ceremony">
-            {truncateText(avoidSection?.plain || 'Do not add a pattern if the simpler code is already readable and stable.', 240)}
-          </CalloutCard>
-          <CalloutCard tone="next" eyebrow="Next Step" title="Read Forward">
-            {truncateText(nextSection?.plain || 'Run the first topic file, compare the output, then use the revision sheet to lock in the decision rule.', 220)}
-          </CalloutCard>
-        </div>
-        <div className="content-card">
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-            <h2 className="page-title mb-0">Start With These Examples</h2>
-            <span className="badge rounded-pill badge-soft">{data.chapter.topics.length} runnable topic{data.chapter.topics.length === 1 ? '' : 's'}</span>
+        <ReadingStateBar routeKey={routeKey} {...readingState} />
+        <div className="content-layout">
+          <div className="content-main">
+            <ChapterStoryCards guide={guide} />
+            <div className="callout-grid mb-4">
+              <CalloutCard tone="story" eyebrow="Problem Pressure" title="The Story">
+                {truncateText(problem?.plain || guide.intro || 'Start by understanding the design pressure before thinking about pattern names.', 260)}
+              </CalloutCard>
+              <CalloutCard tone="caution" eyebrow="Watch Out" title="Avoid Ceremony">
+                {truncateText(avoidSection?.plain || 'Do not add a pattern if the simpler code is already readable and stable.', 240)}
+              </CalloutCard>
+              <CalloutCard tone="next" eyebrow="Next Step" title="Read Forward">
+                {truncateText(nextSection?.plain || 'Run the first topic file, compare the output, then use the revision sheet to lock in the decision rule.', 220)}
+              </CalloutCard>
+            </div>
+            <div id="start-with-examples" className="content-card">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Start With These Examples</h2>
+                <span className="badge rounded-pill badge-soft">{data.chapter.topics.length} runnable topic{data.chapter.topics.length === 1 ? '' : 's'}</span>
+              </div>
+              <div className="topic-grid">
+                {data.chapter.topics.map((topic) => (
+                  <TopicPreviewCard section={data.section} chapter={data.chapter} topic={topic} key={topic.slug} />
+                ))}
+              </div>
+            </div>
+            <div id="chapter-guide" className="content-card">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Chapter Guide</h2>
+                <span className="badge rounded-pill badge-soft">Read this after the first example</span>
+              </div>
+              <MarkdownBlock html={marked.parse(data.guideRaw)} manifest={manifest} contentPath={data.chapter.guide.contentPath} />
+            </div>
+            <div id="revision-sheet" className="content-card">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Revision Sheet</h2>
+                <span className="badge rounded-pill badge-soft">{truncateText(revision.intro || 'Use this for quick recap after running the examples.', 100)}</span>
+              </div>
+              <MarkdownBlock html={marked.parse(data.revisionRaw)} manifest={manifest} contentPath={data.chapter.revision.contentPath} />
+            </div>
           </div>
-          <div className="topic-grid">
-            {data.chapter.topics.map((topic) => (
-              <TopicPreviewCard section={data.section} chapter={data.chapter} topic={topic} key={topic.slug} />
-            ))}
+          <div className="content-side">
+            <InPageToc items={chapterToc} />
           </div>
-        </div>
-        <div className="content-card">
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-            <h2 className="page-title mb-0">Chapter Guide</h2>
-            <span className="badge rounded-pill badge-soft">Read this after the first example</span>
-          </div>
-          <MarkdownBlock html={marked.parse(data.guideRaw)} manifest={manifest} contentPath={data.chapter.guide.contentPath} />
-        </div>
-        <div className="content-card">
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-            <h2 className="page-title mb-0">Revision Sheet</h2>
-            <span className="badge rounded-pill badge-soft">{truncateText(revision.intro || 'Use this for quick recap after running the examples.', 100)}</span>
-          </div>
-          <MarkdownBlock html={marked.parse(data.revisionRaw)} manifest={manifest} contentPath={data.chapter.revision.contentPath} />
         </div>
       </PageLayout>
     );
@@ -1673,6 +1835,13 @@ function RouteRenderer({ route, manifest, fetchText }) {
 
   const topicSummary = data.preview;
   const topicRunner = effectiveRunner(topicSummary, data.lessonMeta);
+  const routeKey = `#topic/${data.section.slug}/${data.chapter.slug}/${data.topic.slug}`;
+  const topicToc = [
+    ...(data.lessonRaw ? [{ href: '#topic-lesson', label: 'Topic Lesson' }] : []),
+    { href: '#how-to-code', label: 'How To Code It' },
+    ...(topicSummary.takeaways.length ? [{ href: '#takeaways', label: 'Takeaways' }] : []),
+    { href: '#source-code', label: 'Source Code' }
+  ];
   return (
     <PageLayout
       header={(
@@ -1689,137 +1858,145 @@ function RouteRenderer({ route, manifest, fetchText }) {
           )}
         />
       )}
-      >
-      {topicSummary.storyHook || topicSummary.whyThisWorks || topicSummary.watchOut ? (
-        <div className="callout-grid mb-4">
-          <CalloutCard tone="story" eyebrow="Story Hook" title="Why You Would Reach For This">
-            {topicSummary.storyHook || topicSummary.problem || topicSummary.realWorld || 'This example starts with a small real-world pressure before showing the Java shape.'}
-          </CalloutCard>
-          <CalloutCard tone="explain" eyebrow="Why This Works" title="What Java Is Doing">
-            {topicSummary.whyThisWorks || topicSummary.mentalModel || topicSummary.why || 'Read the code with the mental model first, then compare it with the output.'}
-          </CalloutCard>
-          <CalloutCard tone="caution" eyebrow="Watch Out" title="Easy Way To Misuse It">
-            {topicSummary.watchOut || topicSummary.commonMistake || 'The common mistake line in the code shows where this concept gets overused or misunderstood.'}
-          </CalloutCard>
-        </div>
-      ) : null}
-
-      <div className="insight-grid mb-4">
-        <InsightCard icon="bi bi-bookmark-star" title="Concept">
-          {topicSummary.concept || titleFromSlug(data.topic.slug)}
-        </InsightCard>
-        <InsightCard icon="bi bi-bullseye" title="What Problem This Solves">
-          {topicSummary.problem || 'Open the code and read the explanation printed before the example runs.'}
-        </InsightCard>
-        <InsightCard icon="bi bi-building" title="Real-World Setup">
-          {topicSummary.realWorld || 'The code file explains the business scenario before showing the implementation.'}
-        </InsightCard>
-        <InsightCard icon="bi bi-diagram-2" title="Mental Model">
-          {topicSummary.mentalModel || topicSummary.why || 'Use the example to build the right intuition before memorizing APIs.'}
-        </InsightCard>
-      </div>
-
-      {(data.lessonMeta.introduced || data.lessonMeta.status || data.lessonMeta.runner || data.lessonMeta.estimated) ? (
-        <div className="content-card mb-4">
-          <div className="topic-meta">
-            {data.lessonMeta.introduced ? <span className="badge rounded-pill badge-soft">Introduced: {data.lessonMeta.introduced}</span> : null}
-            {data.lessonMeta.status ? <span className="badge rounded-pill badge-soft">Status: {data.lessonMeta.status}</span> : null}
-            <span className="badge rounded-pill badge-soft">Runner: {topicRunner}</span>
-            {data.lessonMeta.estimated ? <span className="badge rounded-pill badge-soft">Read time: {data.lessonMeta.estimated}</span> : null}
-          </div>
-        </div>
-      ) : null}
-
-      {data.lessonRaw ? (
-        <div className="content-card mb-4">
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-            <h2 className="page-title mb-0">Topic Lesson</h2>
-            <span className="badge rounded-pill badge-soft">Site-first explanation</span>
-          </div>
-          <MarkdownBlock html={marked.parse(data.lessonRaw)} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-        </div>
-      ) : null}
-
-      {(topicSummary.useWhen || topicSummary.avoidWhen || topicSummary.commonMistake) ? (
-        <div className="insight-grid mb-4">
-          {topicSummary.useWhen ? (
-            <InsightCard icon="bi bi-check2-circle" title="Use This When">
-              {topicSummary.useWhen}
-            </InsightCard>
+    >
+      <ReadingStateBar routeKey={routeKey} {...readingState} />
+      <div className="content-layout">
+        <div className="content-main">
+          {topicSummary.storyHook || topicSummary.whyThisWorks || topicSummary.watchOut ? (
+            <div className="callout-grid mb-4">
+              <CalloutCard tone="story" eyebrow="Story Hook" title="Why You Would Reach For This">
+                {topicSummary.storyHook || topicSummary.problem || topicSummary.realWorld || 'This example starts with a small real-world pressure before showing the Java shape.'}
+              </CalloutCard>
+              <CalloutCard tone="explain" eyebrow="Why This Works" title="What Java Is Doing">
+                {topicSummary.whyThisWorks || topicSummary.mentalModel || topicSummary.why || 'Read the code with the mental model first, then compare it with the output.'}
+              </CalloutCard>
+              <CalloutCard tone="caution" eyebrow="Watch Out" title="Easy Way To Misuse It">
+                {topicSummary.watchOut || topicSummary.commonMistake || 'The common mistake line in the code shows where this concept gets overused or misunderstood.'}
+              </CalloutCard>
+            </div>
           ) : null}
-          {topicSummary.avoidWhen ? (
-            <InsightCard icon="bi bi-slash-circle" title="Avoid This When">
-              {topicSummary.avoidWhen}
+
+          <div className="insight-grid mb-4">
+            <InsightCard icon="bi bi-bookmark-star" title="Concept">
+              {topicSummary.concept || titleFromSlug(data.topic.slug)}
             </InsightCard>
-          ) : null}
-          {topicSummary.commonMistake ? (
-            <InsightCard icon="bi bi-exclamation-triangle" title="Common Mistake">
-              {topicSummary.commonMistake}
+            <InsightCard icon="bi bi-bullseye" title="What Problem This Solves">
+              {topicSummary.problem || 'Open the code and read the explanation printed before the example runs.'}
             </InsightCard>
+            <InsightCard icon="bi bi-building" title="Real-World Setup">
+              {topicSummary.realWorld || 'The code file explains the business scenario before showing the implementation.'}
+            </InsightCard>
+            <InsightCard icon="bi bi-diagram-2" title="Mental Model">
+              {topicSummary.mentalModel || topicSummary.why || 'Use the example to build the right intuition before memorizing APIs.'}
+            </InsightCard>
+          </div>
+
+          {(data.lessonMeta.introduced || data.lessonMeta.status || data.lessonMeta.runner || data.lessonMeta.estimated) ? (
+            <div className="content-card mb-4">
+              <div className="topic-meta">
+                {data.lessonMeta.introduced ? <span className="badge rounded-pill badge-soft">Introduced: {data.lessonMeta.introduced}</span> : null}
+                {data.lessonMeta.status ? <span className="badge rounded-pill badge-soft">Status: {data.lessonMeta.status}</span> : null}
+                <span className="badge rounded-pill badge-soft">Runner: {topicRunner}</span>
+                {data.lessonMeta.estimated ? <span className="badge rounded-pill badge-soft">Read time: {data.lessonMeta.estimated}</span> : null}
+              </div>
+            </div>
           ) : null}
-        </div>
-      ) : null}
 
-      <div className="content-card mb-4">
-        <div className="topic-brief-grid">
-          <div className="topic-brief-card">
-            <div className="eyebrow mb-2">How To Code It</div>
-            <p className="mb-0">{topicSummary.howToCode || 'Run the example, compare the output, and then trace the code line by line.'}</p>
-          </div>
-          <div className="topic-brief-card">
-            <div className="eyebrow mb-2">Expected Output</div>
-            <p className="mb-0">{topicSummary.expectedOutput || 'The code comments and printed lines show the expected behavior.'}</p>
-          </div>
-          <div className="topic-brief-card">
-            <div className="eyebrow mb-2">Run Online</div>
-            <p className="mb-2">
-              {topicRunner === 'embedded'
-                ? 'Use the run button to send this stable example directly to JDoodle, or copy it into another playground.'
-                : 'This topic is best run locally because it depends on newer or preview Java behavior.'}
-            </p>
-            {topicRunner === 'local' ? (
-              <p className="mb-0 text-danger-emphasis">
-                This topic uses newer Java features that may need local JDK 25 preview support.
-              </p>
-            ) : null}
-          </div>
-        </div>
-      </div>
+          {data.lessonRaw ? (
+            <div id="topic-lesson" className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Topic Lesson</h2>
+                <span className="badge rounded-pill badge-soft">Site-first explanation</span>
+              </div>
+              <MarkdownBlock html={marked.parse(data.lessonRaw)} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+            </div>
+          ) : null}
 
-      {topicSummary.takeaways.length ? (
-        <div className="content-card mb-4">
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-            <h2 className="page-title mb-0">After Reading This Example, You Should Know</h2>
-            <span className="badge rounded-pill badge-soft">Takeaways</span>
-          </div>
-          <BulletList items={topicSummary.takeaways} />
-        </div>
-      ) : null}
+          {(topicSummary.useWhen || topicSummary.avoidWhen || topicSummary.commonMistake) ? (
+            <div className="insight-grid mb-4">
+              {topicSummary.useWhen ? (
+                <InsightCard icon="bi bi-check2-circle" title="Use This When">
+                  {topicSummary.useWhen}
+                </InsightCard>
+              ) : null}
+              {topicSummary.avoidWhen ? (
+                <InsightCard icon="bi bi-slash-circle" title="Avoid This When">
+                  {topicSummary.avoidWhen}
+                </InsightCard>
+              ) : null}
+              {topicSummary.commonMistake ? (
+                <InsightCard icon="bi bi-exclamation-triangle" title="Common Mistake">
+                  {topicSummary.commonMistake}
+                </InsightCard>
+              ) : null}
+            </div>
+          ) : null}
 
-      {topicSummary.tryThisNext ? (
-        <div className="content-card mb-4">
-          <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-            <h2 className="page-title mb-0">Try This Next</h2>
-            <span className="badge rounded-pill badge-soft">Stretch the example</span>
-          </div>
-          <p className="mb-0 muted-copy">{topicSummary.tryThisNext}</p>
-        </div>
-      ) : null}
-
-      <div className="content-card">
-        <div className="topic-meta">
-          <span className="badge rounded-pill badge-soft">{topicSummary.concept || data.topic.concept}</span>
-          <span className="badge rounded-pill badge-soft">Java Source</span>
-          {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
-        </div>
-        <div className="code-panel">
-          <div className="code-toolbar">
-            <div>
-              <div className="fw-semibold">{data.topic.title}</div>
-              <div className="source-path">{data.topic.sourcePath}</div>
+          <div id="how-to-code" className="content-card mb-4">
+            <div className="topic-brief-grid">
+              <div className="topic-brief-card">
+                <div className="eyebrow mb-2">How To Code It</div>
+                <p className="mb-0">{topicSummary.howToCode || 'Run the example, compare the output, and then trace the code line by line.'}</p>
+              </div>
+              <div className="topic-brief-card">
+                <div className="eyebrow mb-2">Expected Output</div>
+                <p className="mb-0">{topicSummary.expectedOutput || 'The code comments and printed lines show the expected behavior.'}</p>
+              </div>
+              <div className="topic-brief-card">
+                <div className="eyebrow mb-2">Run Online</div>
+                <p className="mb-2">
+                  {topicRunner === 'embedded'
+                    ? 'Use the run button to send this stable example directly to JDoodle, or copy it into another playground.'
+                    : 'This topic is best run locally because it depends on newer or preview Java behavior.'}
+                </p>
+                {topicRunner === 'local' ? (
+                  <p className="mb-0 text-danger-emphasis">
+                    This topic uses newer Java features that may need local JDK 25 preview support.
+                  </p>
+                ) : null}
+              </div>
             </div>
           </div>
-          <CodeBlock code={data.raw} />
+
+          {topicSummary.takeaways.length ? (
+            <div id="takeaways" className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">After Reading This Example, You Should Know</h2>
+                <span className="badge rounded-pill badge-soft">Takeaways</span>
+              </div>
+              <BulletList items={topicSummary.takeaways} />
+            </div>
+          ) : null}
+
+          {topicSummary.tryThisNext ? (
+            <div className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 className="page-title mb-0">Try This Next</h2>
+                <span className="badge rounded-pill badge-soft">Stretch the example</span>
+              </div>
+              <p className="mb-0 muted-copy">{topicSummary.tryThisNext}</p>
+            </div>
+          ) : null}
+
+          <div id="source-code" className="content-card">
+            <div className="topic-meta">
+              <span className="badge rounded-pill badge-soft">{topicSummary.concept || data.topic.concept}</span>
+              <span className="badge rounded-pill badge-soft">Java Source</span>
+              {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
+            </div>
+            <div className="code-panel">
+              <div className="code-toolbar">
+                <div>
+                  <div className="fw-semibold">{data.topic.title}</div>
+                  <div className="source-path">{data.topic.sourcePath}</div>
+                </div>
+              </div>
+              <CodeBlock code={data.raw} />
+            </div>
+          </div>
+        </div>
+        <div className="content-side">
+          <InPageToc items={topicToc} />
         </div>
       </div>
     </PageLayout>

@@ -1,7 +1,7 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T11:18:00Z",
+  "generatedAt": "2026-04-07T11:42:38Z",
   "stats": {
     "sections": 21,
     "chapters": 47,
@@ -18,7 +18,10 @@
     {"slug": "JAVA_MIGRATION_GUIDES", "title": "JAVA MIGRATION GUIDES", "sourcePath": "JAVA_MIGRATION_GUIDES.md", "contentPath": "content/meta/JAVA_MIGRATION_GUIDES.md", "type": "markdown"},
     {"slug": "HIGH_DEMAND_JAVA_TOPICS", "title": "HIGH DEMAND JAVA TOPICS", "sourcePath": "HIGH_DEMAND_JAVA_TOPICS.md", "contentPath": "content/meta/HIGH_DEMAND_JAVA_TOPICS.md", "type": "markdown"},
     {"slug": "COMPANY_QUESTION_BANK", "title": "COMPANY QUESTION BANK", "sourcePath": "COMPANY_QUESTION_BANK.md", "contentPath": "content/meta/COMPANY_QUESTION_BANK.md", "type": "markdown"},
-    {"slug": "INTERVIEW_PROBLEM_APPROACH", "title": "INTERVIEW PROBLEM APPROACH", "sourcePath": "INTERVIEW_PROBLEM_APPROACH.md", "contentPath": "content/meta/INTERVIEW_PROBLEM_APPROACH.md", "type": "markdown"}
+    {"slug": "INTERVIEW_PROBLEM_APPROACH", "title": "INTERVIEW PROBLEM APPROACH", "sourcePath": "INTERVIEW_PROBLEM_APPROACH.md", "contentPath": "content/meta/INTERVIEW_PROBLEM_APPROACH.md", "type": "markdown"},
+    {"slug": "COMPARE_COLLECTIONS", "title": "COMPARE COLLECTIONS", "sourcePath": "COMPARE_COLLECTIONS.md", "contentPath": "content/meta/COMPARE_COLLECTIONS.md", "type": "markdown"},
+    {"slug": "COMPARE_STREAMS", "title": "COMPARE STREAMS", "sourcePath": "COMPARE_STREAMS.md", "contentPath": "content/meta/COMPARE_STREAMS.md", "type": "markdown"},
+    {"slug": "COMPARE_CONCURRENCY", "title": "COMPARE CONCURRENCY", "sourcePath": "COMPARE_CONCURRENCY.md", "contentPath": "content/meta/COMPARE_CONCURRENCY.md", "type": "markdown"}
   ],
   "sections": [
     {

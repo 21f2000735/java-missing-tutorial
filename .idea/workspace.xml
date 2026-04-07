@@ -4,72 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="first commit">
+    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/AUTHORING_GUIDE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/_baseUniq-ZQiW1nLP.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/arc-CuBk_McJ.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/architectureDiagram-IEHRJDOE-Bsz1iNC3.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/blockDiagram-JOT3LUYC-CCE2kVF0.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/c4Diagram-VJAJSXHY-CD-AXN-c.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/channel-nLodeCBV.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-4BMEZGHF-6RFtTz_j.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-A2AXSNBT-DkrvUSOZ.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-AEK57VVT-LHFgLW-L.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-D6G4REZN-BWXy_ION.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-RZ5BOZE2-XL_WT1WP.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-XZIHB7SX-CNd0G7kD.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-GIVACNV2-BbzJZpOH.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-v2-COTLJTTW-BbzJZpOH.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/clone-Be4fed11.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/dagre-OKDRZEBW-i0UgyL68.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-SSKATNLV-ByI5Sliw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-VNBRO52H-CVhOxiJN.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/erDiagram-Q7BY3M3F-DWZ2zYHM.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/flowDiagram-4HSFHLVR-DbjZE9_U.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/ganttDiagram-APWFNJXF-Cq7b47Cv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/gitGraphDiagram-7IBYFJ6S-BBV26Kwr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/graph-BJGhXZWt.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/index-myIaiXGF.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/infoDiagram-PH2N3AL5-BF4G_a-h.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/journeyDiagram-U35MCT3I-CTBZH6ZX.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/kanban-definition-NDS4AKOZ-wastoZ3f.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/layout-CwIC8bAb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/linear-56JDe_e9.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/mermaid.core-DJ8XJbzw.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/min-Bd6pfLmJ.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/mindmap-definition-ALO5MXBD-Cnw5zuB_.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/pieDiagram-IB7DONF6-C9YpBVyF.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/prism-DH4vd3-h.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/prism-java-wrFNXC7u.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/quadrantDiagram-7GDLP6J5-DPYD_43e.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/radar-MK3ICKWK-DNsOEF1T.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/requirementDiagram-KVF5MWMF-CQ1B3xyH.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/sankeyDiagram-QLVOVGJD-U6o4Zjf2.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/sequenceDiagram-X6HHIX6F-BSvc4RG1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-DGXRK772-_x-QLrMi.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-v2-YXO3MK2T-CY17yA3O.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/timeline-definition-BDJGKUSR-KIxzFtjC.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/xychartDiagram-VJFVF3MP-B-oBiZ6t.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scripts/build_site.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_site.sh" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,11 +122,20 @@
       <option name="project" value="LOCAL" />
       <updated>1775544090949</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="update">
+      <option name="closed" value="true" />
+      <created>1775560834747</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1775560834747</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="first commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="first commit" />
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
   </component>
 </project>
