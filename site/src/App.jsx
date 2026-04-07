@@ -1732,30 +1732,6 @@ function PageLayout({ header, children }) {
   );
 }
 
-function ChapterStoryCards({ guide }) {
-  const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story']);
-  const studyOrder = findGuideSection(guide, ['Study Order', 'Run This First']);
-  const whenToUse = findGuideSection(guide, ['When To Use', 'Use This Chapter When', 'Use This When']);
-  const compare = findGuideSection(guide, ['Compare With', 'Common Confusion', 'What To Look For']);
-
-  return (
-    <div className="insight-grid mb-4">
-      <InsightCard icon="bi bi-bullseye" title="Start With The Problem">
-        {truncateText(problem?.plain || guide.intro || 'Open the chapter guide for the real-world setup behind this concept.', 260)}
-      </InsightCard>
-      <InsightCard icon="bi bi-signpost-2" title="How To Read This Chapter">
-        <BulletList items={numberedItems(studyOrder?.raw || '')} />
-      </InsightCard>
-      <InsightCard icon="bi bi-check2-circle" title="Use This When">
-        <BulletList items={bulletItems(whenToUse?.raw || '')} />
-      </InsightCard>
-      <InsightCard icon="bi bi-shuffle" title="Important Tradeoffs">
-        <BulletList items={bulletItems(compare?.raw || '')} />
-      </InsightCard>
-    </div>
-  );
-}
-
 function TopicPreviewCard({ section, chapter, topic }) {
   const versionMeta = resolveVersionMeta(section.slug, chapter.slug, topic.lessonMeta, topic.preview);
   const summary = truncateText(
@@ -1826,7 +1802,14 @@ function submitToJdoodle(code) {
   document.body.removeChild(form);
 }
 
-function TopicActionButtons({ code, previewRequired, runner }) {
+function TopicActionButtons({
+  code,
+  runner,
+  showNote = true,
+  copyLabel = 'Copy code',
+  copiedLabel = 'Copied',
+  failedLabel = 'Copy failed'
+}) {
   const [copyState, setCopyState] = useState('idle');
 
   async function onCopy() {
@@ -1841,9 +1824,9 @@ function TopicActionButtons({ code, previewRequired, runner }) {
   }
 
   return (
-    <>
+    <div className="d-flex flex-wrap gap-2 topic-actions">
       <button className="btn btn-dark btn-sm rounded-pill" type="button" onClick={onCopy}>
-        {copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed' : 'Copy code'}
+        {copyState === 'copied' ? copiedLabel : copyState === 'failed' ? failedLabel : copyLabel}
       </button>
       {runner === 'embedded' ? (
         <button className="btn btn-outline-dark btn-sm rounded-pill" type="button" onClick={() => submitToJdoodle(code)}>
@@ -1857,8 +1840,8 @@ function TopicActionButtons({ code, previewRequired, runner }) {
       <a className="btn btn-outline-dark btn-sm rounded-pill" href={PLAYGROUND_LINKS.onecompiler} target="_blank" rel="noreferrer">
         Open OneCompiler
       </a>
-      {runner === 'local' ? <span className="playground-note">This example is best run locally, usually because of newer or preview Java features.</span> : null}
-    </>
+      {showNote && runner === 'local' ? <span className="playground-note">This example is best run locally, usually because of newer or preview Java features.</span> : null}
+    </div>
   );
 }
 
@@ -2347,14 +2330,8 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
   if (data.type === 'chapter') {
     const guide = parseGuide(data.guideRaw);
     const revision = parseGuide(data.revisionRaw);
-    const chapterIndex = data.section.chapters.findIndex((chapter) => chapter.slug === data.chapter.slug);
-    const sectionPrereqs = getSectionPrerequisiteInfo(data.section.slug);
-    const priorChapters = data.section.chapters.slice(0, chapterIndex).map((chapter) => `${data.section.title} / ${chapter.title}`);
-    const nextChapters = data.section.chapters.slice(chapterIndex + 1, chapterIndex + 3).map((chapter) => `${data.section.title} / ${chapter.title}`);
     const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story']);
     const quickSummary = findGuideSection(guide, ['Quick Summary', 'What To Look For']);
-    const avoidSection = findGuideSection(guide, ['When Not To Use', 'Avoid This Pattern When', 'Avoid This When', 'Watch Out']);
-    const nextSection = findGuideSection(guide, ['Recommended Next Step', 'Try This Next']);
     const routeKey = `#chapter/${data.section.slug}/${data.chapter.slug}`;
     const chapterToc = [
       { href: '#start-with-examples', label: 'Start With Examples' },
@@ -2383,47 +2360,6 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
         <ReadingStateBar routeKey={routeKey} {...readingState} />
         <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
           <div className="content-main">
-            <ChapterStoryCards guide={guide} />
-            <div className="callout-grid mb-4">
-              <CalloutCard tone="story" eyebrow="Problem Pressure" title="The Story">
-                {truncateText(problem?.plain || guide.intro || 'Start by understanding the design pressure before thinking about pattern names.', 260)}
-              </CalloutCard>
-              <CalloutCard tone="caution" eyebrow="Watch Out" title="Avoid Ceremony">
-                {truncateText(avoidSection?.plain || 'Do not add a pattern if the simpler code is already readable and stable.', 240)}
-              </CalloutCard>
-              <CalloutCard tone="next" eyebrow="Next Step" title="Read Forward">
-                {truncateText(nextSection?.plain || 'Run the first topic file, compare the output, then use the revision sheet to lock in the decision rule.', 220)}
-              </CalloutCard>
-            </div>
-            <div className="content-card mb-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Prerequisite Map</h2>
-                <span className="badge rounded-pill badge-soft">Study order</span>
-              </div>
-              <div className="prerequisite-grid">
-                <div className="prerequisite-panel">
-                  <div className="eyebrow mb-2">Read Before This Chapter</div>
-                  <div className="prerequisite-list">
-                    {priorChapters.length ? priorChapters.map((label) => (
-                      <span key={label} className="prerequisite-pill">{label}</span>
-                    )) : <span className="prerequisite-pill">Start here inside this section</span>}
-                    {sectionPrereqs.before.map((slug) => (
-                      <a key={slug} className="prerequisite-pill" href={`#section/${slug}`}>
-                        {manifest.sections.find((section) => section.slug === slug)?.title || titleFromSlug(slug)}
-                      </a>
-                    ))}
-                  </div>
-                </div>
-                <div className="prerequisite-panel">
-                  <div className="eyebrow mb-2">Best Next Chapter</div>
-                  <div className="prerequisite-list">
-                    {nextChapters.length ? nextChapters.map((label) => (
-                      <span key={label} className="prerequisite-pill prerequisite-pill-next">{label}</span>
-                    )) : <span className="prerequisite-pill prerequisite-pill-next">Use the revision sheet, then move to the next section</span>}
-                  </div>
-                </div>
-              </div>
-            </div>
             <div id="start-with-examples" className="content-card">
               <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
                 <h2 className="page-title mb-0">Start With These Examples</h2>
@@ -2482,7 +2418,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
           actions={(
             <>
               <a className="btn btn-outline-dark btn-sm rounded-pill" href={`#chapter/${data.section.slug}/${data.chapter.slug}`}>Back To Chapter</a>
-              <TopicActionButtons code={data.raw} previewRequired={topicSummary.previewRequired} runner={topicRunner} />
+              <TopicActionButtons code={data.raw} runner={topicRunner} showNote={false} copyLabel="Copy Snippet" />
             </>
           )}
         />
@@ -2618,6 +2554,13 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
               <span className="badge rounded-pill badge-soft">{topicSummary.concept || data.topic.concept}</span>
               <span className="badge rounded-pill badge-soft">Java Source</span>
               {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
+            </div>
+            <div className="code-cta mb-3">
+              <div>
+                <div className="eyebrow mb-1">Copy Or Try This Code</div>
+                <div className="muted-copy mb-0">Copy the snippet directly or open it in an online playground before reading line by line.</div>
+              </div>
+              <TopicActionButtons code={data.raw} runner={topicRunner} copyLabel="Copy Code Snippet" />
             </div>
             <div className="code-panel">
               <div className="code-toolbar">

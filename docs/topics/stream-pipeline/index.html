@@ -55,16 +55,23 @@
   p,li{line-height:1.75}
   .toolbar,.nav{display:flex;flex-wrap:wrap;gap:.75rem}
   .toolbar{justify-content:space-between;align-items:center;margin-top:1rem}
-  .nav a,.theme-toggle{
+  .nav a,.theme-toggle,.action-btn{
     display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.72rem .98rem;text-decoration:none;
     background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(49,40,29,.08);color:var(--text);border:0;font:inherit;cursor:pointer;
   }
   html[data-theme="dark"] .nav a,
-  html[data-theme="dark"] .theme-toggle{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
-  .nav a:hover,.theme-toggle:hover{transform:translateY(-1px)}
-  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
+  html[data-theme="dark"] .theme-toggle,
+  html[data-theme="dark"] .action-btn{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
+  .action-btn-primary{background:rgba(141,67,0,.12);box-shadow:inset 0 0 0 1px rgba(141,67,0,.18)}
+  html[data-theme="dark"] .action-btn-primary{background:rgba(241,178,106,.16);box-shadow:inset 0 0 0 1px rgba(241,178,106,.22)}
+  .nav a:hover,.theme-toggle:hover,.action-btn:hover{transform:translateY(-1px)}
+  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible,.action-btn:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
   .code-title,.lead,.muted{color:var(--muted)}
+  .code-cta{display:grid;gap:.85rem;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:linear-gradient(165deg,rgba(255,250,244,.96),rgba(246,238,221,.88))}
+  html[data-theme="dark"] .code-cta{background:linear-gradient(180deg,rgba(31,27,22,.96),rgba(27,23,19,.92)),var(--panel)}
+  .code-actions{display:flex;flex-wrap:wrap;gap:.75rem}
+  .code-status{margin:0;color:var(--muted);font-size:.95rem;min-height:1.4rem}
   img{display:block;width:min(100%,56rem);max-width:100%;height:auto;margin:1.2rem auto;border-radius:1.15rem;border:1px solid var(--line);background:var(--panel-strong);box-shadow:var(--shadow)}
   pre{overflow:auto;-webkit-overflow-scrolling:touch;background:#241d15;color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
   html[data-theme="dark"] pre{background:#15110d;color:#f7eddc}
@@ -79,8 +86,8 @@
     main{padding:1rem .85rem 2.5rem}
     .layout{grid-template-columns:1fr}
     .toolbar{align-items:stretch}
-    .nav{width:100%}
-    .nav a,.theme-toggle{width:100%;justify-content:center}
+    .nav,.code-actions{width:100%}
+    .nav a,.theme-toggle,.action-btn{width:100%;justify-content:center}
   }
   @media (max-width: 640px){
     .static-header,.panel{padding:1rem}
@@ -485,6 +492,18 @@
         <aside class="panel">
           <p class="eyebrow">Runnable Example</p>
           <p class="code-title">StreamPipeline.java</p>
+          <div class="code-cta">
+            <div>
+              <p class="eyebrow">Copy Or Try This Code</p>
+              <p class="muted">Understand the idea first, then copy the snippet or open it in JDoodle to try it immediately.</p>
+            </div>
+            <div class="code-actions">
+              <button class="action-btn action-btn-primary" id="copy-code-btn" type="button">Copy Code Snippet</button>
+              <button class="action-btn" id="open-jdoodle-btn" type="button">Open JDoodle</button>
+              <a class="action-btn" href="../../index.html#topic/sec04_streams_and_functional_style/ch01_streams/stream_pipeline#source-code">Open App Code View</a>
+            </div>
+            <p class="code-status" id="copy-code-status" aria-live="polite"></p>
+          </div>
           <pre><code>package com.learning.javamissing.sec04_streams_and_functional_style.ch01_streams.topics.stream_pipeline;
 
 import java.util.List;
@@ -638,6 +657,7 @@ public class StreamPipeline {
       </div>
     </div>
   </main>
+  <script>window.__topicCode = "package com.learning.javamissing.sec04_streams_and_functional_style.ch01_streams.topics.stream_pipeline;\n\nimport java.util.List;\n\n/**\n * Concept: Stream Pipeline\n * Why this concept is needed:\n * Many business tasks are really data transformations, and the code should show that clearly.\n *\n * What problem this solves:\n * It expresses filtering and mapping as a readable sequence of steps.\n *\n * Real-world setup:\n * An order screen needs only priority items and only the fields needed for the next step.\n *\n * How to think about it:\n * A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.\n *\n * How to code it:\n * 1. Start with a collection.\n * 2. Add filter and map steps in the same order as the business rule.\n * 3. Finish with a terminal operation that produces the answer.\n *\n * Expected output:\n * longNames = [liam, alex]\n * priorityTotal = 3798\n */\n\npublic class StreamPipeline {\n    public static void main(String[] args) {\n        printOverview();\n        wrongExample();\n        basicExample();\n        betterExample();\n        commonPitfalls();\n        examTrap();\n        interviewQuestion();\n        exercise();\n        solution();\n    }\n\n    private static void wrongExample() {\n        System.out.println(\"Wrong example:\");\n        System.out.println(\"Using a stream for very tiny logic can be worse than a plain loop if the code becomes harder to read.\");\n        System.out.println();\n    }\n\n    private static void printOverview() {\n        System.out.println(\"The problem:\");\n        System.out.println(\"You have raw data, but the business wants a smaller and clearer answer.\");\n        System.out.println(\"A stream pipeline helps when the code is really a chain of filtering and transformation steps.\");\n        System.out.println();\n    }\n\n    private static void basicExample() {\n        // Expected output:\n        // longNames = [liam, alex]\n        List<String> names = List.of(\"ava\", \"liam\", \"zoe\", \"alex\");\n        List<String> longNames = longNames(names, 4);\n\n        System.out.println(\"Run this first:\");\n        System.out.println(\"longNames = \" + longNames);\n        System.out.println(\"Why it works: the filter keeps only names with length >= 4.\");\n        System.out.println(\"Dry run: ava(false), liam(true), zoe(false), alex(true).\");\n        System.out.println();\n    }\n\n    private static void betterExample() {\n        // Expected output:\n        // priorityTotal = 3798 because only book and bag are priority orders\n        List<Order> orders = List.of(\n                new Order(\"book\", 1_299, true),\n                new Order(\"pen\", 199, false),\n                new Order(\"bag\", 2_499, true)\n        );\n\n        int priorityTotal = sumPriorityOrders(orders);\n\n        System.out.println(\"Better real-world example:\");\n        System.out.println(\"priorityTotal = \" + priorityTotal);\n        System.out.println(\"Why it works: the filter keeps only priority orders and mapToInt extracts only the field needed for the sum.\");\n        System.out.println(\"Use this when: the task is really filter -> transform -> answer.\");\n        System.out.println(\"Avoid this when: the logic is stateful and a loop is easier to explain.\");\n        System.out.println();\n    }\n\n    private static void commonPitfalls() {\n        System.out.println(\"Common mistake:\");\n        System.out.println(\"- using streams for logic that is simpler with a loop\");\n        System.out.println(\"- mutating external state inside map or filter\");\n        System.out.println(\"- forgetting that streams do nothing until a terminal operation runs\");\n        System.out.println(\"- making the pipeline so long that it becomes harder to read than a loop\");\n        System.out.println();\n    }\n\n    private static void examTrap() {\n        System.out.println(\"OCJP trap:\");\n        System.out.println(\"Intermediate operations are lazy.\");\n        System.out.println(\"A stream pipeline needs a terminal operation like toList(), count(), or sum() to execute.\");\n        System.out.println();\n    }\n\n    private static void interviewQuestion() {\n        System.out.println(\"Interview Q&A:\");\n        System.out.println(\"Q: When would you choose a loop over a stream?\");\n        System.out.println(\"A: Choose a loop when the logic is stateful, hard to express cleanly in a pipeline, or easier to debug step by step.\");\n        System.out.println();\n    }\n\n    private static void exercise() {\n        System.out.println(\"Exercise:\");\n        System.out.println(\"From scores {55, 91, 78, 42, 88}, build a stream pipeline that keeps passing scores and counts them.\");\n        System.out.println();\n    }\n\n    private static void solution() {\n        long passingCount = countPassingScores(List.of(55, 91, 78, 42, 88), 60);\n\n        System.out.println(\"Solution:\");\n        System.out.println(\"passingCount = \" + passingCount);\n        System.out.println(\"Why this is better: the filter explains the rule, and count() makes the final goal explicit.\");\n        System.out.println(\"After reading this example, you should know:\");\n        System.out.println(\"- a stream pipeline is best when the work is a chain of data steps\");\n        System.out.println(\"- terminal operations are what actually trigger execution\");\n        System.out.println(\"- a loop is still the better choice when the pipeline stops being clear\");\n    }\n\n    static List<String> longNames(List<String> names, int minimumLength) {\n        return names.stream()\n                .filter(name -> name.length() >= minimumLength)\n                .toList();\n    }\n\n    static int sumPriorityOrders(List<Order> orders) {\n        return orders.stream()\n                .filter(Order::priority)\n                .mapToInt(Order::priceInCents)\n                .sum();\n    }\n\n    static long countPassingScores(List<Integer> scores, int passingScore) {\n        return scores.stream()\n                .filter(score -> score >= passingScore)\n                .count();\n    }\n\n    record Order(String name, int priceInCents, boolean priority) {}\n}\n";</script>
   <script>
   const key = 'java-book-theme';
   const root = document.documentElement;
@@ -653,6 +673,47 @@ public class StreamPipeline {
       const next = (root.dataset.theme || 'light') === 'dark' ? 'light' : 'dark';
       localStorage.setItem(key, next);
       apply(next);
+    });
+  }
+  const copyButton = document.getElementById('copy-code-btn');
+  const copyStatus = document.getElementById('copy-code-status');
+  const jdoodleButton = document.getElementById('open-jdoodle-btn');
+  if(copyButton && window.__topicCode){
+    copyButton.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(window.__topicCode);
+        copyButton.textContent = 'Copied';
+        if(copyStatus) copyStatus.textContent = 'Snippet copied. Paste it into your IDE or playground.';
+      }catch{
+        copyButton.textContent = 'Copy failed';
+        if(copyStatus) copyStatus.textContent = 'Clipboard access failed. Use the raw Java file link instead.';
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = 'Copy Code Snippet';
+      }, 1800);
+    });
+  }
+  if(jdoodleButton && window.__topicCode){
+    jdoodleButton.addEventListener('click', () => {
+      const form = document.createElement('form');
+      form.method = 'post';
+      form.action = 'https://www.jdoodle.com/api/redirect-to-post/online-java-compiler';
+      form.target = '_blank';
+      const fields = {
+        language: 'java',
+        versionIndex: '5',
+        code: window.__topicCode
+      };
+      Object.entries(fields).forEach(([name, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
     });
   }
 </script>

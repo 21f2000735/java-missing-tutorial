@@ -55,16 +55,23 @@
   p,li{line-height:1.75}
   .toolbar,.nav{display:flex;flex-wrap:wrap;gap:.75rem}
   .toolbar{justify-content:space-between;align-items:center;margin-top:1rem}
-  .nav a,.theme-toggle{
+  .nav a,.theme-toggle,.action-btn{
     display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.72rem .98rem;text-decoration:none;
     background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(49,40,29,.08);color:var(--text);border:0;font:inherit;cursor:pointer;
   }
   html[data-theme="dark"] .nav a,
-  html[data-theme="dark"] .theme-toggle{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
-  .nav a:hover,.theme-toggle:hover{transform:translateY(-1px)}
-  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
+  html[data-theme="dark"] .theme-toggle,
+  html[data-theme="dark"] .action-btn{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
+  .action-btn-primary{background:rgba(141,67,0,.12);box-shadow:inset 0 0 0 1px rgba(141,67,0,.18)}
+  html[data-theme="dark"] .action-btn-primary{background:rgba(241,178,106,.16);box-shadow:inset 0 0 0 1px rgba(241,178,106,.22)}
+  .nav a:hover,.theme-toggle:hover,.action-btn:hover{transform:translateY(-1px)}
+  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible,.action-btn:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
   .code-title,.lead,.muted{color:var(--muted)}
+  .code-cta{display:grid;gap:.85rem;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:linear-gradient(165deg,rgba(255,250,244,.96),rgba(246,238,221,.88))}
+  html[data-theme="dark"] .code-cta{background:linear-gradient(180deg,rgba(31,27,22,.96),rgba(27,23,19,.92)),var(--panel)}
+  .code-actions{display:flex;flex-wrap:wrap;gap:.75rem}
+  .code-status{margin:0;color:var(--muted);font-size:.95rem;min-height:1.4rem}
   img{display:block;width:min(100%,56rem);max-width:100%;height:auto;margin:1.2rem auto;border-radius:1.15rem;border:1px solid var(--line);background:var(--panel-strong);box-shadow:var(--shadow)}
   pre{overflow:auto;-webkit-overflow-scrolling:touch;background:#241d15;color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
   html[data-theme="dark"] pre{background:#15110d;color:#f7eddc}
@@ -79,8 +86,8 @@
     main{padding:1rem .85rem 2.5rem}
     .layout{grid-template-columns:1fr}
     .toolbar{align-items:stretch}
-    .nav{width:100%}
-    .nav a,.theme-toggle{width:100%;justify-content:center}
+    .nav,.code-actions{width:100%}
+    .nav a,.theme-toggle,.action-btn{width:100%;justify-content:center}
   }
   @media (max-width: 640px){
     .static-header,.panel{padding:1rem}
@@ -444,6 +451,18 @@
         <aside class="panel">
           <p class="eyebrow">Runnable Example</p>
           <p class="code-title">ArrayListGrowthAndLookup.java</p>
+          <div class="code-cta">
+            <div>
+              <p class="eyebrow">Copy Or Try This Code</p>
+              <p class="muted">Understand the idea first, then copy the snippet or open it in JDoodle to try it immediately.</p>
+            </div>
+            <div class="code-actions">
+              <button class="action-btn action-btn-primary" id="copy-code-btn" type="button">Copy Code Snippet</button>
+              <button class="action-btn" id="open-jdoodle-btn" type="button">Open JDoodle</button>
+              <a class="action-btn" href="../../index.html#topic/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/arraylist_growth_and_lookup#source-code">Open App Code View</a>
+            </div>
+            <p class="code-status" id="copy-code-status" aria-live="polite"></p>
+          </div>
           <pre><code>package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.arraylist_growth_and_lookup;
 
 import java.util.ArrayList;
@@ -513,6 +532,7 @@ public class ArrayListGrowthAndLookup {
       </div>
     </div>
   </main>
+  <script>window.__topicCode = "package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.arraylist_growth_and_lookup;\n\nimport java.util.ArrayList;\nimport java.util.List;\n\n/**\n * Concept: ArrayList growth and lookup\n * Why this concept is needed:\n * ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.\n *\n * What problem this solves:\n * It explains why indexed reads are fast and why occasional resize cost appears during append-heavy workloads.\n *\n * Real-world setup:\n * An order dashboard keeps appending recent orders and later reads them by index.\n *\n * How to think about it:\n * ArrayList is fast because data stays in a backing array, but growth sometimes copies old elements.\n *\n * How to code it:\n * 1. Append items while estimating resize-copy work.\n * 2. Read one item by index.\n * 3. Compare cheap common appends with occasional expensive growth.\n *\n * Expected output:\n * itemAtIndex4 = order-5\n * estimatedCopiesDuringGrowth = 10\n */\npublic class ArrayListGrowthAndLookup {\n    public static void main(String[] args) {\n        System.out.println(\"Concept: ArrayList internals\");\n        System.out.println(\"Problem: appends look cheap, but hidden resize work still exists.\");\n        System.out.println();\n\n        List<String> recentOrders = new ArrayList<>();\n        int copiedDuringGrowth = appendWithEstimatedCopyWork(recentOrders, 12);\n\n        // Expected output:\n        // itemAtIndex4 = order-5\n        // estimatedCopiesDuringGrowth = 10\n        System.out.println(\"itemAtIndex4 = \" + recentOrders.get(4));\n        System.out.println(\"estimatedCopiesDuringGrowth = \" + copiedDuringGrowth);\n        System.out.println(\"Why it works: index access is direct, but resizing copies old elements into a larger array.\");\n        System.out.println(\"Common mistake: saying append is always free instead of amortized.\");\n        System.out.println(\"After reading this example, you should know:\");\n        System.out.println(\"- index lookup is fast because ArrayList stores elements in a contiguous backing array\");\n        System.out.println(\"- growth is usually cheap but occasional resize copies old elements\");\n        System.out.println(\"- append is amortized O(1), not magically free\");\n    }\n\n    static int appendWithEstimatedCopyWork(List<String> values, int itemCount) {\n        int capacity = 0;\n        int copiedElements = 0;\n        for (int index = 0; index < itemCount; index++) {\n            if (values.size() == capacity) {\n                int oldCapacity = capacity;\n                capacity = capacity == 0 ? 10 : capacity + (capacity >> 1);\n                copiedElements += oldCapacity;\n            }\n            values.add(\"order-\" + (index + 1));\n        }\n        return copiedElements;\n    }\n}\n";</script>
   <script>
   const key = 'java-book-theme';
   const root = document.documentElement;
@@ -528,6 +548,47 @@ public class ArrayListGrowthAndLookup {
       const next = (root.dataset.theme || 'light') === 'dark' ? 'light' : 'dark';
       localStorage.setItem(key, next);
       apply(next);
+    });
+  }
+  const copyButton = document.getElementById('copy-code-btn');
+  const copyStatus = document.getElementById('copy-code-status');
+  const jdoodleButton = document.getElementById('open-jdoodle-btn');
+  if(copyButton && window.__topicCode){
+    copyButton.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(window.__topicCode);
+        copyButton.textContent = 'Copied';
+        if(copyStatus) copyStatus.textContent = 'Snippet copied. Paste it into your IDE or playground.';
+      }catch{
+        copyButton.textContent = 'Copy failed';
+        if(copyStatus) copyStatus.textContent = 'Clipboard access failed. Use the raw Java file link instead.';
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = 'Copy Code Snippet';
+      }, 1800);
+    });
+  }
+  if(jdoodleButton && window.__topicCode){
+    jdoodleButton.addEventListener('click', () => {
+      const form = document.createElement('form');
+      form.method = 'post';
+      form.action = 'https://www.jdoodle.com/api/redirect-to-post/online-java-compiler';
+      form.target = '_blank';
+      const fields = {
+        language: 'java',
+        versionIndex: '5',
+        code: window.__topicCode
+      };
+      Object.entries(fields).forEach(([name, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
     });
   }
 </script>

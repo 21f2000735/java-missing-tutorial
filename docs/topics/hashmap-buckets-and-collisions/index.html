@@ -55,16 +55,23 @@
   p,li{line-height:1.75}
   .toolbar,.nav{display:flex;flex-wrap:wrap;gap:.75rem}
   .toolbar{justify-content:space-between;align-items:center;margin-top:1rem}
-  .nav a,.theme-toggle{
+  .nav a,.theme-toggle,.action-btn{
     display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.72rem .98rem;text-decoration:none;
     background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(49,40,29,.08);color:var(--text);border:0;font:inherit;cursor:pointer;
   }
   html[data-theme="dark"] .nav a,
-  html[data-theme="dark"] .theme-toggle{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
-  .nav a:hover,.theme-toggle:hover{transform:translateY(-1px)}
-  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
+  html[data-theme="dark"] .theme-toggle,
+  html[data-theme="dark"] .action-btn{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
+  .action-btn-primary{background:rgba(141,67,0,.12);box-shadow:inset 0 0 0 1px rgba(141,67,0,.18)}
+  html[data-theme="dark"] .action-btn-primary{background:rgba(241,178,106,.16);box-shadow:inset 0 0 0 1px rgba(241,178,106,.22)}
+  .nav a:hover,.theme-toggle:hover,.action-btn:hover{transform:translateY(-1px)}
+  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible,.action-btn:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
   .code-title,.lead,.muted{color:var(--muted)}
+  .code-cta{display:grid;gap:.85rem;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:linear-gradient(165deg,rgba(255,250,244,.96),rgba(246,238,221,.88))}
+  html[data-theme="dark"] .code-cta{background:linear-gradient(180deg,rgba(31,27,22,.96),rgba(27,23,19,.92)),var(--panel)}
+  .code-actions{display:flex;flex-wrap:wrap;gap:.75rem}
+  .code-status{margin:0;color:var(--muted);font-size:.95rem;min-height:1.4rem}
   img{display:block;width:min(100%,56rem);max-width:100%;height:auto;margin:1.2rem auto;border-radius:1.15rem;border:1px solid var(--line);background:var(--panel-strong);box-shadow:var(--shadow)}
   pre{overflow:auto;-webkit-overflow-scrolling:touch;background:#241d15;color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
   html[data-theme="dark"] pre{background:#15110d;color:#f7eddc}
@@ -79,8 +86,8 @@
     main{padding:1rem .85rem 2.5rem}
     .layout{grid-template-columns:1fr}
     .toolbar{align-items:stretch}
-    .nav{width:100%}
-    .nav a,.theme-toggle{width:100%;justify-content:center}
+    .nav,.code-actions{width:100%}
+    .nav a,.theme-toggle,.action-btn{width:100%;justify-content:center}
   }
   @media (max-width: 640px){
     .static-header,.panel{padding:1rem}
@@ -466,6 +473,18 @@
         <aside class="panel">
           <p class="eyebrow">Runnable Example</p>
           <p class="code-title">HashMapBucketsAndCollisions.java</p>
+          <div class="code-cta">
+            <div>
+              <p class="eyebrow">Copy Or Try This Code</p>
+              <p class="muted">Understand the idea first, then copy the snippet or open it in JDoodle to try it immediately.</p>
+            </div>
+            <div class="code-actions">
+              <button class="action-btn action-btn-primary" id="copy-code-btn" type="button">Copy Code Snippet</button>
+              <button class="action-btn" id="open-jdoodle-btn" type="button">Open JDoodle</button>
+              <a class="action-btn" href="../../index.html#topic/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/hashmap_buckets_and_collisions#source-code">Open App Code View</a>
+            </div>
+            <p class="code-status" id="copy-code-status" aria-live="polite"></p>
+          </div>
           <pre><code>package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.hashmap_buckets_and_collisions;
 
 import java.util.HashMap;
@@ -541,6 +560,7 @@ public class HashMapBucketsAndCollisions {
       </div>
     </div>
   </main>
+  <script>window.__topicCode = "package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.hashmap_buckets_and_collisions;\n\nimport java.util.HashMap;\nimport java.util.Map;\n\n/**\n * Concept: HashMap buckets and collisions\n * Why this concept is needed:\n * HashMap looks like instant lookup until collisions and hashing quality become relevant.\n *\n * What problem this solves:\n * It explains why average lookup is fast, what collisions mean, and why equals/hashCode correctness matters.\n *\n * Real-world setup:\n * A session store keeps statuses by user ID in a map.\n *\n * How to think about it:\n * HashMap spreads keys across buckets; collisions mean multiple keys share one bucket and more work happens there.\n *\n * How to code it:\n * 1. Store several keys with the same hash.\n * 2. Read one value back.\n * 3. See that correctness still depends on equals/hashCode, even when collisions exist.\n *\n * Expected output:\n * status = EXPIRED\n * sameBucketCount = 3\n */\npublic class HashMapBucketsAndCollisions {\n    public static void main(String[] args) {\n        System.out.println(\"Concept: HashMap collisions\");\n        System.out.println(\"Problem: fast lookup depends on good key distribution, not on magic.\");\n        System.out.println();\n\n        Map<CollidingKey, String> sessions = new HashMap<>();\n        sessions.put(new CollidingKey(\"user-101\"), \"ACTIVE\");\n        sessions.put(new CollidingKey(\"user-205\"), \"EXPIRED\");\n        sessions.put(new CollidingKey(\"user-309\"), \"LOCKED\");\n\n        // Expected output:\n        // status = EXPIRED\n        // sameBucketCount = 3\n        System.out.println(\"status = \" + sessions.get(new CollidingKey(\"user-205\")));\n        System.out.println(\"sameBucketCount = \" + sessions.size());\n        System.out.println(\"Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.\");\n        System.out.println(\"Common mistake: assuming HashMap is always O(1) without thinking about collision patterns.\");\n        System.out.println(\"After reading this example, you should know:\");\n        System.out.println(\"- HashMap lookup is usually O(1) on average\");\n        System.out.println(\"- collisions mean multiple keys land in the same bucket\");\n        System.out.println(\"- correct equals/hashCode keeps lookups correct even when collisions happen\");\n    }\n\n    static final class CollidingKey {\n        private final String value;\n\n        CollidingKey(String value) {\n            this.value = value;\n        }\n\n        @Override\n        public boolean equals(Object other) {\n            return other instanceof CollidingKey key && value.equals(key.value);\n        }\n\n        @Override\n        public int hashCode() {\n            return 7;\n        }\n    }\n}\n";</script>
   <script>
   const key = 'java-book-theme';
   const root = document.documentElement;
@@ -556,6 +576,47 @@ public class HashMapBucketsAndCollisions {
       const next = (root.dataset.theme || 'light') === 'dark' ? 'light' : 'dark';
       localStorage.setItem(key, next);
       apply(next);
+    });
+  }
+  const copyButton = document.getElementById('copy-code-btn');
+  const copyStatus = document.getElementById('copy-code-status');
+  const jdoodleButton = document.getElementById('open-jdoodle-btn');
+  if(copyButton && window.__topicCode){
+    copyButton.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(window.__topicCode);
+        copyButton.textContent = 'Copied';
+        if(copyStatus) copyStatus.textContent = 'Snippet copied. Paste it into your IDE or playground.';
+      }catch{
+        copyButton.textContent = 'Copy failed';
+        if(copyStatus) copyStatus.textContent = 'Clipboard access failed. Use the raw Java file link instead.';
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = 'Copy Code Snippet';
+      }, 1800);
+    });
+  }
+  if(jdoodleButton && window.__topicCode){
+    jdoodleButton.addEventListener('click', () => {
+      const form = document.createElement('form');
+      form.method = 'post';
+      form.action = 'https://www.jdoodle.com/api/redirect-to-post/online-java-compiler';
+      form.target = '_blank';
+      const fields = {
+        language: 'java',
+        versionIndex: '5',
+        code: window.__topicCode
+      };
+      Object.entries(fields).forEach(([name, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
     });
   }
 </script>

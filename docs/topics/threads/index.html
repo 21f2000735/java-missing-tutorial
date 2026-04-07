@@ -55,16 +55,23 @@
   p,li{line-height:1.75}
   .toolbar,.nav{display:flex;flex-wrap:wrap;gap:.75rem}
   .toolbar{justify-content:space-between;align-items:center;margin-top:1rem}
-  .nav a,.theme-toggle{
+  .nav a,.theme-toggle,.action-btn{
     display:inline-flex;align-items:center;gap:.45rem;border-radius:999px;padding:.72rem .98rem;text-decoration:none;
     background:rgba(255,255,255,.75);box-shadow:inset 0 0 0 1px rgba(49,40,29,.08);color:var(--text);border:0;font:inherit;cursor:pointer;
   }
   html[data-theme="dark"] .nav a,
-  html[data-theme="dark"] .theme-toggle{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
-  .nav a:hover,.theme-toggle:hover{transform:translateY(-1px)}
-  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
+  html[data-theme="dark"] .theme-toggle,
+  html[data-theme="dark"] .action-btn{background:rgba(40,34,28,.86);box-shadow:inset 0 0 0 1px var(--line)}
+  .action-btn-primary{background:rgba(141,67,0,.12);box-shadow:inset 0 0 0 1px rgba(141,67,0,.18)}
+  html[data-theme="dark"] .action-btn-primary{background:rgba(241,178,106,.16);box-shadow:inset 0 0 0 1px rgba(241,178,106,.22)}
+  .nav a:hover,.theme-toggle:hover,.action-btn:hover{transform:translateY(-1px)}
+  .nav a:focus-visible,.theme-toggle:focus-visible,.back-link:focus-visible,.action-btn:focus-visible{outline:2px solid var(--accent-strong);outline-offset:3px}
   .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
   .code-title,.lead,.muted{color:var(--muted)}
+  .code-cta{display:grid;gap:.85rem;padding:1rem;border:1px solid var(--line);border-radius:1rem;background:linear-gradient(165deg,rgba(255,250,244,.96),rgba(246,238,221,.88))}
+  html[data-theme="dark"] .code-cta{background:linear-gradient(180deg,rgba(31,27,22,.96),rgba(27,23,19,.92)),var(--panel)}
+  .code-actions{display:flex;flex-wrap:wrap;gap:.75rem}
+  .code-status{margin:0;color:var(--muted);font-size:.95rem;min-height:1.4rem}
   img{display:block;width:min(100%,56rem);max-width:100%;height:auto;margin:1.2rem auto;border-radius:1.15rem;border:1px solid var(--line);background:var(--panel-strong);box-shadow:var(--shadow)}
   pre{overflow:auto;-webkit-overflow-scrolling:touch;background:#241d15;color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
   html[data-theme="dark"] pre{background:#15110d;color:#f7eddc}
@@ -79,8 +86,8 @@
     main{padding:1rem .85rem 2.5rem}
     .layout{grid-template-columns:1fr}
     .toolbar{align-items:stretch}
-    .nav{width:100%}
-    .nav a,.theme-toggle{width:100%;justify-content:center}
+    .nav,.code-actions{width:100%}
+    .nav a,.theme-toggle,.action-btn{width:100%;justify-content:center}
   }
   @media (max-width: 640px){
     .static-header,.panel{padding:1rem}
@@ -414,6 +421,18 @@
         <aside class="panel">
           <p class="eyebrow">Runnable Example</p>
           <p class="code-title">Threads.java</p>
+          <div class="code-cta">
+            <div>
+              <p class="eyebrow">Copy Or Try This Code</p>
+              <p class="muted">Understand the idea first, then copy the snippet or open it in JDoodle to try it immediately.</p>
+            </div>
+            <div class="code-actions">
+              <button class="action-btn action-btn-primary" id="copy-code-btn" type="button">Copy Code Snippet</button>
+              <button class="action-btn" id="open-jdoodle-btn" type="button">Open JDoodle</button>
+              <a class="action-btn" href="../../index.html#topic/sec05_multithreading_and_concurrency/ch01_concurrency_basics/threads#source-code">Open App Code View</a>
+            </div>
+            <p class="code-status" id="copy-code-status" aria-live="polite"></p>
+          </div>
           <pre><code>package com.learning.javamissing.sec05_multithreading_and_concurrency.ch01_concurrency_basics.topics.threads;
 
 /**
@@ -537,6 +556,7 @@ public class Threads {
       </div>
     </div>
   </main>
+  <script>window.__topicCode = "package com.learning.javamissing.sec05_multithreading_and_concurrency.ch01_concurrency_basics.topics.threads;\n\n/**\n * Concept: Threads\n * Why this concept is needed:\n * Concurrency starts with one hard fact: two units of work can overlap in time.\n *\n * What problem this solves:\n * It shows how independent work starts and why shared state becomes risky.\n *\n * Real-world setup:\n * A reporting task runs in the background while the main flow continues.\n *\n * How to think about it:\n * A thread is a unit of execution. Starting work and sharing state are separate concerns.\n *\n * How to code it:\n * 1. Start one background task.\n * 2. Wait with join() when you need the task finished.\n * 3. Notice how shared mutable state changes the design problem.\n *\n * Expected output:\n * worker thread: prepare report\n * safe count = 2\n */\npublic class Threads {\n    public static void main(String[] args) throws InterruptedException {\n        printOverview();\n        wrongExample();\n        basicExample();\n        betterExample();\n        commonPitfalls();\n        exercise();\n        solution();\n    }\n\n    private static void printOverview() {\n        System.out.println(\"The problem:\");\n        System.out.println(\"You want one task to run independently, but once tasks overlap, execution order and shared state both matter.\");\n        System.out.println();\n    }\n\n    private static void wrongExample() {\n        System.out.println(\"Common mistake:\");\n        System.out.println(\"- calling run() directly and expecting a new thread\");\n        System.out.println(\"- sharing mutable state before understanding the execution model\");\n        System.out.println();\n    }\n\n    private static void basicExample() throws InterruptedException {\n        runWorkerAndWait();\n        System.out.println(\"Run this first:\");\n        System.out.println(\"- A thread can run a small task independently.\");\n        System.out.println(\"- join() waits for that task to finish.\");\n        System.out.println();\n    }\n\n    private static void betterExample() throws InterruptedException {\n        int safeCount = runSafeCounterDemo();\n        System.out.println(\"Better example:\");\n        System.out.println(\"safe count = \" + safeCount);\n        System.out.println(\"Why it works: synchronized protects the shared counter.\");\n        System.out.println(\"Use this when: you are learning the execution model or showing a tiny one-off demo.\");\n        System.out.println(\"Avoid this when: production code needs many tasks, because executors age better.\");\n        System.out.println();\n    }\n\n    private static void commonPitfalls() {\n        System.out.println(\"What to remember:\");\n        System.out.println(\"- start() creates a new thread; run() is just a normal method call\");\n        System.out.println(\"- execution order is not guaranteed just because start() was called first\");\n        System.out.println(\"- correctness becomes harder as soon as threads share mutable state\");\n        System.out.println();\n    }\n\n    private static void exercise() {\n        System.out.println(\"Try next:\");\n        System.out.println(\"- remove synchronization from the counter example\");\n        System.out.println(\"- predict whether the final count always stays 2\");\n        System.out.println();\n    }\n\n    private static void solution() {\n        System.out.println(\"After reading this example, you should know:\");\n        System.out.println(\"- threads let work overlap in time\");\n        System.out.println(\"- join() makes waiting explicit\");\n        System.out.println(\"- shared mutable state is where concurrency becomes dangerous\");\n    }\n\n    static void runWorkerAndWait() throws InterruptedException {\n        Thread worker = new Thread(() -> System.out.println(\"worker thread: prepare report\"), \"report-worker\");\n        worker.start();\n        worker.join();\n    }\n\n    static int runSafeCounterDemo() throws InterruptedException {\n        Counter counter = new Counter();\n        Thread first = new Thread(counter::incrementSafely, \"counter-1\");\n        Thread second = new Thread(counter::incrementSafely, \"counter-2\");\n        first.start();\n        second.start();\n        first.join();\n        second.join();\n        return counter.value();\n    }\n\n    private static final class Counter {\n        private int count;\n\n        synchronized void incrementSafely() {\n            count++;\n        }\n\n        synchronized int value() {\n            return count;\n        }\n    }\n}\n";</script>
   <script>
   const key = 'java-book-theme';
   const root = document.documentElement;
@@ -552,6 +572,47 @@ public class Threads {
       const next = (root.dataset.theme || 'light') === 'dark' ? 'light' : 'dark';
       localStorage.setItem(key, next);
       apply(next);
+    });
+  }
+  const copyButton = document.getElementById('copy-code-btn');
+  const copyStatus = document.getElementById('copy-code-status');
+  const jdoodleButton = document.getElementById('open-jdoodle-btn');
+  if(copyButton && window.__topicCode){
+    copyButton.addEventListener('click', async () => {
+      try{
+        await navigator.clipboard.writeText(window.__topicCode);
+        copyButton.textContent = 'Copied';
+        if(copyStatus) copyStatus.textContent = 'Snippet copied. Paste it into your IDE or playground.';
+      }catch{
+        copyButton.textContent = 'Copy failed';
+        if(copyStatus) copyStatus.textContent = 'Clipboard access failed. Use the raw Java file link instead.';
+      }
+      window.setTimeout(() => {
+        copyButton.textContent = 'Copy Code Snippet';
+      }, 1800);
+    });
+  }
+  if(jdoodleButton && window.__topicCode){
+    jdoodleButton.addEventListener('click', () => {
+      const form = document.createElement('form');
+      form.method = 'post';
+      form.action = 'https://www.jdoodle.com/api/redirect-to-post/online-java-compiler';
+      form.target = '_blank';
+      const fields = {
+        language: 'java',
+        versionIndex: '5',
+        code: window.__topicCode
+      };
+      Object.entries(fields).forEach(([name, value]) => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = name;
+        input.value = value;
+        form.appendChild(input);
+      });
+      document.body.appendChild(form);
+      form.submit();
+      document.body.removeChild(form);
     });
   }
 </script>
