@@ -38,6 +38,7 @@ resource_files=(
 )
 
 python3 "$root/scripts/validate_naming.py"
+python3 "$root/scripts/validate_guide_structure.py"
 
 json_escape() {
   printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'

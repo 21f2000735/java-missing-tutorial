@@ -88,23 +88,31 @@ estimated: 8 min
 
 # Topic Name
 
-## The Problem
-## Run This Code
-## Expected Output
-## ❌ Bad Code
-## ✅ Better Code
-## Why This Works
+## Why This Matters
+## Intuition
+## Problem Statement
+## Core Idea
+## Mental Model
+## Simple Example
+## Step-by-Step Working
+## Rules / Syntax
+## Common Mistakes
+## When To Use / When Not To Use
+## Practice
+## Summary
+
+## Quick Visual
 ## Comparison Snapshot
 ## Performance Lens
-## Use This When
-## Avoid This When
+## Benchmark Checklist
 ## Version Notes
 ## Next Topic
 ```
 
 Use `runner: embedded` for stable single-file examples that can be pushed to JDoodle from the site.  
 Use `runner: local` for preview-sensitive or multi-file examples.
-Use `❌` and `✅` sections when you want to teach contrast quickly, especially for Clean Code, concurrency, collections, exception handling, and API design topics.
+`Intuition` is required. It should explain the concept in plain human terms before formal detail starts.
+Use `###` subheadings inside the required sections when you want to teach contrast quickly, especially for Clean Code, concurrency, collections, exception handling, and API design topics. Example: `### Wrong Mental Model`, `### Better Mental Model`, `### Bad Code`, `### Better Code`.
 For topics with clear mental-model value, prefer adding:
 
 - one `.svg` visual that explains the idea in a single look
@@ -112,6 +120,7 @@ For topics with clear mental-model value, prefer adding:
 - one performance or complexity lens
 
 Keep those explanations in `TopicGuide.md` instead of bloating the runnable Java file with too much teaching narration.
+Keep the required `##` headings in the exact order shown above. Optional appendix sections should come after `## Summary`.
 
 ## Naming Limits
 
@@ -218,6 +227,30 @@ Every chapter should contain these chapter-level files:
 Every `ChapterGuide.md` should also include:
 
 - a short line saying the chapter is beginner-friendly
+- the chapter-level form of the same teaching order:
+
+```md
+# Chapter Name Learning Kit
+
+## Why This Chapter Matters
+## Intuition
+## Problem Statement
+## Core Ideas
+## Mental Model
+## Study Order
+## What To Notice
+## Common Mistakes
+## When To Use / When Not To Use
+## Practice
+## Summary
+
+## Sources
+## Effective Java Mapping
+## OCJP Focus
+## Next Chapter
+```
+
+Keep chapter appendices such as `Sources`, `Effective Java Mapping`, `OCJP Focus`, `Compare With`, and `Next Chapter` after `## Summary`.
 - a simple study order
 - a quick summary after each major idea
 

@@ -41,24 +41,31 @@ The learner should understand:
 
 ## Required Topic Pattern
 
-For a deep-dive topic, include:
+For a deep-dive topic, keep the standard topic order and deepen the middle of the lesson:
 
-1. `Concept`
-2. `Why this exists`
-3. `Problem it solves`
-4. `Wrong mental model`
-5. `Right mental model`
-6. `Small example`
-7. `Better real-world example`
-8. `Step-by-step walkthrough`
-9. `What the compiler checks`
-10. `What happens at runtime`
-11. `Common mistake`
-12. `Interview angle`
-13. `OCJP angle`
-14. `Senior note`
-15. `Exercise`
-16. `Solution`
+1. `Why This Matters`
+2. `Intuition`
+3. `Problem Statement`
+4. `Core Idea`
+5. `Mental Model`
+6. `Simple Example`
+7. `Step-by-Step Working`
+8. `Rules / Syntax`
+9. `Common Mistakes`
+10. `When To Use / When Not To Use`
+11. `Practice`
+12. `Summary`
+
+Inside those sections, make sure the topic still covers:
+
+- wrong mental model
+- right mental model
+- compiler checks
+- runtime behavior
+- interview angle
+- OCJP angle
+- senior note
+- exercise and explained solution
 
 ## Deep-Dive Trigger Topics
 

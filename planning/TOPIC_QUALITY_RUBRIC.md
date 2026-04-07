@@ -86,18 +86,22 @@ Target:
 
 ## Required Topic Shape
 
-Every strong topic file should contain, either as comments or printed teaching sections:
+Every strong topic file should contain these `##` sections in this order:
 
-1. `Concept`
-2. `Why this concept is needed`
-3. `What problem this solves`
-4. `Real-world setup`
-5. `How to think about it`
-6. `How to code it`
-7. `Expected output`
-8. `Common mistake`
-9. `Interview angle`
-10. `Senior note`
+1. `Why This Matters`
+2. `Intuition`
+3. `Problem Statement`
+4. `Core Idea`
+5. `Mental Model`
+6. `Simple Example`
+7. `Step-by-Step Working`
+8. `Rules / Syntax`
+9. `Common Mistakes`
+10. `When To Use / When Not To Use`
+11. `Practice`
+12. `Summary`
+
+Optional sections such as `Quick Visual`, `Comparison Snapshot`, `Performance Lens`, `Benchmark Checklist`, `Version Notes`, and `Next Topic` should come after `Summary`.
 
 ## Deep Dive Rule
 

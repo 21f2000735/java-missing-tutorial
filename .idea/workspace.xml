@@ -5,85 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/404.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/404.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/_baseUniq-zRi1edId.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/arc-DF5CfRSG.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/architectureDiagram-IEHRJDOE-DcpaeFa_.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/blockDiagram-JOT3LUYC-CBg9pyZ_.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/c4Diagram-VJAJSXHY-DNwsYhlb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/channel-DtqmGXb0.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-4BMEZGHF-CYf63tKO.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-A2AXSNBT-D85bCjK8.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-AEK57VVT-D-bv_bF1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-D6G4REZN-BHtOEqmF.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-RZ5BOZE2-y99eunlr.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-XZIHB7SX-C7f5J5QE.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-GIVACNV2-DOLgBgFx.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-v2-COTLJTTW-DOLgBgFx.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/clone-CCiDzdEQ.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/dagre-OKDRZEBW-mq5jEv6F.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-SSKATNLV-vvfSJXyf.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-VNBRO52H-CShoAIki.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/erDiagram-Q7BY3M3F-Bp05ygXm.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/flowDiagram-4HSFHLVR-yQT1uoCW.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/ganttDiagram-APWFNJXF-CZBf3UWR.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/gitGraphDiagram-7IBYFJ6S-BM71762W.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/graph-BP4zyTx1.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/index-BfI-_uMv.css" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/index-CZei77zc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/infoDiagram-PH2N3AL5-0hsPXQhp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/journeyDiagram-U35MCT3I-DXn1972c.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/kanban-definition-NDS4AKOZ-DiqI8TuX.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/layout-CVHUL-Cq.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/linear-DWP9Lav6.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/mermaid.core-DhZsM3sp.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/min-c8afUDOd.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/mindmap-definition-ALO5MXBD-m0UhGYIn.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/pieDiagram-IB7DONF6-BpJygzRu.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/prism-Bc6h86kN.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/prism-java-B12xlhWY.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/quadrantDiagram-7GDLP6J5-DoSic0MH.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/radar-MK3ICKWK-CsJLab-h.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/requirementDiagram-KVF5MWMF-CmLmk_rv.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/sankeyDiagram-QLVOVGJD-CQUkuPBK.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/sequenceDiagram-X6HHIX6F-nJEDaj1r.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-DGXRK772-CdWsOLQs.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-v2-YXO3MK2T-of0jaKPl.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/timeline-definition-BDJGKUSR-Bn95JCUb.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/assets/xychartDiagram-VJFVF3MP-WpykATeJ.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/content/meta/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/company-question-bank/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/company-question-bank/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/compare-collections/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/compare-collections/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/compare-concurrency/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/compare-concurrency/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/compare-streams/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/compare-streams/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/high-demand-java-topics/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/high-demand-java-topics/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/interview-problem-approach/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/interview-problem-approach/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/interview-track/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/interview-track/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/java-7-to-25/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/java-7-to-25/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/java-migration-guides/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/java-migration-guides/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/modern-java-track/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/modern-java-track/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/guides/ocjp-track/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/guides/ocjp-track/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/arraylist-growth-and-lookup/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/arraylist-growth-and-lookup/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/collectors/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/collectors/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/handling-payment-failures/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/handling-payment-failures/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/hashmap-buckets-and-collisions/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/hashmap-buckets-and-collisions/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/http-client-basics/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/http-client-basics/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/list-set-map/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/list-set-map/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/stack-heap-and-references/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/stack-heap-and-references/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/stream-pipeline/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/stream-pipeline/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/threads/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/threads/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/topics/virtual-threads/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/topics/virtual-threads/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planning/CHAPTER_QUALITY_CHECKLIST.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/CHAPTER_QUALITY_CHECKLIST.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planning/DEEP_DIVE_STANDARD.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/DEEP_DIVE_STANDARD.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planning/TOPIC_QUALITY_RUBRIC.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/TOPIC_QUALITY_RUBRIC.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build_book.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_book.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build_site.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_site.sh" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -118,6 +45,12 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/21f2000735/java-missing-tutorial.git",
+    "accountId": "e7895089-5f59-4eea-bc01-40a43d6c3d13"
+  }
+}]]></component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
@@ -148,6 +81,8 @@
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "vue.rearranger.settings.migration": "true"
@@ -260,9 +195,17 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1775585766841</updated>
-      <workItem from="1775585771101" duration="72000" />
+      <workItem from="1775585771101" duration="504000" />
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update">
+      <option name="closed" value="true" />
+      <created>1775586239639</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1775586239639</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
