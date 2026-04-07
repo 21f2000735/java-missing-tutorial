@@ -6,8 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/ChapterGuide.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/TopicGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/TopicGuide.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build_site.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_site.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch02_creational_patterns/ChapterGuide.md" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/learning/javamissing/sec06_design_patterns/ch02_creational_patterns/ChapterGuide.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +213,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775585766841</updated>
       <workItem from="1775585771101" duration="3671000" />
-      <workItem from="1775591243727" duration="5272000" />
+      <workItem from="1775591243727" duration="6139000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <option name="closed" value="true" />
@@ -335,7 +335,23 @@
       <option name="project" value="LOCAL" />
       <updated>1775596265607</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="update">
+      <option name="closed" value="true" />
+      <created>1775596798706</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1775596798707</updated>
+    </task>
+    <task id="LOCAL-00020" summary="update">
+      <option name="closed" value="true" />
+      <created>1775597006727</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1775597006727</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

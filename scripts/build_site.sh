@@ -43,6 +43,7 @@ resource_files=(
 
 python3 "$root/scripts/validate_naming.py"
 python3 "$root/scripts/validate_guide_structure.py"
+python3 "$root/scripts/validate_repetition.py"
 python3 "$root/scripts/validate_visual_lessons.py"
 
 json_escape() {
