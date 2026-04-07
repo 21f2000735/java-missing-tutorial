@@ -15,6 +15,7 @@ const pages = [
   { slug: 'high-demand-java-topics', file: 'HIGH_DEMAND_JAVA_TOPICS.md', title: 'High Demand Java Topics - Java Missing Tutorial' },
   { slug: 'interview-problem-approach', file: 'INTERVIEW_PROBLEM_APPROACH.md', title: 'Interview Problem Approach - Java Missing Tutorial' },
   { slug: 'interview-index', file: 'INTERVIEW_INDEX.md', title: 'Interview Index - Java Missing Tutorial' },
+  { slug: 'visual-lesson-standard', file: 'VISUAL_LESSON_STANDARD.md', title: 'Visual Lesson Standard - Java Missing Tutorial' },
   { slug: 'company-question-bank', file: 'COMPANY_QUESTION_BANK.md', title: 'Company Question Bank - Java Missing Tutorial' },
   { slug: 'compare-collections', file: 'COMPARE_COLLECTIONS.md', title: 'Compare Collections - Java Missing Tutorial' },
   { slug: 'compare-streams', file: 'COMPARE_STREAMS.md', title: 'Compare Streams - Java Missing Tutorial' },

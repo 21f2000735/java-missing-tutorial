@@ -72,6 +72,7 @@ const RESOURCE_DESCRIPTIONS = {
   COMPANY_QUESTION_BANK: 'Company-wise interview tracks with original question-and-answer practice for Google, Meta, Amazon, Apple, Netflix, Coinbase, Jane Street, MakeMyTrip, and HotelTrader.',
   INTERVIEW_PROBLEM_APPROACH: 'A step-by-step process for how to approach coding, backend, debugging, and system questions in interviews.',
   INTERVIEW_INDEX: 'A fast lookup page for interview prep: topic index, company index, short study sprints, and a clean restart point when you need quick direction.',
+  VISUAL_LESSON_STANDARD: 'The repo standard for visual-first topics: use diagrams before code when the main confusion is internal working, memory shape, lifecycle, or architecture flow.',
   COMPARE_COLLECTIONS: 'A quick compare page for List, Set, and Map: shape, performance, and common mistakes.',
   COMPARE_STREAMS: 'A quick compare page for loops versus streams, focused on clarity, tradeoffs, and debugging.',
   COMPARE_CONCURRENCY: 'A quick compare page for Thread, ExecutorService, and virtual threads.',
@@ -458,7 +459,7 @@ function sourcePathFromHref(href, repoRoot) {
   if (srcIndex !== -1) {
     return decoded.slice(srcIndex);
   }
-  const metaMatch = decoded.match(/((?:planning\/)?(?:README|BOOK|CURRICULUM|ROADMAP_099|TOP_20_BOOKS|BOOK_MANUSCRIPT|JAVA_7_TO_25|JAVA_MIGRATION_GUIDES|HIGH_DEMAND_JAVA_TOPICS|COMPANY_QUESTION_BANK|INTERVIEW_PROBLEM_APPROACH|INTERVIEW_INDEX|COMPARE_COLLECTIONS|COMPARE_STREAMS|COMPARE_CONCURRENCY|TOPIC_COVERAGE_MAP|OCJP_TRACK|INTERVIEW_TRACK|MODERN_JAVA_TRACK)\.md)$/);
+  const metaMatch = decoded.match(/((?:planning\/)?(?:README|BOOK|CURRICULUM|ROADMAP_099|TOP_20_BOOKS|BOOK_MANUSCRIPT|JAVA_7_TO_25|JAVA_MIGRATION_GUIDES|HIGH_DEMAND_JAVA_TOPICS|COMPANY_QUESTION_BANK|INTERVIEW_PROBLEM_APPROACH|INTERVIEW_INDEX|VISUAL_LESSON_STANDARD|COMPARE_COLLECTIONS|COMPARE_STREAMS|COMPARE_CONCURRENCY|TOPIC_COVERAGE_MAP|OCJP_TRACK|INTERVIEW_TRACK|MODERN_JAVA_TRACK)\.md)$/);
   if (metaMatch) {
     return metaMatch[1];
   }

@@ -21,6 +21,7 @@ resource_files=(
   "planning/AUTHORING_GUIDE.md"
   "planning/INTERVIEW_TOPIC_TEMPLATE.md"
   "planning/CERTIFICATION_TOPIC_TEMPLATE.md"
+  "planning/VISUAL_LESSON_STANDARD.md"
   "planning/CHAPTER_QUALITY_CHECKLIST.md"
   "planning/TOPIC_QUALITY_RUBRIC.md"
   "planning/DEEP_DIVE_STANDARD.md"
@@ -42,6 +43,7 @@ resource_files=(
 
 python3 "$root/scripts/validate_naming.py"
 python3 "$root/scripts/validate_guide_structure.py"
+python3 "$root/scripts/validate_visual_lessons.py"
 
 json_escape() {
   printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'

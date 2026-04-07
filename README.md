@@ -299,6 +299,7 @@ Secondary user paths live in [planning/OCJP_TRACK.md](planning/OCJP_TRACK.md) an
 Detailed topic coverage is mapped in [planning/TOPIC_COVERAGE_MAP.md](planning/TOPIC_COVERAGE_MAP.md).
 Detailed authoring rules are tracked in [planning/AUTHORING_GUIDE.md](planning/AUTHORING_GUIDE.md).
 Topic-writing templates now split by audience: [planning/INTERVIEW_TOPIC_TEMPLATE.md](planning/INTERVIEW_TOPIC_TEMPLATE.md) and [planning/CERTIFICATION_TOPIC_TEMPLATE.md](planning/CERTIFICATION_TOPIC_TEMPLATE.md).
+Visual-first internal-working topics are guided by [planning/VISUAL_LESSON_STANDARD.md](planning/VISUAL_LESSON_STANDARD.md).
 Topic quality is checked against [planning/TOPIC_QUALITY_RUBRIC.md](planning/TOPIC_QUALITY_RUBRIC.md).
 Book sources are tracked in [planning/TOP_20_BOOKS.md](planning/TOP_20_BOOKS.md).
 Chapter completion is checked against [planning/CHAPTER_QUALITY_CHECKLIST.md](planning/CHAPTER_QUALITY_CHECKLIST.md).
