@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>High Demand Java Topics - Java Missing Tutorial</title>
+  <meta name="description" content="This page collects the Java topics that deserve extra emphasis because learners and working engineers keep coming back to them.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/guides/high-demand-java-topics/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:54rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace} pre{overflow:auto;background:#2a2117;color:#fdf8f1;padding:1rem;border-radius:1rem}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="panel">
+      <p class="eyebrow">Static Guide</p>
+      <h1>High Demand Java Topics</h1>
+      <div class="nav">
+        <a href="../../index.html">Open site home</a>
+        <a href="../../index.html#resource/HIGH_DEMAND_JAVA_TOPICS">Open app version</a>
+      </div>
+      <p>This page collects the Java topics that deserve extra emphasis because learners and working engineers keep coming back to them.</p>
+<p>This is an inference from:</p>
+<ul>
+<li>the official Dev.java learning structure, which gives strong space to streams, collections, concurrency, HTTP, and troubleshooting</li>
+<li>recurring Stack Overflow questions around stream collectors, concurrent modification, exceptions, and collection behavior</li>
+</ul>
+<h2>The Topics To Emphasize</h2>
+<h3>Collections</h3>
+<ul>
+<li><code>List</code>, <code>Set</code>, <code>Map</code></li>
+<li><code>HashMap</code> lookup and collisions</li>
+<li><code>ArrayList</code> growth and tradeoffs</li>
+</ul>
+<p>Why it stays in demand:</p>
+<ul>
+<li>developers need to choose the right data shape constantly</li>
+</ul>
+<h3>Streams</h3>
+<ul>
+<li>stream pipeline mental model</li>
+<li>collectors</li>
+<li>side effects and misuse</li>
+</ul>
+<p>Why it stays in demand:</p>
+<ul>
+<li>streams are common in modern Java, but many developers still struggle with readability and correct collectors</li>
+</ul>
+<h3>Exception Handling</h3>
+<ul>
+<li>meaningful exceptions</li>
+<li>checked vs unchecked judgment</li>
+<li>preserving context</li>
+</ul>
+<p>Why it stays in demand:</p>
+<ul>
+<li>failures are part of every real application</li>
+</ul>
+<h3>Concurrency</h3>
+<ul>
+<li>thread basics</li>
+<li>synchronization</li>
+<li>executors</li>
+<li>virtual threads</li>
+</ul>
+<p>Why it stays in demand:</p>
+<ul>
+<li>concurrency bugs are expensive and the mental model is hard for beginners</li>
+</ul>
+<h3>Networking</h3>
+<ul>
+<li>HTTP client basics</li>
+<li>timeouts, retries, and request building</li>
+</ul>
+<p>Why it stays in demand:</p>
+<ul>
+<li>modern services talk to other services constantly</li>
+</ul>
+<h3>JVM Internals</h3>
+<ul>
+<li>stack vs heap</li>
+<li>references and mutation</li>
+<li>memory intuition</li>
+</ul>
+<p>Why it stays in demand:</p>
+<ul>
+<li>it explains many debugging surprises and is still common in interviews</li>
+</ul>
+<h2>How The Site Should Use This</h2>
+<ul>
+<li>surface these topics earlier on the home page</li>
+<li>give them stronger topic guides</li>
+<li>add good-code vs bad-code examples</li>
+<li>give them more real-world scenarios and comparison pages</li>
+</ul>
+<h2>Sources</h2>
+<ul>
+<li>Dev.java Learn: <a href="https://dev.java/learn/">https://dev.java/learn/</a></li>
+<li>Dev.java streams tutorial: <a href="https://dev.java/learn/api/streams/creating/">https://dev.java/learn/api/streams/creating/</a></li>
+<li>Dev.java troubleshooting and debugging: <a href="https://dev.java/learn/jvm/tool/troubleshooting/jdb/">https://dev.java/learn/jvm/tool/troubleshooting/jdb/</a></li>
+<li>Example Stack Overflow question showing continued stream and concurrent-modification confusion: <a href="https://stackoverflow.com/questions/71111213/avoid-concurrentmodificationexception-on-java-stream-using-cache">https://stackoverflow.com/questions/71111213/avoid-concurrentmodificationexception-on-java-stream-using-cache</a></li>
+</ul>
+<p>Inference note:</p>
+<ul>
+<li>the “high-demand” ranking here is an editorial judgment based on these sources, not a direct proprietary keyword-volume dataset</li>
+</ul>
+
+    </div>
+  </main>
+</body>
+</html>

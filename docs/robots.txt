@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://21f2000735.github.io/java-missing-tutorial/sitemap.xml

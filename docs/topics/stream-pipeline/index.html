@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stream Pipeline - Java Missing Tutorial</title>
+  <meta name="description" content="You have a list of data.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/stream-pipeline/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>Stream Pipeline</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec04_streams_and_functional_style/ch01_streams/stream_pipeline">Open app version</a>
+          <a href="../../content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p>You have a list of data.<br>You want to:</p>
+<ul>
+<li>filter it</li>
+<li>transform it</li>
+<li>collect the result</li>
+</ul>
+<p>The question is not &quot;can Java do this?&quot;<br>The question is &quot;how do I express that flow clearly?&quot;</p>
+<h2>Quick Visual</h2>
+<p><img src="../../content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipelineVisual.svg" alt="Stream pipeline single-look visual"></p>
+<p>Read the picture left to right:</p>
+<ul>
+<li>raw data goes in</li>
+<li>filters remove what does not qualify</li>
+<li>map reshapes what remains</li>
+<li>collect produces the final answer</li>
+</ul>
+<h2>Run This Code</h2>
+<p>Run the Java example and read the pipeline left to right.</p>
+<h2>Expected Output</h2>
+<p>Compare the output with the pipeline stages:</p>
+<ul>
+<li>what got filtered out</li>
+<li>what got transformed</li>
+<li>what got collected at the end</li>
+</ul>
+<h2>❌ Bad Code</h2>
+<p>A common mistake is to use streams only because they look modern.</p>
+<p>That leads to:</p>
+<ul>
+<li>heavy nesting</li>
+<li>hard-to-debug side effects</li>
+<li>collectors that are harder to read than a loop</li>
+</ul>
+<h2>✅ Better Code</h2>
+<p>Use streams when the work is really a data transformation pipeline.</p>
+<p>If the code reads naturally as:</p>
+<ol>
+<li>keep these items</li>
+<li>change them this way</li>
+<li>collect the result</li>
+</ol>
+<p>then a stream is probably a good fit.</p>
+<h2>Why This Works</h2>
+<p>Streams separate <em>what should happen</em> from the low-level loop mechanics.<br>That can make business rules easier to scan, especially for filtering, mapping, grouping, and aggregating.</p>
+<h2>Comparison Snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Plain loop</th>
+<th>Stream pipeline</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Best for</td>
+<td>explicit step-by-step local state</td>
+<td>data transformation flow</td>
+</tr>
+<tr>
+<td>Easier to debug line by line</td>
+<td>usually yes</td>
+<td>sometimes no</td>
+</tr>
+<tr>
+<td>Easier to read for filter-map-collect work</td>
+<td>sometimes no</td>
+<td>often yes</td>
+</tr>
+<tr>
+<td>Safer for side effects</td>
+<td>clearer because mutation is visible</td>
+<td>risky when side effects are hidden in pipeline stages</td>
+</tr>
+</tbody></table>
+<h2>Performance Lens</h2>
+<p>Do not teach streams with &quot;always faster&quot; language. The useful rule is:</p>
+<ul>
+<li>stream readability is the first reason to use streams</li>
+<li>allocation, boxing, and pipeline overhead can matter in hot loops</li>
+<li>side effects and poor collector choices usually hurt clarity before they hurt speed</li>
+</ul>
+<p>If performance is critical, benchmark the real pipeline with realistic data size instead of arguing from style.</p>
+<h2>Benchmark Checklist</h2>
+<p>When you compare a loop and a stream, keep these conditions the same:</p>
+<ul>
+<li>same input size</li>
+<li>same result shape</li>
+<li>warm-up before measuring</li>
+<li>no logging inside the measured code</li>
+<li>do not confuse parallel work with simple sequential transformation</li>
+</ul>
+<h2>Use This When</h2>
+<ul>
+<li>the code is mainly about transforming data</li>
+<li>each step can be read left to right</li>
+<li>the collector clearly shows the desired result</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>side effects are the main point</li>
+<li>the pipeline becomes harder to explain than a loop</li>
+<li>debugging needs very explicit step-by-step local state</li>
+</ul>
+<h2>Version Notes</h2>
+<p>Streams were introduced in Java 8 and remain one of the core modern Java features every engineer should understand well.</p>
+<h2>After Reading This, You Should Know</h2>
+<ul>
+<li>a stream pipeline is a good fit when the business rule naturally reads as filter, map, then finish</li>
+<li>stream clarity is more important than stream cleverness</li>
+<li>performance discussions should start with measurement, not assumption</li>
+</ul>
+<h2>Next Topic</h2>
+<p>Open the collectors topic after this one. It is where many stream users become unsure, and it deserves extra attention.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">StreamPipeline.java</p>
+        <pre><code>package com.learning.javamissing.sec04_streams_and_functional_style.ch01_streams.topics.stream_pipeline;
+
+import java.util.List;
+
+/**
+ * Concept: Stream Pipeline
+ * Why this concept is needed:
+ * Many business tasks are really data transformations, and the code should show that clearly.
+ *
+ * What problem this solves:
+ * It expresses filtering and mapping as a readable sequence of steps.
+ *
+ * Real-world setup:
+ * An order screen needs only priority items and only the fields needed for the next step.
+ *
+ * How to think about it:
+ * A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.
+ *
+ * How to code it:
+ * 1. Start with a collection.
+ * 2. Add filter and map steps in the same order as the business rule.
+ * 3. Finish with a terminal operation that produces the answer.
+ *
+ * Expected output:
+ * longNames = [liam, alex]
+ * priorityTotal = 3798
+ */
+
+public class StreamPipeline {
+    public static void main(String[] args) {
+        printOverview();
+        wrongExample();
+        basicExample();
+        betterExample();
+        commonPitfalls();
+        examTrap();
+        interviewQuestion();
+        exercise();
+        solution();
+    }
+
+    private static void wrongExample() {
+        System.out.println(&quot;Wrong example:&quot;);
+        System.out.println(&quot;Using a stream for very tiny logic can be worse than a plain loop if the code becomes harder to read.&quot;);
+        System.out.println();
+    }
+
+    private static void printOverview() {
+        System.out.println(&quot;The problem:&quot;);
+        System.out.println(&quot;You have raw data, but the business wants a smaller and clearer answer.&quot;);
+        System.out.println(&quot;A stream pipeline helps when the code is really a chain of filtering and transformation steps.&quot;);
+        System.out.println();
+    }
+
+    private static void basicExample() {
+        // Expected output:
+        // longNames = [liam, alex]
+        List&lt;String&gt; names = List.of(&quot;ava&quot;, &quot;liam&quot;, &quot;zoe&quot;, &quot;alex&quot;);
+        List&lt;String&gt; longNames = longNames(names, 4);
+
+        System.out.println(&quot;Run this first:&quot;);
+        System.out.println(&quot;longNames = &quot; + longNames);
+        System.out.println(&quot;Why it works: the filter keeps only names with length &gt;= 4.&quot;);
+        System.out.println(&quot;Dry run: ava(false), liam(true), zoe(false), alex(true).&quot;);
+        System.out.println();
+    }
+
+    private static void betterExample() {
+        // Expected output:
+        // priorityTotal = 3798 because only book and bag are priority orders
+        List&lt;Order&gt; orders = List.of(
+                new Order(&quot;book&quot;, 1_299, true),
+                new Order(&quot;pen&quot;, 199, false),
+                new Order(&quot;bag&quot;, 2_499, true)
+        );
+
+        int priorityTotal = sumPriorityOrders(orders);
+
+        System.out.println(&quot;Better real-world example:&quot;);
+        System.out.println(&quot;priorityTotal = &quot; + priorityTotal);
+        System.out.println(&quot;Why it works: the filter keeps only priority orders and mapToInt extracts only the field needed for the sum.&quot;);
+        System.out.println(&quot;Use this when: the task is really filter -&gt; transform -&gt; answer.&quot;);
+        System.out.println(&quot;Avoid this when: the logic is stateful and a loop is easier to explain.&quot;);
+        System.out.println();
+    }
+
+    private static void commonPitfalls() {
+        System.out.println(&quot;Common mistake:&quot;);
+        System.out.println(&quot;- using streams for logic that is simpler with a loop&quot;);
+        System.out.println(&quot;- mutating external state inside map or filter&quot;);
+        System.out.println(&quot;- forgetting that streams do nothing until a terminal operation runs&quot;);
+        System.out.println(&quot;- making the pipeline so long that it becomes harder to read than a loop&quot;);
+        System.out.println();
+    }
+
+    private static void examTrap() {
+        System.out.println(&quot;OCJP trap:&quot;);
+        System.out.println(&quot;Intermediate operations are lazy.&quot;);
+        System.out.println(&quot;A stream pipeline needs a terminal operation like toList(), count(), or sum() to execute.&quot;);
+        System.out.println();
+    }
+
+    private static void interviewQuestion() {
+        System.out.println(&quot;Interview Q&amp;A:&quot;);
+        System.out.println(&quot;Q: When would you choose a loop over a stream?&quot;);
+        System.out.println(&quot;A: Choose a loop when the logic is stateful, hard to express cleanly in a pipeline, or easier to debug step by step.&quot;);
+        System.out.println();
+    }
+
+    private static void exercise() {
+        System.out.println(&quot;Exercise:&quot;);
+        System.out.println(&quot;From scores {55, 91, 78, 42, 88}, build a stream pipeline that keeps passing scores and counts them.&quot;);
+        System.out.println();
+    }
+
+    private static void solution() {
+        long passingCount = countPassingScores(List.of(55, 91, 78, 42, 88), 60);
+
+        System.out.println(&quot;Solution:&quot;);
+        System.out.println(&quot;passingCount = &quot; + passingCount);
+        System.out.println(&quot;Why this is better: the filter explains the rule, and count() makes the final goal explicit.&quot;);
+        System.out.println(&quot;After reading this example, you should know:&quot;);
+        System.out.println(&quot;- a stream pipeline is best when the work is a chain of data steps&quot;);
+        System.out.println(&quot;- terminal operations are what actually trigger execution&quot;);
+        System.out.println(&quot;- a loop is still the better choice when the pipeline stops being clear&quot;);
+    }
+
+    static List&lt;String&gt; longNames(List&lt;String&gt; names, int minimumLength) {
+        return names.stream()
+                .filter(name -&gt; name.length() &gt;= minimumLength)
+                .toList();
+    }
+
+    static int sumPriorityOrders(List&lt;Order&gt; orders) {
+        return orders.stream()
+                .filter(Order::priority)
+                .mapToInt(Order::priceInCents)
+                .sum();
+    }
+
+    static long countPassingScores(List&lt;Integer&gt; scores, int passingScore) {
+        return scores.stream()
+                .filter(score -&gt; score &gt;= passingScore)
+                .count();
+    }
+
+    record Order(String name, int priceInCents, boolean priority) {}
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/ocjp-track/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/interview-track/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/modern-java-track/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/java-7-to-25/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/java-migration-guides/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/high-demand-java-topics/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/interview-problem-approach/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/company-question-bank/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/compare-collections/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/compare-streams/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/guides/compare-concurrency/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/list-set-map/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/stream-pipeline/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/collectors/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/threads/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/virtual-threads/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/stack-heap-and-references/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/handling-payment-failures/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/http-client-basics/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/arraylist-growth-and-lookup/</loc></url>
+  <url><loc>https://21f2000735.github.io/java-missing-tutorial/topics/hashmap-buckets-and-collisions/</loc></url>
+</urlset>

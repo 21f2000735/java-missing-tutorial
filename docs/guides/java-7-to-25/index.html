@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Java 7 To 25 - Java Missing Tutorial</title>
+  <meta name="description" content="This page gives the release-by-release view for learners who want to understand Java as it evolved from Java 7 to Java 25.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/guides/java-7-to-25/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:54rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace} pre{overflow:auto;background:#2a2117;color:#fdf8f1;padding:1rem;border-radius:1rem}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="panel">
+      <p class="eyebrow">Static Guide</p>
+      <h1>Java 7 To 25</h1>
+      <div class="nav">
+        <a href="../../index.html">Open site home</a>
+        <a href="../../index.html#resource/JAVA_7_TO_25">Open app version</a>
+      </div>
+      <p>This page gives the release-by-release view for learners who want to understand Java as it evolved from Java 7 to Java 25.</p>
+<p>As of April 7, 2026:</p>
+<ul>
+<li>Java 26 is the latest GA release, announced on March 17, 2026.</li>
+<li>Java 25 is the latest LTS release, announced on September 16, 2025.</li>
+<li>This site focuses on learning Java 7 through Java 25 in a way that still prepares you to read newer code.</li>
+</ul>
+<h2>How To Use This Page</h2>
+<ul>
+<li>If you are new, start with Java 8, then jump to 11, 17, 21, and 25.</li>
+<li>If you maintain legacy systems, use the migration guide after each major jump.</li>
+<li>If you prepare for interviews, focus on what changed in collections, lambdas, streams, modules, records, pattern matching, and concurrency.</li>
+</ul>
+<h2>Release Map</h2>
+<h3>Java 7</h3>
+<ul>
+<li>NIO.2 file APIs</li>
+<li>try-with-resources</li>
+<li>multi-catch</li>
+<li>diamond operator</li>
+<li>string in <code>switch</code></li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>this is where a lot of modern-looking Java started becoming practical in real code</li>
+</ul>
+<h3>Java 8</h3>
+<ul>
+<li>lambdas</li>
+<li>streams</li>
+<li><code>Optional</code></li>
+<li>new date/time API</li>
+<li>default methods</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>Java 8 is still the biggest mental shift for everyday Java coding</li>
+</ul>
+<h3>Java 9</h3>
+<ul>
+<li>modules</li>
+<li>JShell</li>
+<li>collection factory methods</li>
+<li>stream improvements</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>Java 9 changed both packaging and some everyday APIs</li>
+</ul>
+<h3>Java 10</h3>
+<ul>
+<li>local variable type inference with <code>var</code></li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>small surface change, but big effect on code style</li>
+</ul>
+<h3>Java 11</h3>
+<ul>
+<li>standard HTTP client</li>
+<li>string utility methods</li>
+<li>local-variable syntax for lambda parameters</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>first post-8 LTS that many enterprises adopted seriously</li>
+</ul>
+<h3>Java 12 To 13</h3>
+<ul>
+<li>switch expression work</li>
+<li>text block previews</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>these releases set up several language improvements that became final later</li>
+</ul>
+<h3>Java 14</h3>
+<ul>
+<li>switch expressions final</li>
+<li>records preview</li>
+<li>helpful <code>NullPointerException</code> details</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>cleaner language expression and better debugging</li>
+</ul>
+<h3>Java 15</h3>
+<ul>
+<li>text blocks final</li>
+<li>sealed classes preview</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>Java source became easier to read for multiline text and domain modeling</li>
+</ul>
+<h3>Java 16</h3>
+<ul>
+<li>records final</li>
+<li>pattern matching for <code>instanceof</code> final</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>less ceremony for value-heavy models</li>
+</ul>
+<h3>Java 17</h3>
+<ul>
+<li>sealed classes final</li>
+<li>LTS release</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>major enterprise upgrade target</li>
+</ul>
+<h3>Java 18 To 20</h3>
+<ul>
+<li>UTF-8 by default</li>
+<li>preview work on pattern matching, records, and concurrency-related features</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>these releases are important for understanding how modern Java features matured</li>
+</ul>
+<h3>Java 21</h3>
+<ul>
+<li>virtual threads final</li>
+<li>record patterns final</li>
+<li>pattern matching for <code>switch</code> final</li>
+<li>sequenced collections</li>
+<li>LTS release</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>one of the most important modern Java releases for concurrency and modeling</li>
+</ul>
+<h3>Java 22 To 24</h3>
+<ul>
+<li>continued improvements in preview and incubation areas</li>
+<li>more work around foreign function access and language refinement</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>useful mainly for staying current and understanding the road to 25</li>
+</ul>
+<h3>Java 25</h3>
+<ul>
+<li>LTS release</li>
+<li>continuation of the modern Java platform evolution from 21 onward</li>
+</ul>
+<p>Why it matters:</p>
+<ul>
+<li>this is the current long-term-support destination for modern Java teams</li>
+</ul>
+<h2>Best Learning Path</h2>
+<h3>Minimum path for strong practical Java</h3>
+<ol>
+<li>Java 8</li>
+<li>Java 11</li>
+<li>Java 17</li>
+<li>Java 21</li>
+<li>Java 25</li>
+</ol>
+<h3>If you want deeper historical understanding</h3>
+<ol>
+<li>Java 7</li>
+<li>Java 8</li>
+<li>Java 9</li>
+<li>Java 11</li>
+<li>Java 14 to 17</li>
+<li>Java 21</li>
+<li>Java 25</li>
+</ol>
+<h2>What To Learn At Each Jump</h2>
+<table>
+<thead>
+<tr>
+<th>Jump</th>
+<th>Main Things To Learn</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>7 -&gt; 8</td>
+<td>lambdas, streams, <code>Optional</code>, date/time</td>
+</tr>
+<tr>
+<td>8 -&gt; 11</td>
+<td>modules awareness, HTTP client, API cleanup</td>
+</tr>
+<tr>
+<td>11 -&gt; 17</td>
+<td>records, sealed classes, pattern matching, text blocks</td>
+</tr>
+<tr>
+<td>17 -&gt; 21</td>
+<td>virtual threads, modern pattern matching, sequenced collections</td>
+</tr>
+<tr>
+<td>21 -&gt; 25</td>
+<td>keep current with latest LTS APIs and language refinements</td>
+</tr>
+</tbody></table>
+<h2>Sources</h2>
+<ul>
+<li>Dev.java Learn: <a href="https://dev.java/learn/">https://dev.java/learn/</a></li>
+<li>Dev.java Download: <a href="https://dev.java/download">https://dev.java/download</a></li>
+<li>Oracle Java 25 announcement: <a href="https://www.oracle.com/news/announcement/oracle-releases-java-25-2025-09-16">https://www.oracle.com/news/announcement/oracle-releases-java-25-2025-09-16</a></li>
+<li>Oracle Java 26 announcement: <a href="https://www.oracle.com/news/announcement/oracle-releases-java-26-2026-03-17/">https://www.oracle.com/news/announcement/oracle-releases-java-26-2026-03-17/</a></li>
+<li>Java SE language updates, release 25: <a href="https://docs.oracle.com/en/java/javase/25/language/java-se-language-updates.pdf">https://docs.oracle.com/en/java/javase/25/language/java-se-language-updates.pdf</a></li>
+<li>Java SE language updates, release 26: <a href="https://docs.oracle.com/en/java/javase/26/language/index.html">https://docs.oracle.com/en/java/javase/26/language/index.html</a></li>
+<li>Oracle Java Tutorials note about JDK 8 era content: <a href="https://docs.oracle.com/javase/tutorial//java/">https://docs.oracle.com/javase/tutorial//java/</a></li>
+</ul>
+
+    </div>
+  </main>
+</body>
+</html>

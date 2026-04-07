@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Why Virtual Threads Matter - Java Missing Tutorial</title>
+  <meta name="description" content="Traditional threads are expensive enough that teams started designing around the cost:">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/virtual-threads/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>Why Virtual Threads Matter</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec05_multithreading_and_concurrency/ch02_virtual_threads/why_virtual_threads_matter">Open app version</a>
+          <a href="../../content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p>Traditional threads are expensive enough that teams started designing around the cost:</p>
+<ul>
+<li>thread pools</li>
+<li>callback-heavy code</li>
+<li>reactive complexity even when the business logic is simple</li>
+</ul>
+<p>Virtual threads change that tradeoff for many request-per-task workloads.</p>
+<h2>Quick Visual</h2>
+<p><img src="../../content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/VirtualThreadsVisual.svg" alt="Virtual threads single-look visual"></p>
+<p>One glance should tell you the real story:</p>
+<ul>
+<li>platform threads are limited, expensive workers</li>
+<li>virtual threads are much lighter for waiting-heavy tasks</li>
+<li>the business code can stay direct and blocking-style</li>
+</ul>
+<h2>Run This Code</h2>
+<p>This example is best run locally on a modern JDK because it depends on newer Java support.</p>
+<h2>Expected Output</h2>
+<p>The main point is not a flashy output string.<br>The point is that many blocking tasks can be modeled with a much simpler one-task-per-thread style again.</p>
+<h2>❌ Bad Mental Model</h2>
+<p>The wrong mental model is &quot;virtual threads make concurrency problems disappear.&quot;</p>
+<p>They do not.</p>
+<p>They reduce the cost of threads.<br>They do not remove:</p>
+<ul>
+<li>race conditions</li>
+<li>bad shared-state design</li>
+<li>blocking calls that pin platform resources in the wrong places</li>
+</ul>
+<h2>✅ Better Mental Model</h2>
+<p>Virtual threads reduce thread cost for many waiting tasks.<br>They do not remove the need for safe coordination, clear ownership, or good shared-state design.</p>
+<h2>Why This Works</h2>
+<p>Virtual threads make thread-per-task style practical again for many I/O-heavy workflows.<br>That often improves clarity because the code can read in straight lines instead of callback chains.</p>
+<h2>Comparison Snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>Question</th>
+<th>Platform thread</th>
+<th>Virtual thread</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Best for</td>
+<td>long-lived heavier worker threads</td>
+<td>many waiting tasks</td>
+</tr>
+<tr>
+<td>Cost per thread</td>
+<td>higher</td>
+<td>much lower</td>
+</tr>
+<tr>
+<td>Blocking style code</td>
+<td>possible but costly at scale</td>
+<td>practical again</td>
+</tr>
+<tr>
+<td>Removes race conditions</td>
+<td>no</td>
+<td>no</td>
+</tr>
+</tbody></table>
+<h2>Performance Lens</h2>
+<p>The most useful benchmark question is not &quot;which thread is faster?&quot;</p>
+<p>It is:</p>
+<ul>
+<li>how many waiting tasks can I model clearly</li>
+<li>what happens to throughput when many requests block on I/O</li>
+<li>does the simpler thread-per-task model lower code complexity</li>
+</ul>
+<p>Virtual threads shine when most time is spent waiting, not burning CPU.</p>
+<h2>Benchmark Checklist</h2>
+<p>When you compare executor pools and virtual threads, measure:</p>
+<ul>
+<li>total concurrent requests handled</li>
+<li>average and tail latency</li>
+<li>memory growth</li>
+<li>blocked or pinned behavior</li>
+<li>code complexity and failure handling, not just raw timing</li>
+</ul>
+<h2>Use This When</h2>
+<ul>
+<li>your tasks spend time waiting on I/O</li>
+<li>the one-request-one-thread model fits the business flow</li>
+<li>readability matters more than low-level concurrency tricks</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>the workload is dominated by heavy CPU computation</li>
+<li>you still have unsafe shared mutable state</li>
+<li>you have not checked whether frameworks and libraries are ready for the new model</li>
+</ul>
+<h2>Version Notes</h2>
+<p>Virtual threads became final in Java 21.<br>They are one of the most important changes in modern Java concurrency.</p>
+<h2>After Reading This, You Should Know</h2>
+<ul>
+<li>virtual threads are still threads, not magic background jobs</li>
+<li>they reduce thread cost for waiting-heavy workloads</li>
+<li>they improve the cost model, but not the need for safe shared-state design</li>
+</ul>
+<h2>Next Topic</h2>
+<p>Read the executor-based virtual thread example next, then compare it with structured concurrency.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">WhyVirtualThreadsMatter.java</p>
+        <pre><code>package com.learning.javamissing.sec05_multithreading_and_concurrency.ch02_virtual_threads.topics.why_virtual_threads_matter;
+
+/**
+ * Concept: Why virtual threads matter
+ * Why this concept is needed:
+ * Waiting-heavy systems need a cheaper way to express many concurrent tasks.
+ *
+ * What problem this solves:
+ * It keeps direct blocking-style code practical for very many mostly waiting tasks.
+ *
+ * Real-world setup:
+ * An order request waits on inventory and pricing checks.
+ *
+ * How to think about it:
+ * A virtual thread is still a thread, but its cost model is much better for waiting-heavy workloads.
+ *
+ * How to code it:
+ * 1. Start one virtual thread.
+ * 2. Let it block in a simple style.
+ * 3. Compare the model with traditional expensive thread-per-task thinking.
+ *
+ * Expected output:
+ * inventory check finished on VirtualThread...
+ */
+public class WhyVirtualThreadsMatter {
+    public static void main(String[] args) throws InterruptedException {
+        explainWhy();
+        wrongMentalModel();
+        runBlockingTaskExample();
+        System.out.println();
+        System.out.println(&quot;After reading this example, you should know:&quot;);
+        System.out.println(&quot;- a virtual thread is still a Thread&quot;);
+        System.out.println(&quot;- virtual threads are useful when tasks spend time waiting&quot;);
+        System.out.println(&quot;- they improve the cost model, not the business logic&quot;);
+    }
+
+    private static void explainWhy() {
+        System.out.println(&quot;The problem:&quot;);
+        System.out.println(&quot;Many requests mostly wait on I/O, but traditional thread-per-task models become expensive.&quot;);
+        System.out.println();
+    }
+
+    private static void wrongMentalModel() {
+        System.out.println(&quot;Common mistake:&quot;);
+        System.out.println(&quot;- assuming virtual threads make every workload faster&quot;);
+        System.out.println();
+    }
+
+    private static void runBlockingTaskExample() throws InterruptedException {
+        Thread worker = Thread.ofVirtual().name(&quot;vt-order-check&quot;).start(() -&gt; {
+            try {
+                Thread.sleep(50);
+                System.out.println(&quot;inventory check finished on &quot; + Thread.currentThread());
+            } catch (InterruptedException exception) {
+                Thread.currentThread().interrupt();
+            }
+        });
+        worker.join();
+        System.out.println(&quot;Why it works: the code stays simple and blocking-style, but the thread is lightweight.&quot;);
+        System.out.println(&quot;Use this when: tasks mostly wait on external systems.&quot;);
+        System.out.println(&quot;Avoid this when: the real problem is CPU-heavy work or bad locking.&quot;);
+    }
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

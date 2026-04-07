@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Threads - Java Missing Tutorial</title>
+  <meta name="description" content="Sometimes one flow of work is not enough.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/threads/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>Threads</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec05_multithreading_and_concurrency/ch01_concurrency_basics/threads">Open app version</a>
+          <a href="../../content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/Threads.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p>Sometimes one flow of work is not enough.</p>
+<p>Examples:</p>
+<ul>
+<li>send a report while the main request continues</li>
+<li>process many independent tasks</li>
+<li>keep the UI or API responsive</li>
+</ul>
+<p>Threads are the oldest Java tool for that problem.</p>
+<h2>Quick Visual</h2>
+<p><img src="../../content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/ThreadsVisual.svg" alt="Threads single-look visual"></p>
+<p>At one glance:</p>
+<ul>
+<li>the main thread keeps moving</li>
+<li>a worker thread handles a separate task</li>
+<li>as soon as both touch shared state, design risk appears</li>
+</ul>
+<h2>Run This Code</h2>
+<p>Run the example and watch the main flow and worker flow both print output.</p>
+<h2>Expected Output</h2>
+<p>You should see work happening from more than one thread, but not necessarily in the same order every time.</p>
+<p>That non-deterministic order is part of the lesson.</p>
+<h2>❌ Bad Code</h2>
+<p>A very common beginner mistake is to call <code>run()</code> directly and think a new thread started.</p>
+<p>It did not.<br>That just ran the method on the current thread.</p>
+<h2>✅ Better Code</h2>
+<p>Call <code>start()</code> when you want the JVM to schedule a new thread.</p>
+<h2>Why This Works</h2>
+<p>Threads let the JVM schedule separate units of execution.<br>That gives you concurrency, but it also introduces coordination and shared-state risks.</p>
+<h2>Comparison Snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Raw <code>Thread</code></th>
+<th><code>ExecutorService</code></th>
+<th>Virtual thread</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Learn the mental model</td>
+<td>best starting point</td>
+<td>hides some basics</td>
+<td>builds on thread mental model</td>
+</tr>
+<tr>
+<td>Run many managed tasks</td>
+<td>weak fit</td>
+<td>strong fit</td>
+<td>strong fit for waiting-heavy work</td>
+</tr>
+<tr>
+<td>One-off demo</td>
+<td>simple</td>
+<td>more setup</td>
+<td>needs newer JDK</td>
+</tr>
+<tr>
+<td>Production task orchestration</td>
+<td>usually not ideal</td>
+<td>common choice</td>
+<td>increasingly useful</td>
+</tr>
+</tbody></table>
+<h2>Performance Lens</h2>
+<p>Do not benchmark threads only by &quot;time to print&quot;.</p>
+<p>The real costs are:</p>
+<ul>
+<li>thread creation</li>
+<li>waiting and blocking</li>
+<li>coordination</li>
+<li>contention on shared state</li>
+</ul>
+<p>For tiny demos the cost looks invisible.<br>For real systems the hidden cost appears when you create many threads, wait on slow I/O, or lock shared objects too often.</p>
+<h2>Watch The Right Metric</h2>
+<p>When concurrency examples become real services, track:</p>
+<ul>
+<li>response time</li>
+<li>throughput</li>
+<li>queue growth</li>
+<li>blocked time</li>
+<li>error rate under load</li>
+</ul>
+<h2>Use This When</h2>
+<ul>
+<li>you are learning the basic mental model of concurrency</li>
+<li>you need to understand what executors and virtual threads build on top of</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>production task orchestration would be clearer with executors or structured concurrency</li>
+<li>shared mutable state is not well controlled</li>
+</ul>
+<h2>Version Notes</h2>
+<p>The thread concept is old, but it still matters because newer concurrency tools build on the same core ideas: scheduling, coordination, visibility, and shared state.</p>
+<h2>After Reading This, You Should Know</h2>
+<ul>
+<li><code>start()</code> and <code>run()</code> are not interchangeable</li>
+<li>thread ordering is not guaranteed just because the source code has one order</li>
+<li>concurrency problems usually begin when multiple threads share mutable state</li>
+</ul>
+<h2>Next Topic</h2>
+<p>Move to executors after this one. That is the practical next step for most production code.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">Threads.java</p>
+        <pre><code>package com.learning.javamissing.sec05_multithreading_and_concurrency.ch01_concurrency_basics.topics.threads;
+
+/**
+ * Concept: Threads
+ * Why this concept is needed:
+ * Concurrency starts with one hard fact: two units of work can overlap in time.
+ *
+ * What problem this solves:
+ * It shows how independent work starts and why shared state becomes risky.
+ *
+ * Real-world setup:
+ * A reporting task runs in the background while the main flow continues.
+ *
+ * How to think about it:
+ * A thread is a unit of execution. Starting work and sharing state are separate concerns.
+ *
+ * How to code it:
+ * 1. Start one background task.
+ * 2. Wait with join() when you need the task finished.
+ * 3. Notice how shared mutable state changes the design problem.
+ *
+ * Expected output:
+ * worker thread: prepare report
+ * safe count = 2
+ */
+public class Threads {
+    public static void main(String[] args) throws InterruptedException {
+        printOverview();
+        wrongExample();
+        basicExample();
+        betterExample();
+        commonPitfalls();
+        exercise();
+        solution();
+    }
+
+    private static void printOverview() {
+        System.out.println(&quot;The problem:&quot;);
+        System.out.println(&quot;You want one task to run independently, but once tasks overlap, execution order and shared state both matter.&quot;);
+        System.out.println();
+    }
+
+    private static void wrongExample() {
+        System.out.println(&quot;Common mistake:&quot;);
+        System.out.println(&quot;- calling run() directly and expecting a new thread&quot;);
+        System.out.println(&quot;- sharing mutable state before understanding the execution model&quot;);
+        System.out.println();
+    }
+
+    private static void basicExample() throws InterruptedException {
+        runWorkerAndWait();
+        System.out.println(&quot;Run this first:&quot;);
+        System.out.println(&quot;- A thread can run a small task independently.&quot;);
+        System.out.println(&quot;- join() waits for that task to finish.&quot;);
+        System.out.println();
+    }
+
+    private static void betterExample() throws InterruptedException {
+        int safeCount = runSafeCounterDemo();
+        System.out.println(&quot;Better example:&quot;);
+        System.out.println(&quot;safe count = &quot; + safeCount);
+        System.out.println(&quot;Why it works: synchronized protects the shared counter.&quot;);
+        System.out.println(&quot;Use this when: you are learning the execution model or showing a tiny one-off demo.&quot;);
+        System.out.println(&quot;Avoid this when: production code needs many tasks, because executors age better.&quot;);
+        System.out.println();
+    }
+
+    private static void commonPitfalls() {
+        System.out.println(&quot;What to remember:&quot;);
+        System.out.println(&quot;- start() creates a new thread; run() is just a normal method call&quot;);
+        System.out.println(&quot;- execution order is not guaranteed just because start() was called first&quot;);
+        System.out.println(&quot;- correctness becomes harder as soon as threads share mutable state&quot;);
+        System.out.println();
+    }
+
+    private static void exercise() {
+        System.out.println(&quot;Try next:&quot;);
+        System.out.println(&quot;- remove synchronization from the counter example&quot;);
+        System.out.println(&quot;- predict whether the final count always stays 2&quot;);
+        System.out.println();
+    }
+
+    private static void solution() {
+        System.out.println(&quot;After reading this example, you should know:&quot;);
+        System.out.println(&quot;- threads let work overlap in time&quot;);
+        System.out.println(&quot;- join() makes waiting explicit&quot;);
+        System.out.println(&quot;- shared mutable state is where concurrency becomes dangerous&quot;);
+    }
+
+    static void runWorkerAndWait() throws InterruptedException {
+        Thread worker = new Thread(() -&gt; System.out.println(&quot;worker thread: prepare report&quot;), &quot;report-worker&quot;);
+        worker.start();
+        worker.join();
+    }
+
+    static int runSafeCounterDemo() throws InterruptedException {
+        Counter counter = new Counter();
+        Thread first = new Thread(counter::incrementSafely, &quot;counter-1&quot;);
+        Thread second = new Thread(counter::incrementSafely, &quot;counter-2&quot;);
+        first.start();
+        second.start();
+        first.join();
+        second.join();
+        return counter.value();
+    }
+
+    private static final class Counter {
+        private int count;
+
+        synchronized void incrementSafely() {
+            count++;
+        }
+
+        synchronized int value() {
+            return count;
+        }
+    }
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

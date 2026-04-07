@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>List, Set, Map - Java Missing Tutorial</title>
+  <meta name="description" content="A lot of Java bugs are not syntax bugs.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/list-set-map/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>List, Set, Map</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec02_collections/ch01_collections/list_set_map">Open app version</a>
+          <a href="../../content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p>A lot of Java bugs are not syntax bugs.<br>They are data-shape bugs.</p>
+<p>You wanted:</p>
+<ul>
+<li>ordered items</li>
+<li>unique values</li>
+<li>lookup by key</li>
+</ul>
+<p>but you picked the wrong collection.</p>
+<h2>Quick Visual</h2>
+<p><img src="../../content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMapVisual.svg" alt="List, Set, Map single-look visual"></p>
+<p>The point of the picture is simple:</p>
+<ul>
+<li><code>List</code> answers &quot;keep items in order, even if repeated&quot;</li>
+<li><code>Set</code> answers &quot;keep items unique&quot;</li>
+<li><code>Map</code> answers &quot;find the value by key fast&quot;</li>
+</ul>
+<h2>Run This Code</h2>
+<p>Run the example and compare cart items, coupon codes, and product quantities.</p>
+<h2>Expected Output</h2>
+<ul>
+<li>cart items keep duplicates and order</li>
+<li>coupon codes stay unique</li>
+<li>product quantities can be looked up by SKU</li>
+</ul>
+<h2>❌ Bad Code</h2>
+<p>Use <code>List</code> for everything because it is familiar.</p>
+<p>That usually leads to:</p>
+<ul>
+<li>duplicate values where uniqueness mattered</li>
+<li>manual searching where direct lookup was needed</li>
+<li>intent that is harder to read</li>
+</ul>
+<h2>✅ Better Code</h2>
+<p>Pick the collection based on the problem shape:</p>
+<ul>
+<li><code>List</code> for ordered repeated items</li>
+<li><code>Set</code> for unique values</li>
+<li><code>Map</code> for key-based lookup</li>
+</ul>
+<p>That is both cleaner design and cleaner code.</p>
+<h2>Why This Works</h2>
+<p>The collection type itself becomes documentation.<br>A reader can often understand the data rules just by seeing whether you chose <code>List</code>, <code>Set</code>, or <code>Map</code>.</p>
+<h2>Comparison Snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Best fit</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Preserve order and duplicates</td>
+<td><code>List</code></td>
+<td>Cart lines, screen rows, ordered history</td>
+</tr>
+<tr>
+<td>Keep values unique</td>
+<td><code>Set</code></td>
+<td>Tags, coupon codes, distinct IDs</td>
+</tr>
+<tr>
+<td>Find by key</td>
+<td><code>Map</code></td>
+<td>SKU to quantity, user ID to profile, code to meaning</td>
+</tr>
+</tbody></table>
+<h2>Performance Lens</h2>
+<table>
+<thead>
+<tr>
+<th>Operation</th>
+<th><code>ArrayList</code> style <code>List</code></th>
+<th><code>HashSet</code></th>
+<th><code>HashMap</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Append/add</td>
+<td>usually cheap</td>
+<td>usually cheap</td>
+<td>usually cheap</td>
+</tr>
+<tr>
+<td>Check contains</td>
+<td>often linear scan</td>
+<td>usually near constant average</td>
+<td>usually near constant average by key</td>
+</tr>
+<tr>
+<td>Lookup by index</td>
+<td>direct</td>
+<td>not supported</td>
+<td>not supported</td>
+</tr>
+<tr>
+<td>Lookup by key</td>
+<td>not natural</td>
+<td>not natural</td>
+<td>direct by key on average</td>
+</tr>
+</tbody></table>
+<p>These are the mental-model costs that matter first for learners:</p>
+<ul>
+<li>using <code>List</code> for lookup often pushes you into repeated scanning</li>
+<li>using <code>Set</code> for uniqueness removes &quot;did we already add it?&quot; bugs</li>
+<li>using <code>Map</code> turns &quot;search for the item&quot; into &quot;ask by key&quot;</li>
+</ul>
+<h2>Real-World Decision Rule</h2>
+<p>Ask these three questions in order:</p>
+<ol>
+<li>Do I care about order?</li>
+<li>Do I need uniqueness?</li>
+<li>Do I need lookup by key?</li>
+</ol>
+<p>The first &quot;yes&quot; often tells you the right family of collection.</p>
+<h2>Use This When</h2>
+<ul>
+<li>you want the data structure to express a business rule directly</li>
+<li>correctness matters as much as convenience</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>you are choosing by habit instead of by data shape</li>
+</ul>
+<h2>Version Notes</h2>
+<p>These core collection ideas have been central since the Java Collections Framework arrived in Java 1.2.</p>
+<h2>After Reading This, You Should Know</h2>
+<ul>
+<li>choosing the right collection is a business-rule decision, not just an API choice</li>
+<li><code>List</code>, <code>Set</code>, and <code>Map</code> each express a different data shape</li>
+<li>the wrong collection often creates correctness bugs before it creates performance bugs</li>
+</ul>
+<h2>Next Topic</h2>
+<p>Go next to the collections internals and tradeoffs chapter if you want the complexity and performance side.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">ListSetMap.java</p>
+        <pre><code>package com.learning.javamissing.sec02_collections.ch01_collections.topics.list_set_map;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * Concept: List Set Map
+ * Why this concept is needed:
+ * Java programs stay useful when they are organized around ideas, not only syntax.
+ *
+ * What problem this solves:
+ * teams must store repeated, unique, and keyed data correctly.
+ *
+ * Real-world setup:
+ * This topic uses shopping cart, coupons, and product lookup to make the concept easier to understand.
+ *
+ * How to think about it:
+ * First understand the problem in plain language, then map that idea to the Java code.
+ *
+ * How to code it:
+ * 1. Identify the business data or behavior.
+ * 2. Choose the Java construct that expresses the idea clearly.
+ * 3. Run the example and compare the output with the explanation.
+ *
+ * Expected output:
+ * Read the inline comments and printed lines in main() to see the expected behavior.
+ */
+
+public class ListSetMap {
+    public static void main(String[] args) {
+        overview();
+        wrongExample();
+        // Expected output:
+        // cartItems keeps duplicates, couponCodes stay unique, quantities support product lookup.
+        List&lt;String&gt; cartItems = sampleCartItems();
+        Set&lt;String&gt; couponCodes = sampleCouponCodes();
+        Map&lt;String, Integer&gt; quantitiesBySku = sampleQuantitiesBySku();
+        System.out.println(&quot;cartItems = &quot; + cartItems);
+        System.out.println(&quot;couponCodes = &quot; + couponCodes);
+        System.out.println(&quot;quantitiesBySku = &quot; + quantitiesBySku);
+        System.out.println(&quot;What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU.&quot;);
+        System.out.println(&quot;Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.&quot;);
+        System.out.println(&quot;Senior note: collection choice affects API clarity, mutation rules, and algorithmic cost.&quot;);
+    }
+
+    private static void overview() {
+        System.out.println(&quot;Topic: List, Set, Map&quot;);
+        System.out.println(&quot;Real-world setup: an online store tracks cart items, coupon codes, and product quantities.&quot;);
+        System.out.println(&quot;Why it matters: the right collection makes the code easier to read and prevents the wrong data shape.&quot;);
+        System.out.println();
+    }
+
+    private static void wrongExample() {
+        System.out.println(&quot;Wrong example:&quot;);
+        System.out.println(&quot;Using a List for coupon codes can keep the same coupon more than once by mistake.&quot;);
+        System.out.println();
+    }
+
+    static List&lt;String&gt; sampleCartItems() {
+        return List.of(&quot;USB Cable&quot;, &quot;USB Cable&quot;, &quot;Wireless Mouse&quot;);
+    }
+
+    static Set&lt;String&gt; sampleCouponCodes() {
+        return Set.of(&quot;WELCOME10&quot;, &quot;FREESHIP&quot;);
+    }
+
+    static Map&lt;String, Integer&gt; sampleQuantitiesBySku() {
+        return Map.of(&quot;SKU-USB&quot;, 2, &quot;SKU-MOUSE&quot;, 1);
+    }
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

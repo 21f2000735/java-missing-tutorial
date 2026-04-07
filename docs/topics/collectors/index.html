@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collectors - Java Missing Tutorial</title>
+  <meta name="description" content="Filtering and mapping are only half the story.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/collectors/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>Collectors</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec04_streams_and_functional_style/ch01_streams/collectors">Open app version</a>
+          <a href="../../content/library/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p>Filtering and mapping are only half the story.</p>
+<p>Most business code eventually wants a final result like:</p>
+<ul>
+<li>a grouped map</li>
+<li>a count</li>
+<li>a summary</li>
+<li>a joined string</li>
+<li>a partitioned result</li>
+</ul>
+<p>That is where many stream users get stuck.</p>
+<h2>Run This Code</h2>
+<p>Run the example and focus on four shapes:</p>
+<ul>
+<li>list/set output</li>
+<li>grouped map output</li>
+<li>true/false partition output</li>
+<li>summary output</li>
+</ul>
+<h2>Expected Output</h2>
+<ul>
+<li>uppercase category names in list and set form</li>
+<li>grouped product names by category</li>
+<li>pass/fail partition for scores</li>
+<li>summary statistics for order prices</li>
+</ul>
+<h2>❌ Bad Code</h2>
+<p>Two common mistakes:</p>
+<ul>
+<li>using <code>toMap()</code> when duplicate keys are possible</li>
+<li>building complex mutable maps by hand when the collector already expresses the intent</li>
+</ul>
+<h2>✅ Better Code</h2>
+<p>Use the collector that matches the final result shape:</p>
+<ul>
+<li><code>toList()</code> when order matters</li>
+<li><code>toSet()</code> when uniqueness matters</li>
+<li><code>groupingBy(...)</code> when many values belong to one key</li>
+<li><code>partitioningBy(...)</code> when the answer is naturally yes/no</li>
+<li><code>summarizingInt(...)</code> when you need count, sum, min, max, and average together</li>
+</ul>
+<h2>Why This Works</h2>
+<p>Collectors make the <em>shape of the answer</em> explicit.</p>
+<p>That improves readability because a reviewer can often understand the result structure without reading low-level mutation code.</p>
+<h2>Comparison Snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th>Collector</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Keep all values in a list</td>
+<td><code>toList()</code></td>
+</tr>
+<tr>
+<td>Remove duplicates</td>
+<td><code>toSet()</code></td>
+</tr>
+<tr>
+<td>Group many values by key</td>
+<td><code>groupingBy(...)</code></td>
+</tr>
+<tr>
+<td>Split into true/false groups</td>
+<td><code>partitioningBy(...)</code></td>
+</tr>
+<tr>
+<td>Count per group</td>
+<td><code>groupingBy(..., counting())</code></td>
+</tr>
+<tr>
+<td>Summarize numeric values</td>
+<td><code>summarizingInt(...)</code></td>
+</tr>
+</tbody></table>
+<h2>Performance Lens</h2>
+<p>The useful question is not “are collectors fast?”</p>
+<p>The useful question is:</p>
+<p>“Does this collector express the result clearly enough that the code is easy to trust and review?”</p>
+<p>Performance concerns usually come later:</p>
+<ul>
+<li>unnecessary intermediate allocations</li>
+<li>expensive mapping logic</li>
+<li>poor key choice for grouping</li>
+</ul>
+<p>If the code becomes hard to explain, simplify it before arguing about micro-performance.</p>
+<h2>Use This When</h2>
+<ul>
+<li>the final result has a clear structure</li>
+<li>grouping, counting, partitioning, or summarizing is the main goal</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>a plain loop is much easier to explain</li>
+<li>duplicate-key behavior is unclear and unhandled</li>
+</ul>
+<h2>After Reading This, You Should Know</h2>
+<ul>
+<li>collectors describe the final result shape of a stream</li>
+<li><code>groupingBy</code> and <code>partitioningBy</code> solve different kinds of result grouping</li>
+<li><code>toMap()</code> needs extra care when duplicate keys are possible</li>
+</ul>
+<h2>Next Topic</h2>
+<p>Return to the stream pipeline topic if the full filter-map-collect flow still feels unclear, then compare streams with loops in the compare guide.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">Collectors.java</p>
+        <pre><code>package com.learning.javamissing.sec04_streams_and_functional_style.ch01_streams.topics.collectors;
+
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.IntSummaryStatistics;
+
+/**
+ * Concept: Collectors
+ * Why this concept is needed:
+ * Java programs stay useful when they are organized around ideas, not only syntax.
+ *
+ * What problem this solves:
+ * business code often filters, transforms, groups, and summarizes data.
+ *
+ * Real-world setup:
+ * This topic uses order processing and reporting to make the concept easier to understand.
+ *
+ * How to think about it:
+ * First understand the problem in plain language, then map that idea to the Java code.
+ *
+ * How to code it:
+ * 1. Identify the business data or behavior.
+ * 2. Choose the Java construct that expresses the idea clearly.
+ * 3. Run the example and compare the output with the explanation.
+ *
+ * Expected output:
+ * Read the inline comments and printed lines in main() to see the expected behavior.
+ */
+
+public class Collectors {
+    public static void main(String[] args) {
+        overview();
+        wrongExample();
+        toListExample();
+        groupingByExample();
+        partitioningByExample();
+        summarizingExample();
+        pitfalls();
+        examTrap();
+        interviewQuestion();
+        exercise();
+        solution();
+    }
+
+    private static void wrongExample() {
+        System.out.println(&quot;Wrong example:&quot;);
+        System.out.println(&quot;Using toMap without handling duplicate keys can fail at runtime.&quot;);
+        System.out.println();
+    }
+
+    private static void overview() {
+        System.out.println(&quot;Topic: Collectors&quot;);
+        System.out.println(&quot;Chapter: Streams&quot;);
+        System.out.println(&quot;Real-world setup: an order screen needs grouped items, totals, pass/fail buckets, and printable summaries.&quot;);
+        System.out.println(&quot;Collectors turn a stream into a final result like a List, Set, Map, summary, or grouped structure.&quot;);
+        System.out.println();
+    }
+
+    private static void toListExample() {
+        // Expected output:
+        // upperCaseNames keeps duplicates, uniqueUpperCaseNames removes them
+        List&lt;String&gt; categories = List.of(&quot;books&quot;, &quot;electronics&quot;, &quot;books&quot;, &quot;stationery&quot;, &quot;books&quot;);
+        List&lt;String&gt; upperCaseCategories = uppercaseCategories(categories);
+        Set&lt;String&gt; uniqueUpperCaseCategories = uniqueUppercaseCategories(categories);
+
+        System.out.println(&quot;Example 1: toList and toSet&quot;);
+        System.out.println(&quot;source = &quot; + categories);
+        System.out.println(&quot;upperCaseCategories = &quot; + upperCaseCategories);
+        System.out.println(&quot;uniqueUpperCaseCategories = &quot; + uniqueUpperCaseCategories);
+        System.out.println(&quot;What to notice: toList keeps duplicates, toSet removes duplicates.&quot;);
+        System.out.println(&quot;Dry run: map turns each category name into uppercase before the collector receives it.&quot;);
+        System.out.println();
+    }
+
+    private static void groupingByExample() {
+        // Expected output:
+        // category names map to grouped product-name lists
+        List&lt;Order&gt; orders = List.of(
+                new Order(&quot;book&quot;, &quot;education&quot;, 899),
+                new Order(&quot;pen&quot;, &quot;education&quot;, 99),
+                new Order(&quot;mouse&quot;, &quot;electronics&quot;, 1599),
+                new Order(&quot;keyboard&quot;, &quot;electronics&quot;, 2499),
+                new Order(&quot;notebook&quot;, &quot;education&quot;, 199)
+        );
+
+        Map&lt;String, List&lt;String&gt;&gt; productNamesByCategory = groupProductNamesByCategory(orders);
+
+        System.out.println(&quot;Example 2: groupingBy&quot;);
+        System.out.println(&quot;orders = &quot; + orders);
+        System.out.println(&quot;productNamesByCategory = &quot; + productNamesByCategory);
+        System.out.println(&quot;What to notice: groupingBy creates a Map where each key holds matching values.&quot;);
+        System.out.println(&quot;Senior note: collectors make aggregation intent explicit, which is easier to review than hand-built mutable maps.&quot;);
+        System.out.println();
+    }
+
+    private static void partitioningByExample() {
+        // Expected output:
+        // passing scores go to true, failing scores go to false
+        List&lt;Integer&gt; scores = List.of(91, 48, 77, 63, 39, 88);
+
+        Map&lt;Boolean, List&lt;Integer&gt;&gt; scoresByPassStatus = partitionScores(scores, 60);
+
+        System.out.println(&quot;Example 3: partitioningBy&quot;);
+        System.out.println(&quot;scores = &quot; + scores);
+        System.out.println(&quot;scoresByPassStatus = &quot; + scoresByPassStatus);
+        System.out.println(&quot;What to notice: partitioningBy always creates two groups, true and false.&quot;);
+        System.out.println();
+    }
+
+    private static void summarizingExample() {
+        // Expected output:
+        // count, sum, min, max, average, and joinedNames all print from the order list
+        List&lt;Order&gt; orders = List.of(
+                new Order(&quot;book&quot;, &quot;education&quot;, 899),
+                new Order(&quot;pen&quot;, &quot;education&quot;, 99),
+                new Order(&quot;mouse&quot;, &quot;electronics&quot;, 1599),
+                new Order(&quot;keyboard&quot;, &quot;electronics&quot;, 2499),
+                new Order(&quot;notebook&quot;, &quot;education&quot;, 199)
+        );
+
+        IntSummaryStatistics summary = summarizePrices(orders);
+        String joinedNames = joinNames(orders);
+
+        System.out.println(&quot;Example 4: summarizingInt and joining&quot;);
+        System.out.println(&quot;count = &quot; + summary.getCount());
+        System.out.println(&quot;sum = &quot; + summary.getSum());
+        System.out.println(&quot;min = &quot; + summary.getMin());
+        System.out.println(&quot;max = &quot; + summary.getMax());
+        System.out.println(&quot;average = &quot; + summary.getAverage());
+        System.out.println(&quot;joinedNames = &quot; + joinedNames);
+        System.out.println(&quot;What to notice: collectors can calculate statistics and combine values in one readable pipeline.&quot;);
+        System.out.println();
+    }
+
+    private static void pitfalls() {
+        System.out.println(&quot;Common mistakes:&quot;);
+        System.out.println(&quot;- using groupingBy when partitioningBy would express the intent more clearly&quot;);
+        System.out.println(&quot;- forgetting that toSet does not preserve duplicates&quot;);
+        System.out.println(&quot;- collecting into a map without handling duplicate keys&quot;);
+        System.out.println(&quot;- writing a stream pipeline when a simple loop is easier to read&quot;);
+        System.out.println();
+    }
+
+    private static void examTrap() {
+        System.out.println(&quot;OCJP trap:&quot;);
+        System.out.println(&quot;Collectors.joining works on a stream of CharSequence values, not directly on numbers.&quot;);
+        System.out.println(&quot;Collectors.toMap can fail with duplicate keys unless you provide a merge function.&quot;);
+        System.out.println();
+    }
+
+    private static void interviewQuestion() {
+        List&lt;Order&gt; orders = List.of(
+                new Order(&quot;book&quot;, &quot;education&quot;, 899),
+                new Order(&quot;mouse&quot;, &quot;electronics&quot;, 1599),
+                new Order(&quot;notebook&quot;, &quot;education&quot;, 199)
+        );
+
+        Map&lt;String, Integer&gt; totalPriceByCategory = totalPriceByCategory(orders);
+
+        System.out.println(&quot;Interview Q&amp;A:&quot;);
+        System.out.println(&quot;Q: When is groupingBy better than toMap?&quot;);
+        System.out.println(&quot;A: groupingBy is better when multiple values naturally belong to the same key.&quot;);
+        System.out.println(&quot;Example answer structure: totalPriceByCategory = &quot; + totalPriceByCategory);
+        System.out.println();
+    }
+
+    private static void exercise() {
+        System.out.println(&quot;Exercise:&quot;);
+        System.out.println(&quot;From orders in categories education and electronics, build a map of category -&gt; number of products.&quot;);
+        System.out.println(&quot;Try solving it with groupingBy and counting.&quot;);
+        System.out.println();
+    }
+
+    private static void solution() {
+        List&lt;Order&gt; orders = List.of(
+                new Order(&quot;book&quot;, &quot;education&quot;, 899),
+                new Order(&quot;pen&quot;, &quot;education&quot;, 99),
+                new Order(&quot;mouse&quot;, &quot;electronics&quot;, 1599),
+                new Order(&quot;keyboard&quot;, &quot;electronics&quot;, 2499),
+                new Order(&quot;notebook&quot;, &quot;education&quot;, 199)
+        );
+
+        Map&lt;String, Long&gt; productCountByCategory = countProductsByCategory(orders);
+
+        System.out.println(&quot;Solution:&quot;);
+        System.out.println(&quot;productCountByCategory = &quot; + productCountByCategory);
+        System.out.println(&quot;Why this is good: groupingBy defines the key, and counting clearly expresses the final result.&quot;);
+    }
+
+    static List&lt;String&gt; uppercaseCategories(List&lt;String&gt; categories) {
+        return categories.stream()
+                .map(String::toUpperCase)
+                .collect(java.util.stream.Collectors.toList());
+    }
+
+    static Set&lt;String&gt; uniqueUppercaseCategories(List&lt;String&gt; categories) {
+        return categories.stream()
+                .map(String::toUpperCase)
+                .collect(java.util.stream.Collectors.toSet());
+    }
+
+    static Map&lt;String, List&lt;String&gt;&gt; groupProductNamesByCategory(List&lt;Order&gt; orders) {
+        return orders.stream()
+                .collect(java.util.stream.Collectors.groupingBy(
+                        Order::category,
+                        java.util.stream.Collectors.mapping(
+                                Order::name,
+                                java.util.stream.Collectors.toList()
+                        )
+                ));
+    }
+
+    static Map&lt;Boolean, List&lt;Integer&gt;&gt; partitionScores(List&lt;Integer&gt; scores, int passingScore) {
+        return scores.stream()
+                .collect(java.util.stream.Collectors.partitioningBy(score -&gt; score &gt;= passingScore));
+    }
+
+    static IntSummaryStatistics summarizePrices(List&lt;Order&gt; orders) {
+        return orders.stream()
+                .collect(java.util.stream.Collectors.summarizingInt(Order::priceInCents));
+    }
+
+    static String joinNames(List&lt;Order&gt; orders) {
+        return orders.stream()
+                .map(Order::name)
+                .collect(java.util.stream.Collectors.joining(&quot;, &quot;));
+    }
+
+    static Map&lt;String, Integer&gt; totalPriceByCategory(List&lt;Order&gt; orders) {
+        return orders.stream()
+                .collect(java.util.stream.Collectors.groupingBy(
+                        Order::category,
+                        java.util.stream.Collectors.summingInt(Order::priceInCents)
+                ));
+    }
+
+    static Map&lt;String, Long&gt; countProductsByCategory(List&lt;Order&gt; orders) {
+        return orders.stream()
+                .collect(java.util.stream.Collectors.groupingBy(
+                        Order::category,
+                        java.util.stream.Collectors.counting()
+                ));
+    }
+
+    record Order(String name, String category, int priceInCents) {}
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

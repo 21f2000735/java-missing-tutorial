@@ -10,6 +10,7 @@ library_root="$content_root/library"
 meta_root="$content_root/meta"
 data_root="$site_root/data"
 manifest_file="$data_root/site.json"
+site_url="https://21f2000735.github.io/java-missing-tutorial"
 
 resource_files=(
   "README.md"
@@ -232,5 +233,41 @@ generate_manifest() {
 
 copy_content_tree
 generate_manifest
+node "$root/scripts/render_resource_pages.mjs"
+
+cat > "$site_root/robots.txt" <<EOF
+User-agent: *
+Allow: /
+
+Sitemap: $site_url/sitemap.xml
+EOF
+
+cat > "$site_root/sitemap.xml" <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>$site_url/</loc></url>
+  <url><loc>$site_url/guides/ocjp-track/</loc></url>
+  <url><loc>$site_url/guides/interview-track/</loc></url>
+  <url><loc>$site_url/guides/modern-java-track/</loc></url>
+  <url><loc>$site_url/guides/java-7-to-25/</loc></url>
+  <url><loc>$site_url/guides/java-migration-guides/</loc></url>
+  <url><loc>$site_url/guides/high-demand-java-topics/</loc></url>
+  <url><loc>$site_url/guides/interview-problem-approach/</loc></url>
+  <url><loc>$site_url/guides/company-question-bank/</loc></url>
+  <url><loc>$site_url/guides/compare-collections/</loc></url>
+  <url><loc>$site_url/guides/compare-streams/</loc></url>
+  <url><loc>$site_url/guides/compare-concurrency/</loc></url>
+  <url><loc>$site_url/topics/list-set-map/</loc></url>
+  <url><loc>$site_url/topics/stream-pipeline/</loc></url>
+  <url><loc>$site_url/topics/collectors/</loc></url>
+  <url><loc>$site_url/topics/threads/</loc></url>
+  <url><loc>$site_url/topics/virtual-threads/</loc></url>
+  <url><loc>$site_url/topics/stack-heap-and-references/</loc></url>
+  <url><loc>$site_url/topics/handling-payment-failures/</loc></url>
+  <url><loc>$site_url/topics/http-client-basics/</loc></url>
+  <url><loc>$site_url/topics/arraylist-growth-and-lookup/</loc></url>
+  <url><loc>$site_url/topics/hashmap-buckets-and-collisions/</loc></url>
+</urlset>
+EOF
 
 echo "Wrote $manifest_file"

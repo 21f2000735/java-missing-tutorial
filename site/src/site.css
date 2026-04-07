@@ -38,6 +38,89 @@ body {
   min-height: 100vh;
 }
 
+#root {
+  min-height: 100vh;
+}
+
+.seo-shell {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 2.5rem 1.25rem 3rem;
+}
+
+.app-ready .seo-shell {
+  display: none;
+}
+
+.seo-hero,
+.seo-grid article {
+  background: rgba(255, 251, 244, 0.88);
+  border: 1px solid var(--line);
+  border-radius: 1.5rem;
+  box-shadow: var(--shadow);
+}
+
+.seo-hero {
+  padding: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.seo-hero h1 {
+  font-family: "Fraunces", serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  line-height: 1.02;
+  margin: 0 0 0.9rem;
+}
+
+.seo-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 700;
+  margin: 0 0 0.7rem;
+}
+
+.seo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+}
+
+.seo-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  text-decoration: none;
+  background: white;
+  box-shadow: inset 0 0 0 1px rgba(49, 40, 29, 0.08);
+  color: var(--text);
+}
+
+.seo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1rem;
+}
+
+.seo-grid article {
+  padding: 1.25rem;
+}
+
+.seo-grid h2 {
+  font-family: "Fraunces", serif;
+  font-size: 1.25rem;
+  margin-top: 0;
+}
+
+.seo-noscript {
+  margin-top: 1rem;
+  color: var(--muted);
+}
+
 a {
   color: var(--accent-strong);
 }
@@ -239,6 +322,10 @@ a {
   align-items: start;
 }
 
+.content-layout-reading {
+  grid-template-columns: 1fr;
+}
+
 .content-main {
   min-width: 0;
 }
@@ -382,6 +469,10 @@ a {
 .callout-grid,
 .topic-brief-grid {
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.journey-grid-primary {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .content-card {
@@ -748,6 +839,27 @@ a {
 
 .btn-outline-dark:hover {
   background: var(--text);
+}
+
+.reading-mode .app-quick-links,
+.reading-mode .sidebar-column,
+.reading-mode .content-side {
+  display: none;
+}
+
+.reading-mode .content-wrap {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding-top: 1.25rem;
+}
+
+.reading-mode .hero-panel {
+  background: linear-gradient(180deg, rgba(255, 252, 247, 0.98), rgba(255, 249, 240, 0.92));
+}
+
+.reading-mode .content-card,
+.reading-mode .hero-panel {
+  box-shadow: 0 12px 28px rgba(60, 42, 18, 0.06);
 }
 
 @media (max-width: 1199.98px) {

@@ -60,37 +60,37 @@ const RESOURCE_DESCRIPTIONS = {
 const HIGH_DEMAND_TOPICS = [
   {
     title: 'List, Set, Map',
-    route: '#topic/sec02_collections/ch01_collections/list_set_map',
+    route: './topics/list-set-map/',
     why: 'People keep searching for the right collection choice because it affects correctness, readability, and performance.'
   },
   {
     title: 'Stream Pipeline',
-    route: '#topic/sec04_streams_and_functional_style/ch01_streams/stream_pipeline',
+    route: './topics/stream-pipeline/',
     why: 'Streams remain one of the most searched Java topics because developers need a clear mental model for filter-map-collect flow.'
   },
   {
     title: 'Collectors',
-    route: '#topic/sec04_streams_and_functional_style/ch01_streams/collectors',
+    route: './topics/collectors/',
     why: 'Collectors are where many stream users get stuck, especially around grouping, counting, and mapping results.'
   },
   {
     title: 'Threads',
-    route: '#topic/sec05_multithreading_and_concurrency/ch01_concurrency_basics/threads',
+    route: './topics/threads/',
     why: 'Basic thread behavior is still the entry point for understanding executors, synchronization, and virtual threads.'
   },
   {
     title: 'Handling Payment Failures',
-    route: '#topic/sec11_exception_handling/ch01_handling_errors/handling_payment_failures',
+    route: './topics/handling-payment-failures/',
     why: 'Exception handling stays highly searched because it directly affects debugging, user messaging, and reliability.'
   },
   {
     title: 'HTTP Client Basics',
-    route: '#topic/sec12_networking/ch01_http_client_basics/building_requests_with_http_client',
+    route: './topics/http-client-basics/',
     why: 'Modern Java services frequently need outbound HTTP calls, so request-building basics matter immediately.'
   },
   {
     title: 'Stack, Heap, and References',
-    route: '#topic/sec08_internal_of_jvm/ch01_memory_and_execution_basics/understanding_stack_heap_and_references',
+    route: './topics/stack-heap-and-references/',
     why: 'JVM memory basics stay popular because they explain mutation surprises, debugging confusion, and interview questions.'
   }
 ];
@@ -1015,6 +1015,26 @@ function useFeedbackState() {
   return { votes, setVote };
 }
 
+function useUiPreferences() {
+  const [readingMode, setReadingMode] = useState(() => {
+    try {
+      return window.localStorage.getItem('java-book-reading-mode') === 'on';
+    } catch {
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem('java-book-reading-mode', readingMode ? 'on' : 'off');
+  }, [readingMode]);
+
+  function toggleReadingMode() {
+    setReadingMode((current) => !current);
+  }
+
+  return { readingMode, toggleReadingMode };
+}
+
 function RandomTopicButton({ manifest, currentRoute }) {
   function goToRandomTopic() {
     const topics = [];
@@ -1107,17 +1127,14 @@ function FeedbackBar({ routeKey, feedbackState }) {
 }
 
 function HomePage({ manifest }) {
-  const featuredSections = manifest.sections.slice(0, 6);
-  const learningJourneys = [
-    { title: 'I am starting from zero', sectionSlug: 'sec01_fundamentals' },
-    { title: 'I want OCJP prep', resourceSlug: 'OCJP_TRACK' },
-    { title: 'I want interview prep', resourceSlug: 'INTERVIEW_TRACK' },
-    { title: 'I want modern Java by era', resourceSlug: 'MODERN_JAVA_TRACK' },
-    { title: 'I want data handling judgment', sectionSlug: 'sec02_collections' },
-    { title: 'I want stream confidence', sectionSlug: 'sec04_streams_and_functional_style' },
-    { title: 'I want concurrency clarity', sectionSlug: 'sec05_multithreading_and_concurrency' },
-    { title: 'I want cleaner design', sectionSlug: 'sec06_design_patterns' },
-    { title: 'I want complexity + DSA intuition', sectionSlug: 'sec20_data_structures_and_complexity' }
+  const featuredSections = manifest.sections.filter((section) => (
+    ['sec01_fundamentals', 'sec02_collections', 'sec04_streams_and_functional_style', 'sec05_multithreading_and_concurrency', 'sec20_data_structures_and_complexity']
+      .includes(section.slug)
+  ));
+  const primaryJourneys = [
+    { title: 'Start Java Clearly', sectionSlug: 'sec01_fundamentals' },
+    { title: 'Crack Interviews', resourceSlug: 'INTERVIEW_TRACK' },
+    { title: 'Learn Modern Java', resourceSlug: 'MODERN_JAVA_TRACK' }
   ]
     .map((item) => ({
       ...item,
@@ -1134,37 +1151,31 @@ function HomePage({ manifest }) {
             <p className="eyebrow mb-2">Java Learning Site</p>
             <h1 className="display-title">Learn Java by solving real problems, not by opening random files.</h1>
             <p className="display-subtitle mb-4">
-              This site should read more like a strong technical blog series or a practical book:
-              start with the situation, show the pressure, explain the concept, run the code, and make the output understandable.
+              Learn Java through short problem-first lessons, runnable examples, and clear next steps.
+              Pick one path, open one chapter, and move forward without getting lost in the repo.
             </p>
             <div className="d-flex flex-wrap gap-2">
               <a className="btn btn-dark rounded-pill px-4" href="#section/sec01_fundamentals">Start With Fundamentals</a>
-              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/BOOK">Read The Book Order</a>
-              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/OCJP_TRACK">Open OCJP Track</a>
               <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/INTERVIEW_TRACK">Open Interview Track</a>
-              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/BOOK_MANUSCRIPT">Open Combined Manuscript</a>
+              <a className="btn btn-outline-dark rounded-pill px-4" href="#resource/MODERN_JAVA_TRACK">Open Modern Java Track</a>
             </div>
           </div>
           <div className="col-xl-5">
             <div className="story-strip">
               <div className="story-card story-card-strong">
-                <div className="eyebrow mb-2">What makes this different</div>
-                <h3 className="h5">Hook first. Problem first. Code second. Output always.</h3>
+                <div className="eyebrow mb-2">How to use it</div>
+                <h3 className="h5">Problem first. Example second. Explanation after that.</h3>
                 <p className="muted-copy mb-0">
-                  The site should not feel like a Javadoc shelf. Each chapter should earn attention by showing the real need before the syntax.
+                  Each chapter should help you answer one question well, not open ten options at once.
                 </p>
               </div>
               <div className="story-card">
                 <div className="stat-number">{manifest.stats.sections}</div>
-                <div className="muted-copy">Sections grouped like a book</div>
+                <div className="muted-copy">sections</div>
               </div>
               <div className="story-card">
                 <div className="stat-number">{manifest.stats.chapters}</div>
-                <div className="muted-copy">Chapters with guides and revisions</div>
-              </div>
-              <div className="story-card">
-                <div className="stat-number">{manifest.stats.topics}</div>
-                <div className="muted-copy">Runnable Java topic files</div>
+                <div className="muted-copy">chapters</div>
               </div>
             </div>
           </div>
@@ -1173,32 +1184,11 @@ function HomePage({ manifest }) {
 
       <div className="content-card">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-          <h2 className="page-title mb-0">What This Site Is</h2>
-          <span className="badge rounded-pill badge-soft">For first-time visitors</span>
+          <h2 className="page-title mb-0">Choose One Path</h2>
+          <span className="badge rounded-pill badge-soft">Start here</span>
         </div>
-        <div className="insight-grid">
-          <InsightCard icon="bi bi-book" title="A Learning Book, Not A Repo Browser">
-            Start with the problem, then the example, then the explanation. The code should support the lesson, not replace it.
-          </InsightCard>
-          <InsightCard icon="bi bi-people" title="Useful For Freshers And Experienced Engineers">
-            Beginners can use the guides and examples. Experienced engineers can jump into compare pages, company tracks, JVM internals, and tradeoffs.
-          </InsightCard>
-          <InsightCard icon="bi bi-question-circle" title="What Readers Usually Want">
-            What problem does this solve, what output should I expect, when should I use it, and what mistake should I avoid.
-          </InsightCard>
-          <InsightCard icon="bi bi-signpost-split" title="How To Use It">
-            Pick a section, open a chapter, run a topic, then use the revision sheet and compare pages to lock in the idea.
-          </InsightCard>
-        </div>
-      </div>
-
-      <div className="content-card">
-        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-          <h2 className="page-title mb-0">Pick A Learning Journey</h2>
-          <span className="badge rounded-pill badge-soft">Problem-first paths</span>
-        </div>
-        <div className="journey-grid">
-          {learningJourneys.map(({ title, section, resource }) => {
+        <div className="journey-grid journey-grid-primary">
+          {primaryJourneys.map(({ title, section, resource }) => {
             if (!section) {
               const isOcjp = resource.slug === 'OCJP_TRACK';
               const isInterview = resource.slug === 'INTERVIEW_TRACK';
@@ -1216,19 +1206,11 @@ function HomePage({ manifest }) {
                   </div>
                   <h3 className="h5 mb-2">{title}</h3>
                   <p className="muted-copy mb-3">
-                    {isOcjp
-                      ? 'Use a certification-focused route so fundamentals, collections, generics, streams, exceptions, and testing build in the right order.'
-                      : isInterview
+                    {isInterview
                       ? 'Use company-style interview tracks, backend problem guidance, and core Java sections together instead of treating prep as disconnected lists.'
                       : 'Follow Java from 7 through 25, then use the migration guide to decide what to learn at each jump.'}
                   </p>
-                  <BulletList items={isOcjp
-                    ? [
-                        'Prioritize the topics most likely to appear first',
-                        'Use revision sheets to compress revision time',
-                        'Jump from concept coverage to compare pages quickly'
-                      ]
-                    : isInterview
+                  <BulletList items={isInterview
                     ? [
                         'Practice original questions with sample answers',
                         'Prep by company pressure, not just by logo',
@@ -1248,11 +1230,15 @@ function HomePage({ manifest }) {
               <a className="journey-card text-decoration-none text-reset" href={`#section/${section.slug}`} key={section.slug}>
                 <div className="d-flex align-items-center gap-2 mb-2">
                   {profile.icon ? <i className={`${profile.icon} section-icon`} /> : null}
-                  <span className="badge rounded-pill badge-soft">{section.slug}</span>
+                  <span className="badge rounded-pill badge-soft">Foundation Path</span>
                 </div>
                 <h3 className="h5 mb-2">{title}</h3>
                 <p className="muted-copy mb-3">{profile.hook || `Open ${section.title} as a guided starting point.`}</p>
-                <BulletList items={profile.problems?.slice(0, 2) || []} />
+                <BulletList items={[
+                  'Start from simple runnable Java examples',
+                  'Build collections, streams, and design later',
+                  'Use revision sheets after each chapter'
+                ]} />
               </a>
             );
           })}
@@ -1261,8 +1247,8 @@ function HomePage({ manifest }) {
 
       <div className="content-card">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-          <h2 className="page-title mb-0">Browse By Section</h2>
-          <span className="badge rounded-pill badge-soft">Book-style navigation</span>
+          <h2 className="page-title mb-0">Popular Starting Sections</h2>
+          <span className="badge rounded-pill badge-soft">Simple navigation</span>
         </div>
         <div className="section-grid">
           {featuredSections.map((section) => {
@@ -1284,38 +1270,6 @@ function HomePage({ manifest }) {
 
       <div className="content-card">
         <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-          <h2 className="page-title mb-0">Core Resources</h2>
-          <span className="badge rounded-pill badge-soft">Book + curriculum + references</span>
-        </div>
-        <div className="resource-grid">
-          {manifest.resources.map((resource) => (
-            <a className="resource-card text-decoration-none text-reset" href={`#resource/${resource.slug}`} key={resource.slug}>
-              <div className="eyebrow mb-2">Reference</div>
-              <h3 className="h5 mb-2">{resource.title}</h3>
-              <p className="muted-copy mb-0">{RESOURCE_DESCRIPTIONS[resource.slug] || 'Open the original markdown behind this learning site.'}</p>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      <div className="content-card">
-        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-          <h2 className="page-title mb-0">Compare Fast</h2>
-          <span className="badge rounded-pill badge-soft">One-look tradeoffs</span>
-        </div>
-        <div className="resource-grid">
-          {['COMPARE_COLLECTIONS', 'COMPARE_STREAMS', 'COMPARE_CONCURRENCY'].map((slug) => (
-            <a className="resource-card text-decoration-none text-reset" href={`#resource/${slug}`} key={slug}>
-              <div className="eyebrow mb-2">Compare</div>
-              <h3 className="h5 mb-2">{slug.replace('COMPARE_', '').replace(/_/g, ' ').replace(/\b\w/g, (char) => char.toUpperCase())}</h3>
-              <p className="muted-copy mb-0">{resourceSummaryFromSlug(slug)}</p>
-            </a>
-          ))}
-        </div>
-      </div>
-
-      <div className="content-card">
-        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
           <h2 className="page-title mb-0">Most Asked Java Topics</h2>
           <a className="badge rounded-pill badge-soft text-decoration-none" href="#resource/HIGH_DEMAND_JAVA_TOPICS">See why these matter</a>
         </div>
@@ -1326,27 +1280,6 @@ function HomePage({ manifest }) {
               <p className="muted-copy mb-0">{topic.why}</p>
             </a>
           ))}
-        </div>
-      </div>
-
-      <div className="content-card">
-        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-          <h2 className="page-title mb-0">Common Reader Questions</h2>
-          <span className="badge rounded-pill badge-soft">Asked all the time</span>
-        </div>
-        <div className="insight-grid">
-          <InsightCard icon="bi bi-1-circle" title="Where should I start?">
-            Start with Fundamentals if Java syntax still feels shaky. Start with Collections or Streams if you already write Java and want stronger judgment.
-          </InsightCard>
-          <InsightCard icon="bi bi-2-circle" title="Can I use this for interviews?">
-            Yes. Use the company interview tracks, compare pages, and the interview-approach guide alongside the core topic examples.
-          </InsightCard>
-          <InsightCard icon="bi bi-3-circle" title="Can I run the code online?">
-            Stable single-file examples can be sent to JDoodle. Preview-sensitive topics should be run locally on the right JDK.
-          </InsightCard>
-          <InsightCard icon="bi bi-4-circle" title="How current is the content?">
-            The release track covers Java 7 to 25, and the site shows when the content bundle was last generated.
-          </InsightCard>
         </div>
       </div>
     </>
@@ -1414,17 +1347,11 @@ function TopicPreviewCard({ section, chapter, topic }) {
 function QuickLinkRail({ onRandomTopic }) {
   const links = [
     { label: 'Start Here', href: '#section/sec01_fundamentals' },
-    { label: 'Java 7 to 25', href: '#resource/JAVA_7_TO_25' },
-    { label: 'OCJP Track', href: '#resource/OCJP_TRACK' },
     { label: 'Interview Track', href: '#resource/INTERVIEW_TRACK' },
-    { label: 'Interview Approach', href: '#resource/INTERVIEW_PROBLEM_APPROACH' },
-    { label: 'Compare Collections', href: '#resource/COMPARE_COLLECTIONS' },
-    { label: 'Compare Streams', href: '#resource/COMPARE_STREAMS' },
-    { label: 'Compare Concurrency', href: '#resource/COMPARE_CONCURRENCY' },
+    { label: 'Modern Java', href: '#resource/MODERN_JAVA_TRACK' },
     { label: 'Streams', href: '#section/sec04_streams_and_functional_style' },
     { label: 'Concurrency', href: '#section/sec05_multithreading_and_concurrency' },
-    { label: 'Design Patterns', href: '#section/sec06_design_patterns' },
-    { label: 'Complexity', href: '#section/sec20_data_structures_and_complexity' }
+    { label: 'Collections', href: '#section/sec02_collections' }
   ];
 
   return (
@@ -1500,6 +1427,7 @@ export default function App() {
   const contentCache = useRef(new Map());
   const readingState = useReadingState();
   const feedbackState = useFeedbackState();
+  const uiPreferences = useUiPreferences();
 
   useEffect(() => {
     async function loadManifest() {
@@ -1670,7 +1598,7 @@ export default function App() {
   }
 
   return (
-    <div className="site-shell">
+    <div className={`site-shell ${uiPreferences.readingMode ? 'reading-mode' : ''}`}>
       <header className="site-header border-bottom">
         <nav className="navbar navbar-expand-lg px-3 px-lg-4 py-3">
           <div className="container-fluid px-0">
@@ -1678,31 +1606,28 @@ export default function App() {
             <div className="ms-lg-4 flex-grow-1 d-flex align-items-center gap-3">
               <SearchBox entries={searchEntries} />
               <div className="d-none d-lg-flex align-items-center gap-2">
+                <button className={`btn btn-sm rounded-pill ${uiPreferences.readingMode ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleReadingMode}>
+                  {uiPreferences.readingMode ? 'Exit Reading Mode' : 'Reading Mode'}
+                </button>
                 <RandomTopicButton manifest={manifest} currentRoute={window.location.hash || '#home'} />
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/JAVA_7_TO_25">Java 7 To 25</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/OCJP_TRACK">OCJP Track</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_TRACK">Interview Track</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Interview Approach</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/COMPANY_QUESTION_BANK">Company Bank</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/COMPARE_COLLECTIONS">Compare</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/CURRICULUM">Curriculum</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/TOP_20_BOOKS">Sources</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/MODERN_JAVA_TRACK">Modern Java</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
               </div>
             </div>
           </div>
         </nav>
-        <div className="px-3 px-lg-4 pb-3">
+        <div className="px-3 px-lg-4 pb-3 app-quick-links">
           <QuickLinkRail onRandomTopic={goToRandomTopic} />
         </div>
       </header>
 
       <main className="container-fluid">
         <div className="row gx-0">
-          <Sidebar sections={manifest.sections} activeRoute={activeRoute} />
-          <section className="col-12 col-xl-9 content-column">
+          {!uiPreferences.readingMode ? <Sidebar sections={manifest.sections} activeRoute={activeRoute} /> : null}
+          <section className={uiPreferences.readingMode ? 'col-12 content-column' : 'col-12 col-xl-9 content-column'}>
             <div className="content-wrap">
-              <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} readingState={readingState} feedbackState={feedbackState} />
+              <RouteRenderer route={route} manifest={manifest} fetchText={fetchText} readingState={readingState} feedbackState={feedbackState} uiPreferences={uiPreferences} />
             </div>
             <footer className="site-footer content-card">
               <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
@@ -1726,7 +1651,7 @@ export default function App() {
   );
 }
 
-function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState }) {
+function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState, uiPreferences }) {
   const [content, setContent] = useState({ status: 'loading', data: null, error: '' });
 
   useEffect(() => {
@@ -1981,7 +1906,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
         )}
       >
         <ReadingStateBar routeKey={routeKey} {...readingState} />
-        <div className="content-layout">
+        <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
           <div className="content-main">
             <ChapterStoryCards guide={guide} />
             <div className="callout-grid mb-4">
@@ -2021,9 +1946,11 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
               <MarkdownBlock html={marked.parse(data.revisionRaw)} manifest={manifest} contentPath={data.chapter.revision.contentPath} />
             </div>
           </div>
-          <div className="content-side">
-            <InPageToc items={chapterToc} />
-          </div>
+          {!uiPreferences.readingMode ? (
+            <div className="content-side">
+              <InPageToc items={chapterToc} />
+            </div>
+          ) : null}
         </div>
         <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
       </PageLayout>
@@ -2057,7 +1984,7 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
       )}
     >
       <ReadingStateBar routeKey={routeKey} {...readingState} />
-      <div className="content-layout">
+      <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
         <div className="content-main">
           {topicSummary.storyHook || topicSummary.whyThisWorks || topicSummary.watchOut ? (
             <div className="callout-grid mb-4">
@@ -2192,9 +2119,11 @@ function RouteRenderer({ route, manifest, fetchText, readingState, feedbackState
             </div>
           </div>
         </div>
-        <div className="content-side">
-          <InPageToc items={topicToc} />
-        </div>
+        {!uiPreferences.readingMode ? (
+          <div className="content-side">
+            <InPageToc items={topicToc} />
+          </div>
+        ) : null}
       </div>
       <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
     </PageLayout>

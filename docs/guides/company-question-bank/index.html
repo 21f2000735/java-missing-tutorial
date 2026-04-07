@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Question Bank - Java Missing Tutorial</title>
+  <meta name="description" content="As of April 7, 2026, this page groups target companies by the kind of interview pressure they create.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/guides/company-question-bank/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:54rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace} pre{overflow:auto;background:#2a2117;color:#fdf8f1;padding:1rem;border-radius:1rem}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="panel">
+      <p class="eyebrow">Static Guide</p>
+      <h1>Company Question Bank</h1>
+      <div class="nav">
+        <a href="../../index.html">Open site home</a>
+        <a href="../../index.html#resource/COMPANY_QUESTION_BANK">Open app version</a>
+      </div>
+      <p>As of April 7, 2026, this page groups target companies by the kind of interview pressure they create.</p>
+<p>The goal is not to memorize one company’s leaked questions.
+The goal is to practice the kind of thinking that company is likely to reward.</p>
+<p>These questions and answers are original.
+They are informed by public company career, interview, and engineering pages.</p>
+<h2>Deeper Practice In This Site</h2>
+<p>This resource is now backed by a full book section:</p>
+<ul>
+<li><a href="../../index.html#file/src/main/java/com/learning/javamissing/../../index.html#file/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/SectionGuide.md">sec21_company_interview_tracks/SectionGuide.md</a></li>
+<li><a href="../../index.html#file/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch01_google_meta_amazon/ChapterGuide.md">ch01_google_meta_amazon/ChapterGuide.md</a></li>
+<li><a href="../../index.html#file/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch02_apple_coinbase_jane_street/ChapterGuide.md">ch02_apple_coinbase_jane_street/ChapterGuide.md</a></li>
+<li><a href="../../index.html#file/src/main/java/com/learning/javamissing/sec21_company_interview_tracks/ch03_netflix_makemytrip_hoteltrader/ChapterGuide.md">ch03_netflix_makemytrip_hoteltrader/ChapterGuide.md</a></li>
+</ul>
+<p>Use this page as the overview, then move into those chapters for runnable examples and deeper company-style reasoning.</p>
+<h2>How To Use This Page</h2>
+<ol>
+<li>Pick the company or company group you care about.</li>
+<li>Answer the question aloud before reading the sample answer.</li>
+<li>Rewrite the answer in your own words using Java terms and system tradeoffs.</li>
+<li>Pair the company bank with the matching sections of this site:<ul>
+<li>collections</li>
+<li>streams</li>
+<li>multithreading and concurrency</li>
+<li>design patterns</li>
+<li>exception handling</li>
+<li>data structures and complexity</li>
+</ul>
+</li>
+</ol>
+<h2>Company Map</h2>
+<table>
+<thead>
+<tr>
+<th>Company</th>
+<th>Why it belongs here</th>
+<th>Interview pressure you should expect</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Google</td>
+<td>Strong generalist engineering bar</td>
+<td>algorithms, debugging, system design, clarity</td>
+</tr>
+<tr>
+<td>Meta</td>
+<td>Fast product engineering at massive scale</td>
+<td>coding speed, practical systems, impact</td>
+</tr>
+<tr>
+<td>Amazon</td>
+<td>strong customer and ownership culture</td>
+<td>coding, system design, STAR answers, tradeoffs</td>
+</tr>
+<tr>
+<td>Apple</td>
+<td>platform quality and high engineering standards</td>
+<td>API design, correctness, performance, privacy</td>
+</tr>
+<tr>
+<td>Netflix</td>
+<td>distributed systems and operational excellence</td>
+<td>reliability, scale, observability, judgment</td>
+</tr>
+<tr>
+<td>Coinbase</td>
+<td>money movement, trading, platform integrity</td>
+<td>idempotency, consistency, security, availability</td>
+</tr>
+<tr>
+<td>Jane Street</td>
+<td>elite problem solving and correctness</td>
+<td>algorithms, reasoning, code quality, collaboration</td>
+</tr>
+<tr>
+<td>MakeMyTrip</td>
+<td>travel search, booking, pricing, scale</td>
+<td>caching, inventory, consistency, latency</td>
+</tr>
+<tr>
+<td>HotelTrader</td>
+<td>direct hotel distribution and APIs</td>
+<td>GraphQL, data freshness, onboarding, uptime</td>
+</tr>
+</tbody></table>
+<h2>Google</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>clear problem solving</li>
+<li>structured communication</li>
+<li>data structures and algorithms</li>
+<li>system design with tradeoffs</li>
+</ul>
+<h3>Question 1</h3>
+<p>How would you design an autocomplete service for travel searches?</p>
+<h3>Answer</h3>
+<p>Start with the user need: low-latency suggestions while the user types.</p>
+<ul>
+<li>Use a prefix index such as trie-like storage or a search-optimized index.</li>
+<li>Store popularity signals so high-quality suggestions rank first.</li>
+<li>Cache hot prefixes aggressively because many users type similar inputs.</li>
+<li>Separate write-heavy update flow from read-heavy query flow.</li>
+<li>Measure p95 latency, suggestion relevance, and cache hit rate.</li>
+</ul>
+<p>In Java, I would keep the online read path simple and fast, and move ranking updates into asynchronous jobs.</p>
+<h3>Question 2</h3>
+<p>A Java service suddenly shows a latency jump after a new release. What do you do first?</p>
+<h3>Answer</h3>
+<p>Start with narrowing, not guessing.</p>
+<ul>
+<li>Compare current and previous release metrics.</li>
+<li>Check which endpoints and which dependency calls got slower.</li>
+<li>Look at error rate, GC, thread states, and database timing together.</li>
+<li>Roll back or feature-flag if user impact is high.</li>
+<li>Reproduce with profiling only after the blast radius is clear.</li>
+</ul>
+<p>The important signal is disciplined debugging. Google-style answers should sound methodical, not dramatic.</p>
+<h3>Question 3</h3>
+<p>When would you choose a loop over a stream pipeline in Java?</p>
+<h3>Answer</h3>
+<p>I choose a stream when the work is genuinely filter-map-collect style.
+I choose a loop when:</p>
+<ul>
+<li>state changes are central</li>
+<li>step-by-step debugging matters</li>
+<li>the stream becomes harder to explain than the loop</li>
+</ul>
+<p>The better answer is not &quot;streams are modern.&quot;
+It is &quot;I choose the construct that makes intent obvious.&quot;</p>
+<h2>Meta</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>coding with speed and clarity</li>
+<li>practical backend design</li>
+<li>impact and tradeoff thinking</li>
+<li>debugging issues at product scale</li>
+</ul>
+<h3>Question 1</h3>
+<p>How would you stop duplicate notifications from being sent during a retry storm?</p>
+<h3>Answer</h3>
+<p>Make the notification flow idempotent.</p>
+<ul>
+<li>Generate a stable idempotency key from the business event.</li>
+<li>Store send state keyed by that id.</li>
+<li>Retry safely without producing a second user-visible notification.</li>
+<li>Add expiry or cleanup for old dedupe keys.</li>
+</ul>
+<p>The Meta-style strength is practical engineering under scale, not theoretical beauty.</p>
+<h3>Question 2</h3>
+<p>A feed service has one very hot shard. What would you inspect?</p>
+<h3>Answer</h3>
+<ul>
+<li>traffic distribution by key</li>
+<li>whether the partitioning key is skewed</li>
+<li>whether celebrity or trending entities concentrate reads</li>
+<li>cache effectiveness</li>
+<li>fallback behavior when a shard overloads</li>
+</ul>
+<p>Then I would rebalance or redesign the partitioning strategy instead of only scaling the hot shard vertically.</p>
+<h3>Question 3</h3>
+<p>Tell me about a time you changed code to improve product impact, not just engineering cleanliness.</p>
+<h3>Answer</h3>
+<p>Use a STAR structure:</p>
+<ul>
+<li>Situation: the user-facing flow had a real friction point</li>
+<li>Task: reduce drop-off without breaking correctness</li>
+<li>Action: simplify the backend path, reduce dependency hops, add measurements</li>
+<li>Result: improve latency, reduce failure rate, or increase conversion</li>
+</ul>
+<p>Meta answers should connect engineering choices to user or product impact.</p>
+<h2>Amazon</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>leadership principles</li>
+<li>STAR stories</li>
+<li>customer-focused design</li>
+<li>scalable systems</li>
+</ul>
+<h3>Question 1</h3>
+<p>Design an order reservation service for a flash sale.</p>
+<h3>Answer</h3>
+<p>The main risks are overselling, timeouts, and inconsistent inventory.</p>
+<ul>
+<li>Keep a clear reservation state machine: pending, confirmed, expired, canceled.</li>
+<li>Use time-bounded reservations so abandoned carts release stock.</li>
+<li>Make the confirm call idempotent.</li>
+<li>Prefer append-only business events for auditability.</li>
+<li>Measure reservation success rate, expiration rate, oversell incidents, and p99 latency.</li>
+</ul>
+<p>Amazon answers should show customer impact and operational realism.</p>
+<h3>Question 2</h3>
+<p>Tell me about a time you disagreed with a technical direction.</p>
+<h3>Answer</h3>
+<p>A strong Amazon answer uses a leadership principle without naming it mechanically.</p>
+<ul>
+<li>explain the business risk</li>
+<li>show how you gathered data</li>
+<li>describe how you challenged respectfully</li>
+<li>show what decision was made</li>
+<li>explain the result and what you learned</li>
+</ul>
+<p>The best answer sounds like ownership plus judgment, not politics.</p>
+<h3>Question 3</h3>
+<p>Why would you choose asynchronous processing in a Java backend?</p>
+<h3>Answer</h3>
+<p>Only when the business flow allows it.</p>
+<ul>
+<li>good for email sending, report generation, enrichment, analytics</li>
+<li>not good for steps that must finish before the user gets a correct answer</li>
+</ul>
+<p>I would choose async to reduce user-facing latency and isolate slow dependencies, but only with good retry, visibility, and idempotency.</p>
+<h2>Apple</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>correctness and polish</li>
+<li>API and platform design</li>
+<li>performance awareness</li>
+<li>privacy and reliability</li>
+</ul>
+<h3>Question 1</h3>
+<p>How do you design a Java API that other teams will use safely?</p>
+<h3>Answer</h3>
+<ul>
+<li>make the happy path obvious</li>
+<li>keep invalid states hard to construct</li>
+<li>prefer small stable abstractions</li>
+<li>document thread-safety and error behavior clearly</li>
+<li>minimize surprising side effects</li>
+</ul>
+<p>The best API is not just powerful. It is hard to misuse.</p>
+<h3>Question 2</h3>
+<p>A backend feature works but is memory-heavy. How would you improve it?</p>
+<h3>Answer</h3>
+<p>Profile before rewriting.</p>
+<ul>
+<li>identify large allocations</li>
+<li>separate temporary object churn from retained memory</li>
+<li>stream or batch data instead of materializing everything</li>
+<li>reduce duplicate data copies</li>
+<li>validate the improvement with measurement</li>
+</ul>
+<p>Apple-style answers benefit from discipline and quality focus.</p>
+<h2>Netflix</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>distributed systems</li>
+<li>reliability and observability</li>
+<li>high performance under scale</li>
+<li>engineering judgment</li>
+</ul>
+<h3>Question 1</h3>
+<p>How would you make a billing dependency failure less damaging to signup flow?</p>
+<h3>Answer</h3>
+<p>Start with graceful degradation boundaries.</p>
+<ul>
+<li>isolate billing calls from the rest of the signup flow</li>
+<li>make failures observable and retryable</li>
+<li>protect upstreams with timeouts and circuit breaking</li>
+<li>decide what can be delayed and what must block</li>
+<li>preserve audit events for later recovery</li>
+</ul>
+<p>The point is not only resilience. It is controlled resilience.</p>
+<h3>Question 2</h3>
+<p>What metrics matter most for a streaming or large-scale delivery system?</p>
+<h3>Answer</h3>
+<ul>
+<li>availability</li>
+<li>startup latency</li>
+<li>error rate</li>
+<li>dependency saturation</li>
+<li>retry amplification</li>
+<li>regional imbalance</li>
+</ul>
+<p>A Netflix-style answer should sound comfortable with production reality, not just algorithm interviews.</p>
+<h2>Coinbase</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>money correctness</li>
+<li>idempotency</li>
+<li>high-availability systems</li>
+<li>trading or ledger thinking</li>
+<li>security and integrity</li>
+</ul>
+<h3>Question 1</h3>
+<p>How would you design a transfer API so a retry does not move money twice?</p>
+<h3>Answer</h3>
+<ul>
+<li>require an idempotency key from the caller</li>
+<li>bind that key to the intended transfer request</li>
+<li>persist the result before responding</li>
+<li>return the existing result on duplicate requests</li>
+<li>never rely on client good behavior alone</li>
+</ul>
+<p>For money movement, retries are normal. Double movement is unacceptable.</p>
+<h3>Question 2</h3>
+<p>What is more important in a ledger service: availability or correctness?</p>
+<h3>Answer</h3>
+<p>Correctness comes first.
+For ledger state, a fast wrong answer is worse than a delayed correct one.</p>
+<p>That does not mean ignore availability.
+It means:</p>
+<ul>
+<li>isolate ledger truth carefully</li>
+<li>provide safe retries</li>
+<li>expose pending states honestly</li>
+<li>reconcile aggressively</li>
+</ul>
+<h3>Question 3</h3>
+<p>How do you explain eventual consistency to a product team without sounding academic?</p>
+<h3>Answer</h3>
+<p>I would say:</p>
+<p>&quot;The system accepted the request, but some downstream views update a little later. The important question is which screen shows source-of-truth data and which screens can safely lag.&quot;</p>
+<p>That keeps the explanation tied to user behavior, not buzzwords.</p>
+<h2>Jane Street</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>collaborative problem solving</li>
+<li>precise reasoning</li>
+<li>clean code under pressure</li>
+<li>data-structure and algorithm fluency</li>
+</ul>
+<h3>Question 1</h3>
+<p>Maintain the median of a stream of prices. What data structure would you use?</p>
+<h3>Answer</h3>
+<p>Use two heaps.</p>
+<ul>
+<li>max-heap for lower half</li>
+<li>min-heap for upper half</li>
+<li>rebalance after each insert</li>
+<li>median is either one heap top or the average of both tops</li>
+</ul>
+<p>The stronger answer also explains invariants clearly.</p>
+<h3>Question 2</h3>
+<p>What makes code quality strong in an interview, beyond passing tests?</p>
+<h3>Answer</h3>
+<ul>
+<li>names reflect intent</li>
+<li>edge cases are handled explicitly</li>
+<li>invariants are visible</li>
+<li>solution structure is easy to discuss</li>
+<li>tradeoffs are acknowledged</li>
+</ul>
+<p>Jane Street signals value in how you think aloud, not just whether you reach the finish line.</p>
+<h3>Question 3</h3>
+<p>If your first idea looks too slow, what do you say?</p>
+<h3>Answer</h3>
+<p>Say it directly.</p>
+<ul>
+<li>explain the brute-force version</li>
+<li>state its complexity</li>
+<li>name the bottleneck</li>
+<li>propose a better structure</li>
+</ul>
+<p>Collaborative reasoning is better than silent struggling.</p>
+<h2>MakeMyTrip</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>search and booking flows</li>
+<li>pricing and availability freshness</li>
+<li>caching</li>
+<li>travel-domain scale</li>
+</ul>
+<h3>Question 1</h3>
+<p>How would you design hotel search results caching?</p>
+<h3>Answer</h3>
+<ul>
+<li>cache the expensive read path</li>
+<li>separate static hotel metadata from fast-changing price and availability</li>
+<li>keep short TTLs for volatile travel data</li>
+<li>invalidate carefully around booking and supplier updates</li>
+<li>measure stale-result incidents, cache hit rate, and search latency</li>
+</ul>
+<p>Travel systems punish sloppy caching because stale data becomes a user promise problem.</p>
+<h3>Question 2</h3>
+<p>Why should booking confirmation be idempotent?</p>
+<h3>Answer</h3>
+<p>Because payment retries, client retries, and gateway retries are normal.</p>
+<ul>
+<li>the user should not get multiple bookings</li>
+<li>downstream suppliers should not be called repeatedly without control</li>
+<li>one business action should map to one durable result</li>
+</ul>
+<h3>Question 3</h3>
+<p>How do you handle sudden traffic spikes during holiday sales?</p>
+<h3>Answer</h3>
+<ul>
+<li>protect critical dependencies</li>
+<li>degrade non-essential features first</li>
+<li>queue or shed low-priority work</li>
+<li>scale read paths and cache aggressively</li>
+<li>keep observability simple enough to trust during incident pressure</li>
+</ul>
+<h2>HotelTrader</h2>
+<h3>What to prepare for</h3>
+<ul>
+<li>API design</li>
+<li>GraphQL thinking</li>
+<li>hotel inventory and rate freshness</li>
+<li>onboarding automation</li>
+<li>uptime and partner reliability</li>
+</ul>
+<h3>Question 1</h3>
+<p>How would you model a hotel availability API without over-fetching?</p>
+<h3>Answer</h3>
+<p>This is a good GraphQL-style question.</p>
+<ul>
+<li>expose room, rate, policy, and availability as separate but composable fields</li>
+<li>allow clients to ask for only what they need</li>
+<li>guard expensive joins with careful resolver design</li>
+<li>cache at the right granularity</li>
+<li>watch for N+1 query problems</li>
+</ul>
+<h3>Question 2</h3>
+<p>Why is data freshness so important in hotel distribution?</p>
+<h3>Answer</h3>
+<p>Because stale rates and availability break trust quickly.</p>
+<ul>
+<li>wrong price causes failed booking or margin loss</li>
+<li>wrong availability causes customer frustration</li>
+<li>supplier and buyer relationships degrade when the shelf does not match reality</li>
+</ul>
+<p>This is both a business problem and an engineering problem.</p>
+<h3>Question 3</h3>
+<p>What metrics would you watch for a hotel connectivity platform?</p>
+<h3>Answer</h3>
+<ul>
+<li>uptime</li>
+<li>booking success rate</li>
+<li>rate/availability mismatch rate</li>
+<li>onboarding time</li>
+<li>supplier sync lag</li>
+<li>API latency by partner</li>
+</ul>
+<p>For HotelTrader-style systems, operational transparency is part of the product.</p>
+<h2>How To Prioritize If You Have Limited Time</h2>
+<h3>If you want FAANG-style prep</h3>
+<p>Start with:</p>
+<ol>
+<li>Google</li>
+<li>Meta</li>
+<li>Amazon</li>
+<li>Apple</li>
+<li>Netflix</li>
+</ol>
+<h3>If you want high-pay quant or fintech style prep</h3>
+<p>Start with:</p>
+<ol>
+<li>Jane Street</li>
+<li>Coinbase</li>
+<li>then the concurrency and complexity sections of this site</li>
+</ol>
+<h3>If you want travel-tech prep</h3>
+<p>Start with:</p>
+<ol>
+<li>MakeMyTrip</li>
+<li>HotelTrader</li>
+<li>then collections, caching, networking, and exception-handling sections</li>
+</ol>
+<h2>Sources</h2>
+<p>Official pages used to shape these tracks:</p>
+<ul>
+<li>Google interview tips: <a href="https://www.google.com/about/careers/applications/interview-tips">https://www.google.com/about/careers/applications/interview-tips</a></li>
+<li>Google technical interview guide: <a href="https://services.google.com/fh/files/misc/technical_virtual_interviews_candidate_resource.pdf">https://services.google.com/fh/files/misc/technical_virtual_interviews_candidate_resource.pdf</a></li>
+<li>Meta SWE full-loop prep: <a href="https://www.metacareers.com/careers/SWE-prep-onsite">https://www.metacareers.com/careers/SWE-prep-onsite</a></li>
+<li>Amazon interviewing at Amazon: <a href="https://www.amazon.jobs/en/landing_pages/interviewing-at-amazon">https://www.amazon.jobs/en/landing_pages/interviewing-at-amazon</a></li>
+<li>Amazon how we hire: <a href="https://amazon.jobs/content/en/how-we-hire/interviewing-at-amazon">https://amazon.jobs/content/en/how-we-hire/interviewing-at-amazon</a></li>
+<li>Jane Street interviewing: <a href="https://www.janestreet.com/join-jane-street/interviewing/">https://www.janestreet.com/join-jane-street/interviewing/</a></li>
+<li>Jane Street mock interview: <a href="https://www.janestreet.com/mock-interview">https://www.janestreet.com/mock-interview</a></li>
+<li>Netflix engineering careers: <a href="https://jobs.netflix.com/careers/engineering">https://jobs.netflix.com/careers/engineering</a></li>
+<li>Netflix new grad guidance: <a href="https://jobs.netflix.com/new-grad-program">https://jobs.netflix.com/new-grad-program</a></li>
+<li>Apple staff Java role: <a href="https://jobs.apple.com/en-us/details/200597552-0157/staff-software-engineer-information-systems-technology">https://jobs.apple.com/en-us/details/200597552-0157/staff-software-engineer-information-systems-technology</a></li>
+<li>Coinbase engineering blog: <a href="https://www.coinbase.com/blog/landing/engineering">https://www.coinbase.com/blog/landing/engineering</a></li>
+<li>Coinbase backend roles: <a href="https://www.coinbase.com/careers/positions/7670920">https://www.coinbase.com/careers/positions/7670920</a></li>
+<li>Coinbase advanced trading backend role: <a href="https://www.coinbase.com/careers/positions/7778684">https://www.coinbase.com/careers/positions/7778684</a></li>
+<li>MakeMyTrip engineering event: <a href="https://upfront91.makemytrip.com/">https://upfront91.makemytrip.com/</a></li>
+<li>MakeMyTrip data engineering career playbook: <a href="https://careers.makemytrip.com/prod/careerPlaybook/data-engineering">https://careers.makemytrip.com/prod/careerPlaybook/data-engineering</a></li>
+<li>HotelTrader developer page: <a href="https://hoteltrader.com/developer/">https://hoteltrader.com/developer/</a></li>
+<li>HotelTrader about page: <a href="https://hoteltrader.com/about/">https://hoteltrader.com/about/</a></li>
+</ul>
+<p>Compensation varies by level, location, and market conditions.
+The &quot;high-paying&quot; grouping here is an inference from current public market reputation and company tier, not a salary guarantee.</p>
+
+    </div>
+  </main>
+</body>
+</html>

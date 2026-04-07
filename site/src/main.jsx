@@ -7,6 +7,8 @@ import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import 'prismjs/themes/prism.css';
 
+document.documentElement.classList.add('app-ready');
+
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <App />

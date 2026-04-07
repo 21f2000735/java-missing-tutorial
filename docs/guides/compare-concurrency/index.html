@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Concurrency - Java Missing Tutorial</title>
+  <meta name="description" content="Use this page when you are deciding between raw threads, executors, and virtual threads.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/guides/compare-concurrency/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:54rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace} pre{overflow:auto;background:#2a2117;color:#fdf8f1;padding:1rem;border-radius:1rem}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="panel">
+      <p class="eyebrow">Static Guide</p>
+      <h1>Compare Concurrency</h1>
+      <div class="nav">
+        <a href="../../index.html">Open site home</a>
+        <a href="../../index.html#resource/COMPARE_CONCURRENCY">Open app version</a>
+      </div>
+      <p>Use this page when you are deciding between raw threads, executors, and virtual threads.</p>
+<h2>The Quick Rule</h2>
+<ul>
+<li>Use raw <code>Thread</code> when you are learning basics or need a tiny direct example.</li>
+<li>Use <code>ExecutorService</code> when you want a managed task execution model.</li>
+<li>Use virtual threads when you have many mostly-waiting tasks and a modern JDK setup.</li>
+</ul>
+<h2>One-Look Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Tool</th>
+<th>Best for</th>
+<th>Strength</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>Thread</code></td>
+<td>basic lifecycle understanding</td>
+<td>simplest mental model</td>
+<td>scales poorly for many tasks</td>
+</tr>
+<tr>
+<td><code>ExecutorService</code></td>
+<td>controlled task execution</td>
+<td>pooling, futures, lifecycle control</td>
+<td>can hide task ownership if overused</td>
+</tr>
+<tr>
+<td>virtual threads</td>
+<td>large counts of waiting tasks</td>
+<td>simpler request-style code at scale</td>
+<td>requires newer JDK understanding</td>
+</tr>
+</tbody></table>
+<h2>Use This When</h2>
+<ul>
+<li>Use <code>Thread</code> to learn <code>start()</code>, <code>run()</code>, join, and shared-state basics.</li>
+<li>Use <code>ExecutorService</code> when you want task submission, shutdown control, and reusable worker management.</li>
+<li>Use virtual threads for I/O-heavy workloads where you want one task per request without complex callback flow.</li>
+</ul>
+<h2>Watch Out</h2>
+<ul>
+<li>Do not manage many long-lived raw threads for request-style server work.</li>
+<li>Do not treat executors as a dumping ground with unclear ownership and shutdown rules.</li>
+<li>Do not assume virtual threads remove the need to understand shared state, locking, or blocking behavior.</li>
+</ul>
+<h2>Performance Lens</h2>
+<ul>
+<li>Platform threads are expensive enough that unbounded growth becomes a problem.</li>
+<li>Executors improve control and reuse, but pool sizing still matters.</li>
+<li>Virtual threads drastically reduce the cost of parked waiting tasks, but correctness still matters more than raw thread counts.</li>
+</ul>
+<h2>Read Next</h2>
+<ul>
+<li><a href="../../index.html#file/src/main/java/com/learning/javamissing/src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/SectionGuide.md">Concurrency section</a></li>
+<li><a href="src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md">Threads topic</a></li>
+<li><a href="src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md">Why virtual threads matter</a></li>
+</ul>
+
+    </div>
+  </main>
+</body>
+</html>

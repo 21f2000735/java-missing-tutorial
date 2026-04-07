@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArrayList Growth And Lookup - Java Missing Tutorial</title>
+  <meta name="description" content="Many developers can use ArrayList, but fewer can explain why it is usually fast and where it becomes costly.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/arraylist-growth-and-lookup/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>ArrayList Growth And Lookup</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/arraylist_growth_and_lookup">Open app version</a>
+          <a href="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p>Many developers can use <code>ArrayList</code>, but fewer can explain why it is usually fast and where it becomes costly.</p>
+<p>That gap matters because performance problems often begin with the wrong mental model, not the wrong syntax.</p>
+<h2>Quick Visual</h2>
+<p><img src="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookupVisual.svg" alt="ArrayList growth single-look visual"></p>
+<p>The picture tells the whole story:</p>
+<ul>
+<li>items sit in an array</li>
+<li>index lookup jumps straight to a slot</li>
+<li>growth occasionally copies old items into a larger array</li>
+</ul>
+<h2>Run This Code</h2>
+<p>Run the example and focus on these ideas:</p>
+<ul>
+<li>indexed lookup</li>
+<li>append behavior</li>
+<li>resizing cost</li>
+</ul>
+<h2>Expected Output</h2>
+<p>The printed output should make it clear that:</p>
+<ul>
+<li>lookup by index is direct</li>
+<li>appending is usually cheap</li>
+<li>occasional growth has a larger one-time cost</li>
+</ul>
+<h2>Wrong Example First</h2>
+<p>The wrong mental model is &quot;every append is always O(1) with no caveat.&quot;</p>
+<p>The better mental model is:</p>
+<ul>
+<li>most appends are cheap</li>
+<li>resizing is occasional</li>
+<li>average append cost stays good because the expensive resize does not happen every time</li>
+</ul>
+<h2>Why This Works</h2>
+<p><code>ArrayList</code> stores elements in an array.<br>That gives fast index access, but growth sometimes needs a bigger array and element copying.</p>
+<h2>Comparison Snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th><code>ArrayList</code></th>
+<th><code>LinkedList</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Read by index</td>
+<td>strong fit</td>
+<td>weak fit</td>
+</tr>
+<tr>
+<td>Append often</td>
+<td>strong fit</td>
+<td>fine, but rarely worth the tradeoff</td>
+</tr>
+<tr>
+<td>Insert in middle often</td>
+<td>can be costly</td>
+<td>can help if you already have the node position</td>
+</tr>
+<tr>
+<td>Cache-friendly iteration</td>
+<td>usually better</td>
+<td>usually worse</td>
+</tr>
+</tbody></table>
+<h2>Performance Lens</h2>
+<p>The key metric is not &quot;does resize happen?&quot;<br>It is &quot;how often does the expensive resize happen compared with cheap appends?&quot;</p>
+<p>That is why the right phrase is:</p>
+<ul>
+<li>append is amortized <code>O(1)</code></li>
+<li>indexed lookup is <code>O(1)</code></li>
+<li>middle insertion is often <code>O(n)</code></li>
+</ul>
+<h2>Benchmark Lens</h2>
+<p>If you measure <code>ArrayList</code>, watch these operations separately:</p>
+<ul>
+<li>append at end</li>
+<li>read by index</li>
+<li>insert in middle</li>
+<li>remove in middle</li>
+</ul>
+<p>Those four numbers teach more than one generic &quot;ArrayList benchmark&quot; ever will.</p>
+<h2>Use This When</h2>
+<ul>
+<li>order matters</li>
+<li>index-based lookup matters</li>
+<li>duplicates are fine</li>
+<li>append-heavy workloads are common</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>frequent middle insertions dominate</li>
+<li>uniqueness is the main requirement</li>
+<li>key-based lookup is the real problem</li>
+</ul>
+<h2>Version Notes</h2>
+<p><code>ArrayList</code> has existed since the Java Collections Framework arrived in Java 1.2, so this is a concept every Java engineer should understand no matter which Java version they use.</p>
+<h2>After Reading This, You Should Know</h2>
+<ul>
+<li><code>ArrayList</code> is fast because it uses an array, not because it is magically optimized for everything</li>
+<li>occasional resize cost is the tradeoff behind usually-cheap append</li>
+<li>complexity language becomes much easier once you connect it to actual storage shape</li>
+</ul>
+<h2>Next Topic</h2>
+<p>Read the HashMap buckets and collisions topic next. Together, these two topics form the base of practical Java collection judgment.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">ArrayListGrowthAndLookup.java</p>
+        <pre><code>package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.arraylist_growth_and_lookup;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Concept: ArrayList growth and lookup
+ * Why this concept is needed:
+ * ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.
+ *
+ * What problem this solves:
+ * It explains why indexed reads are fast and why occasional resize cost appears during append-heavy workloads.
+ *
+ * Real-world setup:
+ * An order dashboard keeps appending recent orders and later reads them by index.
+ *
+ * How to think about it:
+ * ArrayList is fast because data stays in a backing array, but growth sometimes copies old elements.
+ *
+ * How to code it:
+ * 1. Append items while estimating resize-copy work.
+ * 2. Read one item by index.
+ * 3. Compare cheap common appends with occasional expensive growth.
+ *
+ * Expected output:
+ * itemAtIndex4 = order-5
+ * estimatedCopiesDuringGrowth = 10
+ */
+public class ArrayListGrowthAndLookup {
+    public static void main(String[] args) {
+        System.out.println(&quot;Concept: ArrayList internals&quot;);
+        System.out.println(&quot;Problem: appends look cheap, but hidden resize work still exists.&quot;);
+        System.out.println();
+
+        List&lt;String&gt; recentOrders = new ArrayList&lt;&gt;();
+        int copiedDuringGrowth = appendWithEstimatedCopyWork(recentOrders, 12);
+
+        // Expected output:
+        // itemAtIndex4 = order-5
+        // estimatedCopiesDuringGrowth = 10
+        System.out.println(&quot;itemAtIndex4 = &quot; + recentOrders.get(4));
+        System.out.println(&quot;estimatedCopiesDuringGrowth = &quot; + copiedDuringGrowth);
+        System.out.println(&quot;Why it works: index access is direct, but resizing copies old elements into a larger array.&quot;);
+        System.out.println(&quot;Common mistake: saying append is always free instead of amortized.&quot;);
+        System.out.println(&quot;After reading this example, you should know:&quot;);
+        System.out.println(&quot;- index lookup is fast because ArrayList stores elements in a contiguous backing array&quot;);
+        System.out.println(&quot;- growth is usually cheap but occasional resize copies old elements&quot;);
+        System.out.println(&quot;- append is amortized O(1), not magically free&quot;);
+    }
+
+    static int appendWithEstimatedCopyWork(List&lt;String&gt; values, int itemCount) {
+        int capacity = 0;
+        int copiedElements = 0;
+        for (int index = 0; index &lt; itemCount; index++) {
+            if (values.size() == capacity) {
+                int oldCapacity = capacity;
+                capacity = capacity == 0 ? 10 : capacity + (capacity &gt;&gt; 1);
+                copiedElements += oldCapacity;
+            }
+            values.add(&quot;order-&quot; + (index + 1));
+        }
+        return copiedElements;
+    }
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handling Payment Failures - Java Missing Tutorial</title>
+  <meta name="description" content="Real systems fail.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/handling-payment-failures/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>Handling Payment Failures</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec11_exception_handling/ch01_handling_errors/handling_payment_failures">Open app version</a>
+          <a href="../../content/library/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/HandlingPaymentFailures.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p>Real systems fail.</p>
+<p>The question is not whether failure happens.<br>The question is whether the code explains the failure clearly enough for:</p>
+<ul>
+<li>the developer</li>
+<li>the log reader</li>
+<li>the user-facing flow</li>
+</ul>
+<h2>Run This Code</h2>
+<p>Run the example and see how the failure keeps business meaning instead of becoming a vague generic message.</p>
+<h2>Expected Output</h2>
+<ul>
+<li>the payment status becomes failed</li>
+<li>the reason stays visible</li>
+</ul>
+<h2>❌ Bad Code</h2>
+<p>Catch a broad exception, print a generic message, and lose the real reason.</p>
+<p>That leads to code that is hard to debug and hard to trust.</p>
+<h2>✅ Better Code</h2>
+<p>Throw and catch exceptions that preserve business meaning.</p>
+<p>In this case:</p>
+<ul>
+<li>the payment failed</li>
+<li>the gateway was unavailable</li>
+</ul>
+<p>That is simple, precise, and useful.</p>
+<h2>Why This Works</h2>
+<p>Good exception handling keeps the meaning of the failure path visible.<br>That is very close to Clean Code thinking: unclear failure handling is unclear code.</p>
+<h2>Use This When</h2>
+<ul>
+<li>business failures need clear context</li>
+<li>the caller should decide how to react</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>you are swallowing exceptions</li>
+<li>you convert every failure into the same vague message</li>
+</ul>
+<h2>Version Notes</h2>
+<p>The core principle is timeless. Modern Java mainly improves how clearly the surrounding code can be written.</p>
+<h2>Next Topic</h2>
+<p>Read the networking chapter after this one, because remote calls create many of the failures engineers must learn to handle well.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">HandlingPaymentFailures.java</p>
+        <pre><code>package com.learning.javamissing.sec11_exception_handling.ch01_handling_errors.topics.handling_payment_failures;
+
+/**
+ * Concept: Handling Payment Failures
+ * Why this concept is needed:
+ * Java programs stay useful when they are organized around ideas, not only syntax.
+ *
+ * What problem this solves:
+ * failures are part of the business flow and must stay understandable.
+ *
+ * Real-world setup:
+ * This topic uses payment and gateway failures to make the concept easier to understand.
+ *
+ * How to think about it:
+ * First understand the problem in plain language, then map that idea to the Java code.
+ *
+ * How to code it:
+ * 1. Identify the business data or behavior.
+ * 2. Choose the Java construct that expresses the idea clearly.
+ * 3. Run the example and compare the output with the explanation.
+ *
+ * Expected output:
+ * Read the inline comments and printed lines in main() to see the expected behavior.
+ */
+
+public class HandlingPaymentFailures {
+    public static void main(String[] args) {
+        try {
+            chargeCard(false);
+        } catch (IllegalStateException exception) {
+            System.out.println(&quot;paymentStatus = failed&quot;);
+            System.out.println(&quot;reason = &quot; + exception.getMessage());
+        }
+        System.out.println(&quot;Concept: errors should preserve meaning for both developers and users.&quot;);
+    }
+
+    static void chargeCard(boolean gatewayAvailable) {
+        if (!gatewayAvailable) {
+            throw new IllegalStateException(&quot;Payment gateway is unavailable&quot;);
+        }
+    }
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

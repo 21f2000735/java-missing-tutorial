@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Streams - Java Missing Tutorial</title>
+  <meta name="description" content="Use this page when you are deciding between a loop and a stream pipeline.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/guides/compare-streams/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:54rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace} pre{overflow:auto;background:#2a2117;color:#fdf8f1;padding:1rem;border-radius:1rem}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="panel">
+      <p class="eyebrow">Static Guide</p>
+      <h1>Compare Streams</h1>
+      <div class="nav">
+        <a href="../../index.html">Open site home</a>
+        <a href="../../index.html#resource/COMPARE_STREAMS">Open app version</a>
+      </div>
+      <p>Use this page when you are deciding between a loop and a stream pipeline.</p>
+<h2>The Quick Rule</h2>
+<ul>
+<li>Use a loop when step-by-step control is the important thing.</li>
+<li>Use a stream when the job is clearly transform, filter, group, or aggregate.</li>
+</ul>
+<h2>One-Look Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Style</th>
+<th>Best for</th>
+<th>Strength</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>for</code> loop</td>
+<td>explicit control flow</td>
+<td>easiest to debug line by line</td>
+<td>can become noisy and mutation-heavy</td>
+</tr>
+<tr>
+<td>stream pipeline</td>
+<td>data transformation</td>
+<td>expresses intent clearly</td>
+<td>can become hard to read if over-chained</td>
+</tr>
+<tr>
+<td>parallel stream</td>
+<td>CPU-heavy, independent work</td>
+<td>can speed up some workloads</td>
+<td>easy to misuse and hard to reason about</td>
+</tr>
+</tbody></table>
+<h2>Use This When</h2>
+<ul>
+<li>Use loops when you need early exits, multi-step mutation, or stateful logic.</li>
+<li>Use streams when the code reads as &quot;take data, filter it, map it, collect it&quot;.</li>
+<li>Use collectors when the output is grouped, counted, partitioned, or summarized.</li>
+</ul>
+<h2>Watch Out</h2>
+<ul>
+<li>Do not force streams into code that is really command-style or side-effect-heavy.</li>
+<li>Do not use parallel streams just because the dataset looks large.</li>
+<li>Do not hide important branching inside dense lambdas.</li>
+</ul>
+<h2>Performance Lens</h2>
+<ul>
+<li>Streams are usually about readability first, not raw speed.</li>
+<li>Simple loops can outperform streams in tight hotspots, but the difference often matters less than clarity until profiling says otherwise.</li>
+<li>Parallel streams add scheduling and merge overhead, so they only pay off on the right workload.</li>
+</ul>
+<h2>Read Next</h2>
+<ul>
+<li><a href="../../index.html#file/src/main/java/com/learning/javamissing/src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/SectionGuide.md">Streams section</a></li>
+<li><a href="src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md">Stream pipeline topic</a></li>
+<li><a href="src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java">Collectors topic</a></li>
+</ul>
+
+    </div>
+  </main>
+</body>
+</html>

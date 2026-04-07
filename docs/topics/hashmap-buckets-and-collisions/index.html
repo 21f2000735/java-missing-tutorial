@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HashMap Buckets And Collisions - Java Missing Tutorial</title>
+  <meta name="description" content="HashMap feels instant until two questions arrive:">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/hashmap-buckets-and-collisions/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>HashMap Buckets And Collisions</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/hashmap_buckets_and_collisions">Open app version</a>
+          <a href="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p><code>HashMap</code> feels instant until two questions arrive:</p>
+<ul>
+<li>what happens when keys collide</li>
+<li>why do <code>equals()</code> and <code>hashCode()</code> matter so much</li>
+</ul>
+<p>This topic exists because many developers can use <code>HashMap</code>, but fewer can explain why it is fast on average and where the risks come from.</p>
+<h2>Quick Visual</h2>
+<p><img src="../../content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/hashmap_buckets_and_collisions/HashMapBucketsVisual.svg" alt="HashMap buckets single-look visual"></p>
+<p>Read the picture in one pass:</p>
+<ul>
+<li>keys are spread into buckets</li>
+<li>collisions mean more than one key lands in the same bucket</li>
+<li>correct <code>equals()</code> and <code>hashCode()</code> keep lookup correct</li>
+</ul>
+<h2>Run This Code</h2>
+<p>Run the example and notice that collisions do not break correctness by themselves.</p>
+<p>The real lesson is:</p>
+<ul>
+<li>bad hashing increases work</li>
+<li>bad <code>equals()</code> or <code>hashCode()</code> breaks map behavior</li>
+</ul>
+<h2>Expected Output</h2>
+<ul>
+<li>the stored status is found correctly</li>
+<li>several keys share the same bucket</li>
+<li>correctness still holds because the key contract is correct</li>
+</ul>
+<h2>❌ Bad Code</h2>
+<p>Treat <code>HashMap</code> as magical constant-time lookup with no caveats.</p>
+<p>That usually leads to:</p>
+<ul>
+<li>ignoring key design</li>
+<li>weak reasoning about collisions</li>
+<li>confusion when behavior is correct but slower than expected</li>
+</ul>
+<h2>✅ Better Code</h2>
+<p>Think in two layers:</p>
+<ol>
+<li>average lookup is fast because keys are spread out</li>
+<li>collisions and poor key design increase the amount of work inside a bucket</li>
+</ol>
+<h2>Comparison Snapshot</h2>
+<table>
+<thead>
+<tr>
+<th>Need</th>
+<th><code>HashMap</code></th>
+<th><code>TreeMap</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Fast average lookup by key</td>
+<td>strong fit</td>
+<td>usually slower</td>
+</tr>
+<tr>
+<td>Sorted keys</td>
+<td>no</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Simple key-value storage</td>
+<td>strong fit</td>
+<td>fine, but adds ordering cost</td>
+</tr>
+<tr>
+<td>Understand collision behavior</td>
+<td>required</td>
+<td>not the same design issue</td>
+</tr>
+</tbody></table>
+<h2>Performance Lens</h2>
+<p>The right mental model is:</p>
+<ul>
+<li>lookup is usually near constant average time</li>
+<li>collision-heavy buckets can do more work</li>
+<li>key design affects speed and correctness</li>
+</ul>
+<p>When performance matters, the useful measurements are:</p>
+<ul>
+<li>lookup time with realistic keys</li>
+<li>map size growth</li>
+<li>collision rate under real data shape</li>
+<li>memory cost per entry</li>
+</ul>
+<h2>Watch Out</h2>
+<p>The biggest beginner bug is not collision.<br>It is inconsistent key contracts.</p>
+<p>If <code>equals()</code> and <code>hashCode()</code> disagree, lookup can become wrong even when the code compiles and the map looks populated.</p>
+<h2>Use This When</h2>
+<ul>
+<li>you need key-based lookup</li>
+<li>ordering is not the main requirement</li>
+<li>average fast access matters</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>you need sorted traversal by key</li>
+<li>the real problem is uniqueness only, not key-to-value lookup</li>
+</ul>
+<h2>After Reading This, You Should Know</h2>
+<ul>
+<li><code>HashMap</code> speed depends on good key distribution, not magic</li>
+<li>collisions increase work but do not automatically break correctness</li>
+<li>correct <code>equals()</code> and <code>hashCode()</code> are part of the data-structure contract</li>
+</ul>
+<h2>Next Topic</h2>
+<p>Go back and compare this with <code>ArrayList</code> growth and lookup. Together they explain two of the most important everyday Java performance tradeoffs.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">HashMapBucketsAndCollisions.java</p>
+        <pre><code>package com.learning.javamissing.sec20_data_structures_and_complexity.ch02_collections_internals_and_tradeoffs.topics.hashmap_buckets_and_collisions;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * Concept: HashMap buckets and collisions
+ * Why this concept is needed:
+ * HashMap looks like instant lookup until collisions and hashing quality become relevant.
+ *
+ * What problem this solves:
+ * It explains why average lookup is fast, what collisions mean, and why equals/hashCode correctness matters.
+ *
+ * Real-world setup:
+ * A session store keeps statuses by user ID in a map.
+ *
+ * How to think about it:
+ * HashMap spreads keys across buckets; collisions mean multiple keys share one bucket and more work happens there.
+ *
+ * How to code it:
+ * 1. Store several keys with the same hash.
+ * 2. Read one value back.
+ * 3. See that correctness still depends on equals/hashCode, even when collisions exist.
+ *
+ * Expected output:
+ * status = EXPIRED
+ * sameBucketCount = 3
+ */
+public class HashMapBucketsAndCollisions {
+    public static void main(String[] args) {
+        System.out.println(&quot;Concept: HashMap collisions&quot;);
+        System.out.println(&quot;Problem: fast lookup depends on good key distribution, not on magic.&quot;);
+        System.out.println();
+
+        Map&lt;CollidingKey, String&gt; sessions = new HashMap&lt;&gt;();
+        sessions.put(new CollidingKey(&quot;user-101&quot;), &quot;ACTIVE&quot;);
+        sessions.put(new CollidingKey(&quot;user-205&quot;), &quot;EXPIRED&quot;);
+        sessions.put(new CollidingKey(&quot;user-309&quot;), &quot;LOCKED&quot;);
+
+        // Expected output:
+        // status = EXPIRED
+        // sameBucketCount = 3
+        System.out.println(&quot;status = &quot; + sessions.get(new CollidingKey(&quot;user-205&quot;)));
+        System.out.println(&quot;sameBucketCount = &quot; + sessions.size());
+        System.out.println(&quot;Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.&quot;);
+        System.out.println(&quot;Common mistake: assuming HashMap is always O(1) without thinking about collision patterns.&quot;);
+        System.out.println(&quot;After reading this example, you should know:&quot;);
+        System.out.println(&quot;- HashMap lookup is usually O(1) on average&quot;);
+        System.out.println(&quot;- collisions mean multiple keys land in the same bucket&quot;);
+        System.out.println(&quot;- correct equals/hashCode keeps lookups correct even when collisions happen&quot;);
+    }
+
+    static final class CollidingKey {
+        private final String value;
+
+        CollidingKey(String value) {
+            this.value = value;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            return other instanceof CollidingKey key &amp;&amp; value.equals(key.value);
+        }
+
+        @Override
+        public int hashCode() {
+            return 7;
+        }
+    }
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>

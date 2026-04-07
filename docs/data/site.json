@@ -1,7 +1,7 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T12:22:54Z",
+  "generatedAt": "2026-04-07T13:44:51Z",
   "stats": {
     "sections": 22,
     "chapters": 56,
@@ -130,7 +130,7 @@
           "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/RunChapter.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/RunChapter.java"},
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/RunAllTopics.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/RunAllTopics.java"},
           "topics": [
-            {"slug": "collectors", "title": "Collectors", "sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java", "concept": "Collectors"},
+            {"slug": "collectors", "title": "Collectors", "sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java", "concept": "Collectors", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/collectors/TopicGuide.md", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/collectors/TopicGuide.md"}},
             {"slug": "parallel_streams", "title": "Parallel Streams", "sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/parallel_streams/ParallelStreams.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/parallel_streams/ParallelStreams.java", "concept": "Parallel Streams"},
             {"slug": "stream_pipeline", "title": "Stream Pipeline", "sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java", "concept": "Stream Pipeline", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md"}}
           ]

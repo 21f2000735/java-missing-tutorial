@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Compare Collections - Java Missing Tutorial</title>
+  <meta name="description" content="Use this page when you are choosing between List, Set, and Map and want the decision quickly.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/guides/compare-collections/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:54rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} code,pre{font-family:ui-monospace,SFMono-Regular,Menlo,monospace} pre{overflow:auto;background:#2a2117;color:#fdf8f1;padding:1rem;border-radius:1rem}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="panel">
+      <p class="eyebrow">Static Guide</p>
+      <h1>Compare Collections</h1>
+      <div class="nav">
+        <a href="../../index.html">Open site home</a>
+        <a href="../../index.html#resource/COMPARE_COLLECTIONS">Open app version</a>
+      </div>
+      <p>Use this page when you are choosing between <code>List</code>, <code>Set</code>, and <code>Map</code> and want the decision quickly.</p>
+<h2>The Quick Rule</h2>
+<ul>
+<li>Use <code>List</code> when order matters and duplicates are allowed.</li>
+<li>Use <code>Set</code> when uniqueness matters more than position.</li>
+<li>Use <code>Map</code> when lookup by key is the real job.</li>
+</ul>
+<h2>One-Look Comparison</h2>
+<table>
+<thead>
+<tr>
+<th>Structure</th>
+<th>Best for</th>
+<th>Allows duplicates</th>
+<th>Lookup shape</th>
+<th>Common Java choice</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>List</code></td>
+<td>ordered items, index access</td>
+<td>yes</td>
+<td>by index</td>
+<td><code>ArrayList</code></td>
+</tr>
+<tr>
+<td><code>Set</code></td>
+<td>unique values</td>
+<td>no</td>
+<td>by value</td>
+<td><code>HashSet</code></td>
+</tr>
+<tr>
+<td><code>Map</code></td>
+<td>key-value lookup</td>
+<td>keys no, values yes</td>
+<td>by key</td>
+<td><code>HashMap</code></td>
+</tr>
+</tbody></table>
+<h2>Use This When</h2>
+<ul>
+<li>You are modeling a cart, report rows, or ordered workflow steps: start with <code>List</code>.</li>
+<li>You are tracking tags, IDs, or already-seen values: start with <code>Set</code>.</li>
+<li>You are storing configuration, caches, counters, or user-by-id lookup: start with <code>Map</code>.</li>
+</ul>
+<h2>Watch Out</h2>
+<ul>
+<li>Do not use <code>List</code> when you keep checking <code>contains()</code> on large data just to enforce uniqueness.</li>
+<li>Do not use <code>Set</code> when the business meaning depends on duplicates or stable order.</li>
+<li>Do not use <code>Map</code> if the value itself should really be the main thing you iterate over without keys.</li>
+</ul>
+<h2>Performance Lens</h2>
+<ul>
+<li><code>ArrayList</code> gives cheap append and fast index access, but middle inserts and deletes shift elements.</li>
+<li><code>HashSet</code> and <code>HashMap</code> are usually fast for add and lookup, but their real cost still depends on hashing quality and resize behavior.</li>
+<li><code>TreeSet</code> and <code>TreeMap</code> buy sorted order with higher constant cost than hash-based structures.</li>
+</ul>
+<h2>Read Next</h2>
+<ul>
+<li><a href="../../index.html#file/src/main/java/com/learning/javamissing/src/main/java/com/learning/javamissing/sec02_collections/SectionGuide.md">Collections section</a></li>
+<li><a href="src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md">List, Set, Map topic</a></li>
+<li><a href="src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/arraylist_growth_and_lookup/TopicGuide.md">ArrayList growth and lookup</a></li>
+</ul>
+
+    </div>
+  </main>
+</body>
+</html>

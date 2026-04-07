@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HTTP Client Basics - Java Missing Tutorial</title>
+  <meta name="description" content="Modern Java applications call external services all the time.">
+  <link rel="canonical" href="https://21f2000735.github.io/java-missing-tutorial/topics/http-client-basics/">
+  <style>
+    :root{--bg:#f5efe3;--panel:#fffaf2;--text:#2d2418;--muted:#6d5a46;--line:rgba(54,43,28,.12);--accent:#8d4300;--code:#241d15;}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:linear-gradient(180deg,#fcf5eb 0%,#f3eadb 100%);color:var(--text)}
+    main{max-width:72rem;margin:0 auto;padding:2rem 1.25rem 4rem}
+    .layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(18rem,24rem);gap:1rem}
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:1.25rem;padding:1.6rem 1.4rem;box-shadow:0 18px 42px rgba(60,42,18,.08)}
+    .eyebrow{text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:700;color:var(--muted);margin:0 0 .7rem}
+    h1,h2,h3{line-height:1.08} h1{font-size:clamp(2rem,4vw,3rem);margin:.2rem 0 1rem} h2{margin-top:2rem}
+    p,li{line-height:1.7} a{color:var(--accent)} img{max-width:100%;height:auto;border-radius:1rem;border:1px solid var(--line)}
+    pre{overflow:auto;background:var(--code);color:#fdf8f1;padding:1rem;border-radius:1rem;font-size:.92rem;line-height:1.55}
+    code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+    .nav{display:flex;flex-wrap:wrap;gap:.75rem;margin:1rem 0 1.25rem}.nav a{text-decoration:none;background:white;border:1px solid var(--line);padding:.7rem .95rem;border-radius:999px;color:var(--text)}
+    .code-title{margin:0 0 .8rem;font-size:1rem;color:var(--muted)}
+    @media (max-width: 900px){.layout{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="layout">
+      <article class="panel">
+        <p class="eyebrow">Static Topic Page</p>
+        <h1>HTTP Client Basics</h1>
+        <div class="nav">
+          <a href="../../index.html">Open site home</a>
+          <a href="../../index.html#topic/sec12_networking/ch01_http_client_basics/building_requests_with_http_client">Open app version</a>
+          <a href="../../content/library/sec12_networking/ch01_http_client_basics/topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java">Open raw Java file</a>
+        </div>
+        <h2>The Problem</h2>
+<p>Modern Java applications call external services all the time.</p>
+<p>Even the basic request should still read clearly:</p>
+<ul>
+<li>where are we calling?</li>
+<li>what method are we using?</li>
+<li>what format do we expect back?</li>
+</ul>
+<h2>Run This Code</h2>
+<p>Run the example and check the request method and host.</p>
+<h2>Expected Output</h2>
+<ul>
+<li>method is <code>GET</code></li>
+<li>host is <code>api.example.com</code></li>
+</ul>
+<h2>❌ Bad Code</h2>
+<p>Scatter request details across many lines or helper methods so the actual HTTP intent is hard to see.</p>
+<h2>✅ Better Code</h2>
+<p>Build the request in one small readable block:</p>
+<ul>
+<li>URI</li>
+<li>headers</li>
+<li>method</li>
+</ul>
+<p>That keeps the outbound call easy to review.</p>
+<h2>Why This Works</h2>
+<p>The request object captures HTTP intent before the call happens.<br>That improves readability and makes future changes safer.</p>
+<h2>Use This When</h2>
+<ul>
+<li>you want a clear standard-library HTTP client</li>
+<li>outbound service calls are part of your everyday code</li>
+</ul>
+<h2>Avoid This When</h2>
+<ul>
+<li>request-building is so abstracted that readers cannot tell what the call is doing</li>
+</ul>
+<h2>Version Notes</h2>
+<p>The standard HTTP client became available in Java 11, which is one reason 11 remains an important learning and migration milestone.</p>
+<h2>Next Topic</h2>
+<p>Read exception handling and retry-related topics next, because networking and failure handling are tightly connected.</p>
+
+      </article>
+      <aside class="panel">
+        <p class="eyebrow">Runnable Example</p>
+        <p class="code-title">BuildingRequestsWithHttpClient.java</p>
+        <pre><code>package com.learning.javamissing.sec12_networking.ch01_http_client_basics.topics.building_requests_with_http_client;
+
+import java.net.URI;
+import java.net.http.HttpRequest;
+
+public class BuildingRequestsWithHttpClient {
+    public static void main(String[] args) {
+        System.out.println(&quot;Concept: build a clear outbound HTTP request&quot;);
+        System.out.println(&quot;Real-world problem: a Java service calls a shipping-rate API.&quot;);
+        System.out.println();
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(&quot;https://api.example.com/shipping/rates&quot;))
+                .header(&quot;Accept&quot;, &quot;application/json&quot;)
+                .GET()
+                .build();
+
+        // Expected output:
+        // method = GET
+        // host = api.example.com
+        System.out.println(&quot;method = &quot; + request.method());
+        System.out.println(&quot;host = &quot; + request.uri().getHost());
+        System.out.println(&quot;Why it works: the request object collects HTTP intent before any network call is made.&quot;);
+    }
+}
+</code></pre>
+      </aside>
+    </div>
+  </main>
+</body>
+</html>
