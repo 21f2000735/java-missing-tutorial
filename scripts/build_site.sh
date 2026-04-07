@@ -47,7 +47,7 @@ write_json_string() {
 }
 
 copy_content_tree() {
-  rm -rf "$library_root" "$meta_root" "$data_root"
+  rm -rf "$library_root" "$meta_root" "$data_root" "$site_root/assets"
   mkdir -p "$library_root" "$meta_root" "$data_root"
 
   find "$source_root" -type f \( -name '*.md' -o -name '*.java' \) | while read -r file; do

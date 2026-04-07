@@ -166,6 +166,8 @@ The combined manuscript can be generated with `scripts/build_book.sh` and is wri
 The content manifest and copied markdown/source tree can be generated with `scripts/build_site.sh`.
 The React + Bootstrap static site is built with `npm run build` and written to [docs/index.html](/Users/indiadelhi/repo/career/java-missing-tutorial/code/docs/index.html).
 Use `npm run dev` for local development. The site fetches markdown, JSON, and Java source files, so opening `index.html` directly with `file://` is not reliable.
+The site is intentionally shifting from “repo browser” to “problem-first learning site”: section and chapter pages should lead with the real problem, study path, and expected outcomes before showing raw source.
+Topic pages support a copy-first workflow for online runners. Simple single-class examples can be copied into JDoodle or OneCompiler directly, while preview-based chapters still need a local JDK 25 setup.
 Detailed authoring rules are tracked in [AUTHORING_GUIDE.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/AUTHORING_GUIDE.md).
 Topic quality is checked against [TOPIC_QUALITY_RUBRIC.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/TOPIC_QUALITY_RUBRIC.md).
 Book sources are tracked in [TOP_20_BOOKS.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/TOP_20_BOOKS.md).
