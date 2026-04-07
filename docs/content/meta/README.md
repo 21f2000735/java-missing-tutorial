@@ -30,6 +30,7 @@ That means:
 This repo should not use separate `Exercise` and `Solution` files anymore.
 Each concept should have one topic file only.
 Chapter notes should be bundled so learners do not have to open too many markdown files.
+The teaching text is now moving out of Java `System.out.println(...)` narration and into site-first lesson pages where that makes the learning experience cleaner.
 
 ```text
 src/main/java/com/learning/javamissing/
@@ -40,8 +41,11 @@ src/main/java/com/learning/javamissing/
       RunAllTopics.java
       topics/
         concept_name/
+          TopicGuide.md
           ConceptName.java
 ```
+
+`TopicGuide.md` is optional but preferred for strong topics. It should carry the hook, explanation, version notes, and next steps. `ConceptName.java` should stay runnable and focused on code.
 
 ## What Goes In One Topic File
 
@@ -167,7 +171,8 @@ The content manifest and copied markdown/source tree can be generated with `scri
 The React + Bootstrap static site is built with `npm run build` and written to [docs/index.html](/Users/indiadelhi/repo/career/java-missing-tutorial/code/docs/index.html).
 Use `npm run dev` for local development. The site fetches markdown, JSON, and Java source files, so opening `index.html` directly with `file://` is not reliable.
 The site is intentionally shifting from “repo browser” to “problem-first learning site”: section and chapter pages should lead with the real problem, study path, and expected outcomes before showing raw source.
-Topic pages support a copy-first workflow for online runners. Simple single-class examples can be copied into JDoodle or OneCompiler directly, while preview-based chapters still need a local JDK 25 setup.
+Topic pages now support a site-first lesson model: `TopicGuide.md` explains the concept, and the Java file stays runnable. Stable examples can be sent directly to JDoodle from the site, while preview-based chapters still need a local JDK 25 setup.
+The release track is now split out into [JAVA_7_TO_25.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/JAVA_7_TO_25.md) and [JAVA_MIGRATION_GUIDES.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/JAVA_MIGRATION_GUIDES.md) so users can learn Java by era as well as by concept.
 Detailed authoring rules are tracked in [AUTHORING_GUIDE.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/AUTHORING_GUIDE.md).
 Topic quality is checked against [TOPIC_QUALITY_RUBRIC.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/TOPIC_QUALITY_RUBRIC.md).
 Book sources are tracked in [TOP_20_BOOKS.md](/Users/indiadelhi/repo/career/java-missing-tutorial/code/TOP_20_BOOKS.md).

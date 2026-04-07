@@ -5,6 +5,10 @@ This file defines how future chapter content should be written.
 ## Main Rule
 
 One concept should use one topic file only.
+For the site, one strong topic should usually have two pieces:
+
+- `TopicGuide.md` for the lesson
+- `ConceptName.java` for the runnable example
 
 Do not split the same concept into:
 
@@ -34,7 +38,7 @@ Also write so that an experienced engineer still finds value in the chapter:
 
 ## Topic File Template
 
-Recommended file layout:
+Recommended Java file layout:
 
 ```java
 package com.learning.javamissing.chXXX_topic_name.topics.concept_name;
@@ -69,6 +73,35 @@ Each topic file should include:
 - at least one OCJP-style tricky point
 - at least one interview question and answer
 - one exercise with a clearly explained solution
+
+## Topic Guide Template
+
+Preferred `TopicGuide.md` layout:
+
+```md
+---
+introduced: Java 8
+status: stable
+runner: embedded
+estimated: 8 min
+---
+
+# Topic Name
+
+## The Problem
+## Run This Code
+## Expected Output
+## Wrong Example First
+## Better Example
+## Why This Works
+## Use This When
+## Avoid This When
+## Version Notes
+## Next Topic
+```
+
+Use `runner: embedded` for stable single-file examples that can be pushed to JDoodle from the site.  
+Use `runner: local` for preview-sensitive or multi-file examples.
 
 Each topic file should avoid:
 
@@ -134,6 +167,7 @@ Every chapter should contain these chapter-level files:
 
 - `ChapterGuide.md`
 - `RunChapter.java`
+- `RunAllTopics.java`
 
 `ChapterGuide.md` should club together:
 
@@ -151,6 +185,17 @@ Every `ChapterGuide.md` should also include:
 - a short line saying the chapter is beginner-friendly
 - a simple study order
 - a quick summary after each major idea
+
+## Release-Aware Writing
+
+This site aims to help users learn Java 7 through Java 25.
+
+When a topic is version-sensitive:
+
+- add `introduced` in `TopicGuide.md`
+- say whether the feature is stable, preview, or final
+- mention what older Java users would have done before this feature existed
+- point to the migration relevance where useful
 
 ## Interview Questions
 

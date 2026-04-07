@@ -1,7 +1,7 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T10:02:10Z",
+  "generatedAt": "2026-04-07T10:16:56Z",
   "stats": {
     "sections": 20,
     "chapters": 44,
@@ -13,7 +13,9 @@
     {"slug": "CURRICULUM", "title": "CURRICULUM", "sourcePath": "CURRICULUM.md", "contentPath": "content/meta/CURRICULUM.md", "type": "markdown"},
     {"slug": "ROADMAP_099", "title": "ROADMAP 099", "sourcePath": "ROADMAP_099.md", "contentPath": "content/meta/ROADMAP_099.md", "type": "markdown"},
     {"slug": "TOP_20_BOOKS", "title": "TOP 20 BOOKS", "sourcePath": "TOP_20_BOOKS.md", "contentPath": "content/meta/TOP_20_BOOKS.md", "type": "markdown"},
-    {"slug": "BOOK_MANUSCRIPT", "title": "BOOK MANUSCRIPT", "sourcePath": "BOOK_MANUSCRIPT.md", "contentPath": "content/meta/BOOK_MANUSCRIPT.md", "type": "markdown"}
+    {"slug": "BOOK_MANUSCRIPT", "title": "BOOK MANUSCRIPT", "sourcePath": "BOOK_MANUSCRIPT.md", "contentPath": "content/meta/BOOK_MANUSCRIPT.md", "type": "markdown"},
+    {"slug": "JAVA_7_TO_25", "title": "JAVA 7 TO 25", "sourcePath": "JAVA_7_TO_25.md", "contentPath": "content/meta/JAVA_7_TO_25.md", "type": "markdown"},
+    {"slug": "JAVA_MIGRATION_GUIDES", "title": "JAVA MIGRATION GUIDES", "sourcePath": "JAVA_MIGRATION_GUIDES.md", "contentPath": "content/meta/JAVA_MIGRATION_GUIDES.md", "type": "markdown"}
   ],
   "sections": [
     {
@@ -104,7 +106,7 @@
           "topics": [
             {"slug": "collectors", "title": "Collectors", "sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/collectors/Collectors.java", "concept": "Collectors"},
             {"slug": "parallel_streams", "title": "Parallel Streams", "sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/parallel_streams/ParallelStreams.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/parallel_streams/ParallelStreams.java", "concept": "Parallel Streams"},
-            {"slug": "stream_pipeline", "title": "Stream Pipeline", "sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java", "concept": "Stream Pipeline"}
+            {"slug": "stream_pipeline", "title": "Stream Pipeline", "sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/StreamPipeline.java", "concept": "Stream Pipeline", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md", "contentPath": "content/library/sec04_streams_and_functional_style/ch01_streams/topics/stream_pipeline/TopicGuide.md"}}
           ]
         },
         {
@@ -157,7 +159,7 @@
           "topics": [
             {"slug": "executors", "title": "Executors", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/executors/Executors.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/executors/Executors.java", "concept": "Executors"},
             {"slug": "synchronization", "title": "Synchronization", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/synchronization/Synchronization.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/synchronization/Synchronization.java", "concept": "Synchronization"},
-            {"slug": "threads", "title": "Threads", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/Threads.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/Threads.java", "concept": "Threads"}
+            {"slug": "threads", "title": "Threads", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/Threads.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/Threads.java", "concept": "Threads", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch01_concurrency_basics/topics/threads/TopicGuide.md"}}
           ]
         },
         {
@@ -170,7 +172,7 @@
           "topics": [
             {"slug": "avoiding_virtual_thread_misuse", "title": "Avoiding Virtual Thread Misuse", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java", "concept": "Avoiding Virtual Thread Misuse"},
             {"slug": "running_tasks_with_virtual_thread_executor", "title": "Running Tasks With Virtual Thread Executor", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java", "concept": "Running Tasks With Virtual Thread Executor"},
-            {"slug": "why_virtual_threads_matter", "title": "Why Virtual Threads Matter", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java", "concept": "Why Virtual Threads Matter"}
+            {"slug": "why_virtual_threads_matter", "title": "Why Virtual Threads Matter", "sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java", "concept": "Why Virtual Threads Matter", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md", "contentPath": "content/library/sec05_multithreading_and_concurrency/ch02_virtual_threads/topics/why_virtual_threads_matter/TopicGuide.md"}}
           ]
         },
         {
@@ -214,7 +216,7 @@
           "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/RunChapter.java", "contentPath": "content/library/sec06_design_patterns/ch01_strategy_pattern/RunChapter.java"},
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/RunAllTopics.java", "contentPath": "content/library/sec06_design_patterns/ch01_strategy_pattern/RunAllTopics.java"},
           "topics": [
-            {"slug": "choosing_behavior_with_strategy", "title": "Choosing Behavior With Strategy", "sourcePath": "src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java", "contentPath": "content/library/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java", "concept": "Choosing Behavior With Strategy"}
+            {"slug": "choosing_behavior_with_strategy", "title": "Choosing Behavior With Strategy", "sourcePath": "src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java", "contentPath": "content/library/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java", "concept": "Choosing Behavior With Strategy", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/TopicGuide.md", "contentPath": "content/library/sec06_design_patterns/ch01_strategy_pattern/topics/choosing_behavior_with_strategy/TopicGuide.md"}}
           ]
         },
         {
@@ -646,7 +648,7 @@
           "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/RunChapter.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/RunChapter.java"},
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/RunAllTopics.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/RunAllTopics.java"},
           "topics": [
-            {"slug": "understanding_arraylist_growth_and_lookup", "title": "Understanding Array List Growth And Lookup", "sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/understanding_arraylist_growth_and_lookup/UnderstandingArrayListGrowthAndLookup.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/understanding_arraylist_growth_and_lookup/UnderstandingArrayListGrowthAndLookup.java", "concept": "Understanding Arraylist Growth And Lookup"},
+            {"slug": "understanding_arraylist_growth_and_lookup", "title": "Understanding Array List Growth And Lookup", "sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/understanding_arraylist_growth_and_lookup/UnderstandingArrayListGrowthAndLookup.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/understanding_arraylist_growth_and_lookup/UnderstandingArrayListGrowthAndLookup.java", "concept": "Understanding Arraylist Growth And Lookup", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/understanding_arraylist_growth_and_lookup/TopicGuide.md", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/understanding_arraylist_growth_and_lookup/TopicGuide.md"}},
             {"slug": "understanding_hashmap_buckets_and_collisions", "title": "Understanding Hash Map Buckets And Collisions", "sourcePath": "src/main/java/com/learning/javamissing/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/understanding_hashmap_buckets_and_collisions/UnderstandingHashMapBucketsAndCollisions.java", "contentPath": "content/library/sec20_data_structures_and_complexity/ch02_collections_internals_and_tradeoffs/topics/understanding_hashmap_buckets_and_collisions/UnderstandingHashMapBucketsAndCollisions.java", "concept": "Understanding Hashmap Buckets And Collisions"}
           ]
         },

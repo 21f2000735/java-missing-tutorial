@@ -4,7 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="first commit" />
+    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="first commit">
+      <change beforePath="$PROJECT_DIR$/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/AUTHORING_GUIDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/_baseUniq-ZEKhoWVn.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/arc-Cqhbxpq9.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/architectureDiagram-IEHRJDOE--ydpBF-e.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/blockDiagram-JOT3LUYC-BQFC2oA-.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/c4Diagram-VJAJSXHY-B_Ebi14R.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/channel-D1VYHly6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-4BMEZGHF-BonAfsR7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-A2AXSNBT-CX2CHXDz.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-AEK57VVT-BosU7-v4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-D6G4REZN-BP75U5z6.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-RZ5BOZE2-DW0vumfm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/chunk-XZIHB7SX-lSuikdQq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-GIVACNV2-DDIwW38O.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/classDiagram-v2-COTLJTTW-DDIwW38O.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/clone-44go5Bia.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/dagre-OKDRZEBW-Bxuep-Q1.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-SSKATNLV-BPXBAIle.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/diagram-VNBRO52H-CLpLJVn-.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/erDiagram-Q7BY3M3F-DIvMQBJA.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/flowDiagram-4HSFHLVR-0VwziUb7.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/ganttDiagram-APWFNJXF-BlJmIXj0.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/gitGraphDiagram-7IBYFJ6S-DGrMMOJ3.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/graph-C0DPm5s4.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/index-BXyo7_p-.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/infoDiagram-PH2N3AL5-CX9NkMDy.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/journeyDiagram-U35MCT3I-C5bqp4hi.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/kanban-definition-NDS4AKOZ-BMQsyNnm.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/layout-0s-HXaFK.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/linear-Bl5F4eee.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/mermaid.core-Bo7yb7UU.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/min-xu943u-C.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/mindmap-definition-ALO5MXBD-BgVq8xzs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/pieDiagram-IB7DONF6-D6eEXpBo.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/prism-DKmHZtGP.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/prism-java-C5LnmL3m.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/quadrantDiagram-7GDLP6J5-ajKQP4Av.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/radar-MK3ICKWK-jU8EYMIg.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/requirementDiagram-KVF5MWMF-BRrfhi59.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/sankeyDiagram-QLVOVGJD-B83wNgTq.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/sequenceDiagram-X6HHIX6F-B8apxYnN.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-DGXRK772-CFC0UfQM.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/stateDiagram-v2-YXO3MK2T-irgYa_bp.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/timeline-definition-BDJGKUSR-C0EWu_Ed.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/assets/xychartDiagram-VJFVF3MP-79fiahKI.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/AUTHORING_GUIDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/content/meta/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/docs/content/meta/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

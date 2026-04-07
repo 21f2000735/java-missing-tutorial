@@ -818,6 +818,7 @@ function HomePage({ manifest }) {
   const featuredSections = manifest.sections.slice(0, 6);
   const learningJourneys = [
     { title: 'I am starting from zero', sectionSlug: 'sec01_fundamentals' },
+    { title: 'I want Java 7 to 25 clarity', resourceSlug: 'JAVA_7_TO_25' },
     { title: 'I want data handling judgment', sectionSlug: 'sec02_collections' },
     { title: 'I want stream confidence', sectionSlug: 'sec04_streams_and_functional_style' },
     { title: 'I want concurrency clarity', sectionSlug: 'sec05_multithreading_and_concurrency' },
@@ -826,9 +827,10 @@ function HomePage({ manifest }) {
   ]
     .map((item) => ({
       ...item,
-      section: manifest.sections.find((section) => section.slug === item.sectionSlug)
+      section: manifest.sections.find((section) => section.slug === item.sectionSlug),
+      resource: manifest.resources.find((resource) => resource.slug === item.resourceSlug)
     }))
-    .filter((item) => item.section);
+    .filter((item) => item.section || item.resource);
 
   return (
     <>
@@ -880,6 +882,24 @@ function HomePage({ manifest }) {
         </div>
         <div className="journey-grid">
           {learningJourneys.map(({ title, section }) => {
+            if (!section) {
+              return (
+                <a className="journey-card text-decoration-none text-reset" href="#resource/JAVA_7_TO_25" key="JAVA_7_TO_25">
+                  <div className="d-flex align-items-center gap-2 mb-2">
+                    <i className="bi bi-clock-history section-icon" />
+                    <span className="badge rounded-pill badge-soft">Release Track</span>
+                  </div>
+                  <h3 className="h5 mb-2">{title}</h3>
+                  <p className="muted-copy mb-3">Follow Java from 7 through 25, then use the migration guide to decide what to learn at each jump.</p>
+                  <BulletList items={[
+                    'See what changed by release',
+                    'Focus on the major mental shifts',
+                    'Plan the right migration path'
+                  ]} />
+                </a>
+              );
+            }
+
             const profile = SECTION_PROFILES[section.slug] || {};
             return (
               <a className="journey-card text-decoration-none text-reset" href={`#section/${section.slug}`} key={section.slug}>
@@ -1174,6 +1194,7 @@ export default function App() {
               <SearchBox entries={searchEntries} />
               <div className="d-none d-lg-flex align-items-center gap-2">
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>
+                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/JAVA_7_TO_25">Java 7 To 25</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/CURRICULUM">Curriculum</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/TOP_20_BOOKS">Sources</a>
               </div>
@@ -1486,6 +1507,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
   }
 
   const topicSummary = data.preview;
+  const topicRunner = effectiveRunner(topicSummary, data.lessonMeta);
   return (
     <PageLayout
       header={(
@@ -1497,7 +1519,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
           actions={(
             <>
               <a className="btn btn-outline-dark btn-sm rounded-pill" href={`#chapter/${data.section.slug}/${data.chapter.slug}`}>Back To Chapter</a>
-              <TopicActionButtons code={data.raw} previewRequired={topicSummary.previewRequired} runner={effectiveRunner(topicSummary, data.lessonMeta)} />
+              <TopicActionButtons code={data.raw} previewRequired={topicSummary.previewRequired} runner={topicRunner} />
             </>
           )}
         />
@@ -1537,7 +1559,7 @@ function RouteRenderer({ route, manifest, fetchText }) {
           <div className="topic-meta">
             {data.lessonMeta.introduced ? <span className="badge rounded-pill badge-soft">Introduced: {data.lessonMeta.introduced}</span> : null}
             {data.lessonMeta.status ? <span className="badge rounded-pill badge-soft">Status: {data.lessonMeta.status}</span> : null}
-            <span className="badge rounded-pill badge-soft">Runner: {effectiveRunner(topicSummary, data.lessonMeta)}</span>
+            <span className="badge rounded-pill badge-soft">Runner: {topicRunner}</span>
             {data.lessonMeta.estimated ? <span className="badge rounded-pill badge-soft">Read time: {data.lessonMeta.estimated}</span> : null}
           </div>
         </div>
@@ -1586,10 +1608,11 @@ function RouteRenderer({ route, manifest, fetchText }) {
           <div className="topic-brief-card">
             <div className="eyebrow mb-2">Run Online</div>
             <p className="mb-2">
-              Use the copy button, then paste into JDoodle or OneCompiler.
-              Simple single-class examples usually work directly.
+              {topicRunner === 'embedded'
+                ? 'Use the run button to send this stable example directly to JDoodle, or copy it into another playground.'
+                : 'This topic is best run locally because it depends on newer or preview Java behavior.'}
             </p>
-            {topicSummary.previewRequired ? (
+            {topicRunner === 'local' ? (
               <p className="mb-0 text-danger-emphasis">
                 This topic uses newer Java features that may need local JDK 25 preview support.
               </p>
