@@ -4,7 +4,7 @@ set -euo pipefail
 
 root="$(cd "$(dirname "$0")/.." && pwd)"
 source_root="$root/src/main/java/com/learning/javamissing"
-site_root="$root/docs"
+site_root="$root/public"
 content_root="$site_root/content"
 library_root="$content_root/library"
 meta_root="$content_root/meta"
@@ -235,6 +235,8 @@ generate_manifest() {
 copy_content_tree
 generate_manifest
 node "$root/scripts/render_resource_pages.mjs"
+
+touch "$site_root/.nojekyll"
 
 cat > "$site_root/robots.txt" <<EOF
 User-agent: *

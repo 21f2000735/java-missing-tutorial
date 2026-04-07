@@ -3,7 +3,7 @@ import path from 'node:path';
 import { marked } from 'marked';
 
 const root = process.cwd();
-const docsRoot = path.join(root, 'docs');
+const docsRoot = path.join(root, 'public');
 const planningRoot = path.join(root, 'planning');
 
 const pages = [

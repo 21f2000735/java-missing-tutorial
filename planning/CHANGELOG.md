@@ -2,7 +2,7 @@
 
 ## 2026-04-07
 
-- simplified the React site so the homepage focuses on three primary learning paths
+- simplified the Next.js site so the homepage focuses on three primary learning paths
 - added reading mode, progress/bookmark state, and cleaner topic/chapter reading flow
 - generated static guide pages under `docs/guides/` for major entry paths
 - generated static topic pages under `docs/topics/` for high-value Java topics

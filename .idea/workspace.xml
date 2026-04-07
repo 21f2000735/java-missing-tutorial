@@ -6,10 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/data/site.json" beforeDir="false" afterPath="$PROJECT_DIR$/docs/data/site.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/build_site.sh" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/build_site.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" beforeDir="false" afterPath="$PROJECT_DIR$/scripts/render_resource_pages.mjs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/site/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/App.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/site/src/site.css" beforeDir="false" afterPath="$PROJECT_DIR$/site/src/site.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,56 +44,56 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "21f2000735"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;21f2000735&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/21f2000735/java-missing-tutorial.git",
-    "accountId": "e7895089-5f59-4eea-bc01-40a43d6c3d13"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/21f2000735/java-missing-tutorial.git&quot;,
+    &quot;accountId&quot;: &quot;e7895089-5f59-4eea-bc01-40a43d6c3d13&quot;
   }
-}]]></component>
+}</component>
   <component name="McpProjectServerCommands">
     <commands />
     <urls />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="3C2Zk34Ot0LVkQiOaVFlUfEs3fj" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Formatting.executor": "Debug",
-    "Application.LocalDateTime.executor": "Run",
-    "Application.RepresentingAbsence.executor": "Run",
-    "Application.RunAllTopics.executor": "Run",
-    "Application.Zones.executor": "Run",
-    "Application.com.learning.javamissing.sec01_fundamentals.ch01_java_basics.RunAllTopics.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.MCP Project settings loaded": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
-    "SHELLCHECK.PATH": "/Users/indiadelhi/Library/Application Support/JetBrains/IntelliJIdea2026.1/plugins/Shell Script/shellcheck",
-    "codeWithMe.voiceChat.enabledByDefault": "false",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Formatting.executor&quot;: &quot;Debug&quot;,
+    &quot;Application.LocalDateTime.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RepresentingAbsence.executor&quot;: &quot;Run&quot;,
+    &quot;Application.RunAllTopics.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Zones.executor&quot;: &quot;Run&quot;,
+    &quot;Application.com.learning.javamissing.sec01_fundamentals.ch01_java_basics.RunAllTopics.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHELLCHECK.PATH&quot;: &quot;/Users/indiadelhi/Library/Application Support/JetBrains/IntelliJIdea2026.1/plugins/Shell Script/shellcheck&quot;,
+    &quot;codeWithMe.voiceChat.enabledByDefault&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Application.RunAll">
+}</component>
+  <component name="RunManager" selected="npm.Next.js: server-side">
     <configuration name="LocalDateTime" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.learning.javamissing.sec16_core_data_time_and_text.ch02_date_and_time.topics.local_date_time.LocalDateTime" />
       <module name="java-missing-tutorial-code" />
@@ -159,6 +159,19 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Next.js: debug client-side" type="JavascriptDebugType" uri="http://localhost:3000/">
+      <method v="2" />
+    </configuration>
+    <configuration name="Next.js: server-side" type="js.build_tools.npm">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="dev" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.RunAll" />
@@ -200,7 +213,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1775585766841</updated>
-      <workItem from="1775585771101" duration="3340000" />
+      <workItem from="1775585771101" duration="3671000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <option name="closed" value="true" />
@@ -250,7 +263,15 @@
       <option name="project" value="LOCAL" />
       <updated>1775588771868</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="update">
+      <option name="closed" value="true" />
+      <created>1775589303332</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1775589303332</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

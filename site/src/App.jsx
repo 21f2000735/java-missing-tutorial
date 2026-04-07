@@ -1,5 +1,25 @@
+'use client';
+
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { marked } from 'marked';
+import {
+  applyDocumentMetadata,
+  applyTheme,
+  currentHash,
+  fetchJson,
+  fetchText as fetchTextFromRuntime,
+  loadBootstrapBundle,
+  markAppReady,
+  navigateToHash,
+  readStorageJson,
+  readStorageValue,
+  subscribeToHashRoute,
+  writeStorageJson,
+  writeStorageValue
+} from './lib/browser-runtime.js';
+import { HOME_ROUTE, parseHashRoute } from './lib/hash-route.js';
+import { GITHUB_URL, SITE_DESCRIPTION, SITE_TITLE } from './lib/site-config.js';
+import { buildSearchEntries, collectTopicRoutes, normalizeManifest, resolveRouteMetadata } from './lib/site-manifest.js';
 
 marked.setOptions({
   gfm: true,
@@ -391,10 +411,6 @@ const PLAYGROUND_LINKS = {
   onecompiler: 'https://onecompiler.com/studio/java'
 };
 
-const SITE_TITLE = 'Java Missing Tutorial';
-const SITE_DESCRIPTION = 'Learn Java with problem-first explanations, runnable code, compare guides, interview tracks, and Java 7 to 25 coverage.';
-const GITHUB_URL = 'https://github.com/21f2000735/java-missing-tutorial';
-
 function stripMarkdown(value = '') {
   return value
     .replace(/```[\s\S]*?```/g, ' ')
@@ -733,44 +749,15 @@ function parseCompanyQuestionBank(raw = '') {
   return { overview, companies };
 }
 
-function parseRoute() {
-  const hash = decodeURIComponent(window.location.hash.slice(1) || 'home');
-  const parts = hash.split('/').filter(Boolean);
-  if (!parts.length || parts[0] === 'home') {
-    return { type: 'home' };
-  }
-  if (parts[0] === 'resource' && parts[1]) {
-    return { type: 'resource', slug: parts[1] };
-  }
-  if (parts[0] === 'section' && parts[1]) {
-    return { type: 'section', sectionSlug: parts[1] };
-  }
-  if (parts[0] === 'chapter' && parts[1] && parts[2]) {
-    return { type: 'chapter', sectionSlug: parts[1], chapterSlug: parts[2] };
-  }
-  if (parts[0] === 'topic' && parts[1] && parts[2] && parts[3]) {
-    return { type: 'topic', sectionSlug: parts[1], chapterSlug: parts[2], topicSlug: parts[3] };
-  }
-  return { type: 'home' };
-}
-
 function useHashRoute() {
-  const [route, setRoute] = useState(() => parseRoute());
+  const [route, setRoute] = useState(() => HOME_ROUTE);
 
   useEffect(() => {
-    const onHashChange = () => setRoute(parseRoute());
-    window.addEventListener('hashchange', onHashChange);
-    return () => window.removeEventListener('hashchange', onHashChange);
+    setRoute(parseHashRoute(currentHash()));
+    return subscribeToHashRoute(setRoute);
   }, []);
 
   return route;
-}
-
-function setMetaDescription(value) {
-  const meta = document.querySelector('meta[name="description"]');
-  if (meta) {
-    meta.setAttribute('content', value);
-  }
 }
 
 function parseTopicMeta(code) {
@@ -1236,27 +1223,15 @@ function resourceSummaryFromSlug(slug) {
 }
 
 function useReadingState() {
-  const [bookmarks, setBookmarks] = useState(() => {
-    try {
-      return JSON.parse(window.localStorage.getItem('java-book-bookmarks') || '[]');
-    } catch {
-      return [];
-    }
-  });
-  const [completed, setCompleted] = useState(() => {
-    try {
-      return JSON.parse(window.localStorage.getItem('java-book-completed') || '[]');
-    } catch {
-      return [];
-    }
-  });
+  const [bookmarks, setBookmarks] = useState(() => readStorageJson('java-book-bookmarks', []));
+  const [completed, setCompleted] = useState(() => readStorageJson('java-book-completed', []));
 
   useEffect(() => {
-    window.localStorage.setItem('java-book-bookmarks', JSON.stringify(bookmarks));
+    writeStorageJson('java-book-bookmarks', bookmarks);
   }, [bookmarks]);
 
   useEffect(() => {
-    window.localStorage.setItem('java-book-completed', JSON.stringify(completed));
+    writeStorageJson('java-book-completed', completed);
   }, [completed]);
 
   function toggleBookmark(route) {
@@ -1275,16 +1250,10 @@ function useReadingState() {
 }
 
 function useFeedbackState() {
-  const [votes, setVotes] = useState(() => {
-    try {
-      return JSON.parse(window.localStorage.getItem('java-book-feedback') || '{}');
-    } catch {
-      return {};
-    }
-  });
+  const [votes, setVotes] = useState(() => readStorageJson('java-book-feedback', {}));
 
   useEffect(() => {
-    window.localStorage.setItem('java-book-feedback', JSON.stringify(votes));
+    writeStorageJson('java-book-feedback', votes);
   }, [votes]);
 
   function setVote(routeKey, vote) {
@@ -1295,33 +1264,16 @@ function useFeedbackState() {
 }
 
 function useUiPreferences() {
-  const [readingMode, setReadingMode] = useState(() => {
-    try {
-      return window.localStorage.getItem('java-book-reading-mode') === 'on';
-    } catch {
-      return false;
-    }
-  });
-  const [theme, setTheme] = useState(() => {
-    try {
-      return window.localStorage.getItem('java-book-theme') || 'light';
-    } catch {
-      return 'light';
-    }
-  });
+  const [readingMode, setReadingMode] = useState(() => readStorageValue('java-book-reading-mode', 'off') === 'on');
+  const [theme, setTheme] = useState(() => readStorageValue('java-book-theme', 'light'));
 
   useEffect(() => {
-    window.localStorage.setItem('java-book-reading-mode', readingMode ? 'on' : 'off');
+    writeStorageValue('java-book-reading-mode', readingMode ? 'on' : 'off');
   }, [readingMode]);
 
   useEffect(() => {
-    window.localStorage.setItem('java-book-theme', theme);
-    document.documentElement.dataset.theme = theme;
-    document.body.dataset.theme = theme;
-    const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) {
-      meta.setAttribute('content', theme === 'dark' ? '#161311' : '#af5b0c');
-    }
+    writeStorageValue('java-book-theme', theme);
+    applyTheme(theme);
   }, [theme]);
 
   function toggleReadingMode() {
@@ -1349,11 +1301,11 @@ function RandomTopicButton({ manifest, currentRoute }) {
       });
     });
     if (!topics.length) {
-      window.location.hash = '#home';
+      navigateToHash('#home');
       return;
     }
     const index = Math.floor(Math.random() * topics.length);
-    window.location.hash = topics[index];
+    navigateToHash(topics[index]);
   }
 
   return (
@@ -1906,32 +1858,15 @@ export default function App() {
   const uiPreferences = useUiPreferences();
 
   useEffect(() => {
+    markAppReady();
+    loadBootstrapBundle();
+  }, []);
+
+  useEffect(() => {
     async function loadManifest() {
       try {
-        const response = await fetch('data/site.json');
-        if (!response.ok) {
-          throw new Error('Failed to load site manifest');
-        }
-        const data = await response.json();
-        const sourceToRoute = new Map();
-        data.resources.forEach((resource) => sourceToRoute.set(resource.sourcePath, `#resource/${resource.slug}`));
-        data.sections.forEach((section) => {
-          sourceToRoute.set(section.guide.sourcePath, `#section/${section.slug}`);
-          section.chapters.forEach((chapter) => {
-            sourceToRoute.set(chapter.guide.sourcePath, `#chapter/${section.slug}/${chapter.slug}`);
-            sourceToRoute.set(chapter.revision.sourcePath, `#chapter/${section.slug}/${chapter.slug}`);
-            sourceToRoute.set(chapter.runChapter.sourcePath, `#chapter/${section.slug}/${chapter.slug}`);
-            sourceToRoute.set(chapter.runAllTopics.sourcePath, `#chapter/${section.slug}/${chapter.slug}`);
-            chapter.topics.forEach((topic) => {
-              sourceToRoute.set(topic.sourcePath, `#topic/${section.slug}/${chapter.slug}/${topic.slug}`);
-              if (topic.guide) {
-                sourceToRoute.set(topic.guide.sourcePath, `#topic/${section.slug}/${chapter.slug}/${topic.slug}`);
-              }
-            });
-          });
-        });
-        data.sourceToRoute = sourceToRoute;
-        setManifest(data);
+        const data = await fetchJson('data/site.json');
+        setManifest(normalizeManifest(data));
       } catch (loadError) {
         setError(loadError.message);
       } finally {
@@ -1942,117 +1877,38 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (!manifest) {
-      document.title = `${SITE_TITLE} - Learn Java 7 to 25 with Real Examples`;
-      setMetaDescription(SITE_DESCRIPTION);
-      return;
-    }
-
-    if (route.type === 'home') {
-      document.title = `${SITE_TITLE} - Learn Java 7 to 25 with Real Examples`;
-      setMetaDescription(SITE_DESCRIPTION);
-      return;
-    }
-
-    if (route.type === 'resource') {
-      const resource = manifest.resources.find((item) => item.slug === route.slug);
-      document.title = `${resource?.title || 'Resource'} | ${SITE_TITLE}`;
-      setMetaDescription(resourceSummaryFromSlug(route.slug));
-      return;
-    }
-
-    const section = manifest.sections.find((item) => item.slug === route.sectionSlug);
-    if (!section) {
-      document.title = SITE_TITLE;
-      setMetaDescription(SITE_DESCRIPTION);
-      return;
-    }
-
-    if (route.type === 'section') {
-      document.title = `${section.title} | ${SITE_TITLE}`;
-      setMetaDescription(SECTION_PROFILES[section.slug]?.hook || `${section.title} section of the Java learning book.`);
-      return;
-    }
-
-    const chapter = section.chapters.find((item) => item.slug === route.chapterSlug);
-    if (!chapter) {
-      document.title = `${section.title} | ${SITE_TITLE}`;
-      setMetaDescription(SECTION_PROFILES[section.slug]?.hook || SITE_DESCRIPTION);
-      return;
-    }
-
-    if (route.type === 'chapter') {
-      document.title = `${chapter.title} | ${SITE_TITLE}`;
-      setMetaDescription(`${chapter.title} in ${section.title}. Runnable Java examples, guide, and revision notes.`);
-      return;
-    }
-
-    const topic = chapter.topics.find((item) => item.slug === route.topicSlug);
-    document.title = `${topic?.title || chapter.title} | ${SITE_TITLE}`;
-    setMetaDescription(`${topic?.title || chapter.title} in ${chapter.title}. Learn the concept through real-world Java examples and guided explanations.`);
+    applyDocumentMetadata(resolveRouteMetadata({
+      manifest,
+      route,
+      sectionProfiles: SECTION_PROFILES,
+      siteTitle: SITE_TITLE,
+      siteDescription: SITE_DESCRIPTION,
+      resourceSummaryFromSlug
+    }));
   }, [manifest, route]);
 
-  const searchEntries = useMemo(() => {
-    if (!manifest) {
-      return [];
-    }
-    const entries = [];
-    manifest.resources.forEach((resource) => {
-      entries.push({ label: resource.title, meta: 'Resource', route: `#resource/${resource.slug}` });
-    });
-    manifest.sections.forEach((section) => {
-      entries.push({ label: section.title, meta: 'Section', route: `#section/${section.slug}` });
-      section.chapters.forEach((chapter) => {
-        entries.push({ label: chapter.title, meta: `${section.title} · Chapter`, route: `#chapter/${section.slug}/${chapter.slug}` });
-        chapter.topics.forEach((topic) => {
-          entries.push({
-            label: topic.title,
-            meta: `${chapter.title} · Topic`,
-            route: `#topic/${section.slug}/${chapter.slug}/${topic.slug}`
-          });
-        });
-      });
-    });
-    return entries;
-  }, [manifest]);
+  const searchEntries = useMemo(() => buildSearchEntries(manifest), [manifest]);
 
-  const allTopicRoutes = useMemo(() => {
-    if (!manifest) {
-      return [];
-    }
-    const topics = [];
-    manifest.sections.forEach((section) => {
-      section.chapters.forEach((chapter) => {
-        chapter.topics.forEach((topic) => {
-          topics.push(`#topic/${section.slug}/${chapter.slug}/${topic.slug}`);
-        });
-      });
-    });
-    return topics;
-  }, [manifest, route]);
+  const allTopicRoutes = useMemo(() => collectTopicRoutes(manifest), [manifest]);
 
   function goToRandomTopic() {
     if (!allTopicRoutes.length) {
-      window.location.hash = '#home';
+      navigateToHash('#home');
       return;
     }
 
-    const currentHash = window.location.hash || '#home';
-    const candidates = allTopicRoutes.filter((item) => item !== currentHash);
+    const activeHash = currentHash();
+    const candidates = allTopicRoutes.filter((item) => item !== activeHash);
     const pool = candidates.length ? candidates : allTopicRoutes;
     const index = Math.floor(Math.random() * pool.length);
-    window.location.hash = pool[index];
+    navigateToHash(pool[index]);
   }
 
   async function fetchText(path) {
     if (contentCache.current.has(path)) {
       return contentCache.current.get(path);
     }
-    const response = await fetch(path);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch ${path}`);
-    }
-    const text = await response.text();
+    const text = await fetchTextFromRuntime(path);
     contentCache.current.set(path, text);
     return text;
   }
@@ -2088,7 +1944,7 @@ export default function App() {
                 <button className={`btn btn-sm rounded-pill ${uiPreferences.readingMode ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleReadingMode}>
                   {uiPreferences.readingMode ? 'Exit Reading Mode' : 'Reading Mode'}
                 </button>
-                <RandomTopicButton manifest={manifest} currentRoute={window.location.hash || '#home'} />
+                <RandomTopicButton manifest={manifest} currentRoute={currentHash()} />
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_TRACK">Interview Track</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/MODERN_JAVA_TRACK">Modern Java</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/BOOK">Book Order</a>

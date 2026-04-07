@@ -235,7 +235,7 @@ Section-level grouping is tracked in [planning/CURRICULUM.md](planning/CURRICULU
 Book-style reading order is tracked in [planning/BOOK.md](planning/BOOK.md).
 The combined manuscript can be generated with `scripts/build_book.sh` and is written to [planning/BOOK_MANUSCRIPT.md](planning/BOOK_MANUSCRIPT.md).
 The content manifest and copied markdown/source tree can be generated with `scripts/build_site.sh`.
-The React + Bootstrap static site is built with `npm run build` and written to [docs/index.html](docs/index.html).
+The Next.js + Bootstrap static site is built with `npm run build` and exported to [docs/index.html](docs/index.html).
 Use `npm run dev` for local development. The site fetches markdown, JSON, and Java source files, so opening `index.html` directly with `file://` is not reliable.
 The site is intentionally shifting from “repo browser” to “problem-first learning site”: section and chapter pages should lead with the real problem, study path, and expected outcomes before showing raw source.
 Topic pages now support a site-first lesson model: `TopicGuide.md` explains the concept, and the Java file stays runnable. Stable examples can be sent directly to JDoodle from the site, while preview-based chapters still need a local JDK 25 setup.
