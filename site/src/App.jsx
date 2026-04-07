@@ -43,8 +43,47 @@ const RESOURCE_DESCRIPTIONS = {
   TOP_20_BOOKS: 'The books and references shaping the code examples, tradeoffs, and deeper explanations.',
   BOOK_MANUSCRIPT: 'A combined manuscript view when you want to read the material like one long book.',
   JAVA_7_TO_25: 'A release-by-release learning track so users can understand what changed from Java 7 through Java 25.',
-  JAVA_MIGRATION_GUIDES: 'Upgrade guides for the biggest Java jumps, with what to learn, what to watch, and what to modernize.'
+  JAVA_MIGRATION_GUIDES: 'Upgrade guides for the biggest Java jumps, with what to learn, what to watch, and what to modernize.',
+  HIGH_DEMAND_JAVA_TOPICS: 'A practical path through the Java topics people keep searching for: collections, streams, errors, concurrency, HTTP, and JVM basics.'
 };
+
+const HIGH_DEMAND_TOPICS = [
+  {
+    title: 'List, Set, Map',
+    route: '#topic/sec02_collections/ch01_collections/list_set_map',
+    why: 'People keep searching for the right collection choice because it affects correctness, readability, and performance.'
+  },
+  {
+    title: 'Stream Pipeline',
+    route: '#topic/sec04_streams_and_functional_style/ch01_streams/stream_pipeline',
+    why: 'Streams remain one of the most searched Java topics because developers need a clear mental model for filter-map-collect flow.'
+  },
+  {
+    title: 'Collectors',
+    route: '#topic/sec04_streams_and_functional_style/ch01_streams/collectors',
+    why: 'Collectors are where many stream users get stuck, especially around grouping, counting, and mapping results.'
+  },
+  {
+    title: 'Threads',
+    route: '#topic/sec05_multithreading_and_concurrency/ch01_concurrency_basics/threads',
+    why: 'Basic thread behavior is still the entry point for understanding executors, synchronization, and virtual threads.'
+  },
+  {
+    title: 'Handling Payment Failures',
+    route: '#topic/sec11_exception_handling/ch01_handling_errors/handling_payment_failures',
+    why: 'Exception handling stays highly searched because it directly affects debugging, user messaging, and reliability.'
+  },
+  {
+    title: 'HTTP Client Basics',
+    route: '#topic/sec12_networking/ch01_http_client_basics/building_requests_with_http_client',
+    why: 'Modern Java services frequently need outbound HTTP calls, so request-building basics matter immediately.'
+  },
+  {
+    title: 'Stack, Heap, and References',
+    route: '#topic/sec08_internal_of_jvm/ch01_memory_and_execution_basics/understanding_stack_heap_and_references',
+    why: 'JVM memory basics stay popular because they explain mutation surprises, debugging confusion, and interview questions.'
+  }
+];
 
 const SECTION_PROFILES = {
   sec01_fundamentals: {
@@ -950,6 +989,21 @@ function HomePage({ manifest }) {
               <div className="eyebrow mb-2">Reference</div>
               <h3 className="h5 mb-2">{resource.title}</h3>
               <p className="muted-copy mb-0">{RESOURCE_DESCRIPTIONS[resource.slug] || 'Open the original markdown behind this learning site.'}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div className="content-card">
+        <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h2 className="page-title mb-0">Most Asked Java Topics</h2>
+          <a className="badge rounded-pill badge-soft text-decoration-none" href="#resource/HIGH_DEMAND_JAVA_TOPICS">See why these matter</a>
+        </div>
+        <div className="topic-grid">
+          {HIGH_DEMAND_TOPICS.map((topic) => (
+            <a className="topic-card topic-teaser text-decoration-none text-reset" href={topic.route} key={topic.route}>
+              <h3 className="h5 mb-2">{topic.title}</h3>
+              <p className="muted-copy mb-0">{topic.why}</p>
             </a>
           ))}
         </div>

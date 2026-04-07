@@ -46,6 +46,7 @@ src/main/java/com/learning/javamissing/
 ```
 
 `TopicGuide.md` is optional but preferred for strong topics. It should carry the hook, explanation, version notes, and next steps. `ConceptName.java` should stay runnable and focused on code.
+Where it helps, use `❌ Bad Code` and `✅ Better Code` sections in `TopicGuide.md` so learners can compare choices quickly. This fits both beginner learning and Clean Code-style contrast.
 
 ## What Goes In One Topic File
 

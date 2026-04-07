@@ -91,8 +91,8 @@ estimated: 8 min
 ## The Problem
 ## Run This Code
 ## Expected Output
-## Wrong Example First
-## Better Example
+## ❌ Bad Code
+## ✅ Better Code
 ## Why This Works
 ## Use This When
 ## Avoid This When
@@ -102,6 +102,7 @@ estimated: 8 min
 
 Use `runner: embedded` for stable single-file examples that can be pushed to JDoodle from the site.  
 Use `runner: local` for preview-sensitive or multi-file examples.
+Use `❌` and `✅` sections when you want to teach contrast quickly, especially for Clean Code, concurrency, collections, exception handling, and API design topics.
 
 Each topic file should avoid:
 

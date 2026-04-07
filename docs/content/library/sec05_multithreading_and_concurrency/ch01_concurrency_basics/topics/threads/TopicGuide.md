@@ -29,14 +29,14 @@ You should see work happening from more than one thread, but not necessarily in 
 
 That non-deterministic order is part of the lesson.
 
-## Wrong Example First
+## ❌ Bad Code
 
 A very common beginner mistake is to call `run()` directly and think a new thread started.
 
 It did not.  
 That just ran the method on the current thread.
 
-## Better Example
+## ✅ Better Code
 
 Call `start()` when you want the JVM to schedule a new thread.
 

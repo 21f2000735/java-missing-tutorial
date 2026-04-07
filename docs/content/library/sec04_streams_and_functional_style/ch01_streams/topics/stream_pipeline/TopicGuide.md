@@ -31,7 +31,7 @@ Compare the output with the pipeline stages:
 - what got transformed
 - what got collected at the end
 
-## Wrong Example First
+## ❌ Bad Code
 
 A common mistake is to use streams only because they look modern.
 
@@ -41,7 +41,7 @@ That leads to:
 - hard-to-debug side effects
 - collectors that are harder to read than a loop
 
-## Better Example
+## ✅ Better Code
 
 Use streams when the work is really a data transformation pipeline.
 

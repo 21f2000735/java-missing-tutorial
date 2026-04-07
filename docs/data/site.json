@@ -1,7 +1,7 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T10:16:56Z",
+  "generatedAt": "2026-04-07T10:24:12Z",
   "stats": {
     "sections": 20,
     "chapters": 44,
@@ -15,7 +15,8 @@
     {"slug": "TOP_20_BOOKS", "title": "TOP 20 BOOKS", "sourcePath": "TOP_20_BOOKS.md", "contentPath": "content/meta/TOP_20_BOOKS.md", "type": "markdown"},
     {"slug": "BOOK_MANUSCRIPT", "title": "BOOK MANUSCRIPT", "sourcePath": "BOOK_MANUSCRIPT.md", "contentPath": "content/meta/BOOK_MANUSCRIPT.md", "type": "markdown"},
     {"slug": "JAVA_7_TO_25", "title": "JAVA 7 TO 25", "sourcePath": "JAVA_7_TO_25.md", "contentPath": "content/meta/JAVA_7_TO_25.md", "type": "markdown"},
-    {"slug": "JAVA_MIGRATION_GUIDES", "title": "JAVA MIGRATION GUIDES", "sourcePath": "JAVA_MIGRATION_GUIDES.md", "contentPath": "content/meta/JAVA_MIGRATION_GUIDES.md", "type": "markdown"}
+    {"slug": "JAVA_MIGRATION_GUIDES", "title": "JAVA MIGRATION GUIDES", "sourcePath": "JAVA_MIGRATION_GUIDES.md", "contentPath": "content/meta/JAVA_MIGRATION_GUIDES.md", "type": "markdown"},
+    {"slug": "HIGH_DEMAND_JAVA_TOPICS", "title": "HIGH DEMAND JAVA TOPICS", "sourcePath": "HIGH_DEMAND_JAVA_TOPICS.md", "contentPath": "content/meta/HIGH_DEMAND_JAVA_TOPICS.md", "type": "markdown"}
   ],
   "sections": [
     {
@@ -66,7 +67,7 @@
           "topics": [
             {"slug": "comparator", "title": "Comparator", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/comparator/Comparator.java", "contentPath": "content/library/sec02_collections/ch01_collections/topics/comparator/Comparator.java", "concept": "Comparator"},
             {"slug": "immutability", "title": "Immutability", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/immutability/Immutability.java", "contentPath": "content/library/sec02_collections/ch01_collections/topics/immutability/Immutability.java", "concept": "Immutability"},
-            {"slug": "list_set_map", "title": "List Set Map", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java", "contentPath": "content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java", "concept": "List Set Map"}
+            {"slug": "list_set_map", "title": "List Set Map", "sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java", "contentPath": "content/library/sec02_collections/ch01_collections/topics/list_set_map/ListSetMap.java", "concept": "List Set Map", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md", "contentPath": "content/library/sec02_collections/ch01_collections/topics/list_set_map/TopicGuide.md"}}
           ]
         }
       ]
@@ -310,7 +311,7 @@
           "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/RunChapter.java", "contentPath": "content/library/sec08_internal_of_jvm/ch01_memory_and_execution_basics/RunChapter.java"},
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/RunAllTopics.java", "contentPath": "content/library/sec08_internal_of_jvm/ch01_memory_and_execution_basics/RunAllTopics.java"},
           "topics": [
-            {"slug": "understanding_stack_heap_and_references", "title": "Understanding Stack Heap And References", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java", "contentPath": "content/library/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java", "concept": "Understanding Stack Heap And References"}
+            {"slug": "understanding_stack_heap_and_references", "title": "Understanding Stack Heap And References", "sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java", "contentPath": "content/library/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java", "concept": "Understanding Stack Heap And References", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/TopicGuide.md", "contentPath": "content/library/sec08_internal_of_jvm/ch01_memory_and_execution_basics/topics/understanding_stack_heap_and_references/TopicGuide.md"}}
           ]
         }
       ]
@@ -364,7 +365,7 @@
           "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch01_handling_errors/RunChapter.java", "contentPath": "content/library/sec11_exception_handling/ch01_handling_errors/RunChapter.java"},
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch01_handling_errors/RunAllTopics.java", "contentPath": "content/library/sec11_exception_handling/ch01_handling_errors/RunAllTopics.java"},
           "topics": [
-            {"slug": "handling_payment_failures", "title": "Handling Payment Failures", "sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/HandlingPaymentFailures.java", "contentPath": "content/library/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/HandlingPaymentFailures.java", "concept": "Handling Payment Failures"}
+            {"slug": "handling_payment_failures", "title": "Handling Payment Failures", "sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/HandlingPaymentFailures.java", "contentPath": "content/library/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/HandlingPaymentFailures.java", "concept": "Handling Payment Failures", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/TopicGuide.md", "contentPath": "content/library/sec11_exception_handling/ch01_handling_errors/topics/handling_payment_failures/TopicGuide.md"}}
           ]
         }
       ]
@@ -382,7 +383,7 @@
           "runChapter": {"sourcePath": "src/main/java/com/learning/javamissing/sec12_networking/ch01_http_client_basics/RunChapter.java", "contentPath": "content/library/sec12_networking/ch01_http_client_basics/RunChapter.java"},
           "runAllTopics": {"sourcePath": "src/main/java/com/learning/javamissing/sec12_networking/ch01_http_client_basics/RunAllTopics.java", "contentPath": "content/library/sec12_networking/ch01_http_client_basics/RunAllTopics.java"},
           "topics": [
-            {"slug": "building_requests_with_http_client", "title": "Building Requests With Http Client", "sourcePath": "src/main/java/com/learning/javamissing/sec12_networking/ch01_http_client_basics/topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java", "contentPath": "content/library/sec12_networking/ch01_http_client_basics/topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java", "concept": "Building Requests With Http Client"}
+            {"slug": "building_requests_with_http_client", "title": "Building Requests With Http Client", "sourcePath": "src/main/java/com/learning/javamissing/sec12_networking/ch01_http_client_basics/topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java", "contentPath": "content/library/sec12_networking/ch01_http_client_basics/topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java", "concept": "Building Requests With Http Client", "guide": {"sourcePath": "src/main/java/com/learning/javamissing/sec12_networking/ch01_http_client_basics/topics/building_requests_with_http_client/TopicGuide.md", "contentPath": "content/library/sec12_networking/ch01_http_client_basics/topics/building_requests_with_http_client/TopicGuide.md"}}
           ]
         }
       ]

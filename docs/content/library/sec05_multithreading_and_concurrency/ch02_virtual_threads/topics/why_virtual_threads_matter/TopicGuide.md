@@ -26,7 +26,7 @@ This example is best run locally on a modern JDK because it depends on newer Jav
 The main point is not a flashy output string.  
 The point is that many blocking tasks can be modeled with a much simpler one-task-per-thread style again.
 
-## Wrong Example First
+## ❌ Bad Mental Model
 
 The wrong mental model is "virtual threads make concurrency problems disappear."
 
@@ -38,6 +38,11 @@ They do not remove:
 - race conditions
 - bad shared-state design
 - blocking calls that pin platform resources in the wrong places
+
+## ✅ Better Mental Model
+
+Virtual threads reduce thread cost for many waiting tasks.  
+They do not remove the need for safe coordination, clear ownership, or good shared-state design.
 
 ## Why This Works
 

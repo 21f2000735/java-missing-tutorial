@@ -29,12 +29,12 @@ Run the Java file first. Notice that `applyDiscount()` stays the same while the 
 - `festivalFinalAmount = 1700`
 - `studentFinalAmount = 1800`
 
-## Wrong Example First
+## ❌ Bad Code
 
 The wrong design is one giant checkout method with many discount branches.  
 That makes checkout hard to test and easy to break whenever the business adds one more rule.
 
-## Better Example
+## ✅ Better Code
 
 Use one small contract for the changing behavior and keep the stable workflow separate.
 

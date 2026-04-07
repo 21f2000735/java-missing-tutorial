@@ -61,7 +61,7 @@ copy_content_tree() {
     cp "$file" "$library_root/$relative"
   done
 
-  for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md AUTHORING_GUIDE.md CHAPTER_QUALITY_CHECKLIST.md TOPIC_QUALITY_RUBRIC.md DEEP_DIVE_STANDARD.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md; do
+  for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md AUTHORING_GUIDE.md CHAPTER_QUALITY_CHECKLIST.md TOPIC_QUALITY_RUBRIC.md DEEP_DIVE_STANDARD.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md HIGH_DEMAND_JAVA_TOPICS.md; do
     cp "$root/$file" "$meta_root/$file"
   done
 }
@@ -85,7 +85,7 @@ generate_manifest() {
     echo '  "resources": ['
 
     local first_resource=1
-    for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md; do
+    for file in README.md BOOK.md CURRICULUM.md ROADMAP_099.md TOP_20_BOOKS.md BOOK_MANUSCRIPT.md JAVA_7_TO_25.md JAVA_MIGRATION_GUIDES.md HIGH_DEMAND_JAVA_TOPICS.md; do
       [[ $first_resource -eq 1 ]] || echo ','
       first_resource=0
       slug="${file%.md}"
