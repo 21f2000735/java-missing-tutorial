@@ -60,6 +60,12 @@ export function buildSearchEntries(manifest) {
       snippet: `Reference page: ${resource.title}`
     });
   });
+  entries.push({
+    label: 'Interview Prep',
+    meta: 'Company Interview Q&A',
+    route: '#interview-prep',
+    snippet: 'Browse company interview questions by company, topic, and level.'
+  });
   manifest.sections.forEach((section) => {
     entries.push({
       label: section.title,
@@ -133,6 +139,13 @@ export function resolveRouteMetadata({
     return {
       title: `My Progress | ${siteTitle}`,
       description: 'Track chapter completion and quiz scores across the Java interview and certification book.'
+    };
+  }
+
+  if (route.type === 'interview-prep') {
+    return {
+      title: `Interview Prep | ${siteTitle}`,
+      description: 'Browse company interview questions by company, topic, and level.'
     };
   }
 

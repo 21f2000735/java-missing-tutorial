@@ -12,6 +12,7 @@ import {
   truncateText
 } from '../../lib/content-helpers.js';
 import { MarkdownBlock } from '../content/MarkdownContent.jsx';
+import { chapterTopicLabel, questionsForChapter } from '../../lib/company-questions.js';
 import {
   FeedbackBar,
   HeaderPanel,
@@ -19,6 +20,7 @@ import {
   PageLayout,
   ReadingStateBar
 } from '../common/AppChrome.jsx';
+import { CompanyQuestionsSection } from '../interview/CompanyQuestionCard.jsx';
 
 function normalizeQuizQuestions(value) {
   const questions = Array.isArray(value?.questions) ? value.questions : Array.isArray(value) ? value : [];
@@ -269,6 +271,8 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
   const previousChapter = chapterIndex > 0 ? manifest.chapterOrder[chapterIndex - 1] : null;
   const nextChapter = chapterIndex >= 0 && chapterIndex < manifest.chapterOrder.length - 1 ? manifest.chapterOrder[chapterIndex + 1] : null;
   const isChapterDone = readingState.completedChapters.includes(routeKey);
+  const chapterTopic = chapterTopicLabel(data.section.slug, data.chapter.slug);
+  const companyQuestions = questionsForChapter(data.section.slug, data.chapter.slug);
   const chapterToc = [
     { href: '#start-with-examples', label: 'Start With Examples' },
     { href: '#chapter-guide', label: 'Chapter Guide' },
@@ -339,6 +343,15 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
               isCompleted={isChapterDone}
               onToggleDone={() => readingState.toggleChapterCompleted(routeKey)}
             />
+
+            {companyQuestions.length ? (
+              <CompanyQuestionsSection
+                title="Companies that ask this"
+                subtitle={chapterTopic ? `Questions mapped to ${chapterTopic}. Try the answer before opening the solution.` : 'Try the answer before opening the solution.'}
+                questions={companyQuestions}
+                compact
+              />
+            ) : null}
           </div>
 
           {!uiPreferences.readingMode ? (

@@ -11,6 +11,9 @@ export function parseHashRoute(hashValue = HOME_HASH) {
   if (parts[0] === 'progress') {
     return { type: 'progress' };
   }
+  if (parts[0] === 'interview-prep') {
+    return { type: 'interview-prep' };
+  }
   if (parts[0] === 'resource' && parts[1]) {
     return { type: 'resource', slug: parts[1] };
   }
@@ -32,6 +35,9 @@ export function routeToHash(route) {
   }
   if (route.type === 'progress') {
     return '#progress';
+  }
+  if (route.type === 'interview-prep') {
+    return '#interview-prep';
   }
   if (route.type === 'resource') {
     return `#resource/${route.slug}`;

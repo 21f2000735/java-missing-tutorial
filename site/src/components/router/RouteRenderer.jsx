@@ -4,6 +4,7 @@ import ChapterPage from '../pages/ChapterPage.jsx';
 import TopicPage from '../pages/TopicPage.jsx';
 import HomePage from '../pages/HomePage.jsx';
 import ProgressPage from '../pages/ProgressPage.jsx';
+import InterviewQAPage from '../pages/InterviewQAPage.jsx';
 import { useRouteContent } from '../../hooks/use-route-content.js';
 
 export default function RouteRenderer({
@@ -40,6 +41,10 @@ export default function RouteRenderer({
         quizScores={readingState.quizScores}
       />
     );
+  }
+
+  if (data.type === 'interview-prep') {
+    return <InterviewQAPage />;
   }
 
   if (data.type === 'resource') {

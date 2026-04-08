@@ -262,6 +262,7 @@ export default function App() {
                   {uiPreferences.readingMode ? 'Exit Reading Mode' : 'Reading Mode'}
                 </button>
                 <RandomTopicButton manifest={manifest} currentRoute={currentHash()} />
+                <a className="btn btn-dark btn-sm rounded-pill" href="#interview-prep">Interview Prep</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_TRACK">Interview Track</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_INDEX">Interview Index</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Problem Approach</a>

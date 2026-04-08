@@ -151,6 +151,7 @@ function RandomTopicButton({ manifest, currentRoute }) {
 
 function QuickLinkRail({ onRandomTopic, onToggleTheme, themeLabel, onToggleReadingMode, readingLabel }) {
   const links = [
+    { label: 'Interview Prep', href: '#interview-prep' },
     { label: 'Interview Track', href: '#resource/INTERVIEW_TRACK' },
     { label: 'Interview Index', href: '#resource/INTERVIEW_INDEX' },
     { label: 'Problem Approach', href: '#resource/INTERVIEW_PROBLEM_APPROACH' },

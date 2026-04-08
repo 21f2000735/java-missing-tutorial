@@ -29,6 +29,13 @@ export function useRouteContent({ route, manifest, fetchText }) {
           return;
         }
 
+        if (route.type === 'interview-prep') {
+          if (!cancelled) {
+            setContent({ status: 'ready', data: { type: 'interview-prep' }, error: '' });
+          }
+          return;
+        }
+
         if (route.type === 'resource') {
           const resource = manifest.resources.find((item) => item.slug === route.slug);
           if (!resource) {
