@@ -1374,6 +1374,116 @@ input:focus-visible {
   gap: 1rem;
 }
 
+.company-qa-summary {
+  border-left: 4px solid rgba(175, 91, 12, 0.28);
+}
+
+.company-question-card {
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--line);
+  border-radius: 1.15rem;
+  background: rgba(255, 255, 255, 0.62);
+  box-shadow: 0 10px 24px rgba(60, 42, 18, 0.04);
+}
+
+.company-question-card-compact {
+  padding: 0.9rem 0.95rem;
+}
+
+.company-question-card-header {
+  width: 100%;
+}
+
+.company-question-title {
+  line-height: 1.35;
+}
+
+.company-question-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.company-badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.company-pill {
+  padding: 0.45rem 0.72rem;
+  font-size: 0.78rem;
+  letter-spacing: 0.01em;
+}
+
+.company-pill-default {
+  background: rgba(175, 91, 12, 0.12);
+  color: #7d430c;
+}
+
+.company-pill-amazon {
+  background: rgba(20, 52, 164, 0.12);
+  color: #153d8f;
+}
+
+.company-pill-google {
+  background: rgba(66, 133, 244, 0.14);
+  color: #1a5fb4;
+}
+
+.company-pill-microsoft {
+  background: rgba(0, 120, 215, 0.14);
+  color: #005ea8;
+}
+
+.company-pill-flipkart {
+  background: rgba(255, 179, 0, 0.16);
+  color: #9c6400;
+}
+
+.company-pill-uber {
+  background: rgba(0, 0, 0, 0.08);
+  color: #222;
+}
+
+.company-pill-swiggy {
+  background: rgba(255, 92, 0, 0.14);
+  color: #d34f00;
+}
+
+.company-pill-zepto {
+  background: rgba(143, 88, 255, 0.14);
+  color: #6b3fd4;
+}
+
+.company-pill-paytm {
+  background: rgba(18, 104, 255, 0.12);
+  color: #1357cb;
+}
+
+.frequent-badge {
+  display: inline-flex;
+  align-items: center;
+}
+
+.company-question-card-body {
+  margin-top: 0.95rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--line);
+}
+
+.company-code-block {
+  padding: 0.95rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(245, 239, 228, 0.72);
+}
+
+.company-code-block pre {
+  margin-bottom: 0;
+  white-space: pre-wrap;
+}
+
 .learning-paths-card,
 .daily-challenge-card,
 .flashcard-shell {
@@ -1861,7 +1971,9 @@ input:focus-visible {
 .theme-dark .quick-link-chip,
 .theme-dark .nav-link-card,
 .theme-dark .prerequisite-pill,
-.theme-dark .company-question {
+.theme-dark .company-question,
+.theme-dark .company-question-card,
+.theme-dark .company-code-block {
   background: rgba(40, 34, 28, 0.86);
   color: var(--text);
   box-shadow: inset 0 0 0 1px var(--line);
@@ -1913,6 +2025,51 @@ input:focus-visible {
 .theme-dark .content-markdown h2,
 .theme-dark .content-markdown h3 {
   color: var(--text);
+}
+
+.theme-dark .company-pill-default {
+  background: rgba(175, 91, 12, 0.22);
+  color: #f0c59b;
+}
+
+.theme-dark .company-pill-amazon {
+  background: rgba(20, 52, 164, 0.2);
+  color: #b6c8ff;
+}
+
+.theme-dark .company-pill-google {
+  background: rgba(66, 133, 244, 0.2);
+  color: #c8dbff;
+}
+
+.theme-dark .company-pill-microsoft {
+  background: rgba(0, 120, 215, 0.2);
+  color: #c8e3ff;
+}
+
+.theme-dark .company-pill-flipkart {
+  background: rgba(255, 179, 0, 0.18);
+  color: #ffe0a2;
+}
+
+.theme-dark .company-pill-uber {
+  background: rgba(255, 255, 255, 0.08);
+  color: #f2efe9;
+}
+
+.theme-dark .company-pill-swiggy {
+  background: rgba(255, 92, 0, 0.2);
+  color: #ffc3a3;
+}
+
+.theme-dark .company-pill-zepto {
+  background: rgba(143, 88, 255, 0.18);
+  color: #d8c9ff;
+}
+
+.theme-dark .company-pill-paytm {
+  background: rgba(18, 104, 255, 0.18);
+  color: #cfe0ff;
 }
 
 .theme-dark .code-panel pre[class*="language-"],
