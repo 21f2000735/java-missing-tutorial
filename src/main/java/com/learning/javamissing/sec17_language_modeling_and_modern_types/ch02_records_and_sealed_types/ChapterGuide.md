@@ -1,185 +1,57 @@
 # Records And Sealed Types Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Many business models have one of these shapes:
+This chapter shows what breaks when records and sealed types is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-- pure data objects such as invoice summaries
-- closed families such as payment status or delivery state
+## Naive Approach
 
-Without clear modeling, teams end up with verbose data classes, weak invariants, and switches that silently miss new cases.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## The Pain Before It
+## Failure
 
-Many business models have one of these shapes:
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-- pure data objects such as invoice summaries
-- closed families such as payment status or delivery state
+## Fix
 
-Without clear modeling, teams end up with verbose data classes, weak invariants, and switches that silently miss new cases.
-
-## Java Creator Mindset
-
-### Records
-
-- records are a good fit for immutable data carriers
-- they express that the data itself is the main point of the type
-
-### Sealed Types
-
-- sealed types declare exactly which implementations are allowed
-- they help model known variants explicitly
-
-### Exhaustive Switch
-
-- sealed hierarchies improve switch safety because the compiler knows the permitted cases
-- missing cases become visible earlier
-
-## How You Might Invent It
-
-```mermaid
-mindmap
-  root((Records and Sealed Types))
-    records
-      transparent data
-      auto members
-    sealed types
-      closed hierarchy
-      controlled variants
-    exhaustive switch
-      safer branching
-```
-
-## Naive Attempt
-
-- record vs ordinary class:
-  use a record when the type is mainly data, use a class when custom identity or mutable behavior matters
-- sealed hierarchy vs open hierarchy:
-  sealed types are better when the domain variants are intentionally closed
-- enum vs sealed hierarchy:
-  enums fit constant-like variants, sealed hierarchies fit variants with different data and behavior
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-### Records
-
-- records are a good fit for immutable data carriers
-- they express that the data itself is the main point of the type
-
-### Sealed Types
-
-- sealed types declare exactly which implementations are allowed
-- they help model known variants explicitly
-
-### Exhaustive Switch
-
-- sealed hierarchies improve switch safety because the compiler knows the permitted cases
-- missing cases become visible earlier
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Closing Hierarchies With Sealed Types](topics/closing_hierarchies_with_sealed_types/ClosingHierarchiesWithSealedTypes.java)
 2. Run [Exhaustive Sealed Branching](topics/exhaustive_sealed_branching/ExhaustiveSealedBranching.java)
 3. Run [Modeling Immutable Data With Records](topics/modeling_immutable_data_with_records/ModelingImmutableDataWithRecords.java)
 4. Run [Record Classes Deep Dive](topics/record_classes_deep_dive/RecordClassesDeepDive.java)
 
-## What To Notice
+What to observe:
 
-### Compare With
+- Which topic shows the failure first: [Closing Hierarchies With Sealed Types](topics/closing_hierarchies_with_sealed_types/ClosingHierarchiesWithSealedTypes.java).
+- Which topic narrows the rule: [Modeling Immutable Data With Records](topics/modeling_immutable_data_with_records/ModelingImmutableDataWithRecords.java).
+- Which topic shows the cleaner abstraction: [Record Classes Deep Dive](topics/record_classes_deep_dive/RecordClassesDeepDive.java).
 
-- record vs ordinary class:
-  use a record when the type is mainly data, use a class when custom identity or mutable behavior matters
-- sealed hierarchy vs open hierarchy:
-  sealed types are better when the domain variants are intentionally closed
-- enum vs sealed hierarchy:
-  enums fit constant-like variants, sealed hierarchies fit variants with different data and behavior
+## Improvement
 
-### Interview Focus
+After this chapter, you can explain the rule behind records and sealed types and choose the right approach with less guesswork.
 
-Q: What is the real benefit of a record?  
-A: It communicates that the type is a transparent immutable data carrier.
+After this chapter, you should be able to explain why Records And Sealed Types exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Q: Why use a sealed type instead of a normal interface?  
-A: To express and enforce that only a known set of implementations is valid.
+## What stays stable
 
-Q: Why are sealed types and pattern matching often discussed together?  
-A: Because a closed hierarchy makes branching more complete and safer.
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-## Mental Model
+## What changes
 
-```mermaid
-mindmap
-  root((Records and Sealed Types))
-    records
-      transparent data
-      auto members
-    sealed types
-      closed hierarchy
-      controlled variants
-    exhaustive switch
-      safer branching
-```
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-## Common Mistakes
+## Rule
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
 
-## Tradeoffs
+## Try this
 
-- record vs ordinary class:
-  use a record when the type is mainly data, use a class when custom identity or mutable behavior matters
-- sealed hierarchy vs open hierarchy:
-  sealed types are better when the domain variants are intentionally closed
-- enum vs sealed hierarchy:
-  enums fit constant-like variants, sealed hierarchies fit variants with different data and behavior
-
-## Use / Avoid
-
-### Use It When
-
-- use records for small immutable value-focused models
-- use sealed types for domains with intentionally closed variants
-- use exhaustive switches when business logic truly depends on every supported case
-
-### Avoid It When
-
-- do not use records for entities that need complex mutable lifecycle behavior
-- do not use sealed types when extension by outside code is a real requirement
-- do not confuse "less code" with "better model"
-
-## Practice
-
-1. Why is a record better than a verbose data class for pure value data?
-2. Why might an enum be insufficient where a sealed hierarchy works well?
-3. Why does a closed hierarchy improve switch safety?
-
-### Mini Case Study
-
-Consider an order system.
-
-- `Order` summary is pure data: record is a natural fit
-- `DeliveryStatus` has a fixed set of states: sealed type is a natural fit
-- the UI needs one branch per status: exhaustive switch becomes safer
-
-This chapter shows those three ideas working together.
-
-## Summary
-
-### Records
-
-- records are a good fit for immutable data carriers
-- they express that the data itself is the main point of the type
-
-### Sealed Types
-
-- sealed types declare exactly which implementations are allowed
-- they help model known variants explicitly
-
-### Exhaustive Switch
-
-- sealed hierarchies improve switch safety because the compiler knows the permitted cases
-- missing cases become visible earlier
+- Run [Closing Hierarchies With Sealed Types](topics/closing_hierarchies_with_sealed_types/ClosingHierarchiesWithSealedTypes.java) and note the first thing that breaks.
+- Run [Modeling Immutable Data With Records](topics/modeling_immutable_data_with_records/ModelingImmutableDataWithRecords.java) and write down what the rule becomes.
+- Run [Record Classes Deep Dive](topics/record_classes_deep_dive/RecordClassesDeepDive.java) and compare the result with the naive approach.

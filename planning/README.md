@@ -7,6 +7,7 @@ This folder keeps the roadmap, book-order, compare pages, release tracks, and au
 - [BOOK.md](BOOK.md)
 - [CURRICULUM.md](CURRICULUM.md)
 - [ROADMAP_099.md](ROADMAP_099.md)
+- [PROPOSED_TABLE_OF_CONTENTS.md](PROPOSED_TABLE_OF_CONTENTS.md)
 
 ## Learning Paths
 

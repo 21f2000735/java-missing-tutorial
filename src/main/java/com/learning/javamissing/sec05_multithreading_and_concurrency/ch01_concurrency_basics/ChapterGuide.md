@@ -1,85 +1,58 @@
 # Concurrency Basics Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 Goal: understand what breaks when work overlaps.
 
-## The Pain Before It
-
-As soon as two tasks overlap, the design has to answer three things:
-
-- how work starts
-- how you wait for it
-- what happens when both tasks touch the same mutable state
-
-## Java Creator Mindset
-
-Make the safe path obvious: start work explicitly, protect shared state explicitly, and hand off worker management when the codebase grows.
-
-## How You Might Invent It
-
-1. Start with one task that runs on its own.
-2. Share state and watch the bug appear.
-3. Move coordination into a tool that owns the workers.
-
-## Naive Attempt
+## Naive Approach
 
 Create a thread whenever you need work and let each task touch shared data directly.
 
-## Why It Breaks
+## Failure
 
 - `run()` does not create a new thread
 - `count++` is not safe when two threads share the same field
 - raw threads make ownership and cleanup hard to scale
 
-## Final Java Direction
+## Fix
 
-`Threads` shows how work starts, `Synchronization` shows what happens when shared state is unsafe, and `Executors` show how task submission and worker management separate cleanly.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Executors](topics/executors/Executors.java)
 2. Run [Synchronization](topics/synchronization/Synchronization.java)
 3. Run [Threads](topics/threads/Threads.java)
 
-## What To Notice
+What to observe:
 
-- `Threads` shows that `start()` creates a new thread while `run()` stays on the current one
-- `Synchronization` shows that a tiny counter can still fail when two threads share it
-- `Executors` show that task code stays cleaner when worker management moves out of the business logic
+- Which topic shows the failure first: [Executors](topics/executors/Executors.java).
+- Which topic narrows the rule: [Synchronization](topics/synchronization/Synchronization.java).
+- Which topic shows the cleaner abstraction: [Threads](topics/threads/Threads.java).
 
-## Mental Model
+## Improvement
 
-Think in layers: thread creation answers "how does work begin?", synchronization answers "how does shared state stay correct?", and executors answer "who manages the workers?"
+`Threads` shows how work starts, `Synchronization` shows what happens when shared state is unsafe, and `Executors` show how task submission and worker management separate cleanly.
 
-## Common Mistakes
+After this chapter, you should be able to explain why Concurrency Basics exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-- treating concurrency as only "faster code"
-- reading the API name without the ownership model
-- expecting raw threads to solve shared-state problems automatically
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Raw threads are direct but fragile; synchronization protects correctness but adds coordination; executors improve structure but add an abstraction layer.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-### Use It When
+## Rule
 
-- you need the foundation before virtual threads or structured concurrency
-- you want to see how overlapping work actually fails
-- you are deciding whether state should be shared at all
+👉 Rule: `Threads` shows how work starts, `Synchronization` shows what happens when shared state is unsafe, and `Executors` show how task submission and worker management separate cleanly.
 
-## Practice
+## Try this
 
-1. Replace `start()` with `run()` in [Threads.java](topics/threads/Threads.java) and note the thread name.
-2. Remove `synchronized` in [Synchronization.java](topics/synchronization/Synchronization.java) and rerun it a few times.
-3. Change the pool size in [Executors.java](topics/executors/Executors.java) from `2` to `1` and watch how the result flow changes.
-
-## Summary
-
-After this chapter, you should be able to explain how work starts, how shared state stays correct, and why executors are usually the cleaner production choice.
-
-## Next Chapter
-
-Move to [Virtual Threads Learning Kit](../ch02_virtual_threads/ChapterGuide.md) after this chapter.
+- Run [Executors](topics/executors/Executors.java) and note the first thing that breaks.
+- Run [Synchronization](topics/synchronization/Synchronization.java) and write down what the rule becomes.
+- Run [Threads](topics/threads/Threads.java) and compare the result with the naive approach.

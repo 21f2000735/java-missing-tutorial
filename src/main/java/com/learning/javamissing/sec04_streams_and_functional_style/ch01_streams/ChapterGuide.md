@@ -1,131 +1,58 @@
 # Streams Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter teaches one interview-relevant decision: when does a stream make data work clearer than a loop?
 
-## The Pain Before It
+## Naive Approach
 
-A lot of business code does the same sequence again and again:
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-- keep only matching records
-- reshape the data
-- produce a grouped, counted, or summed result
+## Failure
 
-Without a clear model, people either write noisy loops for transformation-heavy work or force everything into streams, even when a loop is simpler.
-
-## Java Creator Mindset
-
-Streams are not "modern loops". They are a way to declare a data pipeline:
-
-- source
-- intermediate steps
-- terminal result
-
-That is why they work best when the business rule is really "transform this data into that answer."
-
-## How You Might Invent It
-
-Imagine repeated reporting code:
-
-- first filter the useful rows
-- then map each row to the field you need
-- then collect, count, or sum
-
-At that point, you want a pipeline that reads in the same order as the business rule.
-
-## Naive Attempt
-
-Two weak habits show up here:
-
-- writing manual loops even when the job is obviously filter -> map -> result
-- switching to streams everywhere because the syntax looks cleaner
-
-## Why It Breaks
-
-Both habits create different problems:
-
+- Both habits create different problems:
 - loop-heavy code can hide the transformation steps inside mutable variables
 - stream-heavy code becomes hard to read when the logic is stateful or awkward
-- parallel streams can produce correct output and still be a bad engineering choice
 
-## Final Java Direction
+## Fix
 
-Use this chapter as a three-part decision path:
-
-- `StreamPipeline` for readable data flow
-- `Collectors` for choosing the final shape of the answer
-- `ParallelStreams` for understanding that parallelism is an optimization decision, not a style upgrade
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Collectors](topics/collectors/Collectors.java)
 2. Run [Parallel Streams](topics/parallel_streams/ParallelStreams.java)
 3. Run [Stream Pipeline](topics/stream_pipeline/StreamPipeline.java)
 
-## What To Notice
+What to observe:
 
-- `StreamPipeline` shows filter -> transform -> answer with priority orders and names
-- `Collectors` shows how the final result can become a `List`, `Set`, grouped `Map`, partitioned `Map`, or summary
-- `ParallelStreams` shows that matching output does not automatically justify parallel execution
+- Which topic shows the failure first: [Collectors](topics/collectors/Collectors.java).
+- Which topic narrows the rule: [Parallel Streams](topics/parallel_streams/ParallelStreams.java).
+- Which topic shows the cleaner abstraction: [Stream Pipeline](topics/stream_pipeline/StreamPipeline.java).
 
-## Mental Model
+## Improvement
 
-Use this simple rule:
+After this chapter, you can explain the rule behind streams and choose the right approach with less guesswork.
 
-- if the work is "take data, reshape it, produce an answer", a stream may clarify it
-- if the work is stateful, branch-heavy, or easier to explain step by step, a loop is usually better
+After this chapter, you should be able to explain why Streams exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-The stream itself is not the goal. Clear reasoning is the goal.
+## What stays stable
 
-## Common Mistakes
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-- forgetting that intermediate operations are lazy until a terminal operation runs
-- confusing `groupingBy` with `toMap`
-- using parallel streams before understanding the sequential version
-- mutating external state inside `map`, `filter`, or `forEach`
-- keeping a long pipeline that is harder to debug than a straightforward loop
+## What changes
 
-## Tradeoffs
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-| Choice | Gain | Cost |
-| --- | --- | --- |
-| Sequential stream | readable transformation pipeline | can feel indirect for stateful logic |
-| Collectors | explicit final result shape | more API surface to learn |
-| Parallel stream | possible speedup on the right workload | overhead, coordination cost, and easier misuse |
-| Plain loop | direct control and simple debugging | can bury the higher-level business rule in mutation |
+## Rule
 
-## Use / Avoid
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
 
-### Use It When
+## Try this
 
-- the code is mostly filtering, mapping, grouping, counting, or summarizing
-- you want the business steps to read in order
-- the final answer is a collection, map, statistic, or joined string
-
-### Avoid
-
-- the logic depends on shared mutable state
-- a plain loop is shorter and easier to explain
-- you are reaching for parallel streams before measuring the sequential version
-
-## Practice
-
-Rerun each example with one changed assumption:
-
-- change the filter in `StreamPipeline`
-- change the collector shape in `Collectors`
-- increase the input size in `ParallelStreams`
-
-Then explain whether the stream still makes the code clearer than a loop.
-
-## Summary
-
-- streams are best for transformation-shaped work
-- collectors decide the final answer shape
-- parallel streams are a performance tool, not a readability tool
-- a strong interview answer compares streams with loops instead of treating one as always better
-
-## Next Chapter
-
-Move to [Functional Interfaces Learning Kit](../ch02_functional_interfaces/ChapterGuide.md) after this chapter.
+- Run [Collectors](topics/collectors/Collectors.java) and note the first thing that breaks.
+- Run [Parallel Streams](topics/parallel_streams/ParallelStreams.java) and write down what the rule becomes.
+- Run [Stream Pipeline](topics/stream_pipeline/StreamPipeline.java) and compare the result with the naive approach.

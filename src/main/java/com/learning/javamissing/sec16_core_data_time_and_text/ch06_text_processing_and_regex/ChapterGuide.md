@@ -1,65 +1,54 @@
 # Text Processing And Regex Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter teaches the concept of checking and transforming text data safely.
 
-## The Pain Before It
-
-Before learners build a mental model for text processing and regex, the APIs feel like isolated facts instead of answers to one connected problem.
-
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around text Processing And Regex, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Final Java Direction
+## Fix
 
-Read the chapter as a small set of related ideas around text Processing And Regex, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Validating User Input](topics/validating_user_input/ValidatingUserInput.java)
 
-## What To Notice
+What to observe:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+- Which topic shows the failure first: [Validating User Input](topics/validating_user_input/ValidatingUserInput.java).
+- Which topic narrows the rule: [Validating User Input](topics/validating_user_input/ValidatingUserInput.java).
+- Which topic shows the cleaner abstraction: [Validating User Input](topics/validating_user_input/ValidatingUserInput.java).
 
-## Mental Model
+## Improvement
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Read the chapter as a small set of related ideas around text Processing And Regex, not as isolated trivia.
 
-## Common Mistakes
+After this chapter, you should be able to explain why Text Processing And Regex exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Rule
 
-## Practice
+👉 Rule: Read the chapter as a small set of related ideas around text Processing And Regex, not as isolated trivia.
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+## Try this
 
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind text processing and regex and connect them back to the runnable examples.
-
-## Next Chapter
-
-Move to [Strings In Depth Learning Kit](../ch07_strings_in_depth/ChapterGuide.md) after this chapter.
+- Run [Validating User Input](topics/validating_user_input/ValidatingUserInput.java) and note the first thing that breaks.
+- Run [Validating User Input](topics/validating_user_input/ValidatingUserInput.java) and write down what the rule becomes.
+- Run [Validating User Input](topics/validating_user_input/ValidatingUserInput.java) and compare the result with the naive approach.

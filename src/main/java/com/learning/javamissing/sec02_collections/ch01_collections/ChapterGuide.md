@@ -1,134 +1,56 @@
 # Collections Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Collections are the first place where Java starts feeling like API choice matters, not just syntax.
-This chapter teaches the difference between `List`, `Set`, `Map`, immutable collections, and `Comparator`.
+This chapter shows what breaks when collections is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-## The Pain Before It
+## Naive Approach
 
-Before a learner has a mental model for collections, the APIs feel like unrelated facts instead of answers to one connected problem.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
+## Failure
 
-- `List` keeps order and allows duplicates.
-- `Set` keeps unique values.
-- `Map` stores `key -> value` pairs.
-- immutable collections protect shared data from accidental change.
-- `Comparator` lets Java sort the same object in different ways.
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## How You Might Invent It
+## Fix
 
-```mermaid
-mindmap
-  root((Collections))
-    List
-      ordered
-      duplicates allowed
-    Set
-      unique values
-    Map
-      key value pairs
-    Comparator
-      custom sorting
-    Immutability
-      safer reads
-      no accidental updates
-```
-
-## Naive Attempt
-
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| `List` vs `Set` | order and duplicates matter | uniqueness matters more than duplicates |
-| mutable vs immutable collection | the same owner must keep updating data | callers should not accidentally change shared data |
-| built-in order vs comparator | one natural order is enough everywhere | sorting rules change by use case |
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- use `List` when order matters.
-- use `Set` when duplicates should not exist.
-- use `Map` when you need lookup by key.
-- use immutable collections when callers should not mutate shared data.
-- use `Comparator` when sorting rules must be explicit.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Comparator](topics/comparator/Comparator.java)
 2. Run [Immutability](topics/immutability/Immutability.java)
 3. Run [List Set Map](topics/list_set_map/ListSetMap.java)
 
-## What To Notice
+What to observe:
 
-- the collection type is part of the API contract, not just a storage detail
-- immutable collections reduce defensive coding and make concurrent reading safer
-- comparator design affects correctness, reproducibility, and sometimes cache or query behavior
+- Which topic shows the failure first: [Comparator](topics/comparator/Comparator.java).
+- Which topic narrows the rule: [Immutability](topics/immutability/Immutability.java).
+- Which topic shows the cleaner abstraction: [List Set Map](topics/list_set_map/ListSetMap.java).
 
-## Mental Model
+## Improvement
 
-Think of the chapter as three questions:
+After this chapter, you can explain the rule behind collections and choose the right approach with less guesswork.
 
-1. Do I need order, uniqueness, or key lookup?
-2. Should the data be mutable or protected?
-3. Do I need one default sort or a custom sort rule?
+After this chapter, you should be able to explain why Collections exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-## Common Mistakes
+## What stays stable
 
-- memorizing labels without building a mental model for when the concept actually helps
-- choosing `Set` when duplicates are meaningful
-- choosing `Map` when plain ordered values are enough
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-## Tradeoffs
+## What changes
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| `List` vs `Set` | order and duplicates matter | uniqueness matters more than duplicates |
-| mutable vs immutable collection | the same owner must keep updating data | callers should not accidentally change shared data |
-| built-in order vs comparator | one natural order is enough everywhere | sorting rules change by use case |
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-## Use / Avoid
+## Rule
 
-### Use It When
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
 
-- use `List` when order matters
-- use `Set` when duplicates should not exist
-- use `Map` when you need lookup by key
-- use `Comparator` when sorting rules must be explicit
+## Try this
 
-### Avoid It When
-
-- do not use `Set` if duplicates are meaningful
-- do not use `Map` if you only need plain ordered values
-- do not use mutable collections if shared code should not update them
-
-## Practice
-
-1. Which collection type allows duplicates and keeps order?
-2. What happens if you call `add()` on `List.of(...)`?
-3. When is a comparator better than changing the class itself?
-
-### Mini Case Study
-
-Imagine a shopping app.
-
-- `List` keeps products in cart order
-- `Set` keeps unique coupon codes
-- `Map` stores product id to quantity
-- `Comparator` sorts products by price or name
-- immutable collections protect a final order summary
-
-## Summary
-
-- `List` keeps order and allows duplicates
-- `Set` keeps unique values
-- `Map` stores `key -> value` pairs
-- immutable collections protect shared data
-- `Comparator` makes sorting rules explicit
-
-## Next Chapter
-
-Move to [Maps And Iterators In Depth Learning Kit](../ch02_maps_and_iterators_in_depth/ChapterGuide.md) after this chapter.
+- Run [Comparator](topics/comparator/Comparator.java) and note the first thing that breaks.
+- Run [Immutability](topics/immutability/Immutability.java) and write down what the rule becomes.
+- Run [List Set Map](topics/list_set_map/ListSetMap.java) and compare the result with the naive approach.

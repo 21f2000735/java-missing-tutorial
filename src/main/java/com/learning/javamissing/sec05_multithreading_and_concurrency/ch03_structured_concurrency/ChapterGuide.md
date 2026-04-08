@@ -1,81 +1,57 @@
 # Structured Concurrency Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter teaches a design idea first: related tasks should live and die together.
 
-## The Pain Before It
-
-Many request flows need multiple subtasks:
-
-- fetch user profile
-- fetch plan
-- fetch recommendations
-
-If those tasks are scattered across futures and helpers, they can outlive the request, fail independently, or keep running after their result is no longer useful. Structured concurrency keeps them inside one parent scope.
-
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around structured Concurrency, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
 - tasks are truly independent long-lived jobs
 - you are not ready to track JDK preview changes for this API
 
-## Final Java Direction
+## Fix
 
-Read the chapter as a small set of related ideas around structured Concurrency, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Choosing First Successful Result](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java)
 2. Run [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java)
 3. Run [Keeping Child Tasks Inside One Request](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java)
 
-## What To Notice
+What to observe:
 
-- task lifetime belongs to the parent operation
-- “need all results” and “need first success” are different business decisions
-- cancellation and failure policy should be explicit where tasks are launched
+- Which topic shows the failure first: [Choosing First Successful Result](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java).
+- Which topic narrows the rule: [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java).
+- Which topic shows the cleaner abstraction: [Keeping Child Tasks Inside One Request](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java).
 
-## Mental Model
+## Improvement
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Read the chapter as a small set of related ideas around structured Concurrency, not as isolated trivia.
 
-## Common Mistakes
+After this chapter, you should be able to explain why Structured Concurrency exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-- tasks are truly independent long-lived jobs
-- you are not ready to track JDK preview changes for this API
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-### Use It When
+## Rule
 
-- several tasks belong to one request or workflow
-- task cancellation should follow request cancellation
-- failure handling should stay local and readable
+👉 Rule: Read the chapter as a small set of related ideas around structured Concurrency, not as isolated trivia.
 
-## Practice
+## Try this
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
-
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind structured concurrency and connect them back to the runnable examples.
-
-## Next Chapter
-
-Move to [Scoped Values Learning Kit](../ch04_scoped_values/ChapterGuide.md) after this chapter.
+- Run [Choosing First Successful Result](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java) and note the first thing that breaks.
+- Run [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java) and write down what the rule becomes.
+- Run [Keeping Child Tasks Inside One Request](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java) and compare the result with the naive approach.

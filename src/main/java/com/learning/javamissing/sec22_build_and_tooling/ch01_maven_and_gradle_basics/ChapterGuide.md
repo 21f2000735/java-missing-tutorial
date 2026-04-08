@@ -1,72 +1,55 @@
 # Maven And Gradle Basics Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter gives the practical build-system explanation many Java learners never get early enough.
 
-## The Pain Before It
-
-You may know Java syntax but still feel lost when a project opens with `pom.xml`, `build.gradle`, scopes, plugins, jars, or Spring Boot packaging.
-
-## Java Creator Mindset
-
-- Maven vs Gradle
-- project build files
-- dependency scopes
-- jar vs war vs fat jar
-- why Spring Boot changed packaging conversations
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Final Java Direction
+## Fix
 
-- Maven vs Gradle
-- project build files
-- dependency scopes
-- jar vs war vs fat jar
-- why Spring Boot changed packaging conversations
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Build Files And Dependency Scopes](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java)
 2. Run [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java)
 
-## What To Notice
+What to observe:
+
+- Which topic shows the failure first: [Build Files And Dependency Scopes](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java).
+- Which topic narrows the rule: [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java).
+- Which topic shows the cleaner abstraction: [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java).
+
+## Improvement
 
 As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
 
-## Mental Model
+After this chapter, you should be able to explain why Maven And Gradle Basics exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+## What stays stable
 
-## Common Mistakes
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What changes
 
-## Tradeoffs
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## Rule
 
-## Use / Avoid
+👉 Rule: Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Try this
 
-## Practice
-
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
-
-## Summary
-
-- what a build file is really responsible for
-- why dependency scopes affect runtime behavior
-- why many modern Java services ship as executable jars
+- Run [Build Files And Dependency Scopes](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java) and note the first thing that breaks.
+- Run [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java) and write down what the rule becomes.
+- Run [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java) and compare the result with the naive approach.

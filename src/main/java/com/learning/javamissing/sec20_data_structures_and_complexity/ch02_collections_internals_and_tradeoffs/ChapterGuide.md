@@ -1,99 +1,55 @@
 # Collections Internals And Tradeoffs Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Many developers know how to use `ArrayList` and `HashMap`, but not what costs appear when data grows:
+This chapter shows what breaks when collections internals and tradeoffs is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-- `ArrayList` appends usually feel fast, so resize cost gets ignored
-- `HashMap` lookups usually feel instant, so collisions get ignored
-
-This chapter turns those hidden costs into visible mental models.
-
-## The Pain Before It
-
-Many developers know how to use `ArrayList` and `HashMap`, but not what costs appear when data grows:
-
-- `ArrayList` appends usually feel fast, so resize cost gets ignored
-- `HashMap` lookups usually feel instant, so collisions get ignored
-
-This chapter turns those hidden costs into visible mental models.
-
-## Java Creator Mindset
-
-- `ArrayList` index lookup is fast because elements live in a backing array
-- growth is amortized: most appends are cheap, occasional resizes copy old elements
-- `HashMap` lookup is fast on average when hashes spread keys well
-- collisions do not break correctness if `equals` and `hashCode` are implemented properly, but they affect lookup work
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Final Java Direction
+## Fix
 
-- `ArrayList` index lookup is fast because elements live in a backing array
-- growth is amortized: most appends are cheap, occasional resizes copy old elements
-- `HashMap` lookup is fast on average when hashes spread keys well
-- collisions do not break correctness if `equals` and `hashCode` are implemented properly, but they affect lookup work
-
-## Study Order
+Run the topics in this order:
 
 1. Run [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java)
 2. Run [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java)
 
-## What To Notice
+What to observe:
 
-### Interview Focus
+- Which topic shows the failure first: [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java).
+- Which topic narrows the rule: [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java).
+- Which topic shows the cleaner abstraction: [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java).
 
-Q: Why is `ArrayList` append called amortized `O(1)`?  
-A: Because most appends are cheap, but occasional growth resizes and copies old elements.
-
-Q: Why can `HashMap` performance degrade?  
-A: Because collisions increase the amount of work inside buckets when many keys land together.
-
-## Mental Model
+## Improvement
 
 Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-## Common Mistakes
+After this chapter, you should be able to explain why Collections Internals And Tradeoffs exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Rule
 
-## Practice
+👉 Rule: Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-### Mini Case Study
+## Try this
 
-Imagine an order dashboard.
-
-- new orders arrive at the end of a list
-- the UI often reads by index for pagination
-- user sessions are stored by ID in a map
-
-This looks simple until scale increases. Then growth cost and collision behavior start mattering.
-
-## Summary
-
-- `ArrayList` index lookup is fast because elements live in a backing array
-- growth is amortized: most appends are cheap, occasional resizes copy old elements
-- `HashMap` lookup is fast on average when hashes spread keys well
-- collisions do not break correctness if `equals` and `hashCode` are implemented properly, but they affect lookup work
-
-## Next Chapter
-
-Move to [Sorting Searching And Binary Search Learning Kit](../ch03_sorting_searching_and_binary_search/ChapterGuide.md) after this chapter.
+- Run [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java) and note the first thing that breaks.
+- Run [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) and write down what the rule becomes.
+- Run [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) and compare the result with the naive approach.

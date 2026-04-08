@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import OrderedDict
 from pathlib import Path
 import re
+import subprocess
 
 ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOT = ROOT / "src/main/java/com/learning/javamissing"
@@ -66,8 +67,8 @@ def split_front_matter(text: str) -> tuple[str, str]:
     return "", text
 
 
-def parse_markdown(path: Path) -> tuple[str, str, str, OrderedDict[str, str]]:
-    front_matter, body = split_front_matter(path.read_text())
+def parse_markdown_text(text: str) -> tuple[str, str, str, OrderedDict[str, str]]:
+    front_matter, body = split_front_matter(text)
     lines = body.splitlines()
 
     title = ""
@@ -104,6 +105,25 @@ def parse_markdown(path: Path) -> tuple[str, str, str, OrderedDict[str, str]]:
     )
 
 
+def parse_markdown(path: Path) -> tuple[str, str, str, OrderedDict[str, str]]:
+    return parse_markdown_text(path.read_text())
+
+
+def read_git_head_text(path: Path) -> str:
+    relative = path.relative_to(ROOT).as_posix()
+    try:
+        result = subprocess.run(
+            ["git", "show", f"HEAD:{relative}"],
+            cwd=ROOT,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        return ""
+    return result.stdout
+
+
 def first_non_empty(*values: str) -> str:
     for value in values:
         if value and value.strip():
@@ -136,6 +156,10 @@ def camel_to_title(value: str) -> str:
     value = re.sub(r"([a-z0-9])([A-Z])", r"\1 \2", value)
     value = value.replace("_", " ").strip()
     return re.sub(r"\b(\w)", lambda match: match.group(1).upper(), value)
+
+
+def normalize_key(value: str) -> str:
+    return re.sub(r"[^a-z0-9]+", "", value.lower())
 
 
 def topic_title(topic_dir: Path) -> str:
@@ -339,6 +363,20 @@ def bullet_excerpt(text: str, limit: int = 3) -> str:
     if not bullets:
         return ""
     return bullet_list(bullets[:limit])
+
+
+def usable_paragraph(text: str) -> str:
+    compact = compact_text(text)
+    if not compact:
+        return ""
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    if len(lines) > 1:
+        return ""
+    if any(token in compact for token in ("```", "mermaid", "|")):
+        return ""
+    if compact.startswith(("-", "*", "1.")):
+        return ""
+    return compact
 
 
 def pick_printed_line(lines: list[str], prefixes: list[str]) -> str:
@@ -752,6 +790,39 @@ def chapter_defaults(title: str) -> dict[str, str]:
     }
 
 
+def chapter_flow_defaults(title: str) -> dict[str, str]:
+    subject = title.replace(" Learning Kit", "").strip().lower() if title else "this chapter"
+    return {
+        "Problem": (
+            f"This chapter shows what breaks when {subject} is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap."
+        ),
+        "Naive Approach": (
+            "The naive move is to pick the first obvious API and assume it will stay correct in every case."
+        ),
+        "Failure": (
+            "That breaks when the same assumption stops holding: ordering changes, shared state leaks, or a runtime rule is ignored."
+        ),
+        "Fix": (
+            "Run the topics in order and observe how each one narrows the failure."
+        ),
+        "Improvement": (
+            f"After this chapter, you can explain the rule behind {subject} and choose the right approach with less guesswork."
+        ),
+        "What stays stable": (
+            "The underlying pressure stays the same: correctness still depends on the rule being visible and testable."
+        ),
+        "What changes": (
+            "The API shape, ownership model, or execution behavior changes from topic to topic."
+        ),
+        "Rule": (
+            "Keep the design correct by making the important rule explicit and hard to misuse."
+        ),
+        "Try this": (
+            "Run the first topic, change one assumption, and compare it with the next example."
+        ),
+    }
+
+
 def section_defaults(title: str) -> dict[str, str]:
     subject = title.lower() if title else "this section"
     return {
@@ -966,7 +1037,7 @@ def topic_required_sections(
     )
 
 
-def chapter_topic_entries(chapter_dir: Path) -> list[dict[str, str]]:
+def chapter_topic_entries(chapter_dir: Path, sections: OrderedDict[str, str] | None = None) -> list[dict[str, str]]:
     entries: list[dict[str, str]] = []
     for topic_dir in sorted(chapter_dir.glob("topics/*")):
         if not topic_dir.is_dir():
@@ -981,7 +1052,33 @@ def chapter_topic_entries(chapter_dir: Path) -> list[dict[str, str]]:
                 "link_path": f"topics/{topic_dir.name}/{java_file.name}",
             }
         )
-    return entries
+    if not sections:
+        return entries
+
+    study_order = sections.get("Study Order", "")
+    if not study_order.strip():
+        return entries
+
+    ordered: list[dict[str, str]] = []
+    remaining = entries.copy()
+    order_labels = re.findall(r"\[([^\]]+)\]\(", study_order)
+    for label in order_labels:
+        label_key = normalize_key(label)
+        match_index = next(
+            (
+                index
+                for index, entry in enumerate(remaining)
+                if normalize_key(entry["title"]) == label_key
+                or normalize_key(entry["link_label"].removesuffix(".java")) == label_key
+            ),
+            None,
+        )
+        if match_index is None:
+            continue
+        ordered.append(remaining.pop(match_index))
+
+    ordered.extend(remaining)
+    return ordered
 
 
 def section_chapter_entries(section_dir: Path) -> list[dict[str, str]]:
@@ -1038,193 +1135,131 @@ def normalize_topic(path: Path) -> None:
 
 
 def normalize_chapter(path: Path) -> None:
-    front_matter, title, intro, sections = parse_markdown(path)
+    source_text = read_git_head_text(path) or path.read_text()
+    front_matter, title, intro, sections = parse_markdown_text(source_text)
     chapter_dir = path.parent
     if not title:
         title = f"{humanize_slug(chapter_dir.name)} Learning Kit"
 
-    topic_entries = chapter_topic_entries(chapter_dir)
-    topics_block = "\n".join(
-        f"{index}. Run [{entry['title']}]({entry['link_path']})"
-        for index, entry in enumerate(topic_entries, 1)
+    topic_entries = chapter_topic_entries(chapter_dir, sections)
+    topic_links = [f"[{entry['title']}]({entry['link_path']})" for entry in topic_entries]
+    study_order = numbered_list([f"Run {link}" for link in topic_links])
+    if not study_order:
+        study_order = "No runnable topic files were found for this chapter."
+
+    defaults = chapter_flow_defaults(title)
+    first_topic = topic_links[0] if topic_links else "the first topic"
+    middle_topic = topic_links[len(topic_links) // 2] if topic_links else "the middle topic"
+    last_topic = topic_links[-1] if topic_links else "the last topic"
+
+    problem = first_non_empty(
+        usable_paragraph(sections.get("Why This Chapter Exists", "")),
+        usable_paragraph(sections.get("Why This Chapter Matters", "")),
+        usable_paragraph(intro),
+        usable_paragraph(sections.get("What Problem This Chapter Solves", "")),
+        usable_paragraph(sections.get("The Problem", "")),
+        defaults["Problem"],
     )
-    if not topics_block:
-        topics_block = "No runnable topic files were found for this chapter."
+    naive = first_non_empty(
+        usable_paragraph(sections.get("Naive Attempt", "")),
+        usable_paragraph(sections.get("How You Might Invent It", "")),
+        usable_paragraph(sections.get("Compare With", "")),
+        defaults["Naive Approach"],
+    )
+    failure = bullet_excerpt(
+        first_non_empty(
+            sections.get("Why It Breaks", ""),
+            sections.get("Common Confusion", ""),
+            sections.get("Avoid This Pattern When", ""),
+            sections.get("Avoid This Approach When", ""),
+            sections.get("Avoid Wrong Expectations", ""),
+            sections.get("OCJP Traps", ""),
+            defaults["Failure"],
+        ),
+        3,
+    )
+    if not failure:
+        failure = bullet_list(
+            [
+                "The naive choice works for a tiny case and fails when the assumption changes.",
+                "The failure is usually visible in order, ownership, or cleanup.",
+                "The bug matters because the code still looks reasonable at a glance.",
+            ]
+        )
 
-    next_chapter = ""
-    sibling_chapters = [path for path in sorted(chapter_dir.parent.glob("ch*")) if path.is_dir()]
-    try:
-        index = sibling_chapters.index(chapter_dir)
-    except ValueError:
-        index = -1
-    if 0 <= index < len(sibling_chapters) - 1:
-        next_dir = sibling_chapters[index + 1]
-        next_title = chapter_title(next_dir)
-        next_chapter = f"Move to [{next_title}](../{next_dir.name}/ChapterGuide.md) after this chapter."
+    fix = join_blocks(
+        "Run the topics in this order:",
+        study_order,
+        "What to observe:",
+        bullet_list(
+            [
+                f"Which topic shows the failure first: {first_topic}.",
+                f"Which topic narrows the rule: {middle_topic}.",
+                f"Which topic shows the cleaner abstraction: {last_topic}.",
+            ]
+        ),
+    )
 
-    required = OrderedDict(
+    improvement = join_blocks(
+        first_non_empty(
+            usable_paragraph(sections.get("Final Java Direction", "")),
+            usable_paragraph(sections.get("What To Notice", "")),
+            usable_paragraph(sections.get("Mental Model", "")),
+            usable_paragraph(sections.get("Summary", "")),
+            defaults["Improvement"],
+        ),
+        f"After this chapter, you should be able to explain why {humanize_slug(chapter_dir.name)} exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.",
+    )
+
+    what_stays_stable = bullet_list(
         [
-            (
-                "Why This Chapter Exists",
-                first_non_empty(
-                    sections.get("Why This Chapter Exists", ""),
-                    sections.get("Why This Chapter Matters", ""),
-                    intro,
-                    sections.get("What Problem This Chapter Solves", ""),
-                    sections.get("The Problem", ""),
-                    chapter_defaults(title)["Why This Chapter Exists"],
-                ),
-            ),
-            (
-                "The Pain Before It",
-                first_non_empty(
-                    sections.get("The Pain Before It", ""),
-                    sections.get("The Problem", ""),
-                    sections.get("What Problem This Chapter Solves", ""),
-                    sections.get("Real Problems This Chapter Solves", ""),
-                    chapter_defaults(title)["The Pain Before It"],
-                ),
-            ),
-            (
-                "Java Creator Mindset",
-                first_non_empty(
-                    sections.get("Java Creator Mindset", ""),
-                    sections.get("Core Ideas", ""),
-                    sections.get("What This Chapter Covers", ""),
-                    sections.get("Senior Engineer Lens", ""),
-                    chapter_defaults(title)["Java Creator Mindset"],
-                ),
-            ),
-            (
-                "How You Might Invent It",
-                first_non_empty(
-                    sections.get("How You Might Invent It", ""),
-                    sections.get("The Story", ""),
-                    sections.get("Concept Map", ""),
-                    sections.get("Visual Map", ""),
-                    sections.get("Learning Flow", ""),
-                    sections.get("Mental Model", ""),
-                    chapter_defaults(title)["How You Might Invent It"],
-                ),
-            ),
-            (
-                "Naive Attempt",
-                first_non_empty(
-                    sections.get("Naive Attempt", ""),
-                    sections.get("Compare With", ""),
-                    sections.get("Common Confusion", ""),
-                    sections.get("Avoid This Mistake", ""),
-                    chapter_defaults(title)["Naive Attempt"],
-                ),
-            ),
-            (
-                "Why It Breaks",
-                first_non_empty(
-                    sections.get("Why It Breaks", ""),
-                    sections.get("Common Confusion", ""),
-                    sections.get("Avoid This Pattern When", ""),
-                    sections.get("Avoid This Approach When", ""),
-                    sections.get("Avoid Wrong Expectations", ""),
-                    sections.get("Avoid Jumping Ahead When", ""),
-                    sections.get("OCJP Traps", ""),
-                    chapter_defaults(title)["Why It Breaks"],
-                ),
-            ),
-            (
-                "Final Java Direction",
-                first_non_empty(
-                    sections.get("Final Java Direction", ""),
-                    sections.get("Core Ideas", ""),
-                    sections.get("What This Chapter Covers", ""),
-                    sections.get("Quick Summary", ""),
-                    sections.get("Deep Dive", ""),
-                    chapter_defaults(title)["Final Java Direction"],
-                ),
-            ),
-            ("Study Order", topics_block),
-            (
-                "What To Notice",
-                first_non_empty(
-                    sections.get("What To Notice", ""),
-                    sections.get("What To Look For", ""),
-                    sections.get("Interview Focus", ""),
-                    sections.get("Decision Chart", ""),
-                    sections.get("Compare With", ""),
-                    chapter_defaults(title)["What To Notice"],
-                ),
-            ),
-            (
-                "Mental Model",
-                first_non_empty(
-                    sections.get("Mental Model", ""),
-                    sections.get("Right Mental Model", ""),
-                    sections.get("Concept Map", ""),
-                    sections.get("Visual Map", ""),
-                    sections.get("Deep Dive", ""),
-                    chapter_defaults(title)["Mental Model"],
-                ),
-            ),
-            (
-                "Common Mistakes",
-                first_non_empty(
-                    sections.get("Common Mistakes", ""),
-                    sections.get("Wrong Mental Model", ""),
-                    sections.get("Common Confusion", ""),
-                    sections.get("Avoid This Mistake", ""),
-                    sections.get("OCJP Traps", ""),
-                    chapter_defaults(title)["Common Mistakes"],
-                ),
-            ),
-            (
-                "Tradeoffs",
-                first_non_empty(
-                    sections.get("Tradeoffs", ""),
-                    sections.get("Compare With", ""),
-                    sections.get("What The Compiler Checks", ""),
-                    sections.get("What Happens At Runtime", ""),
-                    sections.get("Senior Engineer Lens", ""),
-                    chapter_defaults(title)["Tradeoffs"],
-                ),
-            ),
-            (
-                "Use / Avoid",
-                first_non_empty(
-                    sections.get("Use / Avoid", ""),
-                    sections.get("When To Use / When Not To Use", ""),
-                    sections.get("Use This Chapter When", ""),
-                    sections.get("Use This Pattern When", ""),
-                    sections.get("When To Use", ""),
-                    sections.get("When Not To Use", ""),
-                    chapter_defaults(title)["Use / Avoid"],
-                ),
-            ),
-            (
-                "Practice",
-                first_non_empty(
-                    sections.get("Practice", ""),
-                    sections.get("Quick Quiz", ""),
-                    sections.get("Mini Case Study", ""),
-                    sections.get("Small Case Study", ""),
-                    chapter_defaults(title)["Practice"],
-                ),
-            ),
-            (
-                "Summary",
-                first_non_empty(
-                    sections.get("Summary", ""),
-                    sections.get("After Reading This Chapter, You Should Know", ""),
-                    sections.get("Quick Summary", ""),
-                    chapter_defaults(title)["Summary"],
-                ),
-            ),
+            defaults["What stays stable"],
+            "The chapter keeps the same learning loop: run, observe, change one thing, and compare.",
+            "The real pressure stays the same even when the API changes.",
         ]
     )
 
-    appendix = OrderedDict()
-    if next_chapter:
-        appendix["Next Chapter"] = next_chapter
+    what_changes = bullet_list(
+        [
+            defaults["What changes"],
+            "The API shape changes from topic to topic.",
+            "The failure mode changes when one assumption is removed.",
+            "The abstraction cost changes as the fix becomes stronger.",
+        ]
+    )
 
-    write_markdown(path, front_matter, title, required, appendix)
+    rule = first_sentence(
+        first_non_empty(
+            usable_paragraph(sections.get("Final Java Direction", "")),
+            usable_paragraph(sections.get("Mental Model", "")),
+            usable_paragraph(sections.get("Summary", "")),
+            defaults["Rule"],
+        )
+    )
+
+    try_this = bullet_list(
+        [
+            f"Run {first_topic} and note the first thing that breaks.",
+            f"Run {middle_topic} and write down what the rule becomes.",
+            f"Run {last_topic} and compare the result with the naive approach.",
+        ]
+    )
+
+    required = OrderedDict(
+        [
+            ("Problem", problem),
+            ("Naive Approach", naive),
+            ("Failure", failure),
+            ("Fix", fix),
+            ("Improvement", improvement),
+            ("What stays stable", what_stays_stable),
+            ("What changes", what_changes),
+            ("Rule", f"👉 Rule: {rule}"),
+            ("Try this", try_this),
+        ]
+    )
+
+    write_markdown(path, front_matter, title, required)
 
 
 def normalize_section(path: Path) -> None:

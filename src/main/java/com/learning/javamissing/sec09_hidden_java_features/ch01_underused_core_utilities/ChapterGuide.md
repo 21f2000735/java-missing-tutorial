@@ -1,61 +1,54 @@
 # Underused Core Utilities Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 Many teams keep writing verbose collection setup even though modern Java already provides compact factory methods and safe copy helpers.
 
-## The Pain Before It
-
-Before learners build a mental model for underused core utilities, the APIs feel like isolated facts instead of answers to one connected problem.
-
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around underused Core Utilities, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Final Java Direction
+## Fix
 
-Read the chapter as a small set of related ideas around underused Core Utilities, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java)
 
-## What To Notice
+What to observe:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+- Which topic shows the failure first: [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java).
+- Which topic narrows the rule: [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java).
+- Which topic shows the cleaner abstraction: [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java).
 
-## Mental Model
+## Improvement
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Read the chapter as a small set of related ideas around underused Core Utilities, not as isolated trivia.
 
-## Common Mistakes
+After this chapter, you should be able to explain why Underused Core Utilities exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Rule
 
-## Practice
+👉 Rule: Read the chapter as a small set of related ideas around underused Core Utilities, not as isolated trivia.
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+## Try this
 
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind underused core utilities and connect them back to the runnable examples.
+- Run [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java) and note the first thing that breaks.
+- Run [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java) and write down what the rule becomes.
+- Run [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java) and compare the result with the naive approach.

@@ -1,80 +1,55 @@
 # Data Grouping And Aggregation Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter is about moving from raw rows to business answers like totals, counts, grouped maps, and summaries.
 
-## The Pain Before It
-
-Decision-makers rarely want:
-
-- every row exactly as stored
-
-They usually want:
-
-- sales by category
-- total revenue by region
-- pass/fail buckets
-- counts by status
-
-That means grouping and aggregation.
-
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around data Grouping And Aggregation, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
 - the result does not need grouping at all
 - the pipeline becomes more complex than a direct loop for a tiny dataset
 
-## Final Java Direction
+## Fix
 
-Read the chapter as a small set of related ideas around data Grouping And Aggregation, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Grouping Sales](topics/grouping_sales/GroupingSales.java)
 
-## What To Notice
+What to observe:
 
-- the grouping key answers “by what dimension?”
-- the aggregation answers “what final fact do we want?”
-- collectors make the shape of the final result explicit
+- Which topic shows the failure first: [Grouping Sales](topics/grouping_sales/GroupingSales.java).
+- Which topic narrows the rule: [Grouping Sales](topics/grouping_sales/GroupingSales.java).
+- Which topic shows the cleaner abstraction: [Grouping Sales](topics/grouping_sales/GroupingSales.java).
 
-## Mental Model
+## Improvement
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Read the chapter as a small set of related ideas around data Grouping And Aggregation, not as isolated trivia.
 
-## Common Mistakes
+After this chapter, you should be able to explain why Data Grouping And Aggregation exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-- the result does not need grouping at all
-- the pipeline becomes more complex than a direct loop for a tiny dataset
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-### Use It When
+## Rule
 
-- you need maps of grouped values
-- you need totals, counts, or summaries from many rows
-- the business question starts with “by category,” “by status,” or “by region”
+👉 Rule: Read the chapter as a small set of related ideas around data Grouping And Aggregation, not as isolated trivia.
 
-## Practice
+## Try this
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
-
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind data grouping and aggregation and connect them back to the runnable examples.
+- Run [Grouping Sales](topics/grouping_sales/GroupingSales.java) and note the first thing that breaks.
+- Run [Grouping Sales](topics/grouping_sales/GroupingSales.java) and write down what the rule becomes.
+- Run [Grouping Sales](topics/grouping_sales/GroupingSales.java) and compare the result with the naive approach.

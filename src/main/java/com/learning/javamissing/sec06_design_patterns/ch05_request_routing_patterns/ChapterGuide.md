@@ -1,106 +1,56 @@
 # Request Routing Patterns
 
-## Why This Chapter Exists
+## Problem
 
 This chapter focuses on chain of responsibility because request processing is where design patterns stop feeling theoretical very quickly.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for request routing patterns, the APIs feel like isolated facts instead of answers to one connected problem.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around request Routing Patterns, not as isolated trivia.
-
-## How You Might Invent It
-
-Checkout validation starts with one rule:
-
-- cart must not be empty
-
-Then more rules arrive:
-
-- address must be present
-- payment must be ready
-- inventory may need to be checked
-- user may need authorization
-
-One long validation method becomes noisy, hard to reorder, and hard to extend.
-
-## Naive Attempt
-
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| one method | validation is short and stable | rules will grow and change independently |
-| chain of responsibility | stages may stop early or be reordered | every step must always run in one fixed batch |
-
-## Why It Breaks
+## Failure
 
 - the rules are tiny and very stable
 - one short method is still easier to explain
 - handlers secretly depend on each other and stop being independent
 
-## Final Java Direction
+## Fix
 
-Read the chapter as a small set of related ideas around request Routing Patterns, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java)
 
-## What To Notice
+What to observe:
 
-- each handler owns one decision
-- the request moves in sequence
-- the chain may stop early when a rule fails
+- Which topic shows the failure first: [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java).
+- Which topic narrows the rule: [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java).
+- Which topic shows the cleaner abstraction: [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java).
 
-### Compare With
+## Improvement
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| one method | validation is short and stable | rules will grow and change independently |
-| chain of responsibility | stages may stop early or be reordered | every step must always run in one fixed batch |
+Read the chapter as a small set of related ideas around request Routing Patterns, not as isolated trivia.
 
-### Interview Focus
+After this chapter, you should be able to explain why Request Routing Patterns exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Q: What problem does chain of responsibility solve?  
-A: It separates request handling into small handlers so rules can evolve independently and the request can move stage by stage.
+## What stays stable
 
-Q: What is the most common misuse?  
-A: Turning a very small fixed validation method into many handlers that add ceremony without adding flexibility.
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-## Mental Model
+## What changes
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-## Common Mistakes
+## Rule
 
-- the rules are tiny and very stable
-- one short method is still easier to explain
-- handlers secretly depend on each other and stop being independent
+👉 Rule: Read the chapter as a small set of related ideas around request Routing Patterns, not as isolated trivia.
 
-## Tradeoffs
+## Try this
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| one method | validation is short and stable | rules will grow and change independently |
-| chain of responsibility | stages may stop early or be reordered | every step must always run in one fixed batch |
-
-## Use / Avoid
-
-### Use It When
-
-- request handling is a series of independent checks
-- you need to insert, remove, or reorder stages over time
-- middleware or validation should read as a pipeline
-
-## Practice
-
-### Case Study
-
-A servlet filter chain, Spring interceptor chain, or checkout validation pipeline all share the same basic pressure:  
-small stages, local decisions, and forward movement until something fails or the request is done.
-
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind request routing patterns and connect them back to the runnable examples.
+- Run [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) and note the first thing that breaks.
+- Run [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) and write down what the rule becomes.
+- Run [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) and compare the result with the naive approach.

@@ -1,199 +1,58 @@
 # Java Basics Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-- variables and type choice
-- control flow
-- writing small clear methods
-- basic OCJP traps
-- basic interview-style answers
+This chapter shows what breaks when java basics is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for java basics, the APIs feel like isolated facts instead of answers to one connected problem.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
-
-### Variables
-
-- choose names that explain the value
-- use exact numeric types when correctness matters
-- use `final` when reassignment should not happen
-
-### Control Flow
-
-- prefer simple branches first
-- use loops that match the problem
-- avoid deeply nested logic when guard clauses or simpler conditions work
-
-### Methods
-
-- one method should do one clear thing
-- prefer return values over hidden side effects
-- method names should explain intent
-
-## How You Might Invent It
-
-```mermaid
-mindmap
-  root((Java Basics))
-    Variables
-      primitive types
-      reference types
-      final
-      naming
-    Control Flow
-      if else
-      loops
-      switch
-      branch clarity
-    Methods
-      parameters
-      return values
-      side effects
-      small units
-```
-
-## Naive Attempt
-
-- variable vs value:
-  a variable is the name, the value is the data stored inside it
-- `if/else` vs loop:
-  `if/else` chooses once, a loop repeats work
-- method vs print statement:
-  a method can return reusable logic, a print statement only shows text
-
-## Why It Breaks
+## Failure
 
 - arithmetic on `byte`, `short`, and `char` promotes to `int`
 - `switch` coverage rules matter
 - Java is pass-by-value, even for object references
-- `while` and `do-while` do not behave the same
 
-## Final Java Direction
+## Fix
 
-### Variables
-
-- choose names that explain the value
-- use exact numeric types when correctness matters
-- use `final` when reassignment should not happen
-
-### Control Flow
-
-- prefer simple branches first
-- use loops that match the problem
-- avoid deeply nested logic when guard clauses or simpler conditions work
-
-### Methods
-
-- one method should do one clear thing
-- prefer return values over hidden side effects
-- method names should explain intent
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Designing Small Methods](topics/designing_small_methods/DesigningSmallMethods.java)
 2. Run [Making Decisions And Repeating Work](topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java)
 3. Run [Storing And Naming Values](topics/storing_and_naming_values/StoringAndNamingValues.java)
 
-## What To Notice
+What to observe:
 
-### Compare With
+- Which topic shows the failure first: [Designing Small Methods](topics/designing_small_methods/DesigningSmallMethods.java).
+- Which topic narrows the rule: [Making Decisions And Repeating Work](topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java).
+- Which topic shows the cleaner abstraction: [Storing And Naming Values](topics/storing_and_naming_values/StoringAndNamingValues.java).
 
-- variable vs value:
-  a variable is the name, the value is the data stored inside it
-- `if/else` vs loop:
-  `if/else` chooses once, a loop repeats work
-- method vs print statement:
-  a method can return reusable logic, a print statement only shows text
-
-### Senior Lens
-
-- naming is not cosmetic; it controls how quickly code can be reviewed under pressure
-- exact types reduce hidden defects, especially around money, rounding, and API contracts
-- small methods are easier to test, inline mentally, and evolve safely
-- basic control-flow clarity matters more in large codebases than clever syntax does
-
-### Decision Guide
-
-```mermaid
-flowchart TD
-  A[Need to store a value] --> B{Can it change?}
-  B -->|No| C[Use final]
-  B -->|Yes| D[Use a mutable local variable]
-  D --> E{Is the logic repeated?}
-  E -->|Yes| F[Extract a small method]
-  E -->|No| G[Keep the code local and simple]
-```
-
-## Mental Model
-
-```mermaid
-mindmap
-  root((Java Basics))
-    Variables
-      primitive types
-      reference types
-      final
-      naming
-    Control Flow
-      if else
-      loops
-      switch
-      branch clarity
-    Methods
-      parameters
-      return values
-      side effects
-      small units
-```
-
-## Common Mistakes
-
-- arithmetic on `byte`, `short`, and `char` promotes to `int`
-- `switch` coverage rules matter
-- Java is pass-by-value, even for object references
-- `while` and `do-while` do not behave the same
-
-## Tradeoffs
-
-- variable vs value:
-  a variable is the name, the value is the data stored inside it
-- `if/else` vs loop:
-  `if/else` chooses once, a loop repeats work
-- method vs print statement:
-  a method can return reusable logic, a print statement only shows text
-
-- naming is not cosmetic; it controls how quickly code can be reviewed under pressure
-- exact types reduce hidden defects, especially around money, rounding, and API contracts
-- small methods are easier to test, inline mentally, and evolve safely
-- basic control-flow clarity matters more in large codebases than clever syntax does
-
-## Use / Avoid
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
-
-## Practice
-
-1. Why does `byte c = a + b;` fail without a cast?
-2. When would you use `final` on a local variable?
-3. Why might a loop be clearer than a stream for very basic branching logic?
-4. Why is returning a value often better than printing inside a method?
-
-### Mini Case Study
-
-Imagine a simple student marks program.
-
-- variables store marks and names
-- control flow decides pass or fail
-- methods calculate total marks and average
-
-This is why Java basics matter. Larger programs still depend on these same small ideas.
-
-## Summary
+## Improvement
 
 After this chapter, you should be able to explain the main decisions behind java basics and connect them back to the runnable examples.
 
-## Next Chapter
+After this chapter, you should be able to explain why Java Basics exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Move to [Classes And Objects Learning Kit](../ch02_classes_and_objects/ChapterGuide.md) after this chapter.
+## What stays stable
+
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+
+## Rule
+
+👉 Rule: After this chapter, you should be able to explain the main decisions behind java basics and connect them back to the runnable examples.
+
+## Try this
+
+- Run [Designing Small Methods](topics/designing_small_methods/DesigningSmallMethods.java) and note the first thing that breaks.
+- Run [Making Decisions And Repeating Work](topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java) and write down what the rule becomes.
+- Run [Storing And Naming Values](topics/storing_and_naming_values/StoringAndNamingValues.java) and compare the result with the naive approach.

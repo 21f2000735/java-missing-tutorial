@@ -1,81 +1,55 @@
 # Data Filtering And Mapping Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter is about the most common transformation job in business code: keep the records you need, then reshape them into the result the caller actually wants.
 
-## The Pain Before It
-
-Raw input is rarely the final answer.
-
-You usually need to:
-
-- remove the rows that do not matter
-- keep only the fields you care about
-- return a simpler result than the original data model
-
-That is filtering plus mapping.
-
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around data Filtering And Mapping, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
 - the transformation is stateful and clearer with a loop
 - you are filtering and mapping so aggressively that the pipeline becomes harder to read than plain code
 
-## Final Java Direction
+## Fix
 
-Read the chapter as a small set of related ideas around data Filtering And Mapping, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Filtering Orders](topics/filtering_orders/FilteringOrders.java)
 
-## What To Notice
+What to observe:
 
-- filter decides what stays
-- map decides what shape the result takes
-- the final answer should match the business need, not the original input structure
+- Which topic shows the failure first: [Filtering Orders](topics/filtering_orders/FilteringOrders.java).
+- Which topic narrows the rule: [Filtering Orders](topics/filtering_orders/FilteringOrders.java).
+- Which topic shows the cleaner abstraction: [Filtering Orders](topics/filtering_orders/FilteringOrders.java).
 
-## Mental Model
+## Improvement
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Read the chapter as a small set of related ideas around data Filtering And Mapping, not as isolated trivia.
 
-## Common Mistakes
+After this chapter, you should be able to explain why Data Filtering And Mapping exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-- the transformation is stateful and clearer with a loop
-- you are filtering and mapping so aggressively that the pipeline becomes harder to read than plain code
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-### Use It When
+## Rule
 
-- you have raw records and need a smaller answer
-- the result type should be simpler than the input type
-- you want transformation code to read like a business rule
+👉 Rule: Read the chapter as a small set of related ideas around data Filtering And Mapping, not as isolated trivia.
 
-## Practice
+## Try this
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
-
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind data filtering and mapping and connect them back to the runnable examples.
-
-## Next Chapter
-
-Move to [Data Grouping And Aggregation Learning Kit](../ch04_data_grouping_and_aggregation/ChapterGuide.md) after this chapter.
+- Run [Filtering Orders](topics/filtering_orders/FilteringOrders.java) and note the first thing that breaks.
+- Run [Filtering Orders](topics/filtering_orders/FilteringOrders.java) and write down what the rule becomes.
+- Run [Filtering Orders](topics/filtering_orders/FilteringOrders.java) and compare the result with the naive approach.

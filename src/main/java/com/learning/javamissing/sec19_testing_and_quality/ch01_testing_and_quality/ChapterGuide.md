@@ -1,186 +1,56 @@
 # Testing And Quality Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Without tests, teams usually suffer from:
+This chapter shows what breaks when testing and quality is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-- fear of changing code
-- hidden regressions
-- unclear business rules
-- duplicate manual checking
+## Naive Approach
 
-This chapter focuses on small, readable, repeatable verification.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## The Pain Before It
+## Failure
 
-Without tests, teams usually suffer from:
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-- fear of changing code
-- hidden regressions
-- unclear business rules
-- duplicate manual checking
+## Fix
 
-This chapter focuses on small, readable, repeatable verification.
-
-## Java Creator Mindset
-
-### Designing Tests
-
-- start from the business rule, not from framework syntax
-- a good test states expected and actual behavior clearly
-
-### JUnit Basics
-
-- JUnit gives structure to setup, execution, and assertion
-- the real value comes from precise assertions and readable test names
-
-### Parameterized Tests
-
-- parameterized tests help when the same rule must hold for many inputs
-- they reduce repetition while preserving clarity
-
-## How You Might Invent It
-
-```mermaid
-mindmap
-  root((Testing and Quality))
-    business rule
-    expected result
-    JUnit test
-    parameterized test
-    regression safety
-```
-
-## Naive Attempt
-
-- manual checking vs automated test:
-  manual checking is slow and inconsistent, automated tests are repeatable
-- one giant test vs focused tests:
-  focused tests fail more clearly and are easier to maintain
-- copy-paste tests vs parameterized tests:
-  parameterized tests work well when one rule is evaluated against multiple cases
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-### Designing Tests
-
-- start from the business rule, not from framework syntax
-- a good test states expected and actual behavior clearly
-
-### JUnit Basics
-
-- JUnit gives structure to setup, execution, and assertion
-- the real value comes from precise assertions and readable test names
-
-### Parameterized Tests
-
-- parameterized tests help when the same rule must hold for many inputs
-- they reduce repetition while preserving clarity
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Checking One Rule With Many Inputs](topics/checking_one_rule_with_many_inputs/CheckingOneRuleWithManyInputs.java)
 2. Run [Designing Tests Around Business Rules](topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java)
 3. Run [Writing Readable JUnit Tests](topics/writing_readable_junit_tests/WritingReadableJUnitTests.java)
 
-## What To Notice
+What to observe:
 
-### Compare With
+- Which topic shows the failure first: [Checking One Rule With Many Inputs](topics/checking_one_rule_with_many_inputs/CheckingOneRuleWithManyInputs.java).
+- Which topic narrows the rule: [Designing Tests Around Business Rules](topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java).
+- Which topic shows the cleaner abstraction: [Writing Readable JUnit Tests](topics/writing_readable_junit_tests/WritingReadableJUnitTests.java).
 
-- manual checking vs automated test:
-  manual checking is slow and inconsistent, automated tests are repeatable
-- one giant test vs focused tests:
-  focused tests fail more clearly and are easier to maintain
-- copy-paste tests vs parameterized tests:
-  parameterized tests work well when one rule is evaluated against multiple cases
+## Improvement
 
-### Interview Focus
+After this chapter, you can explain the rule behind testing and quality and choose the right approach with less guesswork.
 
-Q: What makes a test high quality?  
-A: It is readable, focused, repeatable, and clearly tied to a business rule.
+After this chapter, you should be able to explain why Testing And Quality exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Q: When is a parameterized test better than several copied tests?  
-A: When the same behavior should be checked against many input combinations.
+## What stays stable
 
-Q: Why is test design more important than framework syntax?  
-A: Because poor tests remain poor even if they use a good tool.
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-## Mental Model
+## What changes
 
-```mermaid
-mindmap
-  root((Testing and Quality))
-    business rule
-    expected result
-    JUnit test
-    parameterized test
-    regression safety
-```
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-## Common Mistakes
+## Rule
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
 
-## Tradeoffs
+## Try this
 
-- manual checking vs automated test:
-  manual checking is slow and inconsistent, automated tests are repeatable
-- one giant test vs focused tests:
-  focused tests fail more clearly and are easier to maintain
-- copy-paste tests vs parameterized tests:
-  parameterized tests work well when one rule is evaluated against multiple cases
-
-## Use / Avoid
-
-### Use It When
-
-- write tests for business rules and failure-prone behavior
-- use JUnit when you need structured automated verification
-- use parameterized tests when many inputs exercise one rule
-
-### Avoid It When
-
-- do not write vague tests that only repeat implementation details
-- do not create huge assertion bundles that hide the failing behavior
-- do not parameterize tests so heavily that readability collapses
-
-## Practice
-
-1. Why should a test name describe behavior instead of only the method name?
-2. When does a parameterized test improve quality, and when can it hurt readability?
-3. Why is asserting a business rule stronger than only asserting that a method ran?
-
-### Mini Case Study
-
-A pricing service adds tax to an item price.
-
-- one test should verify the normal case
-- another should verify edge cases such as zero tax
-- if many tax rates are checked, parameterized tests reduce repetition
-
-That is exactly what the topic files in this chapter model.
-
-## Summary
-
-### Designing Tests
-
-- start from the business rule, not from framework syntax
-- a good test states expected and actual behavior clearly
-
-### JUnit Basics
-
-- JUnit gives structure to setup, execution, and assertion
-- the real value comes from precise assertions and readable test names
-
-### Parameterized Tests
-
-- parameterized tests help when the same rule must hold for many inputs
-- they reduce repetition while preserving clarity
-
-## Next Chapter
-
-Move to [JUnit 5 And Test Doubles Learning Kit](../ch02_junit5_and_test_doubles/ChapterGuide.md) after this chapter.
+- Run [Checking One Rule With Many Inputs](topics/checking_one_rule_with_many_inputs/CheckingOneRuleWithManyInputs.java) and note the first thing that breaks.
+- Run [Designing Tests Around Business Rules](topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java) and write down what the rule becomes.
+- Run [Writing Readable JUnit Tests](topics/writing_readable_junit_tests/WritingReadableJUnitTests.java) and compare the result with the naive approach.

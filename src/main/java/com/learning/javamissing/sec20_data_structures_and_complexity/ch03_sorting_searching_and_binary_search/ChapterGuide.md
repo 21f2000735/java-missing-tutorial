@@ -1,106 +1,55 @@
 # Sorting Searching And Binary Search Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Real systems often need repeated lookups and ordered output:
+This chapter shows what breaks when sorting searching and binary search is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-- sort invoices by amount
-- search a sorted list of IDs
-- answer range questions quickly
-
-Without a sorting/searching model, code either stays brute-force or uses binary search incorrectly on unsorted data.
-
-## The Pain Before It
-
-Real systems often need repeated lookups and ordered output:
-
-- sort invoices by amount
-- search a sorted list of IDs
-- answer range questions quickly
-
-Without a sorting/searching model, code either stays brute-force or uses binary search incorrectly on unsorted data.
-
-## Java Creator Mindset
-
-- sorting costs work now so later operations can become easier
-- binary search only works on sorted data
-- the value of sorting depends on how often you search or compare later
-
-## How You Might Invent It
+## Naive Approach
 
 Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-## Naive Attempt
+## Failure
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| unsorted scan | you search once or the data is tiny | you search repeatedly and can justify sorting first |
-| sort now | later lookups, paging, or ranking matter | the data is one-off and sorting adds unnecessary cost |
-| binary search | the data is sorted and random-access lookup is available | the data is unsorted or the structure does not support practical indexed access |
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Why It Breaks
+## Fix
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- sorting costs work now so later operations can become easier
-- binary search only works on sorted data
-- the value of sorting depends on how often you search or compare later
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Sorting Tradeoffs](topics/sorting_tradeoffs/SortingTradeoffs.java)
 2. Run [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java)
 
-## What To Notice
+What to observe:
 
-### Compare With
+- Which topic shows the failure first: [Sorting Tradeoffs](topics/sorting_tradeoffs/SortingTradeoffs.java).
+- Which topic narrows the rule: [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java).
+- Which topic shows the cleaner abstraction: [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java).
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| unsorted scan | you search once or the data is tiny | you search repeatedly and can justify sorting first |
-| sort now | later lookups, paging, or ranking matter | the data is one-off and sorting adds unnecessary cost |
-| binary search | the data is sorted and random-access lookup is available | the data is unsorted or the structure does not support practical indexed access |
-
-## Mental Model
+## Improvement
 
 Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-## Common Mistakes
+After this chapter, you should be able to explain why Sorting Searching And Binary Search exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| unsorted scan | you search once or the data is tiny | you search repeatedly and can justify sorting first |
-| sort now | later lookups, paging, or ranking matter | the data is one-off and sorting adds unnecessary cost |
-| binary search | the data is sorted and random-access lookup is available | the data is unsorted or the structure does not support practical indexed access |
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Rule
 
-## Practice
+👉 Rule: Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-### Mini Case Study
+## Try this
 
-Think about invoice data.
-
-- finance wants the cheapest invoices first
-- support wants to check whether one invoice ID exists
-- search operations happen repeatedly
-
-This is when paying an upfront sort cost can make later operations simpler and faster.
-
-## Summary
-
-- sorting costs work now so later operations can become easier
-- binary search only works on sorted data
-- the value of sorting depends on how often you search or compare later
-
-## Next Chapter
-
-Move to [Problem Solving Patterns Learning Kit](../ch04_problem_solving_patterns/ChapterGuide.md) after this chapter.
+- Run [Sorting Tradeoffs](topics/sorting_tradeoffs/SortingTradeoffs.java) and note the first thing that breaks.
+- Run [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) and write down what the rule becomes.
+- Run [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) and compare the result with the naive approach.

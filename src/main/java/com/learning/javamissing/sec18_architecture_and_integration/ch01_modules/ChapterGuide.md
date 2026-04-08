@@ -1,186 +1,56 @@
 # Java Modules Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-As a system grows, these problems appear:
+This chapter shows what breaks when java modules is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-- too many accidental dependencies
-- unclear public API surface
-- implementation packages being used directly
-- hard-wired implementations
+## Naive Approach
 
-Modules help make those boundaries visible.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## The Pain Before It
+## Failure
 
-As a system grows, these problems appear:
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-- too many accidental dependencies
-- unclear public API surface
-- implementation packages being used directly
-- hard-wired implementations
+## Fix
 
-Modules help make those boundaries visible.
-
-## Java Creator Mindset
-
-### Module Descriptor
-
-- `module-info.java` declares the module boundary
-- it is the entry point for understanding dependencies and exposed packages
-
-### `requires` And `exports`
-
-- `requires` says what this module depends on
-- `exports` says what packages other modules may use
-
-### Services
-
-- services let consumers depend on an abstraction instead of a concrete implementation
-- this supports pluggable designs
-
-## How You Might Invent It
-
-```mermaid
-mindmap
-  root((Modules))
-    module descriptor
-    requires
-    exports
-    services
-    explicit boundaries
-```
-
-## Naive Attempt
-
-- classpath vs module path:
-  classpath is looser, modules make boundaries more explicit
-- public class vs exported package:
-  a public type is not enough by itself in a modular world; package export matters too
-- direct implementation dependency vs service loading:
-  services reduce coupling to one specific implementation
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-### Module Descriptor
-
-- `module-info.java` declares the module boundary
-- it is the entry point for understanding dependencies and exposed packages
-
-### `requires` And `exports`
-
-- `requires` says what this module depends on
-- `exports` says what packages other modules may use
-
-### Services
-
-- services let consumers depend on an abstraction instead of a concrete implementation
-- this supports pluggable designs
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Declaring Module Boundaries](topics/declaring_module_boundaries/DeclaringModuleBoundaries.java)
 2. Run [Module Boundaries](topics/module_boundaries/ModuleBoundaries.java)
 3. Run [Pluggable Implementations](topics/pluggable_implementations/PluggableImplementations.java)
 
-## What To Notice
+What to observe:
 
-### Compare With
+- Which topic shows the failure first: [Declaring Module Boundaries](topics/declaring_module_boundaries/DeclaringModuleBoundaries.java).
+- Which topic narrows the rule: [Module Boundaries](topics/module_boundaries/ModuleBoundaries.java).
+- Which topic shows the cleaner abstraction: [Pluggable Implementations](topics/pluggable_implementations/PluggableImplementations.java).
 
-- classpath vs module path:
-  classpath is looser, modules make boundaries more explicit
-- public class vs exported package:
-  a public type is not enough by itself in a modular world; package export matters too
-- direct implementation dependency vs service loading:
-  services reduce coupling to one specific implementation
+## Improvement
 
-### Interview Focus
+After this chapter, you can explain the rule behind java modules and choose the right approach with less guesswork.
 
-Q: What problem do Java modules primarily solve?  
-A: They make dependencies and visible API boundaries explicit.
+After this chapter, you should be able to explain why Modules exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Q: What is the difference between `requires` and `exports`?  
-A: `requires` brings in another module; `exports` makes one of your packages available to other modules.
+## What stays stable
 
-Q: Why use services in a modular design?  
-A: To decouple consumers from concrete implementations.
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-## Mental Model
+## What changes
 
-```mermaid
-mindmap
-  root((Modules))
-    module descriptor
-    requires
-    exports
-    services
-    explicit boundaries
-```
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-## Common Mistakes
+## Rule
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
 
-## Tradeoffs
+## Try this
 
-- classpath vs module path:
-  classpath is looser, modules make boundaries more explicit
-- public class vs exported package:
-  a public type is not enough by itself in a modular world; package export matters too
-- direct implementation dependency vs service loading:
-  services reduce coupling to one specific implementation
-
-## Use / Avoid
-
-### Use It When
-
-- use modules when the codebase is large enough that dependency boundaries matter
-- use `exports` to expose only intended API packages
-- use services when one abstraction may have multiple implementations
-
-### Avoid It When
-
-- do not add modules mechanically to a tiny toy application with no boundary benefit
-- do not export internal implementation packages
-- do not use service loading where a direct dependency is simpler and clearer
-
-## Practice
-
-1. Why can "public" still be insufficient without `exports`?
-2. Why is service loading useful in a pluggable system?
-3. What is the risk of exporting too many packages?
-
-### Mini Case Study
-
-Imagine a retail platform split into modules:
-
-- `store.api`
-- `store.pricing`
-- `store.reporting`
-
-Reporting should not reach into pricing internals. Pricing should expose only its API package. Discount providers may vary by country, so a service-based design fits better than hard-coded implementation references.
-
-## Summary
-
-### Module Descriptor
-
-- `module-info.java` declares the module boundary
-- it is the entry point for understanding dependencies and exposed packages
-
-### `requires` And `exports`
-
-- `requires` says what this module depends on
-- `exports` says what packages other modules may use
-
-### Services
-
-- services let consumers depend on an abstraction instead of a concrete implementation
-- this supports pluggable designs
-
-## Next Chapter
-
-Move to [Modular Design Learning Kit](../ch02_modular_design/ChapterGuide.md) after this chapter.
+- Run [Declaring Module Boundaries](topics/declaring_module_boundaries/DeclaringModuleBoundaries.java) and note the first thing that breaks.
+- Run [Module Boundaries](topics/module_boundaries/ModuleBoundaries.java) and write down what the rule becomes.
+- Run [Pluggable Implementations](topics/pluggable_implementations/PluggableImplementations.java) and compare the result with the naive approach.

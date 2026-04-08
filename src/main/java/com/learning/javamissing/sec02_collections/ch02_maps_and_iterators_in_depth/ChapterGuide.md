@@ -1,40 +1,20 @@
 # Maps And Iterators In Depth Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter fills the gap between “I know `Map` exists” and “I can choose the right map and explain iterator behavior under pressure.”
 
-## The Pain Before It
-
-Teams often pick `HashMap` by reflex, then later discover they needed stable iteration order, sorted keys, or safer concurrent reads.
-
-## Java Creator Mindset
-
-- `HashMap` basics: hashing, buckets, resize pressure, load factor intuition
-- `TreeMap` vs `LinkedHashMap`
-- fail-fast vs weakly consistent iteration
-- `ConcurrentHashMap` vs `Collections.synchronizedMap`
-
-## How You Might Invent It
+## Naive Approach
 
 Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-## Naive Attempt
+## Failure
 
-- do not memorize “HashMap is fast” without asking what kind of access, ordering, and concurrency you need
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Why It Breaks
+## Fix
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- `HashMap` basics: hashing, buckets, resize pressure, load factor intuition
-- `TreeMap` vs `LinkedHashMap`
-- fail-fast vs weakly consistent iteration
-- `ConcurrentHashMap` vs `Collections.synchronizedMap`
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Concurrent Maps And Iterators](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java)
 2. Run [Fail-Fast Vs Fail-Safe Iterators](topics/fail_fast_vs_fail_safe_iterators/FailFastVsFailSafeIterators.java)
@@ -43,36 +23,37 @@ That breaks when the same mistake repeats across files, teams, or interview ques
 5. Run [Map Tradeoffs](topics/map_tradeoffs/MapTradeoffs.java)
 6. Run [PriorityQueue And Heap Internals](topics/priority_queue_heap_internals/PriorityQueueHeapInternals.java)
 
-## What To Notice
+What to observe:
+
+- Which topic shows the failure first: [Concurrent Maps And Iterators](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java).
+- Which topic narrows the rule: [LinkedHashMap As LRU Cache](topics/linkedhashmap_lru_cache/LinkedHashMapLruCache.java).
+- Which topic shows the cleaner abstraction: [PriorityQueue And Heap Internals](topics/priority_queue_heap_internals/PriorityQueueHeapInternals.java).
+
+## Improvement
 
 As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
 
-## Mental Model
+After this chapter, you should be able to explain why Maps And Iterators In Depth exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+## What stays stable
 
-## Common Mistakes
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-- do not memorize “HashMap is fast” without asking what kind of access, ordering, and concurrency you need
+## What changes
 
-## Tradeoffs
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## Rule
 
-## Use / Avoid
+👉 Rule: Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-### Use It When
+## Try this
 
-- you are choosing a map for real application data
-- interviewers ask why one map implementation fits better
-- iterator behavior or concurrent updates start causing confusion
-
-## Practice
-
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
-
-## Summary
-
-- when insertion order matters more than sort order
-- why concurrent maps change iteration guarantees
-- why iterator behavior is a correctness topic, not just an interview trivia topic
+- Run [Concurrent Maps And Iterators](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java) and note the first thing that breaks.
+- Run [LinkedHashMap As LRU Cache](topics/linkedhashmap_lru_cache/LinkedHashMapLruCache.java) and write down what the rule becomes.
+- Run [PriorityQueue And Heap Internals](topics/priority_queue_heap_internals/PriorityQueueHeapInternals.java) and compare the result with the naive approach.

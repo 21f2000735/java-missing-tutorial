@@ -1,71 +1,56 @@
 # Apple, Coinbase, Jane Street
 
-## Why This Chapter Exists
+## Problem
 
 This chapter mixes three interview styles that push on correctness and thought quality from different angles.
 
-## The Pain Before It
-
-- Apple pushes for safe APIs and high-quality engineering judgment
-- Coinbase pushes for correctness in money movement and retry handling
-- Jane Street pushes for precise reasoning and algorithm clarity
-
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around apple, Coinbase, Jane Street, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Final Java Direction
+## Fix
 
-Read the chapter as a small set of related ideas around apple, Coinbase, Jane Street, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [running median prices](topics/running_median_prices/RunningMedianPrices.java)
 2. Run [safe API design](topics/safe_api_design/SafeApiDesign.java)
 3. Run [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java)
 
-## What To Notice
+What to observe:
 
-- API design is about making misuse harder
-- transfer correctness is about idempotency and source of truth
-- running median is about invariants, not only code syntax
+- Which topic shows the failure first: [running median prices](topics/running_median_prices/RunningMedianPrices.java).
+- Which topic narrows the rule: [safe API design](topics/safe_api_design/SafeApiDesign.java).
+- Which topic shows the cleaner abstraction: [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java).
 
-## Mental Model
+## Improvement
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Read the chapter as a small set of related ideas around apple, Coinbase, Jane Street, not as isolated trivia.
 
-## Common Mistakes
+After this chapter, you should be able to explain why Apple Coinbase Jane Street exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Rule
 
-## Practice
+👉 Rule: Read the chapter as a small set of related ideas around apple, Coinbase, Jane Street, not as isolated trivia.
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+## Try this
 
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind apple, coinbase, jane street and connect them back to the runnable examples.
-
-## Next Chapter
-
-Move to [Netflix, MakeMyTrip, HotelTrader](../ch03_netflix_makemytrip_hoteltrader/ChapterGuide.md) after this chapter.
+- Run [running median prices](topics/running_median_prices/RunningMedianPrices.java) and note the first thing that breaks.
+- Run [safe API design](topics/safe_api_design/SafeApiDesign.java) and write down what the rule becomes.
+- Run [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java) and compare the result with the naive approach.

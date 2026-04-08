@@ -1,72 +1,55 @@
 # JUnit 5 And Test Doubles Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter covers the testing tools and habits usually needed in real teams after the first “assert one value” examples.
 
-## The Pain Before It
-
-Many learners know the idea of a test but still do not know lifecycle hooks, parameterized tests, or how to isolate collaborators cleanly.
-
-## Java Creator Mindset
-
-- JUnit 5 lifecycle ideas
-- parameterized tests
-- test doubles, stubbing, and verification
-- how Mockito fits into this mental model
-- code coverage as a signal, not a target by itself
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Final Java Direction
+## Fix
 
-- JUnit 5 lifecycle ideas
-- parameterized tests
-- test doubles, stubbing, and verification
-- how Mockito fits into this mental model
-- code coverage as a signal, not a target by itself
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Junit5 Lifecycle And Parameters](topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java)
 2. Run [Test Doubles And Verification](topics/test_doubles_and_verification/TestDoublesAndVerification.java)
 
-## What To Notice
+What to observe:
+
+- Which topic shows the failure first: [Junit5 Lifecycle And Parameters](topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java).
+- Which topic narrows the rule: [Test Doubles And Verification](topics/test_doubles_and_verification/TestDoublesAndVerification.java).
+- Which topic shows the cleaner abstraction: [Test Doubles And Verification](topics/test_doubles_and_verification/TestDoublesAndVerification.java).
+
+## Improvement
 
 As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
 
-## Mental Model
+After this chapter, you should be able to explain why Junit5 And Test Doubles exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+## What stays stable
 
-## Common Mistakes
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What changes
 
-## Tradeoffs
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## Rule
 
-## Use / Avoid
+👉 Rule: Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Try this
 
-## Practice
-
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
-
-## Summary
-
-- why tests should express behavior rather than framework ceremony
-- how parameterized tests reduce duplicated assertion code
-- why mocks should support a test instead of dominating it
+- Run [Junit5 Lifecycle And Parameters](topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java) and note the first thing that breaks.
+- Run [Test Doubles And Verification](topics/test_doubles_and_verification/TestDoublesAndVerification.java) and write down what the rule becomes.
+- Run [Test Doubles And Verification](topics/test_doubles_and_verification/TestDoublesAndVerification.java) and compare the result with the naive approach.

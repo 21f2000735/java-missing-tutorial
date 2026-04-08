@@ -1,84 +1,58 @@
 # Scoped Values Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
 This chapter is about one narrow but useful problem: some context belongs to one operation and should be readable through many nested calls without becoming global mutable state.
 
-## The Pain Before It
-
-Real systems often need request-scoped metadata:
-
-- request id
-- current user
-- tenant id
-- trace id
-
-Passing that through every method can become noisy. Mutable thread-local state can leak. Scoped values give a bounded context mechanism.
-
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around scoped Values, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
+## Naive Approach
 
 The naive approach is to solve each small problem separately and miss the common design rule connecting them.
 
-## Why It Breaks
+## Failure
 
 - the value is ordinary business data for one small call chain
 - the state is mutable domain state
 - you are not matching the correct JDK preview setup
 
-## Final Java Direction
+## Fix
 
-Read the chapter as a small set of related ideas around scoped Values, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Binding Request Context](topics/binding_request_context/BindingRequestContext.java)
 2. Run [Introducing Scoped Values](topics/introducing_scoped_values/IntroducingScopedValues.java)
 3. Run [Scoped Values Vs Thread Local](topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java)
 
-## What To Notice
+What to observe:
 
-- the bound value exists only inside one execution scope
-- this is good for read-mostly request metadata
-- ordinary business data should still be passed as normal parameters when that is clearer
+- Which topic shows the failure first: [Binding Request Context](topics/binding_request_context/BindingRequestContext.java).
+- Which topic narrows the rule: [Introducing Scoped Values](topics/introducing_scoped_values/IntroducingScopedValues.java).
+- Which topic shows the cleaner abstraction: [Scoped Values Vs Thread Local](topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java).
 
-## Mental Model
+## Improvement
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Read the chapter as a small set of related ideas around scoped Values, not as isolated trivia.
 
-## Common Mistakes
+After this chapter, you should be able to explain why Scoped Values exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-- the value is ordinary business data for one small call chain
-- the state is mutable domain state
-- you are not matching the correct JDK preview setup
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-### Use It When
+## Rule
 
-- one request-level value must cross many layers
-- you want a bounded context mechanism instead of mutable thread-local state
-- virtual threads and structured tasks make request lifetime more important
+👉 Rule: Read the chapter as a small set of related ideas around scoped Values, not as isolated trivia.
 
-## Practice
+## Try this
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
-
-## Summary
-
-After this chapter, you should be able to explain the main decisions behind scoped values and connect them back to the runnable examples.
-
-## Next Chapter
-
-Move to [Concurrency Primitives And Futures Learning Kit](../ch05_concurrency_primitives_and_futures/ChapterGuide.md) after this chapter.
+- Run [Binding Request Context](topics/binding_request_context/BindingRequestContext.java) and note the first thing that breaks.
+- Run [Introducing Scoped Values](topics/introducing_scoped_values/IntroducingScopedValues.java) and write down what the rule becomes.
+- Run [Scoped Values Vs Thread Local](topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java) and compare the result with the naive approach.

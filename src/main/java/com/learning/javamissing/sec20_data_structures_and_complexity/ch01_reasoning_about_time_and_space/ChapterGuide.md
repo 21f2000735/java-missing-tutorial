@@ -1,125 +1,54 @@
 # Reasoning About Time And Space Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Developers often hear:
+This chapter shows what breaks when reasoning about time and space is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-- `O(1)`
-- `O(log n)`
-- `O(n)`
-- `O(n log n)`
-
-But those labels stay shallow unless you can answer a simpler question:
-
-What work grows as input grows?
-
-This chapter trains that question first.
-
-## The Pain Before It
-
-Developers often hear:
-
-- `O(1)`
-- `O(log n)`
-- `O(n)`
-- `O(n log n)`
-
-But those labels stay shallow unless you can answer a simpler question:
-
-What work grows as input grows?
-
-This chapter trains that question first.
-
-## Java Creator Mindset
-
-- Big-O is about growth trend, not exact milliseconds
-- linear search checks items one by one
-- binary search removes half the remaining search space each step
-- complexity language becomes useful only when tied to an actual operation
-
-## How You Might Invent It
+## Naive Approach
 
 Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-## Naive Attempt
+## Failure
 
-| Compare | What It Tells You |
-| --- | --- |
-| timing result vs Big-O | timing shows one environment, Big-O shows how the work grows |
-| `O(n)` vs `O(log n)` | both may look fine at small sizes, but growth diverges sharply as input becomes large |
-| time complexity vs space complexity | one tracks how much work grows, the other tracks how much memory grows |
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Why It Breaks
+## Fix
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- Big-O is about growth trend, not exact milliseconds
-- linear search checks items one by one
-- binary search removes half the remaining search space each step
-- complexity language becomes useful only when tied to an actual operation
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java)
 
-## What To Notice
+What to observe:
 
-### Compare With
+- Which topic shows the failure first: [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java).
+- Which topic narrows the rule: [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java).
+- Which topic shows the cleaner abstraction: [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java).
 
-| Compare | What It Tells You |
-| --- | --- |
-| timing result vs Big-O | timing shows one environment, Big-O shows how the work grows |
-| `O(n)` vs `O(log n)` | both may look fine at small sizes, but growth diverges sharply as input becomes large |
-| time complexity vs space complexity | one tracks how much work grows, the other tracks how much memory grows |
-
-### Interview Focus
-
-Q: Why is `O(log n)` usually better than `O(n)` for search?  
-A: Because the work grows much more slowly as the input size becomes large.
-
-Q: Why is Big-O not the same as benchmarking?  
-A: Because Big-O describes growth shape, while benchmarking measures one implementation under one environment.
-
-## Mental Model
+## Improvement
 
 Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-## Common Mistakes
+After this chapter, you should be able to explain why Reasoning About Time And Space exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-| Compare | What It Tells You |
-| --- | --- |
-| timing result vs Big-O | timing shows one environment, Big-O shows how the work grows |
-| `O(n)` vs `O(log n)` | both may look fine at small sizes, but growth diverges sharply as input becomes large |
-| time complexity vs space complexity | one tracks how much work grows, the other tracks how much memory grows |
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Rule
 
-## Practice
+👉 Rule: Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-### Mini Case Study
+## Try this
 
-Imagine a student portal searching for a roll number.
-
-- scanning every entry works for a small class list
-- repeated searching across a large, sorted list changes the tradeoff completely
-
-This is why complexity matters. It tells you when a design will stop scaling comfortably.
-
-## Summary
-
-- Big-O is about growth trend, not exact milliseconds
-- linear search checks items one by one
-- binary search removes half the remaining search space each step
-- complexity language becomes useful only when tied to an actual operation
-
-## Next Chapter
-
-Move to [Collections Internals And Tradeoffs Learning Kit](../ch02_collections_internals_and_tradeoffs/ChapterGuide.md) after this chapter.
+- Run [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) and note the first thing that breaks.
+- Run [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) and write down what the rule becomes.
+- Run [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) and compare the result with the naive approach.

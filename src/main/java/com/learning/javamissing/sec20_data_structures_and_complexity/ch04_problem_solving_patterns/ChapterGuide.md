@@ -1,96 +1,55 @@
 # Problem Solving Patterns Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Many brute-force solutions repeat work they do not need to repeat:
+This chapter shows what breaks when problem solving patterns is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-- recalculate every overlapping window from scratch
-- scan the same sorted data with nested loops
-
-Sliding window and two pointers are valuable because they reduce repeated work without making the code magical.
-
-## The Pain Before It
-
-Many brute-force solutions repeat work they do not need to repeat:
-
-- recalculate every overlapping window from scratch
-- scan the same sorted data with nested loops
-
-Sliding window and two pointers are valuable because they reduce repeated work without making the code magical.
-
-## Java Creator Mindset
-
-- sliding window reuses work from the previous range
-- two pointers exploit sorted order to remove nested loops
-- these patterns matter because they turn repeated recalculation into incremental progress
-
-## How You Might Invent It
+## Naive Approach
 
 Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-## Naive Attempt
+## Failure
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| brute-force subarray scan | the data is tiny and clarity is more important | windows overlap heavily and repeated recalculation dominates |
-| nested loops on sorted data | the size is tiny | the data is sorted and a left/right scan can shrink work |
+- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
 
-## Why It Breaks
+## Fix
 
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- sliding window reuses work from the previous range
-- two pointers exploit sorted order to remove nested loops
-- these patterns matter because they turn repeated recalculation into incremental progress
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Scanning Sorted Data With Two Pointers](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java)
 2. Run [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java)
 
-## What To Notice
+What to observe:
 
-### Compare With
+- Which topic shows the failure first: [Scanning Sorted Data With Two Pointers](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java).
+- Which topic narrows the rule: [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java).
+- Which topic shows the cleaner abstraction: [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java).
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| brute-force subarray scan | the data is tiny and clarity is more important | windows overlap heavily and repeated recalculation dominates |
-| nested loops on sorted data | the size is tiny | the data is sorted and a left/right scan can shrink work |
-
-## Mental Model
+## Improvement
 
 Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-## Common Mistakes
+After this chapter, you should be able to explain why Problem Solving Patterns exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## What stays stable
 
-## Tradeoffs
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
+- The real pressure stays the same even when the API changes.
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| brute-force subarray scan | the data is tiny and clarity is more important | windows overlap heavily and repeated recalculation dominates |
-| nested loops on sorted data | the size is tiny | the data is sorted and a left/right scan can shrink work |
+## What changes
 
-## Use / Avoid
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Rule
 
-## Practice
+👉 Rule: Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
 
-### Mini Case Study
+## Try this
 
-Imagine two analytics tasks.
-
-- find the best three-hour sales window
-- find two prices in a sorted list that match a target budget
-
-Both tasks look like nested-loop problems at first. Both become simpler when you recognize the right scanning pattern.
-
-## Summary
-
-- sliding window reuses work from the previous range
-- two pointers exploit sorted order to remove nested loops
-- these patterns matter because they turn repeated recalculation into incremental progress
+- Run [Scanning Sorted Data With Two Pointers](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java) and note the first thing that breaks.
+- Run [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) and write down what the rule becomes.
+- Run [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) and compare the result with the naive approach.
