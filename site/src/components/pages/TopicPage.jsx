@@ -1,70 +1,12 @@
-import { useState } from 'react';
 import {
   bulletItems,
-  effectiveRunner,
   extractTopicLessonFlow,
   firstNonEmpty,
-  inferTopicMode,
-  modePresentation,
-  resolveVersionMeta,
   titleFromSlug,
   truncateText
 } from '../../lib/content-helpers.js';
-import { PLAYGROUND_LINKS } from '../../lib/site-data.js';
 import { CodeBlock } from '../content/MarkdownContent.jsx';
 import { BulletList, PageLayout } from '../common/AppChrome.jsx';
-
-function submitToJdoodle(code) {
-  const form = document.createElement('form');
-  form.method = 'post';
-  form.action = 'https://www.jdoodle.com/api/redirect-to-post/online-java-compiler';
-  form.target = '_blank';
-  form.style.display = 'none';
-
-  const textarea = document.createElement('textarea');
-  textarea.name = 'initScript';
-  textarea.value = code;
-  form.appendChild(textarea);
-
-  document.body.appendChild(form);
-  form.submit();
-  document.body.removeChild(form);
-}
-
-function TopicActionButtons({ code, runner }) {
-  const [copyState, setCopyState] = useState('idle');
-
-  async function onCopy() {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopyState('copied');
-      window.setTimeout(() => setCopyState('idle'), 1500);
-    } catch {
-      setCopyState('failed');
-      window.setTimeout(() => setCopyState('idle'), 1500);
-    }
-  }
-
-  return (
-    <div className="topic-actions-minimal">
-      <button className="topic-action-link" type="button" onClick={onCopy}>
-        {copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed' : 'Copy code'}
-      </button>
-      {runner === 'embedded' ? (
-        <button className="topic-action-link" type="button" onClick={() => submitToJdoodle(code)}>
-          Run in JDoodle
-        </button>
-      ) : (
-        <a className="topic-action-link" href={PLAYGROUND_LINKS.jdoodle} target="_blank" rel="noreferrer">
-          Open JDoodle
-        </a>
-      )}
-      <a className="topic-action-link" href={PLAYGROUND_LINKS.onecompiler} target="_blank" rel="noreferrer">
-        OneCompiler
-      </a>
-    </div>
-  );
-}
 
 function TopicPager({ previousTopic, nextTopic, chapterRoute }) {
   return (
@@ -99,9 +41,6 @@ function ReadingSection({ title, children }) {
 export default function TopicPage({ data }) {
   const topicSummary = data.preview;
   const lessonFlow = extractTopicLessonFlow(data.lessonRaw);
-  const topicRunner = effectiveRunner(topicSummary, data.lessonMeta);
-  const versionMeta = resolveVersionMeta(data.section.slug, data.chapter.slug, data.lessonMeta, topicSummary);
-  const lessonModeUi = modePresentation(inferTopicMode(data.section.slug, data.chapter.slug, data.lessonMeta));
   const conceptLabel = topicSummary.concept || data.topic.concept || titleFromSlug(data.topic.slug);
   const topicSummaryLine = firstNonEmpty(
     lessonFlow.concept?.plain,
@@ -159,17 +98,13 @@ export default function TopicPage({ data }) {
     <PageLayout
       header={(
         <header className="topic-header">
-          <div className="eyebrow mb-2">Topic</div>
           <h1 className="topic-title mb-2">{data.topic.title}</h1>
           <p className="topic-purpose mb-2">
             {truncateText(topicSummaryLine, 200)}
           </p>
-          <p className="topic-meta mb-3">
+          <p className="topic-meta mb-0">
             {data.section.title} · {data.chapter.title}
-            {versionMeta.display ? ` · ${versionMeta.display}` : ''}
-            {lessonModeUi.label ? ` · ${lessonModeUi.label}` : ''}
           </p>
-          <TopicActionButtons code={data.raw} runner={topicRunner} />
         </header>
       )}
     >

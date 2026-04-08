@@ -376,11 +376,11 @@ for (const topicPage of topTopics) {
           <p class="code-title">${escapeHtml(javaFile)}</p>
           <div class="code-cta">
             <div>
-              <p class="eyebrow">Copy Or Try This Code</p>
-              <p class="muted">Understand the idea first, then copy the snippet or open it in JDoodle to try it immediately.</p>
+              <p class="eyebrow">Code</p>
+              <p class="muted">Copy the snippet or open it in JDoodle when you are ready to run it.</p>
             </div>
             <div class="code-actions">
-              <button class="action-btn action-btn-primary" id="copy-code-btn" type="button">Copy Code Snippet</button>
+              <button class="action-btn action-btn-primary" id="copy-code-btn" type="button">Copy code</button>
               <button class="action-btn" id="open-jdoodle-btn" type="button">Open JDoodle</button>
               <a class="action-btn" href="../../index.html#topic/${topicPage.section}/${topicPage.chapter}/${topicPage.topic}#source-code">Open App Code View</a>
             </div>
