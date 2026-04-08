@@ -269,7 +269,7 @@ Use these roles to avoid repetition:
 
 - `Quick Visual` or `Visual Map` should show the shape in one glance. It is the diagram, timeline, or block view.
 - `How You Might Invent It` should show the reasoning path from pressure to design. It is the derivation.
-- `Decision Guide` should help the learner choose: when to use it, when not to use it, and what to compare it against. This usually belongs in `Tradeoffs` or `Use / Avoid`.
+- `Decision Guide` should help the learner choose: when to use it, when not to use it, and what to compare it against. Do not create it as a separate heading; fold that material into `Tradeoffs` or `Use / Avoid`.
 - `Mental Model` should give the learner the compact picture to remember after reading. It is the sticky summary, not a second derivation.
 
 If one section can be deleted without losing information, it was probably repeating another section.

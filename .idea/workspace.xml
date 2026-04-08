@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update" />
+    <list default="true" id="5f59d562-bd59-4b96-a550-63b2cd002c5b" name="Changes" comment="update">
+      <change beforePath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/AUTHORING_GUIDE.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/planning/CHAPTER_QUALITY_CHECKLIST.md" beforeDir="false" afterPath="$PROJECT_DIR$/planning/CHAPTER_QUALITY_CHECKLIST.md" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -209,7 +212,7 @@
       <option name="presentableId" value="Default" />
       <updated>1775585766841</updated>
       <workItem from="1775585771101" duration="3671000" />
-      <workItem from="1775591243727" duration="12015000" />
+      <workItem from="1775591243727" duration="12337000" />
     </task>
     <task id="LOCAL-00004" summary="update">
       <option name="closed" value="true" />
@@ -403,7 +406,31 @@
       <option name="project" value="LOCAL" />
       <updated>1775619003624</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="update">
+      <option name="closed" value="true" />
+      <created>1775619069610</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1775619069610</updated>
+    </task>
+    <task id="LOCAL-00029" summary="update">
+      <option name="closed" value="true" />
+      <created>1775619101424</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1775619101424</updated>
+    </task>
+    <task id="LOCAL-00030" summary="update">
+      <option name="closed" value="true" />
+      <created>1775619329744</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1775619329744</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

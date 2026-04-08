@@ -26,6 +26,7 @@ Use this checklist before calling any chapter complete.
   `Mistakes`, `Tradeoffs`, `Use / Avoid`, `Summary`
 
 - `How You Might Invent It` must show the derivation path; `Mental Model` must show the retained model. Do not duplicate the same explanation in both sections.
+- `Decision Guide` is not a standalone chapter heading. Keep decision-making inside `Tradeoffs` or `Use / Avoid`.
 
 ## Chapter Guide
 
