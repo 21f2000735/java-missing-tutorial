@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import {
   badgeClassForTone,
-  bulletItems,
   effectiveRunner,
   extractTopicLessonFlow,
   firstNonEmpty,
@@ -19,8 +18,6 @@ import {
   BulletList,
   FeedbackBar,
   HeaderPanel,
-  InPageToc,
-  InsightCard,
   PageLayout,
   ReadingStateBar
 } from '../common/AppChrome.jsx';
@@ -80,59 +77,33 @@ function TopicActionButtons({
       <a className="btn btn-outline-dark btn-sm rounded-pill" href={PLAYGROUND_LINKS.onecompiler} target="_blank" rel="noreferrer">
         Open OneCompiler
       </a>
-      {showNote && runner === 'local' ? <span className="playground-note">This example is best run locally, usually because of newer or preview Java features.</span> : null}
+      {showNote && runner === 'local' ? <span className="playground-note">This example is best run locally because it uses newer or preview Java features.</span> : null}
     </div>
   );
 }
 
-function InterviewQuestionsPanel({ questions }) {
-  const [openIndex, setOpenIndex] = useState(-1);
-
-  if (!questions.length) {
-    return null;
-  }
-
+function TopicPager({ previousTopic, nextTopic, chapterRoute }) {
   return (
-    <div className="content-card interview-panel mb-4">
-      <details open>
-        <summary className="interview-panel-summary">
-          <div>
-            <h2 className="page-title mb-1">Interview Questions</h2>
-            <div className="muted-copy mb-0">Quick follow-up questions and concise answers for this topic.</div>
-          </div>
-          <span className="badge rounded-pill text-bg-warning">{questions.length}</span>
-        </summary>
-        <div className="accordion interview-accordion" id="topic-interview-questions">
-          {questions.map((item, index) => {
-            const isOpen = index === openIndex;
-            return (
-              <div className="accordion-item interview-question-item" key={`${item.question}-${index}`}>
-                <h3 className="accordion-header">
-                  <button
-                    className={`accordion-button ${isOpen ? '' : 'collapsed'}`}
-                    type="button"
-                    onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                  >
-                    {item.question}
-                  </button>
-                </h3>
-                <div className={`accordion-collapse collapse ${isOpen ? 'show' : ''}`}>
-                  <div className="accordion-body">
-                    <button
-                      type="button"
-                      className="btn btn-link btn-sm px-0 mb-2 interview-toggle"
-                      onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                    >
-                      {isOpen ? 'Hide answer' : 'Show answer'}
-                    </button>
-                    {isOpen ? <p className="mb-0">{item.answer || 'Answer not added yet.'}</p> : null}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+    <div className="content-card chapter-nav-card">
+      <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
+        <div>
+          <div className="eyebrow mb-1">Move Next</div>
+          <div className="muted-copy mb-0">Go forward when you can explain what stayed stable and what changed.</div>
         </div>
-      </details>
+        <div className="d-flex flex-wrap gap-2">
+          <a className={`btn btn-outline-dark btn-sm rounded-pill ${chapterRoute ? '' : 'disabled'}`} href={chapterRoute || '#'}>
+            Back To Chapter
+          </a>
+          <a className={`btn btn-outline-dark btn-sm rounded-pill ${previousTopic ? '' : 'disabled'}`} href={previousTopic?.route || '#'} aria-disabled={!previousTopic}>
+            <i className="bi bi-arrow-left me-1" />
+            Prev Topic
+          </a>
+          <a className={`btn btn-dark btn-sm rounded-pill ${nextTopic ? '' : 'disabled'}`} href={nextTopic?.route || '#'} aria-disabled={!nextTopic}>
+            Next Topic
+            <i className="bi bi-arrow-right ms-1" />
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
@@ -161,42 +132,21 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
     topicSummary.why,
     'The Java shape should feel like the natural answer to the problem.'
   );
-  const eurekaLine = firstNonEmpty(
+  const ruleSummary = firstNonEmpty(
     lessonFlow.summary?.plain,
-    topicSummary.takeaways[0],
     topicSummary.whyThisWorks,
     topicSummary.mentalModel,
-    'By the end, you should be able to explain why Java chose this shape and when to use it.'
+    'Use the rule that keeps the code predictable when the assumption changes.'
   );
-  const takeaways = topicSummary.takeaways.length ? topicSummary.takeaways : bulletItems(lessonFlow.summary?.raw || '');
+  const topicIndex = typeof data.topic.topicIndex === 'number' ? data.topic.topicIndex : data.chapter.topics.findIndex((item) => item.slug === data.topic.slug);
+  const previousTopic = topicIndex > 0 ? data.chapter.topics[topicIndex - 1] : null;
+  const nextTopic = topicIndex >= 0 && topicIndex < data.chapter.topics.length - 1 ? data.chapter.topics[topicIndex + 1] : null;
   const interviewQuestions = normalizeInterviewQuestions(data.lessonMeta.interviewQ);
-  const topicToc = [
-    { href: '#start-here', label: 'Start Here' },
-    { href: '#invent-it', label: 'Invent It' },
-    { href: '#source-code', label: 'Try The Code' },
-    ...(lessonFlow.walkthrough || lessonFlow.mentalModel ? [{ href: '#understand-it', label: 'Understand It' }] : []),
-    ...(lessonFlow.mistakes || lessonFlow.tradeoffs || lessonFlow.useAvoid || topicSummary.commonMistake || topicSummary.useWhen || topicSummary.avoidWhen
-      ? [{ href: '#use-it-well', label: 'Use It Well' }]
-      : []),
-    ...(takeaways.length || lessonFlow.summary ? [{ href: '#takeaways', label: 'Takeaways' }] : [])
-  ];
-  const quickSteps = [
-    {
-      title: 'See the pressure',
-      detail: truncateText(firstNonEmpty(lessonFlow.pain?.plain, topicSummary.problem, topicSummary.realWorld, topicSummary.storyHook, topicSummaryLine), 145)
-    },
-    {
-      title: 'Catch the Java idea',
-      detail: truncateText(firstNonEmpty(lessonFlow.creatorMindset?.plain, lessonFlow.finalSolution?.plain, ideaSummary), 145)
-    },
-    {
-      title: 'Run the example',
-      detail: truncateText(firstNonEmpty(topicSummary.howToCode, lessonFlow.walkthrough?.plain, 'Run the example, compare the output, then trace the code line by line.'), 145)
-    },
-    {
-      title: 'Lock the insight',
-      detail: truncateText(firstNonEmpty(topicSummary.expectedOutput, lessonFlow.summary?.plain, eurekaLine), 145)
-    }
+
+  const steps = [
+    { title: 'See the pressure', detail: truncateText(firstNonEmpty(lessonFlow.pain?.plain, topicSummary.problem, topicSummary.realWorld, topicSummary.storyHook, topicSummaryLine), 130) },
+    { title: 'Run the example', detail: truncateText(firstNonEmpty(topicSummary.howToCode, lessonFlow.walkthrough?.plain, 'Run the code, then change one assumption and compare the output.'), 130) },
+    { title: 'Lock the rule', detail: truncateText(ruleSummary, 130) }
   ];
 
   return (
@@ -205,7 +155,7 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
         <HeaderPanel
           title={data.topic.title}
           eyebrow={`${data.section.title} · ${data.chapter.title}`}
-          summary={truncateText(topicSummaryLine, 240)}
+          summary={truncateText(topicSummaryLine, 220)}
           sourcePath={data.topic.sourcePath}
           actions={(
             <>
@@ -217,20 +167,21 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
       )}
     >
       <ReadingStateBar routeKey={routeKey} {...readingState} />
+
       <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
         <div className="content-main">
           <div id="start-here" className="content-card mb-4">
             <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
               <h2 className="page-title mb-0">Start Here</h2>
-              <span className="badge rounded-pill badge-soft">Understand fast, then run code</span>
+              <span className="badge rounded-pill badge-soft">Read → Run → Observe</span>
             </div>
             <div className="learning-focus mb-3">
-              <div className="eyebrow mb-2">Concept In One Line</div>
+              <div className="eyebrow mb-2">Concept</div>
               <h3 className="h4 mb-2">{conceptLabel}</h3>
               <p className="mb-0">{topicSummaryLine}</p>
             </div>
-            <div className="learning-step-grid mb-3">
-              {quickSteps.map((step, index) => (
+            <div className="learning-step-grid">
+              {steps.map((step, index) => (
                 <div className="learning-step-card" key={step.title}>
                   <div className="learning-step-number">{index + 1}</div>
                   <div>
@@ -240,120 +191,34 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
                 </div>
               ))}
             </div>
-            <div className="eureka-banner">
-              <div className="eyebrow mb-1">Eureka Goal</div>
-              <p className="mb-0">{truncateText(eurekaLine, 220)}</p>
-            </div>
           </div>
-
-          <div id="invent-it" className="content-card mb-4">
-            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-              <h2 className="page-title mb-0">How The Idea Emerges</h2>
-              <span className="badge rounded-pill badge-soft">Problem to invention</span>
-            </div>
-            <div className="insight-grid mb-4">
-              <InsightCard icon="bi bi-bullseye" title="Problem Pressure">
-                {lessonFlow.pain?.plain || topicSummary.problem || topicSummary.realWorld || 'Start with the real pressure before reading APIs.'}
-              </InsightCard>
-              <InsightCard icon="bi bi-lightbulb" title="Java Creator Mindset">
-                {lessonFlow.creatorMindset?.plain || topicSummary.why || topicSummary.mentalModel || 'Ask what Java is trying to simplify, protect, or make clearer.'}
-              </InsightCard>
-              <InsightCard icon="bi bi-stars" title="Final Java Idea">
-                {ideaSummary}
-              </InsightCard>
-            </div>
-            {lessonFlow.inventIt ? (
-              <div className="section-panel section-panel-soft mb-4">
-                <div className="eyebrow mb-2">How You Might Invent It</div>
-                <LessonSectionContent section={lessonFlow.inventIt} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-              </div>
-            ) : null}
-            {(lessonFlow.naiveAttempt || lessonFlow.whyBreaks || lessonFlow.finalSolution) ? (
-              <div className="journey-grid journey-grid-primary">
-                {lessonFlow.naiveAttempt ? (
-                  <div className="section-panel">
-                    <div className="eyebrow mb-2">Naive Attempt</div>
-                    <LessonSectionContent section={lessonFlow.naiveAttempt} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                  </div>
-                ) : null}
-                {lessonFlow.whyBreaks ? (
-                  <div className="section-panel">
-                    <div className="eyebrow mb-2">Why It Breaks</div>
-                    <LessonSectionContent section={lessonFlow.whyBreaks} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                  </div>
-                ) : null}
-                {lessonFlow.finalSolution ? (
-                  <div className="section-panel section-panel-strong">
-                    <div className="eyebrow mb-2">Final Java Solution</div>
-                    <LessonSectionContent section={lessonFlow.finalSolution} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
-          </div>
-
-          {(versionMeta.display || versionMeta.status || data.lessonMeta.runner || data.lessonMeta.estimated) ? (
-            <div className="content-card mb-4">
-              <div className="topic-meta">
-                {versionMeta.display ? (
-                  <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>
-                    {versionMeta.status === 'preview' ? versionMeta.display : `Introduced: ${versionMeta.display}`}
-                  </span>
-                ) : null}
-                {versionMeta.status && versionMeta.status !== 'preview' ? (
-                  <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>Status: {versionMeta.status}</span>
-                ) : null}
-                <span className={`badge rounded-pill ${lessonModeUi.badgeClass}`}>Mode: {lessonModeUi.label}</span>
-                <span className="badge rounded-pill badge-soft">Runner: {topicRunner}</span>
-                {data.lessonMeta.estimated ? <span className="badge rounded-pill badge-soft">Read time: {data.lessonMeta.estimated}</span> : null}
-              </div>
-            </div>
-          ) : null}
 
           <div id="source-code" className="content-card mb-4">
             <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
               <h2 className="page-title mb-0">Try The Code</h2>
               <span className="badge rounded-pill badge-soft">See the Java shape early</span>
             </div>
-            <div className="topic-meta">
+            <div className="topic-meta mb-3">
               <span className="badge rounded-pill badge-soft">{conceptLabel}</span>
               <span className="badge rounded-pill badge-soft">Java Source</span>
               {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
+              <span className={`badge rounded-pill ${lessonModeUi.badgeClass}`}>Mode: {lessonModeUi.label}</span>
+              {versionMeta.display ? <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>{versionMeta.display}</span> : null}
             </div>
-            <div className="topic-brief-grid">
+            <div className="topic-brief-grid mb-3">
               <div className="topic-brief-card">
-                <div className="eyebrow mb-2">How To Code It</div>
-                <p className="mb-0">{topicSummary.howToCode || 'Run the example, compare the output, and then trace the code line by line.'}</p>
+                <div className="eyebrow mb-2">What to observe</div>
+                <p className="mb-0">{topicSummary.expectedOutput || 'Run the code, compare the output, and note what changes when you tweak one line.'}</p>
               </div>
               <div className="topic-brief-card">
-                <div className="eyebrow mb-2">Expected Output</div>
-                <p className="mb-0">{topicSummary.expectedOutput || 'The code comments and printed lines show the expected behavior.'}</p>
+                <div className="eyebrow mb-2">Why it matters</div>
+                <p className="mb-0">{ideaSummary}</p>
               </div>
-              <div className="topic-brief-card">
-                <div className="eyebrow mb-2">Run Online</div>
-                <p className="mb-2">
-                  {topicRunner === 'embedded'
-                    ? 'Use the run button to send this stable example directly to JDoodle, or copy it into another playground.'
-                    : 'This topic is best run locally because it depends on newer or preview Java behavior.'}
-                </p>
-                {topicRunner === 'local' ? (
-                  <p className="mb-0 text-danger-emphasis">This topic uses newer Java features that may need local JDK 25 preview support.</p>
-                ) : null}
-              </div>
-              <div className="topic-brief-card">
-                <div className="eyebrow mb-2">What Changed</div>
-                <p className="mb-0">{firstNonEmpty(lessonFlow.finalSolution?.plain, topicSummary.whyThisWorks, ideaSummary)}</p>
-              </div>
-            </div>
-            <div className="topic-meta">
-              {topicSummary.storyHook || lessonFlow.whyExists?.plain ? (
-                <span className="badge rounded-pill badge-soft">{truncateText(firstNonEmpty(topicSummary.storyHook, lessonFlow.whyExists?.plain), 90)}</span>
-              ) : null}
             </div>
             <div className="code-cta mb-3">
               <div>
                 <div className="eyebrow mb-1">Copy Or Try This Code</div>
-                <div className="muted-copy mb-0">Copy the snippet directly or open it in an online playground before reading line by line. The goal is to connect the code to the idea immediately.</div>
+                <div className="muted-copy mb-0">Copy the snippet or open it in a playground, then compare the output with the rule.</div>
               </div>
               <TopicActionButtons code={data.raw} runner={topicRunner} copyLabel="Copy Code Snippet" />
             </div>
@@ -368,117 +233,67 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
             </div>
           </div>
 
-          {(lessonFlow.walkthrough || lessonFlow.mentalModel) ? (
-            <div id="understand-it" className="content-card mb-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Understand What Happened</h2>
-                <span className="badge rounded-pill badge-soft">Build the mental model</span>
-              </div>
-              <div className="journey-grid journey-grid-primary">
-                {lessonFlow.walkthrough ? (
-                  <div className="section-panel">
-                    <div className="eyebrow mb-2">Walkthrough</div>
-                    <LessonSectionContent section={lessonFlow.walkthrough} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                  </div>
-                ) : null}
-                {lessonFlow.mentalModel ? (
-                  <div className="section-panel section-panel-soft">
-                    <div className="eyebrow mb-2">Mental Model</div>
-                    <LessonSectionContent section={lessonFlow.mentalModel} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                  </div>
-                ) : null}
+          <div className="topic-insight-grid mb-4">
+            <div className="content-card">
+              <div className="eyebrow mb-2">What happens</div>
+              <div className="muted-copy mb-0">
+                <LessonSectionContent section={lessonFlow.walkthrough || lessonFlow.summary} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
               </div>
             </div>
-          ) : null}
+            <div className="content-card">
+              <div className="eyebrow mb-2">What stays stable</div>
+              <div className="muted-copy mb-0">
+                <LessonSectionContent section={lessonFlow.mentalModel || lessonFlow.creatorMindset} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+              </div>
+            </div>
+            <div className="content-card">
+              <div className="eyebrow mb-2">What changes</div>
+              <div className="muted-copy mb-0">
+                <LessonSectionContent section={lessonFlow.naiveAttempt || lessonFlow.whyBreaks} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
+              </div>
+            </div>
+          </div>
 
-          {(lessonFlow.mistakes || lessonFlow.tradeoffs || lessonFlow.useAvoid || topicSummary.commonMistake || topicSummary.useWhen || topicSummary.avoidWhen) ? (
-            <div id="use-it-well" className="content-card mb-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Use It Well</h2>
-                <span className="badge rounded-pill badge-soft">Mistakes and tradeoffs</span>
-              </div>
-              <div className="journey-grid journey-grid-primary">
-                {(lessonFlow.mistakes || topicSummary.commonMistake) ? (
-                  <div className="section-panel">
-                    <div className="eyebrow mb-2">Common Mistakes</div>
-                    {lessonFlow.mistakes ? (
-                      <LessonSectionContent section={lessonFlow.mistakes} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                    ) : (
-                      <p className="mb-0 muted-copy">{topicSummary.commonMistake}</p>
-                    )}
-                  </div>
-                ) : null}
-                {(lessonFlow.tradeoffs || topicSummary.useWhen || topicSummary.avoidWhen) ? (
-                  <div className="section-panel">
-                    <div className="eyebrow mb-2">Tradeoffs</div>
-                    {lessonFlow.tradeoffs ? (
-                      <LessonSectionContent section={lessonFlow.tradeoffs} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                    ) : (
-                      <div className="insight-grid compact-grid">
-                        {topicSummary.useWhen ? (
-                          <InsightCard icon="bi bi-check2-circle" title="Use This When">{topicSummary.useWhen}</InsightCard>
-                        ) : null}
-                        {topicSummary.avoidWhen ? (
-                          <InsightCard icon="bi bi-slash-circle" title="Avoid This When">{topicSummary.avoidWhen}</InsightCard>
-                        ) : null}
-                      </div>
-                    )}
-                  </div>
-                ) : null}
-                {(lessonFlow.useAvoid || topicSummary.useWhen || topicSummary.avoidWhen) ? (
-                  <div className="section-panel section-panel-soft">
-                    <div className="eyebrow mb-2">Use / Avoid</div>
-                    {lessonFlow.useAvoid ? (
-                      <LessonSectionContent section={lessonFlow.useAvoid} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                    ) : (
-                      <div className="insight-grid compact-grid">
-                        {topicSummary.useWhen ? (
-                          <InsightCard icon="bi bi-check2-circle" title="Use This When">{topicSummary.useWhen}</InsightCard>
-                        ) : null}
-                        {topicSummary.avoidWhen ? (
-                          <InsightCard icon="bi bi-slash-circle" title="Avoid This When">{topicSummary.avoidWhen}</InsightCard>
-                        ) : null}
-                      </div>
-                    )}
-                  </div>
-                ) : null}
-              </div>
+          <div className="content-card mb-4">
+            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+              <h2 className="page-title mb-0">Rule</h2>
+              <span className="badge rounded-pill badge-soft">Keep the design correct</span>
             </div>
-          ) : null}
-
-          {(takeaways.length || lessonFlow.summary) ? (
-            <div id="takeaways" className="content-card mb-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Leave With This</h2>
-                <span className="badge rounded-pill badge-soft">Eureka checkpoint</span>
-              </div>
-              {lessonFlow.summary ? (
-                <div className="section-panel section-panel-strong mb-3">
-                  <LessonSectionContent section={lessonFlow.summary} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-                </div>
-              ) : null}
-              {takeaways.length ? <BulletList items={takeaways} /> : null}
-            </div>
-          ) : null}
+            <p className="mb-0">{ruleSummary}</p>
+          </div>
 
           {topicSummary.tryThisNext ? (
             <div className="content-card mb-4">
               <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Try This Next</h2>
-                <span className="badge rounded-pill badge-soft">Stretch the example</span>
+                <h2 className="page-title mb-0">Try This</h2>
+                <span className="badge rounded-pill badge-soft">2 to 4 concrete tasks</span>
               </div>
               <p className="mb-0 muted-copy">{topicSummary.tryThisNext}</p>
             </div>
           ) : null}
 
-          <InterviewQuestionsPanel questions={interviewQuestions} />
-        </div>
+          {interviewQuestions.length ? (
+            <div className="content-card mb-4">
+              <details>
+                <summary className="eyebrow mb-3">Interview Questions</summary>
+                <div className="interview-question-list">
+                  {interviewQuestions.map((item) => (
+                    <div className="interview-question-item" key={item.question}>
+                      <div className="fw-semibold mb-2">{item.question}</div>
+                      <div className="muted-copy mb-0">{item.answer || 'Answer not added yet.'}</div>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            </div>
+          ) : null}
 
-        {!uiPreferences.readingMode ? (
-          <div className="content-side">
-            <InPageToc items={topicToc} />
-          </div>
-        ) : null}
+          <TopicPager
+            previousTopic={previousTopic}
+            nextTopic={nextTopic}
+            chapterRoute={`#chapter/${data.section.slug}/${data.chapter.slug}`}
+          />
+        </div>
       </div>
 
       <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />

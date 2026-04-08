@@ -1036,6 +1036,15 @@ input:focus-visible {
   gap: 1rem;
 }
 
+.section-flow-grid,
+.section-chapter-grid,
+.topic-insight-grid,
+.practice-grid,
+.chapter-rail {
+  display: grid;
+  gap: 1rem;
+}
+
 .story-strip {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
@@ -1082,8 +1091,32 @@ input:focus-visible {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
+.section-flow-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.section-chapter-grid {
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+}
+
+.chapter-rail {
+  grid-template-columns: 1fr;
+}
+
+.topic-grid-compact {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.topic-insight-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.practice-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
 .content-card {
-  padding: 1.35rem;
+  padding: 1.25rem;
   margin-bottom: 1rem;
 }
 
@@ -1093,7 +1126,9 @@ input:focus-visible {
 .journey-card,
 .insight-card,
 .topic-brief-card,
-.callout-card {
+.callout-card,
+.practice-card,
+.section-path-card {
   padding: 1rem 1.1rem;
   height: 100%;
 }
@@ -1919,6 +1954,38 @@ input:focus-visible {
 .learning-step-card,
 .section-panel {
   background: linear-gradient(165deg, rgba(255, 250, 244, 0.96), rgba(246, 238, 221, 0.88));
+}
+
+.section-path-card,
+.practice-card {
+  background: linear-gradient(165deg, rgba(255, 250, 244, 0.96), rgba(246, 238, 221, 0.88));
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+}
+
+.chapter-card-compact {
+  border-radius: 1rem;
+}
+
+.chapter-card-compact + .chapter-card-compact {
+  margin-top: 0.75rem;
+}
+
+.topic-insight-grid .content-card,
+.practice-card {
+  margin-bottom: 0;
+}
+
+.interview-question-list {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.interview-question-item {
+  padding: 0.9rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
 }
 
 .learning-step-card {
