@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact key.
+HashMap uses hashCode() to find a bucket and equals() to find the exact key.
 
 **Example**
 
@@ -38,25 +38,27 @@ Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact
 
 **What happens**
 
-- Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact key.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact key. Why it matters: mutable keys break lookup because the hash bucket no longer matches the stored entry.
-- The example keeps the same Java shape while you vary one thing.
+- HashMap uses hashCode() to find a bucket and equals() to find the exact key.
+- mutable keys break lookup because the hash bucket no longer matches the stored entry.
 
 **What changes**
 
-- Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact key. Why it matters: mutable keys break lookup because the hash bucket no longer matches the stored entry.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact key. Why it matters: mutable keys break lookup because the hash bucket no longer matches the stored entry.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact key.
+👉 Rule: mutable keys break lookup because the hash bucket no longer matches the stored entry.
 
 **Try this**
 

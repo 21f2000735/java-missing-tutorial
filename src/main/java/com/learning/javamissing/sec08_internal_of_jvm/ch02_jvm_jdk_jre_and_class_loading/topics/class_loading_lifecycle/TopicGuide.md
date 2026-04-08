@@ -14,7 +14,7 @@ visual_asset: ClassLoadingLifecycleVisual.svg
 
 **Concept**
 
-Concept: classes are loaded and initialized only when the JVM decides they are needed.
+classes are loaded and initialized only when the JVM decides they are needed.
 
 **Example**
 
@@ -31,27 +31,27 @@ Concept: classes are loaded and initialized only when the JVM decides they are n
 
 **What happens**
 
-- Concept: classes are loaded and initialized only when the JVM decides they are needed.
-- Accessing CustomerConfig.DEFAULT_REGION triggers class initialization.
-- Why it works: loading makes class data available, linking prepares it, and initialization runs static setup.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: classes are loaded and initialized only when the JVM decides they are needed. Accessing CustomerConfig.DEFAULT_REGION triggers class initialization.
-- The example keeps the same Java shape while you vary one thing.
+- classes are loaded and initialized only when the JVM decides they are needed.
+- loading makes class data available, linking prepares it, and initialization runs static setup.
 
 **What changes**
 
-- Concept: classes are loaded and initialized only when the JVM decides they are needed. Accessing CustomerConfig.DEFAULT_REGION triggers class initialization.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: classes are loaded and initialized only when the JVM decides they are needed. Accessing CustomerConfig.DEFAULT_REGION triggers class initialization.
+loading makes class data available, linking prepares it, and initialization runs static setup.
 
 **Rule**
 
-👉 Rule: Concept: classes are loaded and initialized only when the JVM decides they are needed.
+👉 Rule: loading makes class data available, linking prepares it, and initialization runs static setup.
 
 **Try this**
 

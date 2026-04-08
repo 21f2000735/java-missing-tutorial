@@ -36,27 +36,24 @@ Some interviewers want to see whether you can keep an invariant while data keeps
 
 **What happens**
 
-- Why it works: two heaps keep lower and upper halves balanced.
-- Company lens: Jane Street answers should explain invariants out loud.
-- After reading this example, you should know:
+- the lower heap stores the lower half
 
 **What stays stable**
 
-- Why it works: two heaps keep lower and upper halves balanced. Company lens: Jane Street answers should explain invariants out loud.
-- The example keeps the same Java shape while you vary one thing.
+- the lower heap stores the lower half
+- two heaps keep lower and upper halves balanced.
 
 **What changes**
 
-- Why it works: two heaps keep lower and upper halves balanced. Company lens: Jane Street answers should explain invariants out loud.
-- That change is what reveals the behavior you need to understand.
+- It maintains the median of a growing price stream.
 
 **Why it matters**
 
-Why it works: two heaps keep lower and upper halves balanced. Company lens: Jane Street answers should explain invariants out loud.
+two heaps keep lower and upper halves balanced.
 
 **Rule**
 
-👉 Rule: Why it works: two heaps keep lower and upper halves balanced.
+👉 Rule: the lower heap stores the lower half
 
 **Try this**
 

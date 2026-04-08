@@ -52,25 +52,26 @@ worker observed shutdown = true Why it matters: volatile gives visibility, but A
 
 **What happens**
 
-- worker observed shutdown = true
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- worker observed shutdown = true Why it matters: volatile gives visibility, but AtomicInteger is still needed for atomic updates.
-- The example keeps the same Java shape while you vary one thing.
+- volatile gives visibility, but AtomicInteger is still needed for atomic updates.
 
 **What changes**
 
-- worker observed shutdown = true Why it matters: volatile gives visibility, but AtomicInteger is still needed for atomic updates.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-worker observed shutdown = true Why it matters: volatile gives visibility, but AtomicInteger is still needed for atomic updates.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: worker observed shutdown = true Why it matters: volatile gives visibility, but AtomicInteger is still needed for atomic updates.
+👉 Rule: volatile gives visibility, but AtomicInteger is still needed for atomic updates.
 
 **Try this**
 

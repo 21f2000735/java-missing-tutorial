@@ -7,47 +7,13 @@ estimated: 7 min
 
 # latency debug playbook
 
-## Why This Exists
+## latency debug playbook
 
-Concept: latency debug playbook.
+**Concept**
 
 Strong companies care how you debug production regressions, not just how you code fresh features.
 
-## The Pain Before It
-
-It shows a disciplined way to find the likely bottleneck instead of guessing.
-
-A checkout service got slower after a new release.
-
-## Java Creator Mindset
-
-Compare before and after metrics, identify the largest change, then narrow the blast radius.
-
-## How You Might Invent It
-
-1. Model component timings.
-2. Compare baselines with the new release.
-3. Inspect the largest regression first.
-
-## Naive Attempt
-
-The naive version is to use latency debug playbook without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It shows a disciplined way to find the likely bottleneck instead of guessing.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Compare before and after metrics, identify the largest change, then narrow the blast radius.
-
-Run [LatencyDebugPlaybook.java](LatencyDebugPlaybook.java) as the source of truth for the example.
-
-## Code
-
-Run [LatencyDebugPlaybook.java](LatencyDebugPlaybook.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -78,45 +44,27 @@ Run [LatencyDebugPlaybook.java](LatencyDebugPlaybook.java) and compare the outpu
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Model component timings.
-2. Compare baselines with the new release.
-3. Inspect the largest regression first.
+- compare before and after before chasing symptoms
 
-What to observe:
+**What stays stable**
 
-- primaryRegression = pricing-api
-- latencyDeltaMs = 110
+- compare before and after before chasing symptoms
+- the approach compares metrics first and guesses later.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- It shows a disciplined way to find the likely bottleneck instead of guessing.
 
-## Mistakes
+**Why it matters**
 
-- reading latency debug playbook as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+the approach compares metrics first and guesses later.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: compare before and after before chasing symptoms
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [LatencyDebugPlaybook.java](LatencyDebugPlaybook.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why latency debug playbook exists, what problem it solves, and what the runnable file proves.
+- Model component timings. 2. Compare baselines with the new release. 3. Inspect the largest regression first.

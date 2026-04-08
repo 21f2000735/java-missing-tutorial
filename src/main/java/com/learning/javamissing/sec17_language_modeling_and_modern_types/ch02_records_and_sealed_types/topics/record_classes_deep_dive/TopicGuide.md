@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: records are compact data carriers with built-in equals, hashCode, and toString.
+records are compact data carriers with built-in equals, hashCode, and toString.
 
 **Example**
 
@@ -31,25 +31,27 @@ Concept: records are compact data carriers with built-in equals, hashCode, and t
 
 **What happens**
 
-- Concept: records are compact data carriers with built-in equals, hashCode, and toString.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: records are compact data carriers with built-in equals, hashCode, and toString. Why it matters: compact constructors let you validate data while keeping the class small.
-- The example keeps the same Java shape while you vary one thing.
+- records are compact data carriers with built-in equals, hashCode, and toString.
+- compact constructors let you validate data while keeping the class small.
 
 **What changes**
 
-- Concept: records are compact data carriers with built-in equals, hashCode, and toString. Why it matters: compact constructors let you validate data while keeping the class small.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: records are compact data carriers with built-in equals, hashCode, and toString. Why it matters: compact constructors let you validate data while keeping the class small.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: records are compact data carriers with built-in equals, hashCode, and toString.
+👉 Rule: compact constructors let you validate data while keeping the class small.
 
 **Try this**
 

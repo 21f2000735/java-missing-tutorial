@@ -17,7 +17,7 @@ interviewQ:
 
 **Concept**
 
-Business rules often change faster than the workflow that uses them.
+choose one behavior through a strategy interface
 
 **Example**
 
@@ -52,27 +52,26 @@ Business rules often change faster than the workflow that uses them.
 
 **What happens**
 
-- Concept: choose one behavior through a strategy interface
-- Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month.
-- Real-world problem: checkout uses different discount rules for students and festivals.
+- checkout uses different discount rules for students and festivals.
+- strategy moves changing behavior behind a contract
 
 **What stays stable**
 
-- Concept: choose one behavior through a strategy interface Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month. Real-world problem: checkout uses different discount rules for students and festivals.
-- The example keeps the same Java shape while you vary one thing.
+- strategy moves changing behavior behind a contract
+- choose one behavior through a strategy interface
 
 **What changes**
 
-- Concept: choose one behavior through a strategy interface Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month. Real-world problem: checkout uses different discount rules for students and festivals.
-- That change is what reveals the behavior you need to understand.
+- checkout uses different discount rules for students and festivals.
+- replacing one huge switch with many strategies when the rule set is still tiny and stable.
 
 **Why it matters**
 
-Concept: choose one behavior through a strategy interface Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month. Real-world problem: checkout uses different discount rules for students and festivals.
+one small part of the workflow changes often while the surrounding flow stays stable. checkout depends on the DiscountPolicy contract, not one hard-coded rule.
 
 **Rule**
 
-👉 Rule: Concept: choose one behavior through a strategy interface Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month.
+👉 Rule: strategy moves changing behavior behind a contract
 
 **Try this**
 

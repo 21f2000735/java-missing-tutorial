@@ -38,12 +38,10 @@ Java programs stay useful when they are organized around ideas, not only syntax.
 **What stays stable**
 
 - First understand the problem in plain language, then map that idea to the Java code.
-- The example keeps the same Java shape while you vary one thing.
 
 **What changes**
 
-- business code often filters, transforms, groups, and summarizes data.
-- That change is what reveals the behavior you need to understand.
+- using groupingBy when partitioningBy would express the intent more clearly
 
 **Why it matters**
 

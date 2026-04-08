@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: sealed classes let switch handle every known subtype.
+sealed classes let switch handle every known subtype.
 
 **Example**
 
@@ -31,25 +31,27 @@ Concept: sealed classes let switch handle every known subtype.
 
 **What happens**
 
-- Concept: sealed classes let switch handle every known subtype.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: sealed classes let switch handle every known subtype. Why it matters: exhaustive matching makes result handling safer and easier to read.
-- The example keeps the same Java shape while you vary one thing.
+- sealed classes let switch handle every known subtype.
+- exhaustive matching makes result handling safer and easier to read.
 
 **What changes**
 
-- Concept: sealed classes let switch handle every known subtype. Why it matters: exhaustive matching makes result handling safer and easier to read.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: sealed classes let switch handle every known subtype. Why it matters: exhaustive matching makes result handling safer and easier to read.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: sealed classes let switch handle every known subtype.
+👉 Rule: exhaustive matching makes result handling safer and easier to read.
 
 **Try this**
 

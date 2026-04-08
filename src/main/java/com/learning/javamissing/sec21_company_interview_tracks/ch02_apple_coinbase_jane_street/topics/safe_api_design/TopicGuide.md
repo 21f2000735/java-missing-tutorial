@@ -33,27 +33,24 @@ Good APIs reduce misuse before misuse becomes a production incident.
 
 **What happens**
 
-- Why it works: the static factory validates required fields before the request exists.
-- Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.
-- After reading this example, you should know:
+- good APIs prevent invalid states early
 
 **What stays stable**
 
-- Why it works: the static factory validates required fields before the request exists. Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.
-- The example keeps the same Java shape while you vary one thing.
+- good APIs prevent invalid states early
+- the static factory validates required fields before the request exists.
 
 **What changes**
 
-- Why it works: the static factory validates required fields before the request exists. Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.
-- That change is what reveals the behavior you need to understand.
+- It shows how validation and small construction rules make invalid states harder to create.
 
 **Why it matters**
 
-Why it works: the static factory validates required fields before the request exists. Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.
+the static factory validates required fields before the request exists.
 
 **Rule**
 
-👉 Rule: Why it works: the static factory validates required fields before the request exists.
+👉 Rule: good APIs prevent invalid states early
 
 **Try this**
 

@@ -31,26 +31,27 @@ Many business tasks are really data transformations, and the code should show th
 
 **What happens**
 
-- longNames = [liam, alex]
-- priorityTotal = 3798
+- Why it works: the filter keeps only names with length >= 4.
+- You have raw data, but the business wants a smaller and clearer answer.
+- a stream pipeline is best when the work is a chain of data steps
 
 **What stays stable**
 
-- A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.
-- The example keeps the same Java shape while you vary one thing.
+- a stream pipeline is best when the work is a chain of data steps
+- the filter keeps only names with length >= 4.
 
 **What changes**
 
-- It expresses filtering and mapping as a readable sequence of steps.
-- That change is what reveals the behavior you need to understand.
+- You have raw data, but the business wants a smaller and clearer answer.
+- using streams for logic that is simpler with a loop
 
 **Why it matters**
 
-Many business tasks are really data transformations, and the code should show that clearly.
+the task is really filter -> transform -> answer. the filter keeps only names with length >= 4.
 
 **Rule**
 
-👉 Rule: A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.
+👉 Rule: a stream pipeline is best when the work is a chain of data steps
 
 **Try this**
 

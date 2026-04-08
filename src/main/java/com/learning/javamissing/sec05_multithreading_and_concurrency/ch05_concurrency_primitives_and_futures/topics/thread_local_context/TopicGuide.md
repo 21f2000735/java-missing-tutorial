@@ -33,25 +33,26 @@ Why it matters: each thread can carry request context without sharing mutable st
 
 **What happens**
 
-- Why it matters: each thread can carry request context without sharing mutable state.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Why it matters: each thread can carry request context without sharing mutable state.
-- The example keeps the same Java shape while you vary one thing.
+- each thread can carry request context without sharing mutable state.
 
 **What changes**
 
-- Why it matters: each thread can carry request context without sharing mutable state.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Why it matters: each thread can carry request context without sharing mutable state.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Why it matters: each thread can carry request context without sharing mutable state.
+👉 Rule: each thread can carry request context without sharing mutable state.
 
 **Try this**
 

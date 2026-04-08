@@ -7,47 +7,13 @@ estimated: 9 min
 
 # HashMap buckets and collisions
 
-## Why This Exists
+## HashMap buckets and collisions
 
-Concept: HashMap buckets and collisions.
+**Concept**
 
-HashMap looks like instant lookup until collisions and hashing quality become relevant.
+HashMap collisions
 
-## The Pain Before It
-
-It explains why average lookup is fast, what collisions mean, and why equals/hashCode correctness matters.
-
-A session store keeps statuses by user ID in a map.
-
-## Java Creator Mindset
-
-HashMap spreads keys across buckets; collisions mean multiple keys share one bucket and more work happens there.
-
-## How You Might Invent It
-
-1. Store several keys with the same hash.
-2. Read one value back.
-3. See that correctness still depends on equals/hashCode, even when collisions exist.
-
-## Naive Attempt
-
-The naive version is to use hashmap buckets and collisions without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It explains why average lookup is fast, what collisions mean, and why equals/hashCode correctness matters.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-HashMap spreads keys across buckets; collisions mean multiple keys share one bucket and more work happens there.
-
-Run [HashMapBucketsAndCollisions.java](HashMapBucketsAndCollisions.java) as the source of truth for the example.
-
-## Code
-
-Run [HashMapBucketsAndCollisions.java](HashMapBucketsAndCollisions.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -74,45 +40,27 @@ Run [HashMapBucketsAndCollisions.java](HashMapBucketsAndCollisions.java) and com
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Store several keys with the same hash.
-2. Read one value back.
-3. See that correctness still depends on equals/hashCode, even when collisions exist.
+- HashMap lookup is usually O(1) on average
 
-What to observe:
+**What stays stable**
 
-- status = EXPIRED
-- sameBucketCount = 3
+- HashMap lookup is usually O(1) on average
+- HashMap collisions
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- assuming HashMap is always O(1) without thinking about collision patterns.
 
-## Mistakes
+**Why it matters**
 
-- reading HashMap buckets and collisions as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+collisions do not break lookup when equals/hashCode are implemented correctly.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: HashMap lookup is usually O(1) on average
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [HashMapBucketsAndCollisions.java](HashMapBucketsAndCollisions.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why HashMap buckets and collisions exists, what problem it solves, and what the runnable file proves.
+- Store several keys with the same hash. 2. Read one value back. 3. See that correctness still depends on equals/hashCode, even when collisions exist.

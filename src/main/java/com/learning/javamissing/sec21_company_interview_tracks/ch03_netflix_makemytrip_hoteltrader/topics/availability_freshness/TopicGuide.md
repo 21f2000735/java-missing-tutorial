@@ -37,27 +37,23 @@ Marketplace and partner systems need to know whether what they show is still tru
 
 **What happens**
 
-- Company lens: HotelTrader answers should mention sync lag and mismatch rate, not just API latency.
-- After reading this example, you should know:
 - freshness is a measurable property
 
 **What stays stable**
 
-- Company lens: HotelTrader answers should mention sync lag and mismatch rate, not just API latency. After reading this example, you should know: - freshness is a measurable property - supplier lag can turn correct code into wrong product behavior - platform APIs need trust metrics, not only uptime metrics
-- The example keeps the same Java shape while you vary one thing.
+- freshness is a measurable property
 
 **What changes**
 
-- Company lens: HotelTrader answers should mention sync lag and mismatch rate, not just API latency. After reading this example, you should know: - freshness is a measurable property - supplier lag can turn correct code into wrong product behavior - platform APIs need trust metrics, not only uptime metrics
-- That change is what reveals the behavior you need to understand.
+- It measures whether supplier availability is fresh enough to use.
 
 **Why it matters**
 
-Company lens: HotelTrader answers should mention sync lag and mismatch rate, not just API latency. After reading this example, you should know: - freshness is a measurable property - supplier lag can turn correct code into wrong product behavior - platform APIs need trust metrics, not only uptime metrics
+Marketplace and partner systems need to know whether what they show is still trustworthy.
 
 **Rule**
 
-👉 Rule: Company lens: HotelTrader answers should mention sync lag and mismatch rate, not just API latency.
+👉 Rule: freshness is a measurable property
 
 **Try this**
 

@@ -11,7 +11,7 @@ estimated: 9 min
 
 **Concept**
 
-HashMap looks like instant lookup until collisions and hashing quality become relevant.
+HashMap collisions
 
 **Example**
 
@@ -42,27 +42,24 @@ HashMap looks like instant lookup until collisions and hashing quality become re
 
 **What happens**
 
-- Concept: HashMap collisions
-- Problem: fast lookup depends on good key distribution, not on magic.
-- Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.
+- HashMap lookup is usually O(1) on average
 
 **What stays stable**
 
-- Concept: HashMap collisions Problem: fast lookup depends on good key distribution, not on magic. Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.
-- The example keeps the same Java shape while you vary one thing.
+- HashMap lookup is usually O(1) on average
+- HashMap collisions
 
 **What changes**
 
-- Concept: HashMap collisions Problem: fast lookup depends on good key distribution, not on magic. Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.
-- That change is what reveals the behavior you need to understand.
+- assuming HashMap is always O(1) without thinking about collision patterns.
 
 **Why it matters**
 
-Concept: HashMap collisions Problem: fast lookup depends on good key distribution, not on magic. Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.
+collisions do not break lookup when equals/hashCode are implemented correctly.
 
 **Rule**
 
-👉 Rule: Concept: HashMap collisions Problem: fast lookup depends on good key distribution, not on magic.
+👉 Rule: HashMap lookup is usually O(1) on average
 
 **Try this**
 

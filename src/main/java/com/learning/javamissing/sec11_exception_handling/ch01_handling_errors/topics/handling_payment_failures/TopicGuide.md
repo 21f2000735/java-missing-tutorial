@@ -11,7 +11,7 @@ estimated: 7 min
 
 **Concept**
 
-Java programs stay useful when they are organized around ideas, not only syntax.
+errors should preserve meaning for both developers and users.
 
 **Example**
 
@@ -29,26 +29,23 @@ Java programs stay useful when they are organized around ideas, not only syntax.
 
 **What happens**
 
-- paymentStatus = failed
-- Concept: errors should preserve meaning for both developers and users.
+- Read the inline comments and printed lines in main() to see the expected behavior.
 
 **What stays stable**
 
-- paymentStatus = failed Concept: errors should preserve meaning for both developers and users.
-- The example keeps the same Java shape while you vary one thing.
+- errors should preserve meaning for both developers and users.
 
 **What changes**
 
-- paymentStatus = failed Concept: errors should preserve meaning for both developers and users.
-- That change is what reveals the behavior you need to understand.
+- failures are part of the business flow and must stay understandable.
 
 **Why it matters**
 
-paymentStatus = failed Concept: errors should preserve meaning for both developers and users.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 **Rule**
 
-👉 Rule: paymentStatus = failed Concept: errors should preserve meaning for both developers and users.
+👉 Rule: errors should preserve meaning for both developers and users.
 
 **Try this**
 

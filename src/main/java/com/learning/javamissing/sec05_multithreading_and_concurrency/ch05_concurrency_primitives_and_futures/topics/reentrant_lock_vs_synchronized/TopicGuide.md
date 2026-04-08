@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
+Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose. synchronized example = monitor-based mutual exclusion
 
 **Example**
 
@@ -57,26 +57,27 @@ Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting 
 
 **What happens**
 
-- Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
-- The example keeps the same Java shape while you vary one thing.
+- ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
 
 **What changes**
 
-- Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
+👉 Rule: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
 
 **Try this**
 
-- Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
+- synchronized example = monitor-based mutual exclusion

@@ -36,27 +36,23 @@ Java programs stay useful when they are organized around ideas, not only syntax.
 
 **What happens**
 
-- What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU.
-- Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.
-- Senior note: collection choice affects API clarity, mutation rules, and algorithmic cost.
+- Read the inline comments and printed lines in main() to see the expected behavior.
 
 **What stays stable**
 
-- What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU. Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.
-- The example keeps the same Java shape while you vary one thing.
+- the right collection makes the code easier to read and prevents the wrong data shape.
 
 **What changes**
 
-- What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU. Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.
-- That change is what reveals the behavior you need to understand.
+- teams must store repeated, unique, and keyed data correctly.
 
 **Why it matters**
 
-What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU. Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 **Rule**
 
-👉 Rule: What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU.
+👉 Rule: the right collection makes the code easier to read and prevents the wrong data shape.
 
 **Try this**
 

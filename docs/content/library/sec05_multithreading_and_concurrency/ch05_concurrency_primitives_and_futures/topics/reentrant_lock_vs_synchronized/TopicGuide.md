@@ -9,43 +9,13 @@ visual: recommended
 
 # ReentrantLock Vs Synchronized
 
-## Why This Exists
+## ReentrantLock Vs Synchronized
 
-Concept: ReentrantLock Vs Synchronized.
+**Concept**
 
-## The Pain Before It
+Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose. synchronized example = monitor-based mutual exclusion
 
-
-
-## Java Creator Mindset
-
-Make the rule behind reentrantlock vs synchronized obvious so the safer choice is also the clearer one.
-
-## How You Might Invent It
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-## Naive Attempt
-
-The naive version is to use reentrantlock vs synchronized without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-If you ignore the rule behind reentrantlock vs synchronized, the example becomes harder to trust.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Use the Java file to make the rule behind reentrantlock vs synchronized explicit and repeatable.
-
-Run [ReentrantLockVsSynchronized.java](ReentrantLockVsSynchronized.java) as the source of truth for the example.
-
-## Code
-
-Run [ReentrantLockVsSynchronized.java](ReentrantLockVsSynchronized.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) throws InterruptedException {
@@ -85,45 +55,29 @@ Run [ReentrantLockVsSynchronized.java](ReentrantLockVsSynchronized.java) and com
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
-What to observe:
+**What stays stable**
 
-- Check whether the output matches the rule in the comment header.
-- Check whether the edge case you changed still behaves as expected.
+- ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- The input, state, or execution path is what changes.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading ReentrantLock Vs Synchronized as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+This matters because the rule keeps the behavior predictable when the code gets real.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [ReentrantLockVsSynchronized.java](ReentrantLockVsSynchronized.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why ReentrantLock Vs Synchronized exists, what problem it solves, and what the runnable file proves.
+- synchronized example = monitor-based mutual exclusion

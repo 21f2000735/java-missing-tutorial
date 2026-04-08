@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: ArrayList iterators are fail-fast.
+ArrayList iterators are fail-fast.
 
 **Example**
 
@@ -51,25 +51,27 @@ Concept: ArrayList iterators are fail-fast.
 
 **What happens**
 
-- Concept: ArrayList iterators are fail-fast.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: ArrayList iterators are fail-fast. Why it matters: fail-fast helps catch bugs early, while fail-safe and weakly consistent iterators trade strict detection for concurrency.
-- The example keeps the same Java shape while you vary one thing.
+- ArrayList iterators are fail-fast.
+- fail-fast helps catch bugs early, while fail-safe and weakly consistent iterators trade strict detection for concurrency.
 
 **What changes**
 
-- Concept: ArrayList iterators are fail-fast. Why it matters: fail-fast helps catch bugs early, while fail-safe and weakly consistent iterators trade strict detection for concurrency.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: ArrayList iterators are fail-fast. Why it matters: fail-fast helps catch bugs early, while fail-safe and weakly consistent iterators trade strict detection for concurrency.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: ArrayList iterators are fail-fast.
+👉 Rule: fail-fast helps catch bugs early, while fail-safe and weakly consistent iterators trade strict detection for concurrency.
 
 **Try this**
 

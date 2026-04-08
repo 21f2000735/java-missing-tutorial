@@ -14,7 +14,7 @@ visual_asset: GcStrategiesVisual.svg
 
 **Concept**
 
-Concept: different garbage collectors optimize for different tradeoffs.
+different garbage collectors optimize for different tradeoffs.
 
 **Example**
 
@@ -39,27 +39,26 @@ Concept: different garbage collectors optimize for different tradeoffs.
 
 **What happens**
 
-- Concept: different garbage collectors optimize for different tradeoffs.
-- G1 -> balanced default for many server workloads
-- ZGC -> very low pause time focus
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: different garbage collectors optimize for different tradeoffs. G1 -> balanced default for many server workloads ZGC -> very low pause time focus Shenandoah -> low pause time with concurrent compaction focus Use this when: you need a first mental model before reading deeper GC tuning material.
-- The example keeps the same Java shape while you vary one thing.
+- different garbage collectors optimize for different tradeoffs.
 
 **What changes**
 
-- Concept: different garbage collectors optimize for different tradeoffs. G1 -> balanced default for many server workloads ZGC -> very low pause time focus Shenandoah -> low pause time with concurrent compaction focus Use this when: you need a first mental model before reading deeper GC tuning material.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: different garbage collectors optimize for different tradeoffs. G1 -> balanced default for many server workloads ZGC -> very low pause time focus Shenandoah -> low pause time with concurrent compaction focus Use this when: you need a first mental model before reading deeper GC tuning material.
+you need a first mental model before reading deeper GC tuning material.
 
 **Rule**
 
-👉 Rule: Concept: different garbage collectors optimize for different tradeoffs.
+👉 Rule: different garbage collectors optimize for different tradeoffs.
 
 **Try this**
 

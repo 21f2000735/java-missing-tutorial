@@ -38,27 +38,23 @@ Payment and transfer APIs must survive retries without moving money twice.
 
 **What happens**
 
-- Company lens: Coinbase answers should say correctness before convenience.
-- After reading this example, you should know:
 - idempotency keys belong in money-moving APIs
 
 **What stays stable**
 
-- Company lens: Coinbase answers should say correctness before convenience. After reading this example, you should know: - idempotency keys belong in money-moving APIs - retries are normal and should be safe - ledger truth must not duplicate on client timeout
-- The example keeps the same Java shape while you vary one thing.
+- idempotency keys belong in money-moving APIs
 
 **What changes**
 
-- Company lens: Coinbase answers should say correctness before convenience. After reading this example, you should know: - idempotency keys belong in money-moving APIs - retries are normal and should be safe - ledger truth must not duplicate on client timeout
-- That change is what reveals the behavior you need to understand.
+- It binds a transfer request id to one durable result.
 
 **Why it matters**
 
-Company lens: Coinbase answers should say correctness before convenience. After reading this example, you should know: - idempotency keys belong in money-moving APIs - retries are normal and should be safe - ledger truth must not duplicate on client timeout
+Payment and transfer APIs must survive retries without moving money twice.
 
 **Rule**
 
-👉 Rule: Company lens: Coinbase answers should say correctness before convenience.
+👉 Rule: idempotency keys belong in money-moving APIs
 
 **Try this**
 

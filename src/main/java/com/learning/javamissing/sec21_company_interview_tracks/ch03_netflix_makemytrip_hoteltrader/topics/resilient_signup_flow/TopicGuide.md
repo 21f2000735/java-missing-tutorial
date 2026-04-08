@@ -33,27 +33,23 @@ Distributed systems fail in pieces, not all at once.
 
 **What happens**
 
-- Company lens: Netflix-style answers should show graceful degradation, not all-or-nothing panic.
-- After reading this example, you should know:
 - not every dependency deserves the same failure boundary
 
 **What stays stable**
 
-- Company lens: Netflix-style answers should show graceful degradation, not all-or-nothing panic. After reading this example, you should know: - not every dependency deserves the same failure boundary - degraded success can be better than total failure - reliability answers need explicit recovery plans
-- The example keeps the same Java shape while you vary one thing.
+- not every dependency deserves the same failure boundary
 
 **What changes**
 
-- Company lens: Netflix-style answers should show graceful degradation, not all-or-nothing panic. After reading this example, you should know: - not every dependency deserves the same failure boundary - degraded success can be better than total failure - reliability answers need explicit recovery plans
-- That change is what reveals the behavior you need to understand.
+- It shows how a signup flow can continue when one non-critical dependency fails.
 
 **Why it matters**
 
-Company lens: Netflix-style answers should show graceful degradation, not all-or-nothing panic. After reading this example, you should know: - not every dependency deserves the same failure boundary - degraded success can be better than total failure - reliability answers need explicit recovery plans
+Distributed systems fail in pieces, not all at once.
 
 **Rule**
 
-👉 Rule: Company lens: Netflix-style answers should show graceful degradation, not all-or-nothing panic.
+👉 Rule: not every dependency deserves the same failure boundary
 
 **Try this**
 

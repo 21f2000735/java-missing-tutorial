@@ -29,26 +29,27 @@ Concurrency starts with one hard fact: two units of work can overlap in time.
 
 **What happens**
 
-- worker thread: prepare report
-- safe count = 2
+- A thread can run a small task independently.
+- You want one task to run independently, but once tasks overlap, execution order and shared state both matter.
+- threads let work overlap in time
 
 **What stays stable**
 
-- A thread is a unit of execution. Starting work and sharing state are separate concerns.
-- The example keeps the same Java shape while you vary one thing.
+- start() creates a new thread; run() is just a normal method call
+- threads let work overlap in time
 
 **What changes**
 
-- It shows how independent work starts and why shared state becomes risky.
-- That change is what reveals the behavior you need to understand.
+- You want one task to run independently, but once tasks overlap, execution order and shared state both matter.
+- calling run() directly and expecting a new thread
 
 **Why it matters**
 
-Concurrency starts with one hard fact: two units of work can overlap in time.
+you are learning the execution model or showing a tiny one-off demo. synchronized protects the shared counter.
 
 **Rule**
 
-👉 Rule: A thread is a unit of execution.
+👉 Rule: start() creates a new thread; run() is just a normal method call
 
 **Try this**
 

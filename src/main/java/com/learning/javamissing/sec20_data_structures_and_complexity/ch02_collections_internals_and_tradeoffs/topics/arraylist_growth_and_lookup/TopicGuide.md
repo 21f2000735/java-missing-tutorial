@@ -11,7 +11,7 @@ estimated: 8 min
 
 **Concept**
 
-ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.
+ArrayList internals
 
 **Example**
 
@@ -40,27 +40,24 @@ ArrayList feels simple on the surface, but its backing-array behavior explains w
 
 **What happens**
 
-- Concept: ArrayList internals
-- Problem: appends look cheap, but hidden resize work still exists.
-- Why it works: index access is direct, but resizing copies old elements into a larger array.
+- index lookup is fast because ArrayList stores elements in a contiguous backing array
 
 **What stays stable**
 
-- Concept: ArrayList internals Problem: appends look cheap, but hidden resize work still exists. Why it works: index access is direct, but resizing copies old elements into a larger array.
-- The example keeps the same Java shape while you vary one thing.
+- index lookup is fast because ArrayList stores elements in a contiguous backing array
+- ArrayList internals
 
 **What changes**
 
-- Concept: ArrayList internals Problem: appends look cheap, but hidden resize work still exists. Why it works: index access is direct, but resizing copies old elements into a larger array.
-- That change is what reveals the behavior you need to understand.
+- saying append is always free instead of amortized.
 
 **Why it matters**
 
-Concept: ArrayList internals Problem: appends look cheap, but hidden resize work still exists. Why it works: index access is direct, but resizing copies old elements into a larger array.
+index access is direct, but resizing copies old elements into a larger array.
 
 **Rule**
 
-👉 Rule: Concept: ArrayList internals Problem: appends look cheap, but hidden resize work still exists.
+👉 Rule: index lookup is fast because ArrayList stores elements in a contiguous backing array
 
 **Try this**
 

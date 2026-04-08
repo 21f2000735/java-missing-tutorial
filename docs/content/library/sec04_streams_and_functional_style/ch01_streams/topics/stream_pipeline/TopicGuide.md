@@ -7,47 +7,13 @@ estimated: 9 min
 
 # Stream Pipeline
 
-## Why This Exists
+## Stream Pipeline
 
-Concept: Stream Pipeline.
+**Concept**
 
 Many business tasks are really data transformations, and the code should show that clearly.
 
-## The Pain Before It
-
-It expresses filtering and mapping as a readable sequence of steps.
-
-An order screen needs only priority items and only the fields needed for the next step.
-
-## Java Creator Mindset
-
-A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.
-
-## How You Might Invent It
-
-1. Start with a collection.
-2. Add filter and map steps in the same order as the business rule.
-3. Finish with a terminal operation that produces the answer.
-
-## Naive Attempt
-
-The naive version is to use stream pipeline without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It expresses filtering and mapping as a readable sequence of steps.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.
-
-Run [StreamPipeline.java](StreamPipeline.java) as the source of truth for the example.
-
-## Code
-
-Run [StreamPipeline.java](StreamPipeline.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -63,45 +29,30 @@ Run [StreamPipeline.java](StreamPipeline.java) and compare the output with the e
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Start with a collection.
-2. Add filter and map steps in the same order as the business rule.
-3. Finish with a terminal operation that produces the answer.
+- Why it works: the filter keeps only names with length >= 4.
+- You have raw data, but the business wants a smaller and clearer answer.
+- a stream pipeline is best when the work is a chain of data steps
 
-What to observe:
+**What stays stable**
 
-- longNames = [liam, alex]
-- priorityTotal = 3798
+- a stream pipeline is best when the work is a chain of data steps
+- the filter keeps only names with length >= 4.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- You have raw data, but the business wants a smaller and clearer answer.
+- using streams for logic that is simpler with a loop
 
-## Mistakes
+**Why it matters**
 
-- reading Stream Pipeline as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+the task is really filter -> transform -> answer. the filter keeps only names with length >= 4.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: a stream pipeline is best when the work is a chain of data steps
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [StreamPipeline.java](StreamPipeline.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why Stream Pipeline exists, what problem it solves, and what the runnable file proves.
+- Start with a collection. 2. Add filter and map steps in the same order as the business rule. 3. Finish with a terminal operation that produces the answer.

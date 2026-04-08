@@ -49,25 +49,26 @@ allOf = all parallel calls finished Why it matters: thenApply maps a value, then
 
 **What happens**
 
-- allOf = all parallel calls finished
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- allOf = all parallel calls finished Why it matters: thenApply maps a value, thenCompose flattens async work, and allOf/anyOf coordinate parallel calls.
-- The example keeps the same Java shape while you vary one thing.
+- thenApply maps a value, thenCompose flattens async work, and allOf/anyOf coordinate parallel calls.
 
 **What changes**
 
-- allOf = all parallel calls finished Why it matters: thenApply maps a value, thenCompose flattens async work, and allOf/anyOf coordinate parallel calls.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-allOf = all parallel calls finished Why it matters: thenApply maps a value, thenCompose flattens async work, and allOf/anyOf coordinate parallel calls.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: allOf = all parallel calls finished Why it matters: thenApply maps a value, thenCompose flattens async work, and allOf/anyOf coordinate parallel calls.
+👉 Rule: thenApply maps a value, thenCompose flattens async work, and allOf/anyOf coordinate parallel calls.
 
 **Try this**
 

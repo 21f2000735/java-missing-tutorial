@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: PriorityQueue is a min-heap by default.
+PriorityQueue is a min-heap by default.
 
 **Example**
 
@@ -44,25 +44,27 @@ Concept: PriorityQueue is a min-heap by default.
 
 **What happens**
 
-- Concept: PriorityQueue is a min-heap by default.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: PriorityQueue is a min-heap by default. Why it matters: add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.
-- The example keeps the same Java shape while you vary one thing.
+- PriorityQueue is a min-heap by default.
+- add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.
 
 **What changes**
 
-- Concept: PriorityQueue is a min-heap by default. Why it matters: add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: PriorityQueue is a min-heap by default. Why it matters: add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: PriorityQueue is a min-heap by default.
+👉 Rule: add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.
 
 **Try this**
 

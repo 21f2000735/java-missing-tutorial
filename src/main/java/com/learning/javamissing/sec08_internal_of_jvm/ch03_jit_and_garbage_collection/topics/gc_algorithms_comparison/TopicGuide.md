@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: different GC algorithms optimize different tradeoffs.
+different GC algorithms optimize different tradeoffs.
 
 **Example**
 
@@ -32,27 +32,27 @@ Concept: different GC algorithms optimize different tradeoffs.
 
 **What happens**
 
-- Concept: different GC algorithms optimize different tradeoffs.
-- Serial GC = single-threaded, simple, small heaps
-- Parallel GC = throughput focused, multi-threaded
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: different GC algorithms optimize different tradeoffs. Serial GC = single-threaded, simple, small heaps Parallel GC = throughput focused, multi-threaded G1 GC = region based, predictable pauses ZGC = concurrent compaction, sub-10ms pauses Shenandoah = concurrent evacuation Flags: -XX:+UseG1GC, -XX:+UseZGC Why it matters: the best GC depends on latency target, heap size, and throughput needs.
-- The example keeps the same Java shape while you vary one thing.
+- different GC algorithms optimize different tradeoffs.
+- the best GC depends on latency target, heap size, and throughput needs.
 
 **What changes**
 
-- Concept: different GC algorithms optimize different tradeoffs. Serial GC = single-threaded, simple, small heaps Parallel GC = throughput focused, multi-threaded G1 GC = region based, predictable pauses ZGC = concurrent compaction, sub-10ms pauses Shenandoah = concurrent evacuation Flags: -XX:+UseG1GC, -XX:+UseZGC Why it matters: the best GC depends on latency target, heap size, and throughput needs.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: different GC algorithms optimize different tradeoffs. Serial GC = single-threaded, simple, small heaps Parallel GC = throughput focused, multi-threaded G1 GC = region based, predictable pauses ZGC = concurrent compaction, sub-10ms pauses Shenandoah = concurrent evacuation Flags: -XX:+UseG1GC, -XX:+UseZGC Why it matters: the best GC depends on latency target, heap size, and throughput needs.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: different GC algorithms optimize different tradeoffs.
+👉 Rule: the best GC depends on latency target, heap size, and throughput needs.
 
 **Try this**
 

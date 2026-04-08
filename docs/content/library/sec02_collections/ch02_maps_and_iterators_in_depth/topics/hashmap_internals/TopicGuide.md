@@ -9,43 +9,13 @@ visual: recommended
 
 # HashMap Internals
 
-## Why This Exists
+## HashMap Internals
 
-Concept: HashMap Internals.
+**Concept**
 
-## The Pain Before It
+HashMap uses hashCode() to find a bucket and equals() to find the exact key.
 
-
-
-## Java Creator Mindset
-
-Make the rule behind hashmap internals obvious so the safer choice is also the clearer one.
-
-## How You Might Invent It
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-## Naive Attempt
-
-The naive version is to use hashmap internals without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-If you ignore the rule behind hashmap internals, the example becomes harder to trust.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Use the Java file to make the rule behind hashmap internals explicit and repeatable.
-
-Run [HashMapInternals.java](HashMapInternals.java) as the source of truth for the example.
-
-## Code
-
-Run [HashMapInternals.java](HashMapInternals.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -66,45 +36,30 @@ Run [HashMapInternals.java](HashMapInternals.java) and compare the output with t
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
-What to observe:
+**What stays stable**
 
-- Check whether the output matches the rule in the comment header.
-- Check whether the edge case you changed still behaves as expected.
+- HashMap uses hashCode() to find a bucket and equals() to find the exact key.
+- mutable keys break lookup because the hash bucket no longer matches the stored entry.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- The input, state, or execution path is what changes.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading HashMap Internals as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+This matters because the rule keeps the behavior predictable when the code gets real.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: mutable keys break lookup because the hash bucket no longer matches the stored entry.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [HashMapInternals.java](HashMapInternals.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why HashMap Internals exists, what problem it solves, and what the runnable file proves.
+- Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact key.

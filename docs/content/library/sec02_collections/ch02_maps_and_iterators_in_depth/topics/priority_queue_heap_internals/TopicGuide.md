@@ -9,43 +9,13 @@ visual: recommended
 
 # PriorityQueue And Heap Internals
 
-## Why This Exists
+## PriorityQueue And Heap Internals
 
-Concept: PriorityQueue And Heap Internals.
+**Concept**
 
-## The Pain Before It
+PriorityQueue is a min-heap by default.
 
-
-
-## Java Creator Mindset
-
-Make the rule behind priorityqueue and heap internals obvious so the safer choice is also the clearer one.
-
-## How You Might Invent It
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-## Naive Attempt
-
-The naive version is to use priorityqueue and heap internals without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-If you ignore the rule behind priorityqueue and heap internals, the example becomes harder to trust.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Use the Java file to make the rule behind priorityqueue and heap internals explicit and repeatable.
-
-Run [PriorityQueueHeapInternals.java](PriorityQueueHeapInternals.java) as the source of truth for the example.
-
-## Code
-
-Run [PriorityQueueHeapInternals.java](PriorityQueueHeapInternals.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -72,45 +42,30 @@ Run [PriorityQueueHeapInternals.java](PriorityQueueHeapInternals.java) and compa
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
-What to observe:
+**What stays stable**
 
-- Check whether the output matches the rule in the comment header.
-- Check whether the edge case you changed still behaves as expected.
+- PriorityQueue is a min-heap by default.
+- add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- The input, state, or execution path is what changes.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading PriorityQueue And Heap Internals as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+This matters because the rule keeps the behavior predictable when the code gets real.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [PriorityQueueHeapInternals.java](PriorityQueueHeapInternals.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why PriorityQueue And Heap Internals exists, what problem it solves, and what the runnable file proves.
+- Concept: PriorityQueue is a min-heap by default.

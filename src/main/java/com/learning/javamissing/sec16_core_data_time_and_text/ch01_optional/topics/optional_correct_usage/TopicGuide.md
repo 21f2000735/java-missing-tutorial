@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: Optional models a missing value without null checks.
+Optional models a missing value without null checks.
 
 **Example**
 
@@ -34,25 +34,27 @@ Concept: Optional models a missing value without null checks.
 
 **What happens**
 
-- Concept: Optional models a missing value without null checks.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: Optional models a missing value without null checks. Why it matters: Optional works well as a return type, but not as a field or method parameter.
-- The example keeps the same Java shape while you vary one thing.
+- Optional models a missing value without null checks.
+- Optional works well as a return type, but not as a field or method parameter.
 
 **What changes**
 
-- Concept: Optional models a missing value without null checks. Why it matters: Optional works well as a return type, but not as a field or method parameter.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: Optional models a missing value without null checks. Why it matters: Optional works well as a return type, but not as a field or method parameter.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: Optional models a missing value without null checks.
+👉 Rule: Optional works well as a return type, but not as a field or method parameter.
 
 **Try this**
 

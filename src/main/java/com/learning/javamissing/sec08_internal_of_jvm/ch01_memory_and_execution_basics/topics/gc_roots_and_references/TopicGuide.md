@@ -37,25 +37,26 @@ GC roots = local variable, active thread, static field, and JNI-style references
 
 **What happens**
 
-- GC roots = local variable, active thread, static field, and JNI-style references.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- GC roots = local variable, active thread, static field, and JNI-style references. Why it matters: strong, soft, weak, and phantom references control how caches and leaks behave.
-- The example keeps the same Java shape while you vary one thing.
+- strong, soft, weak, and phantom references control how caches and leaks behave.
 
 **What changes**
 
-- GC roots = local variable, active thread, static field, and JNI-style references. Why it matters: strong, soft, weak, and phantom references control how caches and leaks behave.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-GC roots = local variable, active thread, static field, and JNI-style references. Why it matters: strong, soft, weak, and phantom references control how caches and leaks behave.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: GC roots = local variable, active thread, static field, and JNI-style references.
+👉 Rule: strong, soft, weak, and phantom references control how caches and leaks behave.
 
 **Try this**
 

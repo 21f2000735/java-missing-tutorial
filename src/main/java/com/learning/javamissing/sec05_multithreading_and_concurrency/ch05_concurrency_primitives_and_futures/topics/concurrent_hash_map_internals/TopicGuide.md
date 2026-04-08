@@ -38,25 +38,26 @@ Why it matters: ConcurrentHashMap is designed for shared reads and writes withou
 
 **What happens**
 
-- Why it matters: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Why it matters: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
-- The example keeps the same Java shape while you vary one thing.
+- ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
 
 **What changes**
 
-- Why it matters: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Why it matters: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Why it matters: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
+👉 Rule: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
 
 **Try this**
 

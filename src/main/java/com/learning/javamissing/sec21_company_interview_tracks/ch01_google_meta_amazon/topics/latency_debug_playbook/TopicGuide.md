@@ -46,27 +46,24 @@ Strong companies care how you debug production regressions, not just how you cod
 
 **What happens**
 
-- Why it works: the approach compares metrics first and guesses later.
-- Company lens: Google values methodical debugging and measurable reasoning.
-- After reading this example, you should know:
+- compare before and after before chasing symptoms
 
 **What stays stable**
 
-- Why it works: the approach compares metrics first and guesses later. Company lens: Google values methodical debugging and measurable reasoning.
-- The example keeps the same Java shape while you vary one thing.
+- compare before and after before chasing symptoms
+- the approach compares metrics first and guesses later.
 
 **What changes**
 
-- Why it works: the approach compares metrics first and guesses later. Company lens: Google values methodical debugging and measurable reasoning.
-- That change is what reveals the behavior you need to understand.
+- It shows a disciplined way to find the likely bottleneck instead of guessing.
 
 **Why it matters**
 
-Why it works: the approach compares metrics first and guesses later. Company lens: Google values methodical debugging and measurable reasoning.
+the approach compares metrics first and guesses later.
 
 **Rule**
 
-👉 Rule: Why it works: the approach compares metrics first and guesses later.
+👉 Rule: compare before and after before chasing symptoms
 
 **Try this**
 

@@ -30,27 +30,26 @@ Waiting-heavy systems need a cheaper way to express many concurrent tasks.
 
 **What happens**
 
-- After reading this example, you should know:
+- Many requests mostly wait on I/O, but traditional thread-per-task models become expensive.
 - a virtual thread is still a Thread
-- virtual threads are useful when tasks spend time waiting
 
 **What stays stable**
 
-- After reading this example, you should know: - a virtual thread is still a Thread - virtual threads are useful when tasks spend time waiting - they improve the cost model, not the business logic
-- The example keeps the same Java shape while you vary one thing.
+- a virtual thread is still a Thread
+- the code stays simple and blocking-style, but the thread is lightweight.
 
 **What changes**
 
-- After reading this example, you should know: - a virtual thread is still a Thread - virtual threads are useful when tasks spend time waiting - they improve the cost model, not the business logic
-- That change is what reveals the behavior you need to understand.
+- Many requests mostly wait on I/O, but traditional thread-per-task models become expensive.
+- assuming virtual threads make every workload faster
 
 **Why it matters**
 
-After reading this example, you should know: - a virtual thread is still a Thread - virtual threads are useful when tasks spend time waiting - they improve the cost model, not the business logic
+tasks mostly wait on external systems. the code stays simple and blocking-style, but the thread is lightweight.
 
 **Rule**
 
-👉 Rule: After reading this example, you should know: - a virtual thread is still a Thread - virtual threads are useful when tasks spend time waiting - they improve the cost model, not the business logic
+👉 Rule: a virtual thread is still a Thread
 
 **Try this**
 

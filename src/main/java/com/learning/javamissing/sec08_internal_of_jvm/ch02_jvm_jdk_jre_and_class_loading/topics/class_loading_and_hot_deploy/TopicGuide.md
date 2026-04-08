@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: class identity is class name plus class loader.
+class identity is class name plus class loader.
 
 **Example**
 
@@ -29,25 +29,27 @@ Concept: class identity is class name plus class loader.
 
 **What happens**
 
-- Concept: class identity is class name plus class loader.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: class identity is class name plus class loader. Why it matters: hot-deploy containers rely on unloading whole class loaders, not just individual classes.
-- The example keeps the same Java shape while you vary one thing.
+- class identity is class name plus class loader.
+- hot-deploy containers rely on unloading whole class loaders, not just individual classes.
 
 **What changes**
 
-- Concept: class identity is class name plus class loader. Why it matters: hot-deploy containers rely on unloading whole class loaders, not just individual classes.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: class identity is class name plus class loader. Why it matters: hot-deploy containers rely on unloading whole class loaders, not just individual classes.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: class identity is class name plus class loader.
+👉 Rule: hot-deploy containers rely on unloading whole class loaders, not just individual classes.
 
 **Try this**
 

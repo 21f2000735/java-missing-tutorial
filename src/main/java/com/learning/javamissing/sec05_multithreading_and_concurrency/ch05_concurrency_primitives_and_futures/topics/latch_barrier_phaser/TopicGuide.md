@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+Why it matters: each tool waits differently, so choosing the right one keeps coordination readable. CountDownLatch merge = all preload tasks finished Phaser merge = dynamic parties can join and leave
 
 **Example**
 
@@ -28,26 +28,28 @@ Why it matters: each tool waits differently, so choosing the right one keeps coo
 
 **What happens**
 
-- Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
-- The example keeps the same Java shape while you vary one thing.
+- each tool waits differently, so choosing the right one keeps coordination readable.
 
 **What changes**
 
-- Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+👉 Rule: each tool waits differently, so choosing the right one keeps coordination readable.
 
 **Try this**
 
-- Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+- CountDownLatch merge = all preload tasks finished
+- Phaser merge = dynamic parties can join and leave

@@ -11,7 +11,7 @@ estimated: 7 min
 
 **Concept**
 
-Concept: build a clear outbound HTTP request
+build a clear outbound HTTP request
 
 **Example**
 
@@ -38,27 +38,24 @@ Concept: build a clear outbound HTTP request
 
 **What happens**
 
-- Concept: build a clear outbound HTTP request
-- Real-world problem: a Java service calls a shipping-rate API.
-- Why it works: the request object collects HTTP intent before any network call is made.
+- a Java service calls a shipping-rate API.
 
 **What stays stable**
 
-- Concept: build a clear outbound HTTP request Real-world problem: a Java service calls a shipping-rate API. Why it works: the request object collects HTTP intent before any network call is made.
-- The example keeps the same Java shape while you vary one thing.
+- build a clear outbound HTTP request
+- the request object collects HTTP intent before any network call is made.
 
 **What changes**
 
-- Concept: build a clear outbound HTTP request Real-world problem: a Java service calls a shipping-rate API. Why it works: the request object collects HTTP intent before any network call is made.
-- That change is what reveals the behavior you need to understand.
+- a Java service calls a shipping-rate API.
 
 **Why it matters**
 
-Concept: build a clear outbound HTTP request Real-world problem: a Java service calls a shipping-rate API. Why it works: the request object collects HTTP intent before any network call is made.
+the request object collects HTTP intent before any network call is made. a Java service calls a shipping-rate API.
 
 **Rule**
 
-👉 Rule: Concept: build a clear outbound HTTP request Real-world problem: a Java service calls a shipping-rate API.
+👉 Rule: the request object collects HTTP intent before any network call is made.
 
 **Try this**
 

@@ -14,7 +14,7 @@ visual_asset: RuntimeLayersVisual.svg
 
 **Concept**
 
-Concept: JVM, JRE, and JDK answer different questions.
+JVM, JRE, and JDK answer different questions.
 
 **Example**
 
@@ -39,27 +39,24 @@ Concept: JVM, JRE, and JDK answer different questions.
 
 **What happens**
 
-- Concept: JVM, JRE, and JDK answer different questions.
-- Real-world problem: a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
-- JVM = executes bytecode
+- a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
 
 **What stays stable**
 
-- Concept: JVM, JRE, and JDK answer different questions. Real-world problem: a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
-- The example keeps the same Java shape while you vary one thing.
+- JVM, JRE, and JDK answer different questions.
+- the JDK contains tools like javac, while the JVM is the execution engine inside the larger runtime story.
 
 **What changes**
 
-- Concept: JVM, JRE, and JDK answer different questions. Real-world problem: a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
-- That change is what reveals the behavior you need to understand.
+- a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
 
 **Why it matters**
 
-Concept: JVM, JRE, and JDK answer different questions. Real-world problem: a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
+a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
 
 **Rule**
 
-👉 Rule: Concept: JVM, JRE, and JDK answer different questions.
+👉 Rule: the JDK contains tools like javac, while the JVM is the execution engine inside the larger runtime story.
 
 **Try this**
 

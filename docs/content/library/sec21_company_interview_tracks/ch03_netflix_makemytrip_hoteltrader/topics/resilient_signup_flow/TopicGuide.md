@@ -7,47 +7,13 @@ estimated: 7 min
 
 # resilient signup flow
 
-## Why This Exists
+## resilient signup flow
 
-Concept: resilient signup flow.
+**Concept**
 
 Distributed systems fail in pieces, not all at once.
 
-## The Pain Before It
-
-It shows how a signup flow can continue when one non-critical dependency fails.
-
-Signup depends on account creation, billing, and welcome-email steps.
-
-## Java Creator Mindset
-
-Decide which steps are critical and which can degrade safely.
-
-## How You Might Invent It
-
-1. Run critical steps first.
-2. Catch non-critical failure separately.
-3. Return an honest degraded result.
-
-## Naive Attempt
-
-The naive version is to use resilient signup flow without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It shows how a signup flow can continue when one non-critical dependency fails.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Decide which steps are critical and which can degrade safely.
-
-Run [ResilientSignupFlow.java](ResilientSignupFlow.java) as the source of truth for the example.
-
-## Code
-
-Run [ResilientSignupFlow.java](ResilientSignupFlow.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -65,44 +31,26 @@ Run [ResilientSignupFlow.java](ResilientSignupFlow.java) and compare the output 
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Run critical steps first.
-2. Catch non-critical failure separately.
-3. Return an honest degraded result.
+- not every dependency deserves the same failure boundary
 
-What to observe:
+**What stays stable**
 
-- signupStatus = PARTIAL_SUCCESS
+- not every dependency deserves the same failure boundary
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- It shows how a signup flow can continue when one non-critical dependency fails.
 
-## Mistakes
+**Why it matters**
 
-- reading resilient signup flow as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Distributed systems fail in pieces, not all at once.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: not every dependency deserves the same failure boundary
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [ResilientSignupFlow.java](ResilientSignupFlow.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why resilient signup flow exists, what problem it solves, and what the runnable file proves.
+- Run critical steps first. 2. Catch non-critical failure separately. 3. Return an honest degraded result.

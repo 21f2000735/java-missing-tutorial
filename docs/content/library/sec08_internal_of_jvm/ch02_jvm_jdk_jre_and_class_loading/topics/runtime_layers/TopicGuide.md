@@ -10,45 +10,13 @@ visual_asset: RuntimeLayersVisual.svg
 
 # Runtime Layers
 
-## Why This Exists
+## Runtime Layers
 
-Concept: Runtime Layers.
+**Concept**
 
-## The Pain Before It
+JVM, JRE, and JDK answer different questions.
 
-
-
-## Java Creator Mindset
-
-Make the rule behind runtime layers obvious so the safer choice is also the clearer one.
-
-## How You Might Invent It
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-![Runtime Layers visual](./RuntimeLayersVisual.svg)
-
-## Naive Attempt
-
-The naive version is to use runtime layers without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-If you ignore the rule behind runtime layers, the example becomes harder to trust.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Use the Java file to make the rule behind runtime layers explicit and repeatable.
-
-Run [RuntimeLayers.java](RuntimeLayers.java) as the source of truth for the example.
-
-## Code
-
-Run [RuntimeLayers.java](RuntimeLayers.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -67,47 +35,31 @@ Run [RuntimeLayers.java](RuntimeLayers.java) and compare the output with the exp
     }
 ```
 
-## Walkthrough
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-What to observe:
-
-- Check whether the output matches the rule in the comment header.
-- Check whether the edge case you changed still behaves as expected.
-
-## Mental Model
-
 ![Runtime Layers visual](./RuntimeLayersVisual.svg)
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+**What happens**
 
-## Mistakes
+- a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
 
-- reading Runtime Layers as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+**What stays stable**
 
-## Tradeoffs
+- JVM, JRE, and JDK answer different questions.
+- the JDK contains tools like javac, while the JVM is the execution engine inside the larger runtime story.
 
-The gain is clarity or correctness.
+**What changes**
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+- a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
 
-## Use / Avoid
+**Why it matters**
 
-Use it when the problem in the header comment matches the real code you are writing.
+a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
 
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
+**Rule**
 
-## Practice
+👉 Rule: the JDK contains tools like javac, while the JVM is the execution engine inside the larger runtime story.
 
-Change one line in [RuntimeLayers.java](RuntimeLayers.java), rerun it, and write down what changed before and after the edit.
+**Try this**
 
-## Summary
-
-After this topic, you should be able to explain why Runtime Layers exists, what problem it solves, and what the runnable file proves.
+- Concept: JVM, JRE, and JDK answer different questions.
+- Real-world problem: a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
+- JVM = executes bytecode

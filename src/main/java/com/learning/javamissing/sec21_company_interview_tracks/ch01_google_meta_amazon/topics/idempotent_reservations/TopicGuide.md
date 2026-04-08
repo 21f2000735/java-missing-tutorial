@@ -41,27 +41,24 @@ Booking, checkout, and order systems are retried under network failure.
 
 **What happens**
 
-- Why it works: the same request id returns the same stored reservation result.
-- Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.
-- After reading this example, you should know:
+- idempotency protects business actions under retry
 
 **What stays stable**
 
-- Why it works: the same request id returns the same stored reservation result. Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.
-- The example keeps the same Java shape while you vary one thing.
+- idempotency protects business actions under retry
+- the same request id returns the same stored reservation result.
 
 **What changes**
 
-- Why it works: the same request id returns the same stored reservation result. Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.
-- That change is what reveals the behavior you need to understand.
+- It prevents duplicate reservations when the same request is sent again.
 
 **Why it matters**
 
-Why it works: the same request id returns the same stored reservation result. Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.
+the same request id returns the same stored reservation result.
 
 **Rule**
 
-👉 Rule: Why it works: the same request id returns the same stored reservation result.
+👉 Rule: idempotency protects business actions under retry
 
 **Try this**
 

@@ -46,27 +46,24 @@ Product search suggestions must be fast, relevant, and easy to reason about unde
 
 **What happens**
 
-- Company lens: Google and Meta like answers that are simple, measurable, and scalable.
-- Problem: a user types 'pa' and expects useful suggestions fast.
-- Why it works: prefix filtering narrows candidates and popularity ranking orders them.
+- retrieval and ranking are different concerns
 
 **What stays stable**
 
-- Company lens: Google and Meta like answers that are simple, measurable, and scalable. Problem: a user types 'pa' and expects useful suggestions fast.
-- The example keeps the same Java shape while you vary one thing.
+- retrieval and ranking are different concerns
+- prefix filtering narrows candidates and popularity ranking orders them.
 
 **What changes**
 
-- Company lens: Google and Meta like answers that are simple, measurable, and scalable. Problem: a user types 'pa' and expects useful suggestions fast.
-- That change is what reveals the behavior you need to understand.
+- It shows how prefix filtering, popularity ranking, and hot-prefix caching work together.
 
 **Why it matters**
 
-Company lens: Google and Meta like answers that are simple, measurable, and scalable. Problem: a user types 'pa' and expects useful suggestions fast.
+prefix filtering narrows candidates and popularity ranking orders them.
 
 **Rule**
 
-👉 Rule: Company lens: Google and Meta like answers that are simple, measurable, and scalable.
+👉 Rule: retrieval and ranking are different concerns
 
 **Try this**
 

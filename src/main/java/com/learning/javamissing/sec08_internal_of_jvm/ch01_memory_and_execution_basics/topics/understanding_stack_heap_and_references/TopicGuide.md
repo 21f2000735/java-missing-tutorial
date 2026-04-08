@@ -19,7 +19,7 @@ interviewQ:
 
 **Concept**
 
-Concept: local variable values and object state are not the same thing
+local variable values and object state are not the same thing
 
 **Example**
 
@@ -46,27 +46,24 @@ Concept: local variable values and object state are not the same thing
 
 **What happens**
 
-- Concept: local variable values and object state are not the same thing
-- Real-world problem: two variables point to the same cart object and one update surprises the learner.
-- Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
+- two variables point to the same cart object and one update surprises the learner.
 
 **What stays stable**
 
-- Concept: local variable values and object state are not the same thing Real-world problem: two variables point to the same cart object and one update surprises the learner. Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
-- The example keeps the same Java shape while you vary one thing.
+- local variable values and object state are not the same thing
+- both variables refer to the same heap object, so one mutation is visible through both references.
 
 **What changes**
 
-- Concept: local variable values and object state are not the same thing Real-world problem: two variables point to the same cart object and one update surprises the learner. Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
-- That change is what reveals the behavior you need to understand.
+- two variables point to the same cart object and one update surprises the learner.
 
 **Why it matters**
 
-Concept: local variable values and object state are not the same thing Real-world problem: two variables point to the same cart object and one update surprises the learner. Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
+both variables refer to the same heap object, so one mutation is visible through both references. two variables point to the same cart object and one update surprises the learner.
 
 **Rule**
 
-👉 Rule: Concept: local variable values and object state are not the same thing Real-world problem: two variables point to the same cart object and one update surprises the learner.
+👉 Rule: both variables refer to the same heap object, so one mutation is visible through both references.
 
 **Try this**
 

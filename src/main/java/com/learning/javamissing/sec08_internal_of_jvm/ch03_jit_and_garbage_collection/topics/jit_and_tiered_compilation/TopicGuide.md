@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: hot methods get optimized by the JIT over time.
+hot methods get optimized by the JIT over time.
 
 **Example**
 
@@ -32,26 +32,27 @@ Concept: hot methods get optimized by the JIT over time.
 
 **What happens**
 
-- Concept: hot methods get optimized by the JIT over time.
-- Use -XX:+PrintCompilation to observe compilation decisions when needed.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: hot methods get optimized by the JIT over time. Use -XX:+PrintCompilation to observe compilation decisions when needed.
-- The example keeps the same Java shape while you vary one thing.
+- hot methods get optimized by the JIT over time.
+- tiered compilation moves from interpreted code to faster compiled code for hot paths.
 
 **What changes**
 
-- Concept: hot methods get optimized by the JIT over time. Use -XX:+PrintCompilation to observe compilation decisions when needed.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: hot methods get optimized by the JIT over time. Use -XX:+PrintCompilation to observe compilation decisions when needed.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: hot methods get optimized by the JIT over time.
+👉 Rule: tiered compilation moves from interpreted code to faster compiled code for hot paths.
 
 **Try this**
 

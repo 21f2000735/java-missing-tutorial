@@ -7,47 +7,13 @@ estimated: 9 min
 
 # Why virtual threads matter
 
-## Why This Exists
+## Why virtual threads matter
 
-Concept: Why virtual threads matter.
+**Concept**
 
 Waiting-heavy systems need a cheaper way to express many concurrent tasks.
 
-## The Pain Before It
-
-It keeps direct blocking-style code practical for very many mostly waiting tasks.
-
-An order request waits on inventory and pricing checks.
-
-## Java Creator Mindset
-
-A virtual thread is still a thread, but its cost model is much better for waiting-heavy workloads.
-
-## How You Might Invent It
-
-1. Start one virtual thread.
-2. Let it block in a simple style.
-3. Compare the model with traditional expensive thread-per-task thinking.
-
-## Naive Attempt
-
-The naive version is to use why virtual threads matter without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It keeps direct blocking-style code practical for very many mostly waiting tasks.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-A virtual thread is still a thread, but its cost model is much better for waiting-heavy workloads.
-
-Run [WhyVirtualThreadsMatter.java](WhyVirtualThreadsMatter.java) as the source of truth for the example.
-
-## Code
-
-Run [WhyVirtualThreadsMatter.java](WhyVirtualThreadsMatter.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) throws InterruptedException {
@@ -62,44 +28,29 @@ Run [WhyVirtualThreadsMatter.java](WhyVirtualThreadsMatter.java) and compare the
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Start one virtual thread.
-2. Let it block in a simple style.
-3. Compare the model with traditional expensive thread-per-task thinking.
+- Many requests mostly wait on I/O, but traditional thread-per-task models become expensive.
+- a virtual thread is still a Thread
 
-What to observe:
+**What stays stable**
 
-- inventory check finished on VirtualThread...
+- a virtual thread is still a Thread
+- the code stays simple and blocking-style, but the thread is lightweight.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Many requests mostly wait on I/O, but traditional thread-per-task models become expensive.
+- assuming virtual threads make every workload faster
 
-## Mistakes
+**Why it matters**
 
-- reading Why virtual threads matter as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+tasks mostly wait on external systems. the code stays simple and blocking-style, but the thread is lightweight.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: a virtual thread is still a Thread
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [WhyVirtualThreadsMatter.java](WhyVirtualThreadsMatter.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why Why virtual threads matter exists, what problem it solves, and what the runnable file proves.
+- Start one virtual thread. 2. Let it block in a simple style. 3. Compare the model with traditional expensive thread-per-task thinking.

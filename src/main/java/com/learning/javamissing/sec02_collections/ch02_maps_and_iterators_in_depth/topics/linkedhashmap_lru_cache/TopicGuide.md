@@ -13,7 +13,7 @@ visual: recommended
 
 **Concept**
 
-Concept: access-order LinkedHashMap can act like a small LRU cache.
+access-order LinkedHashMap can act like a small LRU cache.
 
 **Example**
 
@@ -36,25 +36,27 @@ Concept: access-order LinkedHashMap can act like a small LRU cache.
 
 **What happens**
 
-- Concept: access-order LinkedHashMap can act like a small LRU cache.
+- Run the example and compare the output with the rule in the explanation.
+- Change one input or one line.
+- Observe what stayed the same and what changed.
 
 **What stays stable**
 
-- Concept: access-order LinkedHashMap can act like a small LRU cache. Why it matters: the least recently used entry is evicted automatically when size goes past the cap.
-- The example keeps the same Java shape while you vary one thing.
+- access-order LinkedHashMap can act like a small LRU cache.
+- the least recently used entry is evicted automatically when size goes past the cap.
 
 **What changes**
 
-- Concept: access-order LinkedHashMap can act like a small LRU cache. Why it matters: the least recently used entry is evicted automatically when size goes past the cap.
+- The input, state, or execution path is what changes.
 - That change is what reveals the behavior you need to understand.
 
 **Why it matters**
 
-Concept: access-order LinkedHashMap can act like a small LRU cache. Why it matters: the least recently used entry is evicted automatically when size goes past the cap.
+This matters because the rule keeps the behavior predictable when the code gets real.
 
 **Rule**
 
-👉 Rule: Concept: access-order LinkedHashMap can act like a small LRU cache.
+👉 Rule: the least recently used entry is evicted automatically when size goes past the cap.
 
 **Try this**
 

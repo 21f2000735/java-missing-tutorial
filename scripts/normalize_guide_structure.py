@@ -341,6 +341,23 @@ def bullet_excerpt(text: str, limit: int = 3) -> str:
     return bullet_list(bullets[:limit])
 
 
+def pick_printed_line(lines: list[str], prefixes: list[str]) -> str:
+    for prefix in prefixes:
+        lowered_prefix = prefix.lower()
+        for index, line in enumerate(lines):
+            lowered = line.lower()
+            if lowered.startswith(lowered_prefix):
+                rest = line[len(prefix) :].strip(" :-")
+                if rest:
+                    return rest
+                if index + 1 < len(lines):
+                    next_line = lines[index + 1].strip()
+                    if next_line and not next_line.endswith(":"):
+                        return re.sub(r"^[-*]\s+", "", next_line).strip()
+                return line
+    return ""
+
+
 def fenced_java(code: str) -> str:
     if not code.strip():
         return ""
@@ -368,6 +385,22 @@ def topic_sections_from_java(
     main_snippet = extract_main_snippet(java_path) if java_path else ""
     printed_lines = extract_printed_lines(java_path) if java_path else []
     printed_text = "\n".join(printed_lines)
+    printed_concept = pick_printed_line(printed_lines, ["Concept:"])
+    printed_problem = pick_printed_line(
+        printed_lines, ["The problem:", "Real-world problem:"]
+    )
+    printed_why = pick_printed_line(
+        printed_lines, ["Why it works:", "Why it matters:"]
+    )
+    printed_use = pick_printed_line(
+        printed_lines, ["Use this when:", "After reading this example, you should know:"]
+    )
+    printed_avoid = pick_printed_line(
+        printed_lines, ["Avoid this when:"]
+    )
+    printed_remember = pick_printed_line(
+        printed_lines, ["What to remember:", "After reading this example, you should know:"]
+    )
     file_link = f"[{java_path.name}]({java_path.name})" if java_path else ""
     topic_dir = java_path.parent if java_path else None
     visual_name = visual_asset or (
@@ -378,6 +411,7 @@ def topic_sections_from_java(
         visual_block = f"![{concept} visual](./{visual_name})"
 
     concept_source = first_non_empty(
+        printed_concept,
         sections.get("Concept", ""),
         sections.get("Why This Exists", ""),
         sections.get("Why This Matters", ""),
@@ -401,7 +435,11 @@ def topic_sections_from_java(
         example_source = join_blocks(example_source, visual_block)
 
     happens_source = first_non_empty(
-        printed_text,
+        join_blocks(
+            pick_printed_line(printed_lines, ["Run this first:"]),
+            pick_printed_line(printed_lines, ["The problem:", "Real-world problem:"]),
+            pick_printed_line(printed_lines, ["After reading this example, you should know:"]),
+        ),
         sections.get("What happens", ""),
         sections.get("Walkthrough", ""),
         sections.get("Expected Output", ""),
@@ -409,7 +447,12 @@ def topic_sections_from_java(
         code_steps,
     )
     stable_source = first_non_empty(
-        printed_text,
+        join_blocks(
+            pick_printed_line(printed_lines, ["What to remember:"]),
+            pick_printed_line(printed_lines, ["After reading this example, you should know:"]),
+            printed_concept,
+            printed_why,
+        ),
         sections.get("What stays stable", ""),
         sections.get("Mental Model", ""),
         sections.get("Java Creator Mindset", ""),
@@ -417,7 +460,11 @@ def topic_sections_from_java(
         think,
     )
     changes_source = first_non_empty(
-        printed_text,
+        join_blocks(
+            pick_printed_line(printed_lines, ["The problem:", "Real-world problem:"]),
+            pick_printed_line(printed_lines, ["Common mistake:", "Common mistakes:"]),
+            pick_printed_line(printed_lines, ["Avoid this when:"]),
+        ),
         sections.get("What changes", ""),
         sections.get("The Pain Before It", ""),
         sections.get("Why It Breaks", ""),
@@ -426,7 +473,11 @@ def topic_sections_from_java(
         setup,
     )
     matters_source = first_non_empty(
-        printed_text,
+        join_blocks(
+            pick_printed_line(printed_lines, ["Use this when:"]),
+            pick_printed_line(printed_lines, ["Why it works:"]),
+            pick_printed_line(printed_lines, ["The problem:", "Real-world problem:"]),
+        ),
         sections.get("Why it matters", ""),
         sections.get("Tradeoffs", ""),
         sections.get("Use / Avoid", ""),
@@ -435,7 +486,10 @@ def topic_sections_from_java(
         problem,
     )
     rule_source = first_non_empty(
-        printed_text,
+        pick_printed_line(printed_lines, ["What to remember:"]),
+        pick_printed_line(printed_lines, ["After reading this example, you should know:"]),
+        printed_why,
+        printed_concept,
         sections.get("Rule", ""),
         sections.get("Final Java Solution", ""),
         sections.get("Java Creator Mindset", ""),

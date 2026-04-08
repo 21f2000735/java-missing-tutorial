@@ -36,27 +36,23 @@ Travel search is read-heavy, but stale prices and stale availability can hurt tr
 
 **What happens**
 
-- Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together.
-- After reading this example, you should know:
 - cache keys should reflect the search shape
 
 **What stays stable**
 
-- Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together. After reading this example, you should know: - cache keys should reflect the search shape - short freshness windows are often safer for travel data - latency improvement is not enough if correctness degrades
-- The example keeps the same Java shape while you vary one thing.
+- cache keys should reflect the search shape
 
 **What changes**
 
-- Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together. After reading this example, you should know: - cache keys should reflect the search shape - short freshness windows are often safer for travel data - latency improvement is not enough if correctness degrades
-- That change is what reveals the behavior you need to understand.
+- It caches expensive search responses while keeping a short freshness window.
 
 **Why it matters**
 
-Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together. After reading this example, you should know: - cache keys should reflect the search shape - short freshness windows are often safer for travel data - latency improvement is not enough if correctness degrades
+Travel search is read-heavy, but stale prices and stale availability can hurt trust.
 
 **Rule**
 
-👉 Rule: Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together.
+👉 Rule: cache keys should reflect the search shape
 
 **Try this**
 
