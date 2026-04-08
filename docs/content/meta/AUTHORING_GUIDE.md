@@ -254,6 +254,15 @@ Use the certification template when the topic should help the learner:
 If a topic tries to do both equally, the writing usually gets bloated.
 Pick a primary goal and let the secondary goal be a short appendix instead.
 
+## How `How You Might Invent It` Differs From `Mental Model`
+
+These are related but not the same:
+
+- `How You Might Invent It` should show the path from the problem to the solution. It is the derivation, the false starts, and the turning point.
+- `Mental Model` should give the learner a stable picture they can remember later. It is the compressed explanation after the code exists.
+
+If both sections say the same thing, merge them. Do not repeat the same explanation under two headings.
+
 Keep chapter appendices such as `Sources`, `Effective Java Mapping`, `OCJP Focus`, `Compare With`, and `Next Chapter` after `## Summary`.
 Chapter guides should also keep a simple study order and a quick summary after each major idea.
 

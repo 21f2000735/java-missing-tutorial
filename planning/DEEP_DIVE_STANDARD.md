@@ -69,6 +69,13 @@ Inside those sections, make sure the topic still covers:
 - senior note
 - exercise and explained solution
 
+`How You Might Invent It` and `Mental Model` must serve different jobs:
+
+- `How You Might Invent It` is the invention path from pressure to design.
+- `Mental Model` is the durable picture the reader should retain after the walkthrough.
+
+If the same sentences work for both, the section is too broad and should be split or merged.
+
 ## Deep-Dive Trigger Topics
 
 Prioritize this level of depth for:

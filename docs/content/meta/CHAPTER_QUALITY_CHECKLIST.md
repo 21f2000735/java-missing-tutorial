@@ -25,6 +25,8 @@ Use this checklist before calling any chapter complete.
   `Final Java Solution`, `Code`, `Walkthrough`, `Mental Model`,
   `Mistakes`, `Tradeoffs`, `Use / Avoid`, `Summary`
 
+- `How You Might Invent It` must show the derivation path; `Mental Model` must show the retained model. Do not duplicate the same explanation in both sections.
+
 ## Chapter Guide
 
 - one `ChapterGuide.md` per chapter
