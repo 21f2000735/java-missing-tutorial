@@ -30,8 +30,7 @@ Read the chapter as a small set of related ideas around designing Classes, not a
 
 ## Study Order
 
-1. Run [SeparatingResponsibilities.java](topics/separating_responsibilities/SeparatingResponsibilities.java)
-2. Focus on the concept first: classes should model roles, not piles of mixed behavior.
+1. Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java)
 
 ## What To Notice
 
@@ -61,22 +60,6 @@ Run the examples again, change one assumption, and explain how the chapter guida
 
 After this chapter, you should be able to explain the main decisions behind designing classes and connect them back to the runnable examples.
 
-## Why This Chapter Matters
+## Next Chapter
 
-This chapter teaches the concept of giving each class one clear responsibility.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-This chapter teaches the concept of giving each class one clear responsibility.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around designing Classes, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Move to [Immutability And Value Objects Learning Kit](../ch02_immutability_and_value_objects/ChapterGuide.md) after this chapter.

@@ -30,7 +30,7 @@ Read the chapter as a small set of related ideas around readable Code Basics, no
 
 ## Study Order
 
-1. Run [RenamingAndExtractingMethods.java](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java)
+1. Run [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java)
 
 ## What To Notice
 
@@ -59,23 +59,3 @@ Run the examples again, change one assumption, and explain how the chapter guida
 ## Summary
 
 After this chapter, you should be able to explain the main decisions behind readable code basics and connect them back to the runnable examples.
-
-## Why This Chapter Matters
-
-Readable code matters because most code is read more often than it is written.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-Readable code matters because most code is read more often than it is written.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around readable Code Basics, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.

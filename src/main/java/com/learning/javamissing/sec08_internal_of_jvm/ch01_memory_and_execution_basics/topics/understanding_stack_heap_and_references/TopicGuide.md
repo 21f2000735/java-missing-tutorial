@@ -118,14 +118,10 @@ This model makes Java easier to reason about, but only if you trace references d
 
 - you are repeating stack/heap words without drawing the reference flow
 
+## Practice
+
+Change one input in [UnderstandingStackHeapAndReferences.java](UnderstandingStackHeapAndReferences.java), rerun it, and write down what changed.
+
 ## Summary
 
 After this topic, you should be able to explain exactly why two variables can show the same mutated value without claiming that Java copied the object twice.
-
-## Why This Matters
-
-This is one of the fastest ways to improve JVM interview answers, because many later topics depend on correct shared-state intuition.
-
-## Next Topic
-
-Continue into class loading and GC topics once the reference model feels stable.

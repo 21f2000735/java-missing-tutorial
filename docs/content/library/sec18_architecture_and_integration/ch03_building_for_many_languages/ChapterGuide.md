@@ -30,8 +30,7 @@ Read the chapter as a small set of related ideas around building For Many Langua
 
 ## Study Order
 
-1. Run [ShowingMessagesByLocale.java](topics/showing_messages_by_locale/ShowingMessagesByLocale.java)
-2. Focus on the concept first: user-facing text depends on language and region.
+1. Run [Showing Messages By Locale](topics/showing_messages_by_locale/ShowingMessagesByLocale.java)
 
 ## What To Notice
 
@@ -61,22 +60,6 @@ Run the examples again, change one assumption, and explain how the chapter guida
 
 After this chapter, you should be able to explain the main decisions behind building for many languages and connect them back to the runnable examples.
 
-## Why This Chapter Matters
+## Next Chapter
 
-This chapter teaches the concept of adapting software for users in different locales.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-This chapter teaches the concept of adapting software for users in different locales.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around building For Many Languages, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Move to [Writing Safe Java Learning Kit](../ch04_writing_safe_java/ChapterGuide.md) after this chapter.

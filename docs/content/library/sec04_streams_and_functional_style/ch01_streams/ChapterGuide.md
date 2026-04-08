@@ -59,9 +59,9 @@ Use this chapter as a three-part decision path:
 
 ## Study Order
 
-1. Run [StreamPipeline.java](topics/stream_pipeline/StreamPipeline.java)
-2. Run [Collectors.java](topics/collectors/Collectors.java)
-3. Run [ParallelStreams.java](topics/parallel_streams/ParallelStreams.java)
+1. Run [Collectors](topics/collectors/Collectors.java)
+2. Run [Parallel Streams](topics/parallel_streams/ParallelStreams.java)
+3. Run [Stream Pipeline](topics/stream_pipeline/StreamPipeline.java)
 
 ## What To Notice
 
@@ -126,12 +126,6 @@ Then explain whether the stream still makes the code clearer than a loop.
 - parallel streams are a performance tool, not a readability tool
 - a strong interview answer compares streams with loops instead of treating one as always better
 
-## Sources
-
-- Modern Java in Action: https://www.manning.com/books/modern-java-in-action
-- Core Java, Volume II: https://www.informit.com/store/core-java-volume-ii-advanced-features-9780135558690
-- Effective Java, 3rd Edition: https://www.informit.com/store/effective-java-9780134686042
-
 ## Next Chapter
 
-Move to `ch02_functional_interfaces` so passing behavior into stream-style code stops feeling magical.
+Move to [Functional Interfaces Learning Kit](../ch02_functional_interfaces/ChapterGuide.md) after this chapter.

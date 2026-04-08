@@ -38,8 +38,8 @@ That breaks when the same mistake repeats across files, teams, or interview ques
 
 ## Study Order
 
-1. Run [StringPoolAndEquals.java](topics/string_pool_and_equals/StringPoolAndEquals.java)
-2. Run [BuildersFormattingAndRegex.java](topics/builders_formatting_and_regex/BuildersFormattingAndRegex.java)
+1. Run [Builders Formatting And Regex](topics/builders_formatting_and_regex/BuildersFormattingAndRegex.java)
+2. Run [String Pool And Equals](topics/string_pool_and_equals/StringPoolAndEquals.java)
 
 ## What To Notice
 
@@ -66,48 +66,6 @@ Use this chapter when the surrounding design decision is still fuzzy. Do not for
 Run the examples again, change one assumption, and explain how the chapter guidance changes.
 
 ## Summary
-
-- why reference equality and value equality are different
-- why repeated string concatenation can become expensive
-- when regex helps and when it makes code harder to read
-
-## Why This Chapter Matters
-
-This chapter covers the string topics learners repeatedly stumble over in interviews and production code reviews.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-Strings look simple until interning, `==`, builders, formatting, and regex all arrive in the same discussion.
-
-## Core Ideas
-
-- string pool and interning
-- `==` vs `.equals()`
-- `StringBuilder` vs `StringBuffer`
-- `String.format()` and text blocks
-- regular expressions in Java
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
-
-## The Problem
-
-Strings look simple until interning, `==`, builders, formatting, and regex all arrive in the same discussion.
-
-## What This Chapter Covers
-
-- string pool and interning
-- `==` vs `.equals()`
-- `StringBuilder` vs `StringBuffer`
-- `String.format()` and text blocks
-- regular expressions in Java
-
-## After Reading This Chapter, You Should Know
 
 - why reference equality and value equality are different
 - why repeated string concatenation can become expensive

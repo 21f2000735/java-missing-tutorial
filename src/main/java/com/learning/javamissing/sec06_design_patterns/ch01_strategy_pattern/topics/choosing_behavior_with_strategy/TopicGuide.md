@@ -107,64 +107,10 @@ You pay with extra types and one more abstraction layer.
 - the abstraction would be heavier than the problem
 - a short direct method is still clearer
 
-## Summary
-
-After this topic, you should be able to explain why `applyDiscount()` stays stable while discount behavior changes through `DiscountPolicy`.
-
-## Why This Matters
-
-This is a common interview pattern because it shows that you can separate stable flow from changing business rules.
-
-## Core Idea
-
-Depend on a behavior contract, not one concrete rule.
-
-## Simple Example
-
-### Run It
-
-Run the example and confirm that different policy objects change the outcome without changing checkout flow.
-
-### Expected Result
-
-- `festivalFinalAmount = 1700`
-- `studentFinalAmount = 1800`
-
-## Step-by-Step Working
-
-- `main()` chooses a policy implementation
-- `applyDiscount()` calls `discountFor(amount)`
-- the selected policy decides the discount
-- the caller stays unchanged
-
-## Rules / Syntax
-
-The concept is old and stable. Modern Java mainly makes implementations shorter, not different in design intent.
-
-## Common Mistakes
-
-- replacing one small `if` with unnecessary structure
-- choosing concrete strategies everywhere instead of keeping selection localized
-
-## When To Use / When Not To Use
-
-### Use It When
-
-- the behavior varies independently
-- the caller should not own every rule
-
-### Avoid It When
-
-- the variation is tiny and unlikely to grow
-
 ## Practice
 
 Add a `PremiumDiscount` implementation and explain why `applyDiscount()` should not change.
 
-## Version Notes
+## Summary
 
-You can implement strategy with classes, lambdas, or method references. The design idea stays the same.
-
-## Next Topic
-
-Compare this variation problem with creational patterns, where the main question is object creation rather than behavior swapping.
+After this topic, you should be able to explain why `applyDiscount()` stays stable while discount behavior changes through `DiscountPolicy`.

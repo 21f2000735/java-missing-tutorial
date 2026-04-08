@@ -85,10 +85,7 @@ The caller depends on the contract, not on one concrete discount formula.
 
 ## Study Order
 
-1. Run [ChoosingBehaviorWithStrategy.java](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
-2. Notice that `applyDiscount()` never changes while the policy object changes
-3. Add one more policy mentally and check whether checkout needs editing
-4. Ask whether the variation is large enough to justify strategy at all
+1. Run [Choosing Behavior With Strategy](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
 
 ## What To Notice
 
@@ -186,12 +183,6 @@ Keep the stable workflow in one place and move the changing rule behind a small 
 
 If you cannot clearly name the changing behavior, you probably do not need strategy yet.
 
-## Effective Java Mapping
+## Next Chapter
 
-- Item 18: Favor composition over inheritance
-- Item 64: Refer to objects by their interfaces
-
-## Sources
-
-- Head First Design Patterns: https://www.oreilly.com/library/view/head-first-design/9781492077992/
-- Effective Java, 3rd Edition: https://www.informit.com/store/effective-java-9780134686042
+Move to [Creational Patterns](../ch02_creational_patterns/ChapterGuide.md) after this chapter.

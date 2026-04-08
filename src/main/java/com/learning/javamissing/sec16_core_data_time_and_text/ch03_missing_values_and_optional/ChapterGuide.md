@@ -30,8 +30,7 @@ Read the chapter as a small set of related ideas around missing Values And Optio
 
 ## Study Order
 
-1. Run [RepresentingAbsence.java](topics/representing_absence/RepresentingAbsence.java)
-2. Focus on the concept first: a value may exist or may be missing.
+1. Run [Representing Absence](topics/representing_absence/RepresentingAbsence.java)
 
 ## What To Notice
 
@@ -61,22 +60,6 @@ Run the examples again, change one assumption, and explain how the chapter guida
 
 After this chapter, you should be able to explain the main decisions behind missing values and optional and connect them back to the runnable examples.
 
-## Why This Chapter Matters
+## Next Chapter
 
-This chapter teaches the concept of absence in data.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-This chapter teaches the concept of absence in data.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around missing Values And Optional, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Move to [Working With Time Learning Kit](../ch04_working_with_time/ChapterGuide.md) after this chapter.

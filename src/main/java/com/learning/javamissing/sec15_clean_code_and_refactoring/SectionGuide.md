@@ -1,14 +1,22 @@
-# sec15_clean_code_and_refactoring Clean Code And Refactoring
+# Clean Code And Refactoring
+
+## Why This Section Exists
 
 Current chapters:
 
 - `ch01_readable_code_basics`
 
-## Before You Start
+## Real Problems
 
-- Prerequisites: sec01_fundamentals. sec07_principles_and_solid helps.
-- This section prepares you for: Safer code reviews, day-to-day cleanup work, and maintainability discussions.
-- Suggested pace: 1 to 2 focused sessions.
+- the code is correct for one case but unclear for the next one
+- the API names feel related but not obviously different
+- the same bug keeps showing up in slightly different forms
+
+## Start Here If
+
+- clean code and refactoring still feels fuzzy
+- the examples look related but the boundary between them is still blurry
+- you want the practical problem before the syntax
 
 ## How To Read This Section
 
@@ -16,10 +24,24 @@ Current chapters:
 - compare the printed output with the explanation in each topic
 - finish the chapter with its revision sheet before moving on
 
-## Why This Section Matters
+## Current Chapters
 
-Safer code reviews, day-to-day cleanup work, and maintainability discussions.
+- [Readable Code Basics Learning Kit](ch01_readable_code_basics/ChapterGuide.md)
 
-## Recommended Next Step
+## Reading Order
+
+1. Run [Readable Code Basics Learning Kit](ch01_readable_code_basics/ChapterGuide.md)
+
+## Common Mistakes
+
+- starting with the API name instead of the problem
+- treating the examples as trivia instead of a design choice
+- skipping the runnable code and only skimming the prose
+
+## Practice
+
+Run the first chapter in this section, change one assumption in its example, and explain the result in one paragraph.
+
+## Next Step
 
 Apply this lens to every other section, especially sec06_design_patterns and sec19_testing_and_quality.

@@ -58,9 +58,9 @@ That breaks when the same mistake repeats across files, teams, or interview ques
 
 ## Study Order
 
-1. Run [ListSetMap.java](topics/list_set_map/ListSetMap.java)
-2. Run [Immutability.java](topics/immutability/Immutability.java)
-3. Run [Comparator.java](topics/comparator/Comparator.java)
+1. Run [Comparator](topics/comparator/Comparator.java)
+2. Run [Immutability](topics/immutability/Immutability.java)
+3. Run [List, Set, Map](topics/list_set_map/ListSetMap.java)
 
 ## What To Notice
 
@@ -128,3 +128,7 @@ Imagine a shopping app.
 - `Map` stores `key -> value` pairs
 - immutable collections protect shared data
 - `Comparator` makes sorting rules explicit
+
+## Next Chapter
+
+Move to [Maps And Iterators In Depth Learning Kit](../ch02_maps_and_iterators_in_depth/ChapterGuide.md) after this chapter.

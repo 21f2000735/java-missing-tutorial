@@ -68,9 +68,8 @@ Then ask one question every time:
 
 ## Study Order
 
-1. Run [UnderstandingStackHeapAndReferences.java](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java)
-2. Draw the two references and one shared `Cart` object before reading the output
-3. Change the code so `second = new Cart(5)` and compare what changes
+1. Run [GC Roots And Reference Types](topics/gc_roots_and_references/GcRootsAndReferences.java)
+2. Run [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java)
 
 ## What To Notice
 
@@ -152,6 +151,6 @@ After this chapter, you should be able to explain one of the most common Java su
 
 Two variables can point to one object, so one mutation can be observed through both references.
 
-## Sources
+## Next Chapter
 
-- Java Language Specification: https://docs.oracle.com/javase/specs/
+Move to [JVM, JDK, JRE, And Class Loading Learning Kit](../ch02_jvm_jdk_jre_and_class_loading/ChapterGuide.md) after this chapter.

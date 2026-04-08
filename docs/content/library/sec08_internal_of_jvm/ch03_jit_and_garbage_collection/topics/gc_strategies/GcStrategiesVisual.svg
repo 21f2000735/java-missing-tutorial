@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 340" role="img" aria-labelledby="title desc">
+  <title id="title">Garbage collector strategy tradeoffs</title>
+  <desc id="desc">A tradeoff map shows G1 as balanced, ZGC as very low pause focused, and Shenandoah as low pause with concurrent compaction focus.</desc>
+  <rect width="780" height="340" fill="#fbf6ee"/>
+  <line x1="100" y1="270" x2="690" y2="270" stroke="#6d5a46" stroke-width="4"/>
+  <line x1="100" y1="270" x2="100" y2="60" stroke="#6d5a46" stroke-width="4"/>
+  <text x="588" y="300" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#6d5a46">more throughput focus</text>
+  <text x="30" y="90" transform="rotate(-90 30,90)" font-family="IBM Plex Sans, Arial, sans-serif" font-size="18" fill="#6d5a46">lower pause focus</text>
+  <circle cx="300" cy="170" r="34" fill="#f2d7b8" stroke="#af5b0c" stroke-width="2"/>
+  <text x="286" y="176" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#402b12">G1</text>
+  <text x="232" y="220" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17" fill="#6d5a46">balanced default</text>
+  <circle cx="520" cy="118" r="36" fill="#d8ece3" stroke="#3a6a57" stroke-width="2"/>
+  <text x="497" y="124" font-family="IBM Plex Sans, Arial, sans-serif" font-size="22" font-weight="700" fill="#203d33">ZGC</text>
+  <text x="468" y="170" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17" fill="#6d5a46">very low pause</text>
+  <circle cx="420" cy="148" r="38" fill="#e5edf7" stroke="#4a6b93" stroke-width="2"/>
+  <text x="373" y="154" font-family="IBM Plex Sans, Arial, sans-serif" font-size="19" font-weight="700" fill="#2a445f">Shenandoah</text>
+  <text x="362" y="202" font-family="IBM Plex Sans, Arial, sans-serif" font-size="17" fill="#6d5a46">low pause + compaction</text>
+  <text x="100" y="34" font-family="IBM Plex Sans, Arial, sans-serif" font-size="24" font-weight="700" fill="#2d2418">Think in workload goals, not collector names.</text>
+</svg>

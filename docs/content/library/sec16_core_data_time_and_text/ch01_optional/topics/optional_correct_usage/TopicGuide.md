@@ -9,21 +9,20 @@ visual: recommended
 
 # Optional Correct Usage
 
-## Topic / Problem
-- Real problem: a lookup can miss, but `null` makes that absence easy to forget.
-- Why this Java feature: `Optional` makes the missing case explicit in the return type.
+## Why This Exists
 
-Bad code:
-```java
-Optional<String> email = Optional.empty();
-String value = email.get();
-```
-Good code:
-```java
-String value = email.orElseGet(() -> "missing");
-```
+This topic explains optional correct usage because it solves a concrete problem that becomes visible once the naive version starts to fail.
 
-## Intuition
+## The Pain Before It
+
+Before optional correct usage, the code often works for a tiny case but becomes hard to trust once edge cases, state, or reuse enter the picture.
+
+## Java Creator Mindset
+
+A Java designer would ask what rule needs to be made visible so the safer choice is also the clearer one.
+
+## How You Might Invent It
+
 - `Optional` is a wrapper around "maybe a value."
 - `of()` requires a real value.
 - `ofNullable()` accepts a possible null.
@@ -35,28 +34,66 @@ String value = email.orElseGet(() -> "missing");
 | Maybe missing value | `Optional.ofNullable(...)` | safe conversion |
 | Default fallback | `orElseGet(...)` | compute lazily |
 
-## Small Code Snippet
-- The runnable example prints a customer email fallback and a required order amount.
-- Expected output:
-  - `email = alice@example.com`
-  - `amount = 499`
+## Naive Attempt
 
-## Internal Working
-- `map()` transforms the wrapped value.
-- `flatMap()` is useful when the mapping function already returns an `Optional`.
-- Trap callout: do not use `Optional.get()` without checking or handling absence first.
+The first attempt usually uses direct code and leaves too much behavior implicit.
 
-## Comparison With Other
-- `Optional` is good for return values that may be absent.
-- A plain null return is easier to forget.
-- A field or parameter of type `Optional` usually adds noise rather than clarity.
+## Why It Breaks
 
-## Famous Company Interview Question
-Q: Where should `Optional` be used?
-A: Mostly as a return type for values that may be missing.
+That version breaks when the same assumption no longer holds in real code, especially around edge cases, state, or repeated use.
 
-Q: Why is `orElseGet()` better than `orElse()` in some cases?
-A: Because `orElseGet()` computes the fallback only when needed.
+## Final Java Solution
 
-Q: Why not use `Optional` as a field?
-A: Because fields should usually carry the actual value or a clear nullability rule.
+Java's final form for optional correct usage makes the important rule visible and repeatable instead of hiding it inside ad hoc code.
+
+## Code
+
+Run [OptionalCorrectUsage.java](OptionalCorrectUsage.java) and focus on the runnable example first. Then compare the output with the explanation below.
+
+## Walkthrough
+
+1. Identify the starting state or input.
+2. Run the example once without changing anything.
+3. Change one line or one input.
+4. Compare the new result with the rule the topic is teaching.
+
+## Mental Model
+
+- `Optional` is a wrapper around "maybe a value."
+- `of()` requires a real value.
+- `ofNullable()` accepts a possible null.
+- Comparison table:
+
+| Need | Use | Why |
+| --- | --- | --- |
+| Present value | `Optional.of(...)` | fail fast if null sneaks in |
+| Maybe missing value | `Optional.ofNullable(...)` | safe conversion |
+| Default fallback | `orElseGet(...)` | compute lazily |
+
+## Mistakes
+
+- memorizing syntax before the problem
+- assuming the tiny example covers every case
+- changing the rule without rerunning the example
+
+## Tradeoffs
+
+Gain: clearer behavior or safer code.
+
+Cost: a bit more structure or one more rule to remember.
+
+Question: is the extra rule cheaper than the bug it prevents?
+
+## Use / Avoid
+
+Use it when the rule removes a real bug or removes guesswork.
+
+Avoid it when direct code is already clearer and just as safe.
+
+## Practice
+
+Change one input in [OptionalCorrectUsage.java](OptionalCorrectUsage.java), rerun it, and write down what changed.
+
+## Summary
+
+After this topic, you should be able to explain the problem it solves, the rule Java enforces, and the smallest change that proves you understand it.

@@ -1,8 +1,10 @@
-# sec05_multithreading_and_concurrency Multithreading And Concurrency
+# Multithreading And Concurrency
+
+## Why This Section Exists
 
 This section is about one hard reality: once work overlaps in time, correctness becomes harder than syntax.
 
-## What Real Problems This Section Solves
+## Real Problems
 
 - a request waits on many slow operations at once
 - two tasks update the same state and produce inconsistent answers
@@ -43,6 +45,10 @@ This section is about one hard reality: once work overlaps in time, correctness 
 - assuming virtual threads remove design problems
 - scattering task management across unrelated code
 
-## Recommended Next Step
+## Practice
+
+Run the first chapter in this section, change one assumption in its example, and explain the result in one paragraph.
+
+## Next Step
 
 Revisit sec20_data_structures_and_complexity after this section so performance reasoning and concurrency reasoning start reinforcing each other.

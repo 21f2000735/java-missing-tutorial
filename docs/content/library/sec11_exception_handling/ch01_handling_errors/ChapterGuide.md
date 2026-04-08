@@ -30,8 +30,7 @@ Read the chapter as a small set of related ideas around handling Errors, not as 
 
 ## Study Order
 
-1. Run [HandlingPaymentFailures.java](topics/handling_payment_failures/HandlingPaymentFailures.java)
-2. Focus on the concept first: errors are part of system behavior, not side notes.
+1. Run [Handling Payment Failures](topics/handling_payment_failures/HandlingPaymentFailures.java)
 
 ## What To Notice
 
@@ -61,22 +60,6 @@ Run the examples again, change one assumption, and explain how the chapter guida
 
 After this chapter, you should be able to explain the main decisions behind handling errors and connect them back to the runnable examples.
 
-## Why This Chapter Matters
+## Next Chapter
 
-This chapter teaches the concept of turning failures into understandable program behavior.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-This chapter teaches the concept of turning failures into understandable program behavior.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around handling Errors, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Move to [Exception Design And Resources Learning Kit](../ch02_exception_design_and_resources/ChapterGuide.md) after this chapter.

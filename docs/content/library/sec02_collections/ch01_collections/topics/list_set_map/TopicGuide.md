@@ -140,6 +140,10 @@ For interview answers, say the correctness rule first and the performance implic
 - you are picking a collection only because it is the one you remember best
 - you are discussing implementation classes before you understand the data shape
 
+## Practice
+
+Change one input in [ListSetMap.java](ListSetMap.java), rerun it, and write down what changed.
+
 ## Summary
 
 - `List`, `Set`, and `Map` solve different data-shape problems

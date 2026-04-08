@@ -30,8 +30,7 @@ Read the chapter as a small set of related ideas around text Processing And Rege
 
 ## Study Order
 
-1. Run [ValidatingUserInput.java](topics/validating_user_input/ValidatingUserInput.java)
-2. Focus on the concept first: text from users must be checked before it is trusted.
+1. Run [Validating User Input](topics/validating_user_input/ValidatingUserInput.java)
 
 ## What To Notice
 
@@ -61,22 +60,6 @@ Run the examples again, change one assumption, and explain how the chapter guida
 
 After this chapter, you should be able to explain the main decisions behind text processing and regex and connect them back to the runnable examples.
 
-## Why This Chapter Matters
+## Next Chapter
 
-This chapter teaches the concept of checking and transforming text data safely.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-This chapter teaches the concept of checking and transforming text data safely.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around text Processing And Regex, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Move to [Strings In Depth Learning Kit](../ch07_strings_in_depth/ChapterGuide.md) after this chapter.

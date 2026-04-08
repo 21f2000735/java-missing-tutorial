@@ -30,8 +30,7 @@ Read the chapter as a small set of related ideas around working With Time, not a
 
 ## Study Order
 
-1. Run [SchedulingDeliveries.java](topics/scheduling_deliveries/SchedulingDeliveries.java)
-2. Focus on the concept first: business time is data, not just text.
+1. Run [Scheduling Deliveries](topics/scheduling_deliveries/SchedulingDeliveries.java)
 
 ## What To Notice
 
@@ -61,22 +60,6 @@ Run the examples again, change one assumption, and explain how the chapter guida
 
 After this chapter, you should be able to explain the main decisions behind working with time and connect them back to the runnable examples.
 
-## Why This Chapter Matters
+## Next Chapter
 
-This chapter teaches the concept of modeling dates, times, and schedules correctly.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-This chapter teaches the concept of modeling dates, times, and schedules correctly.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around working With Time, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Move to [Numbers And Formatting Learning Kit](../ch05_numbers_and_formatting/ChapterGuide.md) after this chapter.

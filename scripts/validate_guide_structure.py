@@ -23,6 +23,7 @@ TOPIC_REQUIRED = [
     "Mistakes",
     "Tradeoffs",
     "Use / Avoid",
+    "Practice",
     "Summary",
 ]
 

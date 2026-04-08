@@ -134,22 +134,13 @@ For interviews, mention that an in-memory map is only a teaching model. Real sys
 - the action has no meaningful side effect to protect
 - you are using the word idempotent without defining the stable identity rule
 
+## Practice
+
+Change one input in [IdempotentReservations.java](IdempotentReservations.java), rerun it, and write down what changed.
+
 ## Summary
 
 - retries are normal in booking and checkout systems
 - idempotency means the same logical request should return the same result
 - the core move is stable request identity plus stored first result
 - a strong interview answer ties idempotency to business correctness, not only API style
-
-## Company Lens
-
-- Amazon: ownership, trust, and customer-impact prevention
-- Meta: robust backend behavior under retry storms and distributed failure
-
-## Strong Interview Answer
-
-Use an idempotency key, store the first successful result durably, and return that same result on duplicate calls so retries do not repeat the business side effect.
-
-## Next Topic
-
-Read `LatencyDebugPlaybook` next. It pairs well with this topic because both are about handling real production behavior instead of ideal demos.

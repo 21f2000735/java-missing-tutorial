@@ -38,8 +38,8 @@ That breaks when the same mistake repeats across files, teams, or interview ques
 
 ## Study Order
 
-1. Run [BytesCharsAndFiles.java](topics/bytes_chars_and_files/BytesCharsAndFiles.java)
-2. Run [WatchServiceAndSerialization.java](topics/watch_service_and_serialization/WatchServiceAndSerialization.java)
+1. Run [Bytes Chars And Files](topics/bytes_chars_and_files/BytesCharsAndFiles.java)
+2. Run [Watch Service And Serialization](topics/watch_service_and_serialization/WatchServiceAndSerialization.java)
 
 ## What To Notice
 
@@ -66,48 +66,6 @@ Use this chapter when the surrounding design decision is still fuzzy. Do not for
 Run the examples again, change one assumption, and explain how the chapter guidance changes.
 
 ## Summary
-
-- when character APIs are safer than raw byte APIs
-- why buffering improves practical I/O throughput
-- why serialization should be treated carefully rather than as a default persistence strategy
-
-## Why This Chapter Matters
-
-This chapter explains the practical I/O questions beginners usually skip until file handling breaks in production.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-People often learn `InputStream` or `File` in isolation and miss the bigger distinction between bytes, characters, buffering, paths, and serialization risk.
-
-## Core Ideas
-
-- bytes vs chars
-- buffered I/O intuition
-- modern `Path` and `Files`
-- `WatchService` at a concept level
-- serialization pitfalls
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
-
-## The Problem
-
-People often learn `InputStream` or `File` in isolation and miss the bigger distinction between bytes, characters, buffering, paths, and serialization risk.
-
-## What This Chapter Covers
-
-- bytes vs chars
-- buffered I/O intuition
-- modern `Path` and `Files`
-- `WatchService` at a concept level
-- serialization pitfalls
-
-## After Reading This Chapter, You Should Know
 
 - when character APIs are safer than raw byte APIs
 - why buffering improves practical I/O throughput

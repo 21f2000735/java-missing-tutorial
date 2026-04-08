@@ -1,15 +1,23 @@
-# sec11_exception_handling Exception Handling
+# Exception Handling
+
+## Why This Section Exists
 
 Current chapters:
 
 - `ch01_handling_errors`
 - `ch02_exception_design_and_resources`
 
-## Before You Start
+## Real Problems
 
-- Prerequisites: sec01_fundamentals.
-- This section prepares you for: Safer APIs, better error messages, and production failure handling.
-- Suggested pace: 1 to 2 focused sessions.
+- the code is correct for one case but unclear for the next one
+- the API names feel related but not obviously different
+- the same bug keeps showing up in slightly different forms
+
+## Start Here If
+
+- exception handling still feels fuzzy
+- the examples look related but the boundary between them is still blurry
+- you want the practical problem before the syntax
 
 ## How To Read This Section
 
@@ -17,10 +25,26 @@ Current chapters:
 - compare the printed output with the explanation in each topic
 - finish the chapter with its revision sheet before moving on
 
-## Why This Section Matters
+## Current Chapters
 
-Safer APIs, better error messages, and production failure handling.
+- [Handling Errors Learning Kit](ch01_handling_errors/ChapterGuide.md)
+- [Exception Design And Resources Learning Kit](ch02_exception_design_and_resources/ChapterGuide.md)
 
-## Recommended Next Step
+## Reading Order
+
+1. Run [Handling Errors Learning Kit](ch01_handling_errors/ChapterGuide.md)
+2. Run [Exception Design And Resources Learning Kit](ch02_exception_design_and_resources/ChapterGuide.md)
+
+## Common Mistakes
+
+- starting with the API name instead of the problem
+- treating the examples as trivia instead of a design choice
+- skipping the runnable code and only skimming the prose
+
+## Practice
+
+Run the first chapter in this section, change one assumption in its example, and explain the result in one paragraph.
+
+## Next Step
 
 Move to sec13_io_and_data_access, sec12_networking, and sec19_testing_and_quality.

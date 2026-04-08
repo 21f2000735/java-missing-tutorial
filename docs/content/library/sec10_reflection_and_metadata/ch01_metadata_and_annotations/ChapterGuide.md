@@ -30,8 +30,7 @@ Read the chapter as a small set of related ideas around metadata And Annotations
 
 ## Study Order
 
-1. Run [MarkingApiContracts.java](topics/marking_api_contracts/MarkingApiContracts.java)
-2. Focus on the concept first: metadata helps tools and teammates understand intent.
+1. Run [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java)
 
 ## What To Notice
 
@@ -60,23 +59,3 @@ Run the examples again, change one assumption, and explain how the chapter guida
 ## Summary
 
 After this chapter, you should be able to explain the main decisions behind metadata and annotations and connect them back to the runnable examples.
-
-## Why This Chapter Matters
-
-This chapter teaches the concept of attaching meaning to code beyond plain statements.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-This chapter teaches the concept of attaching meaning to code beyond plain statements.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around metadata And Annotations, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.

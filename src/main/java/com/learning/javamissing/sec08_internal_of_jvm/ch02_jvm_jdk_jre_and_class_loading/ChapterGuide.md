@@ -72,9 +72,9 @@ One is about responsibilities. The other is about timing.
 
 ## Study Order
 
-1. Run [RuntimeLayers.java](topics/runtime_layers/RuntimeLayers.java)
-2. Run [ClassLoadingLifecycle.java](topics/class_loading_lifecycle/ClassLoadingLifecycle.java)
-3. Explain why the second example prints static initialization output exactly when it does
+1. Run [Class Loading And Hot Deploy](topics/class_loading_and_hot_deploy/ClassLoadingAndHotDeploy.java)
+2. Run [Class Loading Lifecycle](topics/class_loading_lifecycle/ClassLoadingLifecycle.java)
+3. Run [Runtime Layers](topics/runtime_layers/RuntimeLayers.java)
 
 ## What To Notice
 
@@ -152,6 +152,6 @@ After this chapter, you should be able to answer two different questions clearly
 - what piece of Java is responsible for building versus running code?
 - when does a class actually become initialized?
 
-## Sources
+## Next Chapter
 
-- Java Language Specification: https://docs.oracle.com/javase/specs/
+Move to [JIT And Garbage Collection Learning Kit](../ch03_jit_and_garbage_collection/ChapterGuide.md) after this chapter.

@@ -60,9 +60,10 @@ Do not pretend to be a JVM tuner. Build the first correct mental model.
 
 ## Study Order
 
-1. Run [JitBasics.java](topics/jit_basics/JitBasics.java)
-2. Run [GcStrategies.java](topics/gc_strategies/GcStrategies.java)
-3. Explain what "hot path" and "pause time" mean in plain language
+1. Run [GC Algorithms Comparison](topics/gc_algorithms_comparison/GcAlgorithmsComparison.java)
+2. Run [GC Strategies](topics/gc_strategies/GcStrategies.java)
+3. Run [JIT Compilation And Tiered Compilation](topics/jit_and_tiered_compilation/JitAndTieredCompilation.java)
+4. Run [Jit Basics](topics/jit_basics/JitBasics.java)
 
 ## What To Notice
 
@@ -138,7 +139,3 @@ After this chapter, you should be able to explain the JVM as an adaptive runtime
 - JIT optimizes hot paths
 - GC reclaims memory
 - collector choice is about tradeoffs, not magic
-
-## Sources
-
-- Java HotSpot VM documentation: https://docs.oracle.com/en/java/

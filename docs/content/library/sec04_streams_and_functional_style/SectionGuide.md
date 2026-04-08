@@ -1,8 +1,10 @@
-# sec04_streams_and_functional_style Streams And Functional Style
+# Streams And Functional Style
+
+## Why This Section Exists
 
 This section is about one broad problem: turning raw data into useful answers without burying the business intent.
 
-## What Real Problems This Section Solves
+## Real Problems
 
 - a list of orders must be filtered down to only the ones that matter
 - raw rows must become names, totals, grouped maps, or summaries
@@ -44,6 +46,10 @@ This section is about one broad problem: turning raw data into useful answers wi
 - treating collectors as memorization instead of asking what final result is needed
 - choosing parallel streams before measuring or understanding side effects
 
-## Recommended Next Step
+## Practice
+
+Run the first chapter in this section, change one assumption in its example, and explain the result in one paragraph.
+
+## Next Step
 
 Move to sec16_core_data_time_and_text for more real business data handling, or to sec19_testing_and_quality to test transformation logic cleanly.

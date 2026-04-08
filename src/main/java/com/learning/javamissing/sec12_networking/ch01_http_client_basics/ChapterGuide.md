@@ -30,7 +30,7 @@ Read the chapter as a small set of related ideas around hTTP Client Basics, not 
 
 ## Study Order
 
-1. Run [BuildingRequestsWithHttpClient.java](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java)
+1. Run [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java)
 
 ## What To Notice
 
@@ -59,23 +59,3 @@ Run the examples again, change one assumption, and explain how the chapter guida
 ## Summary
 
 After this chapter, you should be able to explain the main decisions behind http client basics and connect them back to the runnable examples.
-
-## Why This Chapter Matters
-
-Many systems call external APIs. Before worrying about retries and resilience, the learner should understand the basic request model.
-
-## Intuition
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Problem Statement
-
-Many systems call external APIs. Before worrying about retries and resilience, the learner should understand the basic request model.
-
-## Core Ideas
-
-Read the chapter as a small set of related ideas around hTTP Client Basics, not as isolated trivia.
-
-## When To Use / When Not To Use
-
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.

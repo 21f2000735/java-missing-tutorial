@@ -81,9 +81,8 @@ Keep plain constructors when the object is still tiny and obvious.
 
 ## Study Order
 
-1. Run [CreatingObjectsWithFactoryMethod.java](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java)
-2. Run [AssemblingObjectsWithBuilder.java](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java)
-3. Ask which example hides type selection and which example improves call-site readability
+1. Run [Assembling Objects With Builder](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java)
+2. Run [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java)
 
 ## What To Notice
 
@@ -179,12 +178,6 @@ After this chapter, you should be able to explain creational patterns as two dif
 
 If neither pressure exists, use a constructor and move on.
 
-## Effective Java Mapping
+## Next Chapter
 
-- Item 1: Consider static factory methods instead of constructors
-- Item 2: Consider a builder when faced with many constructor parameters
-
-## Sources
-
-- Effective Java, 3rd Edition: https://www.informit.com/store/effective-java-9780134686042
-- Head First Design Patterns: https://www.oreilly.com/library/view/head-first-design/9781492077992/
+Move to [Structural Patterns](../ch03_structural_patterns/ChapterGuide.md) after this chapter.
