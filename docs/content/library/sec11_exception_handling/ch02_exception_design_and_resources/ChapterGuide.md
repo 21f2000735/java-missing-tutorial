@@ -1,5 +1,13 @@
 # Exception Design And Resources Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Checked Unchecked And Custom](topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java) to see the raw behavior.
+2. Step 2: Try [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java) to see the naive approach.
+3. Step 3: Watch [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when exception design and resources is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

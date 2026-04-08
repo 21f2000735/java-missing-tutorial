@@ -1,5 +1,13 @@
 # Java Basics Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Designing Small Methods](topics/designing_small_methods/DesigningSmallMethods.java) to see the raw behavior.
+2. Step 2: Try [Making Decisions And Repeating Work](topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java) to see the naive approach.
+3. Step 3: Watch [Making Decisions And Repeating Work](topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java) to find the failure.
+4. Step 4: Use [Making Decisions And Repeating Work](topics/making_decisions_and_repeating_work/MakingDecisionsAndRepeatingWork.java) to restore correctness.
+5. Step 5: Finish with [Storing And Naming Values](topics/storing_and_naming_values/StoringAndNamingValues.java) to see the improvement.
+
 ## Problem
 
 Java programs stay useful when they are organized around ideas, not only syntax.

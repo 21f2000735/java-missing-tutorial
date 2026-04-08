@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: class identity is class name plus class loader.
+
 class identity is class name plus class loader.
 
 **Example**
@@ -54,3 +56,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Concept: class identity is class name plus class loader.
+
+- Next: compare this step with the next topic and notice what changes.

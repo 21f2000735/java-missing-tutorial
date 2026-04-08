@@ -1,5 +1,13 @@
 # Creational Patterns
 
+## Learning Path
+
+1. Step 1: Start with [Assembling Objects With Builder](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java) to see the raw behavior.
+2. Step 2: Try [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java) to see the naive approach.
+3. Step 3: Watch [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java) to see the improvement.
+
 ## Problem
 
 Constructors become hard to read when required and optional values mix together.

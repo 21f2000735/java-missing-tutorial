@@ -11,6 +11,8 @@ estimated: 9 min
 
 **Concept**
 
+This step focuses on: HashMap looks like instant lookup until collisions and hashing quality become relevant.
+
 HashMap collisions
 
 **Example**
@@ -64,3 +66,5 @@ collisions do not break lookup when equals/hashCode are implemented correctly.
 **Try this**
 
 - Store several keys with the same hash. 2. Read one value back. 3. See that correctness still depends on equals/hashCode, even when collisions exist.
+
+- Next: compare this step with the next topic and notice what changes.

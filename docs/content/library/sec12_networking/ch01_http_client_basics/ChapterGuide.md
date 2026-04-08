@@ -1,5 +1,13 @@
 # HTTP Client Basics Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when http client basics is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

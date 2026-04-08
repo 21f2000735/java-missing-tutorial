@@ -1,5 +1,13 @@
 # Behavioral Patterns
 
+## Learning Path
+
+1. Step 1: Start with [Capturing Workflows With Template Method](topics/capturing_workflows_with_template_method/CapturingWorkflowsWithTemplateMethod.java) to see the raw behavior.
+2. Step 2: Try [Publishing Updates With Observer](topics/publishing_updates_with_observer/PublishingUpdatesWithObserver.java) to see the naive approach.
+3. Step 3: Watch [Publishing Updates With Observer](topics/publishing_updates_with_observer/PublishingUpdatesWithObserver.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Publishing Updates With Observer](topics/publishing_updates_with_observer/PublishingUpdatesWithObserver.java) to see the improvement.
+
 ## Problem
 
 Some workflows stay stable overall while a few internal steps vary.

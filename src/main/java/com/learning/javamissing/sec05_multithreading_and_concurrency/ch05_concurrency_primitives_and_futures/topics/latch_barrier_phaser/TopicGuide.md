@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+
 Why it matters: each tool waits differently, so choosing the right one keeps coordination readable. CountDownLatch merge = all preload tasks finished Phaser merge = dynamic parties can join and leave
 
 **Example**
@@ -53,3 +55,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 
 - CountDownLatch merge = all preload tasks finished
 - Phaser merge = dynamic parties can join and leave
+
+- Next: compare this step with the next topic and notice what changes.

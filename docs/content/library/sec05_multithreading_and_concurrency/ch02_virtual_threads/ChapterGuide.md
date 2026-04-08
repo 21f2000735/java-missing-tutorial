@@ -1,5 +1,13 @@
 # Virtual Threads Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Avoiding Virtual Thread Misuse](topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java) to see the raw behavior.
+2. Step 2: Try [Running Tasks With Virtual Thread Executor](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java) to see the naive approach.
+3. Step 3: Watch [Running Tasks With Virtual Thread Executor](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java) to find the failure.
+4. Step 4: Use [Running Tasks With Virtual Thread Executor](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java) to restore correctness.
+5. Step 5: Finish with [Why virtual threads matter](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java) to see the improvement.
+
 ## Problem
 
 Cheap threads do not remove design mistakes around locking and blocking.

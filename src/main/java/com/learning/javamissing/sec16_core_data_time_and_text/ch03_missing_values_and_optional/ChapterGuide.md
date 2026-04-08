@@ -1,5 +1,13 @@
 # Missing Values And Optional Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with the first topic to see the raw behavior.
+2. Step 2: Try the naive version and compare the output.
+3. Step 3: Watch the failure appear when the assumption changes.
+4. Step 4: Apply the fix and check what stays stable.
+5. Step 5: Finish with the improvement and move to the next chapter.
+
 ## Problem
 
 Java programs stay useful when they are organized around ideas, not only syntax.

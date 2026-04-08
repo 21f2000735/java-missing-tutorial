@@ -1,5 +1,13 @@
 # Problem Solving Patterns Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Scanning Sorted Data With Two Pointers](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java) to see the raw behavior.
+2. Step 2: Try [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) to see the naive approach.
+3. Step 3: Watch [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) to see the improvement.
+
 ## Problem
 
 Sorted data often lets you avoid nested loops if you scan from both sides intelligently.

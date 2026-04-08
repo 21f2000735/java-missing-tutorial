@@ -11,6 +11,8 @@ estimated: 8 min
 
 **Concept**
 
+This step focuses on: Product search suggestions must be fast, relevant, and easy to reason about under load.
+
 Product search suggestions must be fast, relevant, and easy to reason about under load.
 
 **Example**
@@ -68,3 +70,5 @@ prefix filtering narrows candidates and popularity ranking orders them.
 **Try this**
 
 - Filter destinations by prefix. 2. Sort by popularity. 3. Cache hot prefixes for repeated reads.
+
+- Next: compare this step with the next topic and notice what changes.

@@ -1,5 +1,13 @@
 # Java Modules Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Declaring Module Boundaries](topics/declaring_module_boundaries/DeclaringModuleBoundaries.java) to see the raw behavior.
+2. Step 2: Try [Module Boundaries](topics/module_boundaries/ModuleBoundaries.java) to see the naive approach.
+3. Step 3: Watch [Module Boundaries](topics/module_boundaries/ModuleBoundaries.java) to find the failure.
+4. Step 4: Use [Module Boundaries](topics/module_boundaries/ModuleBoundaries.java) to restore correctness.
+5. Step 5: Finish with [Pluggable Implementations](topics/pluggable_implementations/PluggableImplementations.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when java modules is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

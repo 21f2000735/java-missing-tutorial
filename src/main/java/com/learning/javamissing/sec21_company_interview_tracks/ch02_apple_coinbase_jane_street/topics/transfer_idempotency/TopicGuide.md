@@ -11,6 +11,8 @@ estimated: 7 min
 
 **Concept**
 
+This step focuses on: Payment and transfer APIs must survive retries without moving money twice.
+
 Payment and transfer APIs must survive retries without moving money twice.
 
 **Example**
@@ -59,3 +61,5 @@ Payment and transfer APIs must survive retries without moving money twice.
 **Try this**
 
 - Accept an idempotency key. 2. Store the result for that key. 3. Return the same result on retry.
+
+- Next: compare this step with the next topic and notice what changes.

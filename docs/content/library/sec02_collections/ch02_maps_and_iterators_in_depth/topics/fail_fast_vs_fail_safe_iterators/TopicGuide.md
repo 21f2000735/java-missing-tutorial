@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: ArrayList iterators are fail-fast.
+
 ArrayList iterators are fail-fast.
 
 **Example**
@@ -76,3 +78,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Concept: ArrayList iterators are fail-fast.
+
+- Next: compare this step with the next topic and notice what changes.

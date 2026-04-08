@@ -1,5 +1,13 @@
 # JUnit 5 And Test Doubles Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Junit5 Lifecycle And Parameters](topics/junit5_lifecycle_and_parameters/Junit5LifecycleAndParameters.java) to see the raw behavior.
+2. Step 2: Try [Test Doubles And Verification](topics/test_doubles_and_verification/TestDoublesAndVerification.java) to see the naive approach.
+3. Step 3: Watch [Test Doubles And Verification](topics/test_doubles_and_verification/TestDoublesAndVerification.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Test Doubles And Verification](topics/test_doubles_and_verification/TestDoublesAndVerification.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when junit 5 and test doubles is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

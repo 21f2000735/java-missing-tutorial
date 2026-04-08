@@ -1,5 +1,13 @@
 # Memory And Execution Basics Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [GC Roots And Reference Types](topics/gc_roots_and_references/GcRootsAndReferences.java) to see the raw behavior.
+2. Step 2: Try [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) to see the naive approach.
+3. Step 3: Watch [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when memory and execution basics is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

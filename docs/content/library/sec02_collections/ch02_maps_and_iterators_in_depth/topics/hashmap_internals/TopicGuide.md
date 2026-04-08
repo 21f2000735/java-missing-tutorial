@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: HashMap uses hashCode() to find a bucket and equals() to find the exact key.
+
 HashMap uses hashCode() to find a bucket and equals() to find the exact key.
 
 **Example**
@@ -63,3 +65,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Concept: HashMap uses hashCode() to find a bucket and equals() to find the exact key.
+
+- Next: compare this step with the next topic and notice what changes.

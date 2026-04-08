@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: PriorityQueue is a min-heap by default.
+
 PriorityQueue is a min-heap by default.
 
 **Example**
@@ -69,3 +71,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Concept: PriorityQueue is a min-heap by default.
+
+- Next: compare this step with the next topic and notice what changes.

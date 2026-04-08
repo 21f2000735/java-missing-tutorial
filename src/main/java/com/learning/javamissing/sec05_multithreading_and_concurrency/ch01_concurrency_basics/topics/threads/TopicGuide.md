@@ -11,6 +11,8 @@ estimated: 8 min
 
 **Concept**
 
+This step focuses on: Concurrency starts with one hard fact: two units of work can overlap in time.
+
 Concurrency starts with one hard fact: two units of work can overlap in time.
 
 **Example**
@@ -54,3 +56,5 @@ you are learning the execution model or showing a tiny one-off demo. synchronize
 **Try this**
 
 - Start one background task. 2. Wait with join() when you need the task finished. 3. Notice how shared mutable state changes the design problem.
+
+- Next: compare this step with the next topic and notice what changes.

@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: Why it matters: each thread can carry request context without sharing mutable state.
+
 Why it matters: each thread can carry request context without sharing mutable state.
 
 **Example**
@@ -57,3 +59,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Why it matters: each thread can carry request context without sharing mutable state.
+
+- Next: compare this step with the next topic and notice what changes.

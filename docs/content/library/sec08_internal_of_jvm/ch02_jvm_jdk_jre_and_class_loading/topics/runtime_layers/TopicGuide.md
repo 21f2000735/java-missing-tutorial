@@ -14,6 +14,8 @@ visual_asset: RuntimeLayersVisual.svg
 
 **Concept**
 
+This step focuses on: JVM, JRE, and JDK answer different questions.
+
 JVM, JRE, and JDK answer different questions.
 
 **Example**
@@ -63,3 +65,5 @@ a new developer can run code in the IDE but cannot explain what the runtime and 
 - Concept: JVM, JRE, and JDK answer different questions.
 - Real-world problem: a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.
 - JVM = executes bytecode
+
+- Next: compare this step with the next topic and notice what changes.

@@ -1,5 +1,13 @@
 # Netflix, MakeMyTrip, HotelTrader
 
+## Learning Path
+
+1. Step 1: Start with [availability freshness](topics/availability_freshness/AvailabilityFreshness.java) to see the raw behavior.
+2. Step 2: Try [hotel search cache](topics/hotel_search_cache/HotelSearchCache.java) to see the naive approach.
+3. Step 3: Watch [hotel search cache](topics/hotel_search_cache/HotelSearchCache.java) to find the failure.
+4. Step 4: Use [hotel search cache](topics/hotel_search_cache/HotelSearchCache.java) to restore correctness.
+5. Step 5: Finish with [resilient signup flow](topics/resilient_signup_flow/ResilientSignupFlow.java) to see the improvement.
+
 ## Problem
 
 Marketplace and partner systems need to know whether what they show is still trustworthy.

@@ -1,5 +1,13 @@
 # JVM, JDK, JRE, And Class Loading Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Class Loading And Hot Deploy](topics/class_loading_and_hot_deploy/ClassLoadingAndHotDeploy.java) to see the raw behavior.
+2. Step 2: Try [Class Loading Lifecycle](topics/class_loading_lifecycle/ClassLoadingLifecycle.java) to see the naive approach.
+3. Step 3: Watch [Class Loading Lifecycle](topics/class_loading_lifecycle/ClassLoadingLifecycle.java) to find the failure.
+4. Step 4: Use [Class Loading Lifecycle](topics/class_loading_lifecycle/ClassLoadingLifecycle.java) to restore correctness.
+5. Step 5: Finish with [Runtime Layers](topics/runtime_layers/RuntimeLayers.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when jvm, jdk, jre, and class loading is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

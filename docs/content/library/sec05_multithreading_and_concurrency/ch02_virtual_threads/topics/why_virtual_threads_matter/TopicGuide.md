@@ -11,6 +11,8 @@ estimated: 9 min
 
 **Concept**
 
+This step focuses on: Waiting-heavy systems need a cheaper way to express many concurrent tasks.
+
 Waiting-heavy systems need a cheaper way to express many concurrent tasks.
 
 **Example**
@@ -54,3 +56,5 @@ tasks mostly wait on external systems. the code stays simple and blocking-style,
 **Try this**
 
 - Start one virtual thread. 2. Let it block in a simple style. 3. Compare the model with traditional expensive thread-per-task thinking.
+
+- Next: compare this step with the next topic and notice what changes.

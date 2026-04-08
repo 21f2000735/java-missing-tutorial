@@ -1,5 +1,13 @@
 # Maps And Iterators In Depth Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Concurrent Maps And Iterators](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java) to see the raw behavior.
+2. Step 2: Try [Fail-Fast Vs Fail-Safe Iterators](topics/fail_fast_vs_fail_safe_iterators/FailFastVsFailSafeIterators.java) to see the naive approach.
+3. Step 3: Watch [LinkedHashMap As LRU Cache](topics/linkedhashmap_lru_cache/LinkedHashMapLruCache.java) to find the failure.
+4. Step 4: Use [Map Tradeoffs](topics/map_tradeoffs/MapTradeoffs.java) to restore correctness.
+5. Step 5: Finish with [PriorityQueue And Heap Internals](topics/priority_queue_heap_internals/PriorityQueueHeapInternals.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when maps and iterators in depth is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

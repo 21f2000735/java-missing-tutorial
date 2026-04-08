@@ -1,5 +1,13 @@
 # Underused Core Utilities Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Using Factory Methods And Copy Of](topics/using_factory_methods_and_copy_of/UsingFactoryMethodsAndCopyOf.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when underused core utilities is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: records are compact data carriers with built-in equals, hashCode, and toString.
+
 records are compact data carriers with built-in equals, hashCode, and toString.
 
 **Example**
@@ -56,3 +58,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Concept: records are compact data carriers with built-in equals, hashCode, and toString.
+
+- Next: compare this step with the next topic and notice what changes.

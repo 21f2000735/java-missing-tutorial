@@ -11,6 +11,8 @@ estimated: 7 min
 
 **Concept**
 
+This step focuses on: Distributed systems fail in pieces, not all at once.
+
 Distributed systems fail in pieces, not all at once.
 
 **Example**
@@ -54,3 +56,5 @@ Distributed systems fail in pieces, not all at once.
 **Try this**
 
 - Run critical steps first. 2. Catch non-critical failure separately. 3. Return an honest degraded result.
+
+- Next: compare this step with the next topic and notice what changes.

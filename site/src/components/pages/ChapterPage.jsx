@@ -1,4 +1,4 @@
-import { badgeClassForTone, bulletItems, inferTopicMode, modePresentation, parseGuide, resolveVersionMeta, scoreLabel, statusTone, truncateText } from '../../lib/content-helpers.js';
+import { badgeClassForTone, bulletItems, inferTopicMode, modePresentation, numberedItems, parseGuide, resolveVersionMeta, scoreLabel, statusTone, truncateText } from '../../lib/content-helpers.js';
 import {
   FeedbackBar,
   HeaderPanel,
@@ -98,9 +98,11 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
   const previousChapter = chapterIndex > 0 ? manifest.chapterOrder[chapterIndex - 1] : null;
   const nextChapter = chapterIndex >= 0 && chapterIndex < manifest.chapterOrder.length - 1 ? manifest.chapterOrder[chapterIndex + 1] : null;
   const isChapterDone = readingState.completedChapters.includes(routeKey);
-  const problem = guide.sections.find((section) => ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story'].includes(section.title));
+  const learningPath = guide.sections.find((section) => section.title === 'Learning Path');
+  const problem = guide.sections.find((section) => ['Problem', 'What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story'].includes(section.title));
   const practice = guide.sections.find((section) => ['Practice', 'Try This', 'Exercise'].includes(section.title));
   const topicGroups = splitIntoGroups(data.chapter.topics, 3);
+  const learningPathItems = numberedItems(learningPath?.raw || '');
 
   return (
     <PageLayout
@@ -124,6 +126,19 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
 
       <div className="content-layout content-layout-single">
         <div className="content-main">
+          {learningPathItems.length ? (
+            <div className="content-card mb-4">
+              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <div>
+                  <div className="eyebrow mb-2">Learning Path</div>
+                  <h2 className="page-title mb-0">Step-by-step ladder</h2>
+                </div>
+                <span className="badge rounded-pill badge-soft">{learningPathItems.length} steps</span>
+              </div>
+              <BulletList items={learningPathItems} />
+            </div>
+          ) : null}
+
           <div className="content-card mb-4">
             <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
               <h2 className="page-title mb-0">Start With Examples</h2>

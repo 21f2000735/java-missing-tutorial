@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: hot methods get optimized by the JIT over time.
+
 hot methods get optimized by the JIT over time.
 
 **Example**
@@ -58,3 +60,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 
 - Concept: hot methods get optimized by the JIT over time.
 - Use -XX:+PrintCompilation to observe compilation decisions when needed.
+
+- Next: compare this step with the next topic and notice what changes.

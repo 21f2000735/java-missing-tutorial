@@ -1,5 +1,13 @@
 # Structural Patterns
 
+## Learning Path
+
+1. Step 1: Start with [Adding Features With Decorator](topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java) to see the raw behavior.
+2. Step 2: Try [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java) to see the naive approach.
+3. Step 3: Watch [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java) to see the improvement.
+
 ## Problem
 
 Stable code often needs extra behavior without being rewritten for each new feature.

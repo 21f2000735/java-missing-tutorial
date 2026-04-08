@@ -12,6 +12,8 @@ mode: shared
 
 **Concept**
 
+This step focuses on: Java programs stay useful when they are organized around ideas, not only syntax.
+
 Java programs stay useful when they are organized around ideas, not only syntax.
 
 **Example**
@@ -57,3 +59,5 @@ Java programs stay useful when they are organized around ideas, not only syntax.
 **Try this**
 
 - Identify the business data or behavior. 2. Choose the Java construct that expresses the idea clearly. 3. Run the example and compare the output with the explanation.
+
+- Next: compare this step with the next topic and notice what changes.

@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: sealed classes let switch handle every known subtype.
+
 sealed classes let switch handle every known subtype.
 
 **Example**
@@ -56,3 +58,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Concept: sealed classes let switch handle every known subtype.
+
+- Next: compare this step with the next topic and notice what changes.

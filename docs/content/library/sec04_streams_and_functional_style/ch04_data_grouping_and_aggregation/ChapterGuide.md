@@ -1,5 +1,13 @@
 # Data Grouping And Aggregation Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Grouping Sales](topics/grouping_sales/GroupingSales.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Grouping Sales](topics/grouping_sales/GroupingSales.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Grouping Sales](topics/grouping_sales/GroupingSales.java) to see the improvement.
+
 ## Problem
 
 Business users usually ask for summaries by category, status, or region instead of raw rows.

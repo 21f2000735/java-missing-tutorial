@@ -1,5 +1,13 @@
 # Collections Internals And Tradeoffs Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java) to see the raw behavior.
+2. Step 2: Try [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) to see the naive approach.
+3. Step 3: Watch [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) to see the improvement.
+
 ## Problem
 
 ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.

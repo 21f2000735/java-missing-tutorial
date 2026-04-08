@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: worker observed shutdown = true Why it matters: volatile gives visibility, but AtomicInteger is still needed for atomic updates.
+
 worker observed shutdown = true Why it matters: volatile gives visibility, but AtomicInteger is still needed for atomic updates.
 
 **Example**
@@ -76,3 +78,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - worker observed shutdown = true
+
+- Next: compare this step with the next topic and notice what changes.

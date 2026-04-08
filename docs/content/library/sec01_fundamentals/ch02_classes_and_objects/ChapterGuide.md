@@ -1,5 +1,13 @@
 # Classes And Objects Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Classes Objects](topics/classes_objects/ClassesObjects.java) to see the raw behavior.
+2. Step 2: Try [Inheritance](topics/inheritance/Inheritance.java) to see the naive approach.
+3. Step 3: Watch [Inheritance](topics/inheritance/Inheritance.java) to find the failure.
+4. Step 4: Use [Inheritance](topics/inheritance/Inheritance.java) to restore correctness.
+5. Step 5: Finish with [Polymorphism](topics/polymorphism/Polymorphism.java) to see the improvement.
+
 ## Problem
 
 Java programs stay useful when they are organized around ideas, not only syntax.

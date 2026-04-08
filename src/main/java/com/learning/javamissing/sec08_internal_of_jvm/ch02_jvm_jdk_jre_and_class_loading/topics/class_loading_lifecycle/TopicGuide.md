@@ -14,6 +14,8 @@ visual_asset: ClassLoadingLifecycleVisual.svg
 
 **Concept**
 
+This step focuses on: classes are loaded and initialized only when the JVM decides they are needed.
+
 classes are loaded and initialized only when the JVM decides they are needed.
 
 **Example**
@@ -58,3 +60,5 @@ loading makes class data available, linking prepares it, and initialization runs
 - Concept: classes are loaded and initialized only when the JVM decides they are needed.
 - Accessing CustomerConfig.DEFAULT_REGION triggers class initialization.
 - Why it works: loading makes class data available, linking prepares it, and initialization runs static setup.
+
+- Next: compare this step with the next topic and notice what changes.

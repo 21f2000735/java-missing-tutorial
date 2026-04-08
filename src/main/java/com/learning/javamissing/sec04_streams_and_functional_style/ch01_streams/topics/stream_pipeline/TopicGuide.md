@@ -11,6 +11,8 @@ estimated: 9 min
 
 **Concept**
 
+This step focuses on: Many business tasks are really data transformations, and the code should show that clearly.
+
 Many business tasks are really data transformations, and the code should show that clearly.
 
 **Example**
@@ -56,3 +58,5 @@ the task is really filter -> transform -> answer. the filter keeps only names wi
 **Try this**
 
 - Start with a collection. 2. Add filter and map steps in the same order as the business rule. 3. Finish with a terminal operation that produces the answer.
+
+- Next: compare this step with the next topic and notice what changes.

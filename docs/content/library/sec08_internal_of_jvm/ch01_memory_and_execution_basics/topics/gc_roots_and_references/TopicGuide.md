@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: GC roots = local variable, active thread, static field, and JNI-style references.
+
 GC roots = local variable, active thread, static field, and JNI-style references. Why it matters: strong, soft, weak, and phantom references control how caches and leaks behave.
 
 **Example**
@@ -61,3 +63,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - GC roots = local variable, active thread, static field, and JNI-style references.
+
+- Next: compare this step with the next topic and notice what changes.

@@ -11,6 +11,8 @@ estimated: 8 min
 
 **Concept**
 
+This step focuses on: ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.
+
 ArrayList internals
 
 **Example**
@@ -62,3 +64,5 @@ index access is direct, but resizing copies old elements into a larger array.
 **Try this**
 
 - Append items while estimating resize-copy work. 2. Read one item by index. 3. Compare cheap common appends with occasional expensive growth.
+
+- Next: compare this step with the next topic and notice what changes.

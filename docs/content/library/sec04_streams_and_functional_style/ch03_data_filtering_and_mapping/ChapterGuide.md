@@ -1,5 +1,13 @@
 # Data Filtering And Mapping Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Filtering Orders](topics/filtering_orders/FilteringOrders.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Filtering Orders](topics/filtering_orders/FilteringOrders.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Filtering Orders](topics/filtering_orders/FilteringOrders.java) to see the improvement.
+
 ## Problem
 
 Most real code does not need the raw input exactly as it arrives.

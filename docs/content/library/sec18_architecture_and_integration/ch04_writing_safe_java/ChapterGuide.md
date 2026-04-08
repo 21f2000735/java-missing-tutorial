@@ -1,5 +1,13 @@
 # Writing Safe Java Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Validating Checkout Input](topics/validating_checkout_input/ValidatingCheckoutInput.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Validating Checkout Input](topics/validating_checkout_input/ValidatingCheckoutInput.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Validating Checkout Input](topics/validating_checkout_input/ValidatingCheckoutInput.java) to see the improvement.
+
 ## Problem
 
 Java programs stay useful when they are organized around ideas, not only syntax.

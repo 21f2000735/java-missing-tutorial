@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose.
+
 Why it matters: ReentrantLock adds timeout, fairness, and interruptible waiting that synchronized does not expose. synchronized example = monitor-based mutual exclusion
 
 **Example**
@@ -81,3 +83,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - synchronized example = monitor-based mutual exclusion
+
+- Next: compare this step with the next topic and notice what changes.

@@ -1,5 +1,13 @@
 # Apple, Coinbase, Jane Street
 
+## Learning Path
+
+1. Step 1: Start with [running median prices](topics/running_median_prices/RunningMedianPrices.java) to see the raw behavior.
+2. Step 2: Try [safe API design](topics/safe_api_design/SafeApiDesign.java) to see the naive approach.
+3. Step 3: Watch [safe API design](topics/safe_api_design/SafeApiDesign.java) to find the failure.
+4. Step 4: Use [safe API design](topics/safe_api_design/SafeApiDesign.java) to restore correctness.
+5. Step 5: Finish with [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java) to see the improvement.
+
 ## Problem
 
 Some interviewers want to see whether you can keep an invariant while data keeps arriving.

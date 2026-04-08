@@ -1,5 +1,13 @@
 # Google, Meta, Amazon
 
+## Learning Path
+
+1. Step 1: Start with [idempotent reservations](topics/idempotent_reservations/IdempotentReservations.java) to see the raw behavior.
+2. Step 2: Try [latency debug playbook](topics/latency_debug_playbook/LatencyDebugPlaybook.java) to see the naive approach.
+3. Step 3: Watch [latency debug playbook](topics/latency_debug_playbook/LatencyDebugPlaybook.java) to find the failure.
+4. Step 4: Use [latency debug playbook](topics/latency_debug_playbook/LatencyDebugPlaybook.java) to restore correctness.
+5. Step 5: Finish with [search autocomplete design](topics/search_autocomplete_design/SearchAutocompleteDesign.java) to see the improvement.
+
 ## Problem
 
 Booking, checkout, and order systems are retried under network failure.

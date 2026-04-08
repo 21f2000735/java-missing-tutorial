@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: access-order LinkedHashMap can act like a small LRU cache.
+
 access-order LinkedHashMap can act like a small LRU cache.
 
 **Example**
@@ -61,3 +63,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Concept: access-order LinkedHashMap can act like a small LRU cache.
+
+- Next: compare this step with the next topic and notice what changes.

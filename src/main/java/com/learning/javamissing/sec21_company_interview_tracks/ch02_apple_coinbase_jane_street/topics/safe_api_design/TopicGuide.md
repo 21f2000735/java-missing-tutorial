@@ -11,6 +11,8 @@ estimated: 6 min
 
 **Concept**
 
+This step focuses on: Good APIs reduce misuse before misuse becomes a production incident.
+
 Good APIs reduce misuse before misuse becomes a production incident.
 
 **Example**
@@ -55,3 +57,5 @@ the static factory validates required fields before the request exists.
 **Try this**
 
 - Validate required fields at creation time. 2. Keep the object small and obvious. 3. Expose clear methods instead of vague mutable state.
+
+- Next: compare this step with the next topic and notice what changes.

@@ -17,6 +17,8 @@ interviewQ:
 
 **Concept**
 
+This step focuses on: Business rules often change faster than the workflow that uses them.
+
 choose one behavior through a strategy interface
 
 **Example**
@@ -76,3 +78,5 @@ one small part of the workflow changes often while the surrounding flow stays st
 **Try this**
 
 - Define the behavior contract. 2. Add one implementation per rule. 3. Pass the chosen strategy into the stable workflow.
+
+- Next: compare this step with the next topic and notice what changes.

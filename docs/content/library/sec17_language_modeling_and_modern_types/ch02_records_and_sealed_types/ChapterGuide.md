@@ -1,5 +1,13 @@
 # Records And Sealed Types Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Closing Hierarchies With Sealed Types](topics/closing_hierarchies_with_sealed_types/ClosingHierarchiesWithSealedTypes.java) to see the raw behavior.
+2. Step 2: Try [Exhaustive Sealed Branching](topics/exhaustive_sealed_branching/ExhaustiveSealedBranching.java) to see the naive approach.
+3. Step 3: Watch [Modeling Immutable Data With Records](topics/modeling_immutable_data_with_records/ModelingImmutableDataWithRecords.java) to find the failure.
+4. Step 4: Use [Modeling Immutable Data With Records](topics/modeling_immutable_data_with_records/ModelingImmutableDataWithRecords.java) to restore correctness.
+5. Step 5: Finish with [Record Classes Deep Dive](topics/record_classes_deep_dive/RecordClassesDeepDive.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when records and sealed types is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

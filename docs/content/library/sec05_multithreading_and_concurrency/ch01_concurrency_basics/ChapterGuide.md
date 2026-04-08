@@ -1,5 +1,13 @@
 # Concurrency Basics Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Threads](topics/threads/Threads.java) to see the raw behavior.
+2. Step 2: Try [Synchronization](topics/synchronization/Synchronization.java) to see the naive approach.
+3. Step 3: Watch [Synchronization](topics/synchronization/Synchronization.java) to find the failure.
+4. Step 4: Use [Synchronization](topics/synchronization/Synchronization.java) to restore correctness.
+5. Step 5: Finish with [Executors](topics/executors/Executors.java) to see the improvement.
+
 ## Problem
 
 Concurrency starts with one hard fact: two units of work can overlap in time.

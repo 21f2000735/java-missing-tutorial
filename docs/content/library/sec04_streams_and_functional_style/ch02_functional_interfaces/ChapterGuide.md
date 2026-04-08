@@ -1,5 +1,13 @@
 # Functional Interfaces Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Defining Functions](topics/defining_functions/DefiningFunctions.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Defining Functions](topics/defining_functions/DefiningFunctions.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Defining Functions](topics/defining_functions/DefiningFunctions.java) to see the improvement.
+
 ## Problem
 
 Some rules should be supplied from outside the workflow instead of being hard-coded inside it.

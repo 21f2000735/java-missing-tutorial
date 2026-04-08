@@ -21,6 +21,7 @@ TOPIC_REQUIRED = [
 ]
 
 CHAPTER_REQUIRED = [
+    "Learning Path",
     "Problem",
     "Naive Approach",
     "Failure",

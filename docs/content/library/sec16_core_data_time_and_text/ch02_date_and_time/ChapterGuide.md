@@ -1,5 +1,13 @@
 # Date And Time Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Formatting](topics/formatting/Formatting.java) to see the raw behavior.
+2. Step 2: Try [Local Date Time](topics/local_date_time/LocalDateTime.java) to see the naive approach.
+3. Step 3: Watch [Local Date Time](topics/local_date_time/LocalDateTime.java) to find the failure.
+4. Step 4: Use [Local Date Time](topics/local_date_time/LocalDateTime.java) to restore correctness.
+5. Step 5: Finish with [Zones](topics/zones/Zones.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when date and time is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

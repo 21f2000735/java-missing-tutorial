@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: different GC algorithms optimize different tradeoffs.
+
 different GC algorithms optimize different tradeoffs.
 
 **Example**
@@ -59,3 +61,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 - Concept: different GC algorithms optimize different tradeoffs.
 - Serial GC = single-threaded, simple, small heaps
 - Parallel GC = throughput focused, multi-threaded
+
+- Next: compare this step with the next topic and notice what changes.

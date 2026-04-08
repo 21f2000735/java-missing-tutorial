@@ -1,5 +1,13 @@
 # Scoped Values Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Binding Request Context](topics/binding_request_context/BindingRequestContext.java) to see the raw behavior.
+2. Step 2: Try [Introducing Scoped Values](topics/introducing_scoped_values/IntroducingScopedValues.java) to see the naive approach.
+3. Step 3: Watch [Introducing Scoped Values](topics/introducing_scoped_values/IntroducingScopedValues.java) to find the failure.
+4. Step 4: Use [Introducing Scoped Values](topics/introducing_scoped_values/IntroducingScopedValues.java) to restore correctness.
+5. Step 5: Finish with [Scoped Values Vs Thread Local](topics/scoped_values_vs_thread_local/ScopedValuesVsThreadLocal.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when scoped values is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

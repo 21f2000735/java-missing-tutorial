@@ -11,6 +11,8 @@ estimated: 8 min
 
 **Concept**
 
+This step focuses on: Some interviewers want to see whether you can keep an invariant while data keeps arriving.
+
 Some interviewers want to see whether you can keep an invariant while data keeps arriving.
 
 **Example**
@@ -58,3 +60,5 @@ two heaps keep lower and upper halves balanced.
 **Try this**
 
 - Insert into the correct heap. 2. Rebalance sizes. 3. Read the median from heap tops.
+
+- Next: compare this step with the next topic and notice what changes.

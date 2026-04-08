@@ -1,5 +1,13 @@
 # Request Routing Patterns
 
+## Learning Path
+
+1. Step 1: Start with [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) to see the improvement.
+
 ## Problem
 
 Request handling often contains several independent checks that should stay separate.

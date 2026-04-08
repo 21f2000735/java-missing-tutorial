@@ -1,5 +1,13 @@
 # Pattern Matching Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Checking Shape With Instanceof](topics/checking_shape_with_instanceof/CheckingShapeWithInstanceof.java) to see the raw behavior.
+2. Step 2: Try [Sealed Classes + Pattern Matching Switch](topics/sealed_classes_pattern_matching_switch/SealedClassesPatternMatchingSwitch.java) to see the naive approach.
+3. Step 3: Watch [Switching On Runtime Shape](topics/switching_on_runtime_shape/SwitchingOnRuntimeShape.java) to find the failure.
+4. Step 4: Use [Switching On Runtime Shape](topics/switching_on_runtime_shape/SwitchingOnRuntimeShape.java) to restore correctness.
+5. Step 5: Finish with [Unpacking Records With Patterns](topics/unpacking_records_with_patterns/UnpackingRecordsWithPatterns.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when pattern matching is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

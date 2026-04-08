@@ -29,21 +29,16 @@ TOPIC_REQUIRED = [
 ]
 
 CHAPTER_REQUIRED = [
-    "Why This Chapter Exists",
-    "The Pain Before It",
-    "Java Creator Mindset",
-    "How You Might Invent It",
-    "Naive Attempt",
-    "Why It Breaks",
-    "Final Java Direction",
-    "Study Order",
-    "What To Notice",
-    "Mental Model",
-    "Common Mistakes",
-    "Tradeoffs",
-    "Use / Avoid",
-    "Practice",
-    "Summary",
+    "Learning Path",
+    "Problem",
+    "Naive Approach",
+    "Failure",
+    "Fix",
+    "Improvement",
+    "What stays stable",
+    "What changes",
+    "Rule",
+    "Try this",
 ]
 
 SECTION_REQUIRED = [
@@ -647,6 +642,11 @@ def topic_sections_from_java(
         concept_text = (
             f"This topic explains {concept.lower()} by showing the rule that keeps the example correct."
         )
+    focus_text = shorten_text(first_non_empty(why_needed, problem, setup, concept_source), 1)
+    if not focus_text:
+        focus_text = f"{concept.lower()} is the pressure this step solves."
+    if not re.match(r"(?i)^this step focuses on:", concept_text.strip()):
+        concept_text = join_blocks(f"This step focuses on: {focus_text}", concept_text)
     if concept_text.lower().startswith("concept:") and printed_lines:
         concept_text = printed_lines[0]
 
@@ -695,6 +695,13 @@ def topic_sections_from_java(
             "Write down what stayed stable and what changed.",
         ]
     )
+    if "Next:" not in try_this:
+        try_this = join_blocks(
+            try_this,
+            bullet_list([
+                "Next: compare this step with the next topic and notice what changes.",
+            ]),
+        )
 
     return OrderedDict(
         [
@@ -893,6 +900,17 @@ def chapter_defaults(title: str) -> dict[str, str]:
 def chapter_flow_defaults(title: str) -> dict[str, str]:
     subject = title.replace(" Learning Kit", "").strip().lower() if title else "this chapter"
     return {
+        "Learning Path": (
+            numbered_list(
+                [
+                    "Step 1: Start with the first topic to see the raw behavior.",
+                    "Step 2: Try the next topic to see the naive approach.",
+                    "Step 3: Watch the middle topic to find the failure.",
+                    "Step 4: Use the fix topic to restore correctness.",
+                    "Step 5: Finish with the last topic to see the improvement.",
+                ]
+            )
+        ),
         "Problem": (
             f"This chapter shows what breaks when {subject} is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap."
         ),
@@ -1260,6 +1278,15 @@ def normalize_chapter(path: Path) -> None:
     first_detail = topic_details[0] if topic_details else {}
     middle_detail = topic_details[len(topic_details) // 2] if topic_details else {}
     last_detail = topic_details[-1] if topic_details else {}
+    learning_path = numbered_list(
+        [
+            "Step 1: Start with the first topic to see the raw behavior.",
+            "Step 2: Try the naive version and compare the output.",
+            "Step 3: Watch the failure appear when the assumption changes.",
+            "Step 4: Apply the fix and check what stays stable.",
+            "Step 5: Finish with the improvement and move to the next chapter.",
+        ]
+    )
 
     problem_source = first_non_empty(
         usable_paragraph(sections.get("Why This Chapter Exists", "")),
@@ -1405,6 +1432,7 @@ def normalize_chapter(path: Path) -> None:
 
     required = OrderedDict(
         [
+            ("Learning Path", learning_path),
             ("Problem", problem),
             ("Naive Approach", naive),
             ("Failure", failure),

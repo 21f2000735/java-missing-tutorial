@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: Optional models a missing value without null checks.
+
 Optional models a missing value without null checks.
 
 **Example**
@@ -59,3 +61,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Concept: Optional models a missing value without null checks.
+
+- Next: compare this step with the next topic and notice what changes.

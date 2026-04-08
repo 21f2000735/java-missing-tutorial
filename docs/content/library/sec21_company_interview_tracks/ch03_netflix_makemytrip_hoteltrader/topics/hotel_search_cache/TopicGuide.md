@@ -11,6 +11,8 @@ estimated: 7 min
 
 **Concept**
 
+This step focuses on: Travel search is read-heavy, but stale prices and stale availability can hurt trust.
+
 Travel search is read-heavy, but stale prices and stale availability can hurt trust.
 
 **Example**
@@ -57,3 +59,5 @@ Travel search is read-heavy, but stale prices and stale availability can hurt tr
 **Try this**
 
 - Build a cache key from search input. 2. Return cached results when still fresh. 3. Refresh after the freshness window expires.
+
+- Next: compare this step with the next topic and notice what changes.

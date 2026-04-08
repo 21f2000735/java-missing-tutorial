@@ -1,5 +1,13 @@
 # Reasoning About Time And Space Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) to see the improvement.
+
 ## Problem
 
 Timing alone does not explain how code behaves as the input keeps growing.

@@ -14,6 +14,8 @@ visual_asset: GcStrategiesVisual.svg
 
 **Concept**
 
+This step focuses on: different garbage collectors optimize for different tradeoffs.
+
 different garbage collectors optimize for different tradeoffs.
 
 **Example**
@@ -65,3 +67,5 @@ you need a first mental model before reading deeper GC tuning material.
 - Concept: different garbage collectors optimize for different tradeoffs.
 - G1 -> balanced default for many server workloads
 - ZGC -> very low pause time focus
+
+- Next: compare this step with the next topic and notice what changes.

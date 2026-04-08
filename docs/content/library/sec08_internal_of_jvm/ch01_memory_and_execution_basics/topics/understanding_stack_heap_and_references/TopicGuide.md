@@ -19,6 +19,8 @@ interviewQ:
 
 **Concept**
 
+This step focuses on: local variable values and object state are not the same thing
+
 local variable values and object state are not the same thing
 
 **Example**
@@ -70,3 +72,5 @@ both variables refer to the same heap object, so one mutation is visible through
 - Concept: local variable values and object state are not the same thing
 - Real-world problem: two variables point to the same cart object and one update surprises the learner.
 - Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
+
+- Next: compare this step with the next topic and notice what changes.

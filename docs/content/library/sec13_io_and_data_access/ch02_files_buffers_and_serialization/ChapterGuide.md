@@ -1,5 +1,13 @@
 # Files, Buffers, And Serialization Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Bytes Chars And Files](topics/bytes_chars_and_files/BytesCharsAndFiles.java) to see the raw behavior.
+2. Step 2: Try [Watch Service And Serialization](topics/watch_service_and_serialization/WatchServiceAndSerialization.java) to see the naive approach.
+3. Step 3: Watch [Watch Service And Serialization](topics/watch_service_and_serialization/WatchServiceAndSerialization.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Watch Service And Serialization](topics/watch_service_and_serialization/WatchServiceAndSerialization.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when files, buffers, and serialization is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

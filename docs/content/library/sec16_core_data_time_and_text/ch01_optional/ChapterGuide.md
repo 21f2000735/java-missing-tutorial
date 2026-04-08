@@ -1,5 +1,13 @@
 # Optional Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java) to see the raw behavior.
+2. Step 2: Try [Optional Correct Usage](topics/optional_correct_usage/OptionalCorrectUsage.java) to see the naive approach.
+3. Step 3: Watch [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java) to find the failure.
+4. Step 4: Use [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java) to restore correctness.
+5. Step 5: Finish with [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java) to see the improvement.
+
 ## Problem
 
 Java programs stay useful when they are organized around ideas, not only syntax.

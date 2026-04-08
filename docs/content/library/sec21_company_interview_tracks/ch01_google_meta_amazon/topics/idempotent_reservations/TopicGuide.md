@@ -12,6 +12,8 @@ mode: interview
 
 **Concept**
 
+This step focuses on: Booking, checkout, and order systems are retried under network failure.
+
 Booking, checkout, and order systems are retried under network failure.
 
 **Example**
@@ -63,3 +65,5 @@ the same request id returns the same stored reservation result.
 **Try this**
 
 - Accept a request id. 2. Store the first result under that id. 3. Return the stored result on duplicate calls.
+
+- Next: compare this step with the next topic and notice what changes.

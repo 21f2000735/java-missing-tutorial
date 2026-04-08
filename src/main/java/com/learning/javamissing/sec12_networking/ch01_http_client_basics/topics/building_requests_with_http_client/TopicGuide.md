@@ -11,6 +11,8 @@ estimated: 7 min
 
 **Concept**
 
+This step focuses on: build a clear outbound HTTP request
+
 build a clear outbound HTTP request
 
 **Example**
@@ -62,3 +64,5 @@ the request object collects HTTP intent before any network call is made. a Java 
 - Concept: build a clear outbound HTTP request
 - Real-world problem: a Java service calls a shipping-rate API.
 - Why it works: the request object collects HTTP intent before any network call is made.
+
+- Next: compare this step with the next topic and notice what changes.

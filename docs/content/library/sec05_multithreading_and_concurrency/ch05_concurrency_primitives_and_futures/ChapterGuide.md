@@ -1,5 +1,13 @@
 # Concurrency Primitives And Futures Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [CompletableFuture Deep Dive](topics/completable_future_deep_dive/CompletableFutureDeepDive.java) to see the raw behavior.
+2. Step 2: Try [ConcurrentHashMap Internals](topics/concurrent_hash_map_internals/ConcurrentHashMapInternals.java) to see the naive approach.
+3. Step 3: Watch [ReentrantLock Vs Synchronized](topics/reentrant_lock_vs_synchronized/ReentrantLockVsSynchronized.java) to find the failure.
+4. Step 4: Use [Visibility And Volatile](topics/visibility_and_volatile/VisibilityAndVolatile.java) to restore correctness.
+5. Step 5: Finish with [Volatile Keyword](topics/volatile_keyword/VolatileKeyword.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when concurrency primitives and futures is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

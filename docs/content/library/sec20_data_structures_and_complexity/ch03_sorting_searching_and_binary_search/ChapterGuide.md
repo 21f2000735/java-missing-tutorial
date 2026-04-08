@@ -1,5 +1,13 @@
 # Sorting Searching And Binary Search Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Sorting Tradeoffs](topics/sorting_tradeoffs/SortingTradeoffs.java) to see the raw behavior.
+2. Step 2: Try [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) to see the naive approach.
+3. Step 3: Watch [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) to see the improvement.
+
 ## Problem
 
 Sorting costs work upfront, so the decision is only good when later operations benefit from the order.

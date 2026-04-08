@@ -1,5 +1,13 @@
 # Structured Concurrency Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Choosing First Successful Result](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java) to see the raw behavior.
+2. Step 2: Try [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java) to see the naive approach.
+3. Step 3: Watch [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java) to find the failure.
+4. Step 4: Use [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java) to restore correctness.
+5. Step 5: Finish with [Keeping Child Tasks Inside One Request](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when structured concurrency is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

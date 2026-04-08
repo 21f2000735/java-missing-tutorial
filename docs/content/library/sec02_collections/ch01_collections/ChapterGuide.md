@@ -1,5 +1,13 @@
 # Collections Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Comparator](topics/comparator/Comparator.java) to see the raw behavior.
+2. Step 2: Try [Immutability](topics/immutability/Immutability.java) to see the naive approach.
+3. Step 3: Watch [Immutability](topics/immutability/Immutability.java) to find the failure.
+4. Step 4: Use [Immutability](topics/immutability/Immutability.java) to restore correctness.
+5. Step 5: Finish with [List Set Map](topics/list_set_map/ListSetMap.java) to see the improvement.
+
 ## Problem
 
 Java programs stay useful when they are organized around ideas, not only syntax.

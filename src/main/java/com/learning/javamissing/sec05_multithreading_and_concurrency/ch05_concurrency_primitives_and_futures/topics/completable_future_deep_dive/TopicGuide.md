@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: allOf = all parallel calls finished Why it matters: thenApply maps a value, thenCompose flattens async work, and allOf/anyOf coordinate parallel calls.
+
 allOf = all parallel calls finished Why it matters: thenApply maps a value, thenCompose flattens async work, and allOf/anyOf coordinate parallel calls.
 
 **Example**
@@ -73,3 +75,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - allOf = all parallel calls finished
+
+- Next: compare this step with the next topic and notice what changes.

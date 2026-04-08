@@ -1,5 +1,13 @@
 # Building For Many Languages Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Showing Messages By Locale](topics/showing_messages_by_locale/ShowingMessagesByLocale.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Showing Messages By Locale](topics/showing_messages_by_locale/ShowingMessagesByLocale.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Showing Messages By Locale](topics/showing_messages_by_locale/ShowingMessagesByLocale.java) to see the improvement.
+
 ## Problem
 
 Java programs stay useful when they are organized around ideas, not only syntax.

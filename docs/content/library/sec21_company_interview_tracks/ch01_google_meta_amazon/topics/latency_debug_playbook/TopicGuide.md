@@ -11,6 +11,8 @@ estimated: 7 min
 
 **Concept**
 
+This step focuses on: Strong companies care how you debug production regressions, not just how you code fresh features.
+
 Strong companies care how you debug production regressions, not just how you code fresh features.
 
 **Example**
@@ -68,3 +70,5 @@ the approach compares metrics first and guesses later.
 **Try this**
 
 - Model component timings. 2. Compare baselines with the new release. 3. Inspect the largest regression first.
+
+- Next: compare this step with the next topic and notice what changes.

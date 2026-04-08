@@ -11,6 +11,8 @@ estimated: 6 min
 
 **Concept**
 
+This step focuses on: Marketplace and partner systems need to know whether what they show is still trustworthy.
+
 Marketplace and partner systems need to know whether what they show is still trustworthy.
 
 **Example**
@@ -58,3 +60,5 @@ Marketplace and partner systems need to know whether what they show is still tru
 **Try this**
 
 - Keep the last supplier update time. 2. Compare it with now. 3. Mark inventory as stale when the lag is too large.
+
+- Next: compare this step with the next topic and notice what changes.

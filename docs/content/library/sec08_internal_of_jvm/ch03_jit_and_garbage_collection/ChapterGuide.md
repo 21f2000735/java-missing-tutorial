@@ -1,5 +1,13 @@
 # JIT And Garbage Collection Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [GC Algorithms Comparison](topics/gc_algorithms_comparison/GcAlgorithmsComparison.java) to see the raw behavior.
+2. Step 2: Try [GC Strategies](topics/gc_strategies/GcStrategies.java) to see the naive approach.
+3. Step 3: Watch [JIT Compilation And Tiered Compilation](topics/jit_and_tiered_compilation/JitAndTieredCompilation.java) to find the failure.
+4. Step 4: Use [JIT Compilation And Tiered Compilation](topics/jit_and_tiered_compilation/JitAndTieredCompilation.java) to restore correctness.
+5. Step 5: Finish with [Jit Basics](topics/jit_basics/JitBasics.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when jit and garbage collection is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.

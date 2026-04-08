@@ -1,5 +1,13 @@
 # Strategy Pattern
 
+## Learning Path
+
+1. Step 1: Start with [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) to see the raw behavior.
+2. Step 2: Try the next topic to see the naive approach.
+3. Step 3: Watch [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) to find the failure.
+4. Step 4: Use the fix step to restore correctness.
+5. Step 5: Finish with [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) to see the improvement.
+
 ## Problem
 
 Business rules often change faster than the workflow that uses them.

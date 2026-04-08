@@ -13,6 +13,8 @@ visual: recommended
 
 **Concept**
 
+This step focuses on: Why it matters: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
+
 Why it matters: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
 
 **Example**
@@ -62,3 +64,5 @@ This matters because the rule keeps the behavior predictable when the code gets 
 **Try this**
 
 - Why it matters: ConcurrentHashMap is designed for shared reads and writes without one giant map-wide lock.
+
+- Next: compare this step with the next topic and notice what changes.

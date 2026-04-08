@@ -1,5 +1,13 @@
 # Testing And Quality Learning Kit
 
+## Learning Path
+
+1. Step 1: Start with [Checking One Rule With Many Inputs](topics/checking_one_rule_with_many_inputs/CheckingOneRuleWithManyInputs.java) to see the raw behavior.
+2. Step 2: Try [Designing Tests Around Business Rules](topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java) to see the naive approach.
+3. Step 3: Watch [Designing Tests Around Business Rules](topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java) to find the failure.
+4. Step 4: Use [Designing Tests Around Business Rules](topics/designing_tests_around_business_rules/DesigningTestsAroundBusinessRules.java) to restore correctness.
+5. Step 5: Finish with [Writing Readable JUnit Tests](topics/writing_readable_junit_tests/WritingReadableJUnitTests.java) to see the improvement.
+
 ## Problem
 
 This chapter shows what breaks when testing and quality is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
