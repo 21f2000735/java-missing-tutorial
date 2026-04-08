@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import {
-  badgeClassForTone,
   bulletItems,
   effectiveRunner,
   extractTopicLessonFlow,
@@ -8,19 +7,12 @@ import {
   inferTopicMode,
   modePresentation,
   resolveVersionMeta,
-  statusTone,
   titleFromSlug,
   truncateText
 } from '../../lib/content-helpers.js';
 import { PLAYGROUND_LINKS } from '../../lib/site-data.js';
 import { CodeBlock } from '../content/MarkdownContent.jsx';
-import {
-  BulletList,
-  FeedbackBar,
-  HeaderPanel,
-  PageLayout,
-  ReadingStateBar
-} from '../common/AppChrome.jsx';
+import { BulletList, PageLayout } from '../common/AppChrome.jsx';
 
 function submitToJdoodle(code) {
   const form = document.createElement('form');
@@ -39,14 +31,7 @@ function submitToJdoodle(code) {
   document.body.removeChild(form);
 }
 
-function TopicActionButtons({
-  code,
-  runner,
-  showNote = true,
-  copyLabel = 'Copy code',
-  copiedLabel = 'Copied',
-  failedLabel = 'Copy failed'
-}) {
+function TopicActionButtons({ code, runner }) {
   const [copyState, setCopyState] = useState('idle');
 
   async function onCopy() {
@@ -61,50 +46,39 @@ function TopicActionButtons({
   }
 
   return (
-    <div className="d-flex flex-wrap gap-2 topic-actions">
-      <button className="btn btn-dark btn-sm rounded-pill" type="button" onClick={onCopy}>
-        {copyState === 'copied' ? copiedLabel : copyState === 'failed' ? failedLabel : copyLabel}
+    <div className="topic-actions-minimal">
+      <button className="topic-action-link" type="button" onClick={onCopy}>
+        {copyState === 'copied' ? 'Copied' : copyState === 'failed' ? 'Copy failed' : 'Copy code'}
       </button>
       {runner === 'embedded' ? (
-        <button className="btn btn-outline-dark btn-sm rounded-pill" type="button" onClick={() => submitToJdoodle(code)}>
-          Run In JDoodle
+        <button className="topic-action-link" type="button" onClick={() => submitToJdoodle(code)}>
+          Run in JDoodle
         </button>
       ) : (
-        <a className="btn btn-outline-dark btn-sm rounded-pill" href={PLAYGROUND_LINKS.jdoodle} target="_blank" rel="noreferrer">
+        <a className="topic-action-link" href={PLAYGROUND_LINKS.jdoodle} target="_blank" rel="noreferrer">
           Open JDoodle
         </a>
       )}
-      <a className="btn btn-outline-dark btn-sm rounded-pill" href={PLAYGROUND_LINKS.onecompiler} target="_blank" rel="noreferrer">
-        Open OneCompiler
+      <a className="topic-action-link" href={PLAYGROUND_LINKS.onecompiler} target="_blank" rel="noreferrer">
+        OneCompiler
       </a>
-      {showNote && runner === 'local' ? <span className="playground-note">This example is best run locally because it uses newer or preview Java features.</span> : null}
     </div>
   );
 }
 
 function TopicPager({ previousTopic, nextTopic, chapterRoute }) {
   return (
-    <div className="content-card chapter-nav-card">
-      <div className="d-flex flex-wrap justify-content-between align-items-center gap-3">
-        <div>
-          <div className="eyebrow mb-1">Move Next</div>
-          <div className="muted-copy mb-0">Go forward when you can explain what stayed stable and what changed.</div>
-        </div>
-        <div className="d-flex flex-wrap gap-2">
-          <a className={`btn btn-outline-dark btn-sm rounded-pill ${chapterRoute ? '' : 'disabled'}`} href={chapterRoute || '#'}>
-            Back To Chapter
-          </a>
-          <a className={`btn btn-outline-dark btn-sm rounded-pill ${previousTopic ? '' : 'disabled'}`} href={previousTopic?.route || '#'} aria-disabled={!previousTopic}>
-            <i className="bi bi-arrow-left me-1" />
-            Prev Topic
-          </a>
-          <a className={`btn btn-dark btn-sm rounded-pill ${nextTopic ? '' : 'disabled'}`} href={nextTopic?.route || '#'} aria-disabled={!nextTopic}>
-            Next Topic
-            <i className="bi bi-arrow-right ms-1" />
-          </a>
-        </div>
-      </div>
-    </div>
+    <nav className="topic-nav" aria-label="Topic navigation">
+      <a className={`topic-nav-link ${chapterRoute ? '' : 'is-disabled'}`} href={chapterRoute || '#'}>
+        Back to chapter
+      </a>
+      <a className={`topic-nav-link ${previousTopic ? '' : 'is-disabled'}`} href={previousTopic?.route || '#'} aria-disabled={!previousTopic}>
+        Previous topic
+      </a>
+      <a className={`topic-nav-link ${nextTopic ? '' : 'is-disabled'}`} href={nextTopic?.route || '#'} aria-disabled={!nextTopic}>
+        Next topic
+      </a>
+    </nav>
   );
 }
 
@@ -113,13 +87,21 @@ function compactBullets(section, fallback = []) {
   return items.length ? items : fallback;
 }
 
-export default function TopicPage({ data, readingState, feedbackState, uiPreferences }) {
+function ReadingSection({ title, children }) {
+  return (
+    <section className="reading-section">
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
+}
+
+export default function TopicPage({ data }) {
   const topicSummary = data.preview;
   const lessonFlow = extractTopicLessonFlow(data.lessonRaw);
   const topicRunner = effectiveRunner(topicSummary, data.lessonMeta);
   const versionMeta = resolveVersionMeta(data.section.slug, data.chapter.slug, data.lessonMeta, topicSummary);
   const lessonModeUi = modePresentation(inferTopicMode(data.section.slug, data.chapter.slug, data.lessonMeta));
-  const routeKey = `#topic/${data.section.slug}/${data.chapter.slug}/${data.topic.slug}`;
   const conceptLabel = topicSummary.concept || data.topic.concept || titleFromSlug(data.topic.slug);
   const topicSummaryLine = firstNonEmpty(
     lessonFlow.concept?.plain,
@@ -164,83 +146,61 @@ export default function TopicPage({ data, readingState, feedbackState, uiPrefere
     {
       title: 'Rule',
       items: [`👉 Rule: ${ruleSummary}`]
-    },
-    {
-      title: 'Try this',
-      items: compactBullets(lessonFlow.tryThis, [
-        'Replace the main assumption with a smaller one and rerun the file.',
-        'Change one line and note what stays stable.',
-        'Explain the result in one sentence before moving on.'
-      ])
     }
   ];
+
+  const practiceItems = compactBullets(lessonFlow.tryThis, [
+    'Replace the main assumption with a smaller one and rerun the file.',
+    'Change one line and note what stays stable.',
+    'Explain the result in one sentence before moving on.'
+  ]);
 
   return (
     <PageLayout
       header={(
-        <HeaderPanel
-          title={data.topic.title}
-          eyebrow={`${data.section.title} · ${data.chapter.title}`}
-          summary={truncateText(topicSummaryLine, 200)}
-          sourcePath={data.topic.sourcePath}
-          actions={(
-            <>
-              <a className="btn btn-outline-dark btn-sm rounded-pill" href={`#chapter/${data.section.slug}/${data.chapter.slug}`}>Back To Chapter</a>
-              <TopicActionButtons code={data.raw} runner={topicRunner} showNote={false} copyLabel="Copy Snippet" />
-            </>
-          )}
-        />
+        <header className="topic-header">
+          <div className="eyebrow mb-2">Topic</div>
+          <h1 className="topic-title mb-2">{data.topic.title}</h1>
+          <p className="topic-purpose mb-2">
+            {truncateText(topicSummaryLine, 200)}
+          </p>
+          <p className="topic-meta mb-3">
+            {data.section.title} · {data.chapter.title}
+            {versionMeta.display ? ` · ${versionMeta.display}` : ''}
+            {lessonModeUi.label ? ` · ${lessonModeUi.label}` : ''}
+          </p>
+          <TopicActionButtons code={data.raw} runner={topicRunner} />
+        </header>
       )}
     >
-      <ReadingStateBar routeKey={routeKey} {...readingState} />
+      <div className="reading-page">
+        <hr className="reading-divider" />
 
-      <div className="content-layout content-layout-single">
-        <div className="content-main">
-          <div className="content-card mb-4">
-            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-              <div>
-                <div className="eyebrow mb-2">Concept</div>
-                <h2 className="page-title mb-0">{conceptLabel}</h2>
-              </div>
-              <div className="d-flex flex-wrap gap-2">
-                <span className="badge rounded-pill badge-soft">{lessonModeUi.label}</span>
-                {versionMeta.display ? <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>{versionMeta.display}</span> : null}
-                {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
-              </div>
-            </div>
+        <ReadingSection title={conceptLabel}>
+          <CodeBlock code={data.raw} />
+        </ReadingSection>
 
-            <p className="mb-3 muted-copy">{topicSummaryLine}</p>
-
-            <div className="code-panel mb-3">
-              <div className="code-toolbar">
-                <div>
-                  <div className="fw-semibold">{data.topic.title}</div>
-                  <div className="source-path">{data.topic.sourcePath}</div>
-                </div>
-              </div>
-              <CodeBlock code={data.raw} />
-            </div>
-
-            <div className="topic-brief-grid mb-3">
-              {blocks.map((block) => (
-                <div className="topic-brief-card" key={block.title}>
-                  <div className="eyebrow mb-2">{block.title}</div>
-                  <BulletList items={block.items} />
-                </div>
-              ))}
-            </div>
-
+        {blocks.map((block) => (
+          <div key={block.title}>
+            <hr className="reading-divider" />
+            <ReadingSection title={block.title}>
+              <BulletList items={block.items} />
+            </ReadingSection>
           </div>
+        ))}
 
-          <TopicPager
-            previousTopic={previousTopic}
-            nextTopic={nextTopic}
-            chapterRoute={`#chapter/${data.section.slug}/${data.chapter.slug}`}
-          />
-        </div>
+        <hr className="reading-divider" />
+        <ReadingSection title="Practice">
+          <BulletList items={practiceItems} />
+        </ReadingSection>
+
+        <hr className="reading-divider" />
+        <TopicPager
+          previousTopic={previousTopic}
+          nextTopic={nextTopic}
+          chapterRoute={`#chapter/${data.section.slug}/${data.chapter.slug}`}
+        />
       </div>
-
-      <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />
     </PageLayout>
   );
 }

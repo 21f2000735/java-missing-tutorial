@@ -196,6 +196,95 @@
   margin-top: 1rem;
 }
 
+.reading-page {
+  max-width: 56rem;
+}
+
+.reading-divider {
+  border: 0;
+  border-top: 1px solid rgba(54, 43, 28, 0.12);
+  margin: 1.5rem 0;
+}
+
+.topic-header {
+  max-width: 56rem;
+}
+
+.topic-title {
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  line-height: 1.02;
+  margin: 0;
+}
+
+.topic-purpose,
+.topic-meta {
+  max-width: 48rem;
+  margin: 0;
+  color: var(--muted);
+}
+
+.topic-purpose {
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.topic-meta {
+  font-size: 0.88rem;
+}
+
+.topic-actions-minimal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.topic-action-link,
+.topic-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--accent-strong);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.topic-action-link:hover,
+.topic-nav-link:hover {
+  text-decoration: underline;
+}
+
+.topic-nav-link.is-disabled {
+  color: rgba(109, 90, 70, 0.45);
+  pointer-events: none;
+  text-decoration: none;
+}
+
+.topic-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+  align-items: center;
+  padding-bottom: 0.5rem;
+}
+
+.reading-section {
+  max-width: 56rem;
+}
+
+.reading-section h2 {
+  margin: 0 0 0.75rem;
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+.reading-section .reading-list {
+  margin-left: 1rem;
+}
+
 .interview-panel {
   border-left: 4px solid #c98c16;
 }
