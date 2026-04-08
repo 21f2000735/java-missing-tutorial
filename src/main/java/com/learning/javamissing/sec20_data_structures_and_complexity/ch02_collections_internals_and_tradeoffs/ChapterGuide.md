@@ -46,8 +46,8 @@ That breaks when the same mistake repeats across files, teams, or interview ques
 
 ## Study Order
 
-1. Run [ArrayList Growth And Lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java)
-2. Run [HashMap Buckets And Collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java)
+1. Run [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java)
+2. Run [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java)
 
 ## What To Notice
 

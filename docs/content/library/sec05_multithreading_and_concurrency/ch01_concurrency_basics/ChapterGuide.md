@@ -38,9 +38,9 @@ Create a thread whenever you need work and let each task touch shared data direc
 
 ## Study Order
 
-1. Run [Threads.java](topics/threads/Threads.java) and [TopicGuide.md](topics/threads/TopicGuide.md)
-2. Run [Synchronization.java](topics/synchronization/Synchronization.java) and [TopicGuide.md](topics/synchronization/TopicGuide.md)
-3. Run [Executors.java](topics/executors/Executors.java) and [TopicGuide.md](topics/executors/TopicGuide.md)
+1. Run [Executors](topics/executors/Executors.java)
+2. Run [Synchronization](topics/synchronization/Synchronization.java)
+3. Run [Threads](topics/threads/Threads.java)
 
 ## What To Notice
 

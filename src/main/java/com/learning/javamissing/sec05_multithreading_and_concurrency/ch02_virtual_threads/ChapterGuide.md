@@ -41,7 +41,7 @@ Read the chapter as a small set of related ideas around virtual Threads, not as 
 
 1. Run [Avoiding Virtual Thread Misuse](topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java)
 2. Run [Running Tasks With Virtual Thread Executor](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java)
-3. Run [Why Virtual Threads Matter](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java)
+3. Run [Why virtual threads matter](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java)
 
 ## What To Notice
 

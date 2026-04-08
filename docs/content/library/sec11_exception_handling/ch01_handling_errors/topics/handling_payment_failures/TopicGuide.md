@@ -9,107 +9,96 @@ estimated: 7 min
 
 ## Why This Exists
 
-Real systems fail.
+Concept: Handling Payment Failures.
+
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## The Pain Before It
 
-Real systems fail.
+failures are part of the business flow and must stay understandable.
 
-The question is not whether failure happens.  
-The question is whether the code explains the failure clearly enough for:
-
-- the developer
-- the log reader
-- the user-facing flow
+This topic uses payment and gateway failures to make the concept easier to understand.
 
 ## Java Creator Mindset
 
-Throw and catch exceptions that preserve business meaning.
-
-In this case:
-
-- the payment failed
-- the gateway was unavailable
-
-That is simple, precise, and useful.
+First understand the problem in plain language, then map that idea to the Java code.
 
 ## How You Might Invent It
 
-Throw and catch exceptions that preserve business meaning.
+1. Identify the business data or behavior.
+2. Choose the Java construct that expresses the idea clearly.
+3. Run the example and compare the output with the explanation.
 
 ## Naive Attempt
 
-Catch a broad exception, print a generic message, and lose the real reason.
-
-That leads to code that is hard to debug and hard to trust.
+The naive version is to use handling payment failures without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-Catch a broad exception, print a generic message, and lose the real reason.
+failures are part of the business flow and must stay understandable.
 
-That leads to code that is hard to debug and hard to trust.
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Throw and catch exceptions that preserve business meaning.
+First understand the problem in plain language, then map that idea to the Java code.
 
-In this case:
-
-- the payment failed
-- the gateway was unavailable
-
-That is simple, precise, and useful.
+Run [HandlingPaymentFailures.java](HandlingPaymentFailures.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [HandlingPaymentFailures.java](HandlingPaymentFailures.java) and compare the output with the explanation below.
 
-Run the example and see how the failure keeps business meaning instead of becoming a vague generic message.
-
-### Expected Result
-
-- the payment status becomes failed
-- the reason stays visible
+```java
+    public static void main(String[] args) {
+        try {
+            chargeCard(false);
+        } catch (IllegalStateException exception) {
+            System.out.println("paymentStatus = failed");
+            System.out.println("reason = " + exception.getMessage());
+        }
+        System.out.println("Concept: errors should preserve meaning for both developers and users.");
+    }
+```
 
 ## Walkthrough
 
-Good exception handling keeps the meaning of the failure path visible.  
-That is very close to Clean Code thinking: unclear failure handling is unclear code.
+1. Identify the business data or behavior.
+2. Choose the Java construct that expresses the idea clearly.
+3. Run the example and compare the output with the explanation.
+
+What to observe:
+
+- Read the inline comments and printed lines in main() to see the expected behavior.
 
 ## Mental Model
 
-Use a small mental model first: identify the input, the rule, and the outcome that handling payment failures should guarantee.
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-Catch a broad exception, print a generic message, and lose the real reason.
-
-That leads to code that is hard to debug and hard to trust.
+- reading Handling Payment Failures as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- business failures need clear context
-- the caller should decide how to react
-
-### Avoid It When
-
-- you are swallowing exceptions
-- you convert every failure into the same vague message
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether handling payment failures still behaves the way you expected.
-
-### After That
-
-Read the networking chapter after this one, because remote calls create many of the failures engineers must learn to handle well.
+Change one line in [HandlingPaymentFailures.java](HandlingPaymentFailures.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain handling payment failures, run the example, and defend when it helps versus when it adds noise.
+After this topic, you should be able to explain why Handling Payment Failures exists, what problem it solves, and what the runnable file proves.

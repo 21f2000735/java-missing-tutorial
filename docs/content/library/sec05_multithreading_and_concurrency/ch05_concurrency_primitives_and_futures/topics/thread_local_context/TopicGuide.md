@@ -11,87 +11,95 @@ visual: recommended
 
 ## Why This Exists
 
-This topic explains threadlocal because it solves a concrete problem that becomes visible once the naive version starts to fail.
+Concept: ThreadLocal.
 
 ## The Pain Before It
 
-Before threadlocal, the code often works for a tiny case but becomes hard to trust once edge cases, state, or reuse enter the picture.
+
 
 ## Java Creator Mindset
 
-A Java designer would ask what rule needs to be made visible so the safer choice is also the clearer one.
+Make the rule behind threadlocal obvious so the safer choice is also the clearer one.
 
 ## How You Might Invent It
 
-- Think "one slot per thread."
-- The same key name exists, but each thread reads its own value.
-- Comparison table:
-
-| Need | Use | Why |
-| --- | --- | --- |
-| Per-thread request context | `ThreadLocal` | isolates thread state |
-| Cross-thread shared value | normal field with safety | one value is shared |
-| Short-lived request data in web server | `ThreadLocal` + `remove()` | prevents leaks |
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
 ## Naive Attempt
 
-The first attempt usually uses direct code and leaves too much behavior implicit.
+The naive version is to use threadlocal without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-That version breaks when the same assumption no longer holds in real code, especially around edge cases, state, or repeated use.
+If you ignore the rule behind threadlocal, the example becomes harder to trust.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Java's final form for threadlocal makes the important rule visible and repeatable instead of hiding it inside ad hoc code.
+Use the Java file to make the rule behind threadlocal explicit and repeatable.
+
+Run [ThreadLocalContext.java](ThreadLocalContext.java) as the source of truth for the example.
 
 ## Code
 
-Run [ThreadLocalContext.java](ThreadLocalContext.java) and focus on the runnable example first. Then compare the output with the explanation below.
+Run [ThreadLocalContext.java](ThreadLocalContext.java) and compare the output with the explanation below.
+
+```java
+    public static void main(String[] args) throws InterruptedException {
+        Thread alice = new Thread(() -> runRequest("alice", "orders"));
+        Thread bob = new Thread(() -> runRequest("bob", "payments"));
+
+        alice.start();
+        bob.start();
+        alice.join();
+        bob.join();
+
+        System.out.println("Why it matters: each thread can carry request context without sharing mutable state.");
+    }
+```
 
 ## Walkthrough
 
-1. Identify the starting state or input.
-2. Run the example once without changing anything.
-3. Change one line or one input.
-4. Compare the new result with the rule the topic is teaching.
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
+
+What to observe:
+
+- Check whether the output matches the rule in the comment header.
+- Check whether the edge case you changed still behaves as expected.
 
 ## Mental Model
 
-- Think "one slot per thread."
-- The same key name exists, but each thread reads its own value.
-- Comparison table:
-
-| Need | Use | Why |
-| --- | --- | --- |
-| Per-thread request context | `ThreadLocal` | isolates thread state |
-| Cross-thread shared value | normal field with safety | one value is shared |
-| Short-lived request data in web server | `ThreadLocal` + `remove()` | prevents leaks |
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-- memorizing syntax before the problem
-- assuming the tiny example covers every case
-- changing the rule without rerunning the example
+- reading ThreadLocal as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-Gain: clearer behavior or safer code.
+The gain is clarity or correctness.
 
-Cost: a bit more structure or one more rule to remember.
-
-Question: is the extra rule cheaper than the bug it prevents?
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-Use it when the rule removes a real bug or removes guesswork.
+Use it when the problem in the header comment matches the real code you are writing.
 
-Avoid it when direct code is already clearer and just as safe.
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one input in [ThreadLocalContext.java](ThreadLocalContext.java), rerun it, and write down what changed.
+Change one line in [ThreadLocalContext.java](ThreadLocalContext.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain the problem it solves, the rule Java enforces, and the smallest change that proves you understand it.
+After this topic, you should be able to explain why ThreadLocal exists, what problem it solves, and what the runnable file proves.

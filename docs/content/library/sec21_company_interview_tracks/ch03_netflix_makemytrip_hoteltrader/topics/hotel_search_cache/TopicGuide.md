@@ -5,89 +5,108 @@ runner: embedded
 estimated: 7 min
 ---
 
-# Hotel Search Cache
+# hotel search cache
 
 ## Why This Exists
 
-Travel search is a classic marketplace caching question because speed helps, but stale data harms trust.
+Concept: hotel search cache.
+
+Travel search is read-heavy, but stale prices and stale availability can hurt trust.
 
 ## The Pain Before It
 
-Travel search is a classic marketplace caching question because speed helps, but stale data harms trust.
+It caches expensive search responses while keeping a short freshness window.
+
+A hotel search page repeatedly asks for the same city and dates.
 
 ## Java Creator Mindset
 
-### Interview Angle
-
-Mention:
-
-- cache key design
-- TTL or freshness window
-- static versus volatile data
-- cache hit rate and stale-result incidents
+Cache the hot read, but separate stable search shape from freshness policy.
 
 ## How You Might Invent It
 
-Treat hotel search cache as a practical decision tool, not just a term to memorize.
+1. Build a cache key from search input.
+2. Return cached results when still fresh.
+3. Refresh after the freshness window expires.
 
 ## Naive Attempt
 
-The first instinct is usually to solve the problem directly with local code and hope the edge cases stay small.
+The naive version is to use hotel search cache without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-The common mistake is to use hotel search cache by pattern-matching on syntax instead of understanding the decision behind it.
+It caches expensive search responses while keeping a short freshness window.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-### Interview Angle
+Cache the hot read, but separate stable search shape from freshness policy.
 
-Mention:
-
-- cache key design
-- TTL or freshness window
-- static versus volatile data
-- cache hit rate and stale-result incidents
+Run [HotelSearchCache.java](HotelSearchCache.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [HotelSearchCache.java](HotelSearchCache.java) and compare the output with the explanation below.
 
-Run the same request twice and see how the cache helps the read path.
+```java
+    public static void main(String[] args) {
+        SearchCache cache = new SearchCache(60);
+        List<String> hotels = cache.search("goa|2026-05-10|2026-05-12");
+        boolean cacheHit = cache.search("goa|2026-05-10|2026-05-12").equals(hotels);
+
+        // Expected output:
+        // cacheHit = true
+        // hotels = [Sea View, Central Stay]
+        System.out.println("cacheHit = " + cacheHit);
+        System.out.println("hotels = " + hotels);
+        System.out.println("Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- cache keys should reflect the search shape");
+        System.out.println("- short freshness windows are often safer for travel data");
+        System.out.println("- latency improvement is not enough if correctness degrades");
+    }
+```
 
 ## Walkthrough
 
-Mention:
+1. Build a cache key from search input.
+2. Return cached results when still fresh.
+3. Refresh after the freshness window expires.
 
-- cache key design
-- TTL or freshness window
-- static versus volatile data
-- cache hit rate and stale-result incidents
+What to observe:
+
+- cacheHit = true
+- hotels = [Sea View, Central Stay]
 
 ## Mental Model
 
-Use a small mental model first: identify the input, the rule, and the outcome that hotel search cache should guarantee.
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-The common mistake is to use hotel search cache by pattern-matching on syntax instead of understanding the decision behind it.
+- reading hotel search cache as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-Use it when it makes the code clearer or safer. Avoid it when a simpler direct approach explains the intent better.
+Use it when the problem in the header comment matches the real code you are writing.
+
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether hotel search cache still behaves the way you expected.
-
-### After That
-
-Read `AvailabilityFreshness` next for the partner-platform side of the same problem.
+Change one line in [HotelSearchCache.java](HotelSearchCache.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain hotel search cache, run the example, and defend when it helps versus when it adds noise.
+After this topic, you should be able to explain why hotel search cache exists, what problem it solves, and what the runnable file proves.

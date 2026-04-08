@@ -5,89 +5,107 @@ runner: embedded
 estimated: 8 min
 ---
 
-# Running Median Prices
+# running median prices
 
 ## Why This Exists
 
-This is a strong Jane Street-style question because it tests whether you can keep invariants visible while data changes.
+Concept: running median prices.
+
+Some interviewers want to see whether you can keep an invariant while data keeps arriving.
 
 ## The Pain Before It
 
-This is a strong Jane Street-style question because it tests whether you can keep invariants visible while data changes.
+It maintains the median of a growing price stream.
+
+A trading dashboard wants the median of recent execution prices.
 
 ## Java Creator Mindset
 
-### Interview Angle
-
-Mention:
-
-- lower half max-heap
-- upper half min-heap
-- rebalance rule
-- how median is read when sizes match or differ
+Keep the lower half in a max heap and the upper half in a min heap, then rebalance.
 
 ## How You Might Invent It
 
-Treat running median prices as a practical decision tool, not just a term to memorize.
+1. Insert into the correct heap.
+2. Rebalance sizes.
+3. Read the median from heap tops.
 
 ## Naive Attempt
 
-The first instinct is usually to solve the problem directly with local code and hope the edge cases stay small.
+The naive version is to use running median prices without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-The common mistake is to use running median prices by pattern-matching on syntax instead of understanding the decision behind it.
+It maintains the median of a growing price stream.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-### Interview Angle
+Keep the lower half in a max heap and the upper half in a min heap, then rebalance.
 
-Mention:
-
-- lower half max-heap
-- upper half min-heap
-- rebalance rule
-- how median is read when sizes match or differ
+Run [RunningMedianPrices.java](RunningMedianPrices.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [RunningMedianPrices.java](RunningMedianPrices.java) and compare the output with the explanation below.
 
-Run the stream of prices and explain why the median stays readable after each insert.
+```java
+    public static void main(String[] args) {
+        RunningMedian median = new RunningMedian();
+        median.add(100);
+        median.add(103);
+        median.add(101);
+
+        // Expected output:
+        // median = 101.0
+        System.out.println("median = " + median.median());
+        System.out.println("Why it works: two heaps keep lower and upper halves balanced.");
+        System.out.println("Company lens: Jane Street answers should explain invariants out loud.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- the lower heap stores the lower half");
+        System.out.println("- the upper heap stores the upper half");
+        System.out.println("- balanced heaps make median lookup cheap");
+    }
+```
 
 ## Walkthrough
 
-Mention:
+1. Insert into the correct heap.
+2. Rebalance sizes.
+3. Read the median from heap tops.
 
-- lower half max-heap
-- upper half min-heap
-- rebalance rule
-- how median is read when sizes match or differ
+What to observe:
+
+- median = 101.0
 
 ## Mental Model
 
-Use a small mental model first: identify the input, the rule, and the outcome that running median prices should guarantee.
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-The common mistake is to use running median prices by pattern-matching on syntax instead of understanding the decision behind it.
+- reading running median prices as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-Use it when it makes the code clearer or safer. Avoid it when a simpler direct approach explains the intent better.
+Use it when the problem in the header comment matches the real code you are writing.
+
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether running median prices still behaves the way you expected.
-
-### After That
-
-Go to `ch03_netflix_makemytrip_hoteltrader` for reliability and marketplace-style backend design.
+Change one line in [RunningMedianPrices.java](RunningMedianPrices.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain running median prices, run the example, and defend when it helps versus when it adds noise.
+After this topic, you should be able to explain why running median prices exists, what problem it solves, and what the runnable file proves.

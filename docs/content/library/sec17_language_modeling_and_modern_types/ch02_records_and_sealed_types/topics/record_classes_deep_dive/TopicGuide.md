@@ -11,87 +11,93 @@ visual: recommended
 
 ## Why This Exists
 
-This topic explains record classes deep dive because it solves a concrete problem that becomes visible once the naive version starts to fail.
+Concept: Record Classes Deep Dive.
 
 ## The Pain Before It
 
-Before record classes deep dive, the code often works for a tiny case but becomes hard to trust once edge cases, state, or reuse enter the picture.
+
 
 ## Java Creator Mindset
 
-A Java designer would ask what rule needs to be made visible so the safer choice is also the clearer one.
+Make the rule behind record classes deep dive obvious so the safer choice is also the clearer one.
 
 ## How You Might Invent It
 
-- Records are data-first classes.
-- Java generates the boring parts for you.
-- Comparison table:
-
-| Feature | Record | Regular class |
-| --- | --- | --- |
-| `equals/hashCode/toString` | auto-generated | manual |
-| Immutability | fields are final | depends on design |
-| Validation | compact constructor | normal constructor |
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
 ## Naive Attempt
 
-The first attempt usually uses direct code and leaves too much behavior implicit.
+The naive version is to use record classes deep dive without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-That version breaks when the same assumption no longer holds in real code, especially around edge cases, state, or repeated use.
+If you ignore the rule behind record classes deep dive, the example becomes harder to trust.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Java's final form for record classes deep dive makes the important rule visible and repeatable instead of hiding it inside ad hoc code.
+Use the Java file to make the rule behind record classes deep dive explicit and repeatable.
+
+Run [RecordClassesDeepDive.java](RecordClassesDeepDive.java) as the source of truth for the example.
 
 ## Code
 
-Run [RecordClassesDeepDive.java](RecordClassesDeepDive.java) and focus on the runnable example first. Then compare the output with the explanation below.
+Run [RecordClassesDeepDive.java](RecordClassesDeepDive.java) and compare the output with the explanation below.
+
+```java
+    public static void main(String[] args) {
+        Money total = new Money("INR", 499);
+        Money sameTotal = new Money("INR", 499);
+
+        System.out.println("Concept: records are compact data carriers with built-in equals, hashCode, and toString.");
+        System.out.println("record = " + total);
+        System.out.println("equals = " + total.equals(sameTotal));
+        System.out.println("Why it matters: compact constructors let you validate data while keeping the class small.");
+    }
+```
 
 ## Walkthrough
 
-1. Identify the starting state or input.
-2. Run the example once without changing anything.
-3. Change one line or one input.
-4. Compare the new result with the rule the topic is teaching.
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
+
+What to observe:
+
+- Check whether the output matches the rule in the comment header.
+- Check whether the edge case you changed still behaves as expected.
 
 ## Mental Model
 
-- Records are data-first classes.
-- Java generates the boring parts for you.
-- Comparison table:
-
-| Feature | Record | Regular class |
-| --- | --- | --- |
-| `equals/hashCode/toString` | auto-generated | manual |
-| Immutability | fields are final | depends on design |
-| Validation | compact constructor | normal constructor |
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-- memorizing syntax before the problem
-- assuming the tiny example covers every case
-- changing the rule without rerunning the example
+- reading Record Classes Deep Dive as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-Gain: clearer behavior or safer code.
+The gain is clarity or correctness.
 
-Cost: a bit more structure or one more rule to remember.
-
-Question: is the extra rule cheaper than the bug it prevents?
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-Use it when the rule removes a real bug or removes guesswork.
+Use it when the problem in the header comment matches the real code you are writing.
 
-Avoid it when direct code is already clearer and just as safe.
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one input in [RecordClassesDeepDive.java](RecordClassesDeepDive.java), rerun it, and write down what changed.
+Change one line in [RecordClassesDeepDive.java](RecordClassesDeepDive.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain the problem it solves, the rule Java enforces, and the smallest change that proves you understand it.
+After this topic, you should be able to explain why Record Classes Deep Dive exists, what problem it solves, and what the runnable file proves.

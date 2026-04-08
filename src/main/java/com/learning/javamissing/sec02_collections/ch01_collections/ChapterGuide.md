@@ -60,7 +60,7 @@ That breaks when the same mistake repeats across files, teams, or interview ques
 
 1. Run [Comparator](topics/comparator/Comparator.java)
 2. Run [Immutability](topics/immutability/Immutability.java)
-3. Run [List, Set, Map](topics/list_set_map/ListSetMap.java)
+3. Run [List Set Map](topics/list_set_map/ListSetMap.java)
 
 ## What To Notice
 

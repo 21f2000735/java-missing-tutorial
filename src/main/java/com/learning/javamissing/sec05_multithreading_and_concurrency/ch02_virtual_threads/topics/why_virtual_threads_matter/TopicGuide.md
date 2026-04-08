@@ -5,169 +5,101 @@ runner: local
 estimated: 9 min
 ---
 
-# Why Virtual Threads Matter
+# Why virtual threads matter
 
 ## Why This Exists
 
-Traditional threads are expensive enough that teams started designing around the cost:
+Concept: Why virtual threads matter.
 
-- thread pools
-- callback-heavy code
-- reactive complexity even when the business logic is simple
+Waiting-heavy systems need a cheaper way to express many concurrent tasks.
 
 ## The Pain Before It
 
-Traditional threads are expensive enough that teams started designing around the cost:
+It keeps direct blocking-style code practical for very many mostly waiting tasks.
 
-- thread pools
-- callback-heavy code
-- reactive complexity even when the business logic is simple
-
-Virtual threads change that tradeoff for many request-per-task workloads.
+An order request waits on inventory and pricing checks.
 
 ## Java Creator Mindset
 
-Virtual threads reduce thread cost for many waiting tasks.  
-They do not remove the need for safe coordination, clear ownership, or good shared-state design.
+A virtual thread is still a thread, but its cost model is much better for waiting-heavy workloads.
 
 ## How You Might Invent It
 
-![Virtual threads single-look visual](./VirtualThreadsVisual.svg)
-
-One glance should tell you the real story:
-
-- platform threads are limited, expensive workers
-- virtual threads are much lighter for waiting-heavy tasks
-- the business code can stay direct and blocking-style
+1. Start one virtual thread.
+2. Let it block in a simple style.
+3. Compare the model with traditional expensive thread-per-task thinking.
 
 ## Naive Attempt
 
-The wrong mental model is "virtual threads make concurrency problems disappear."
-
-They do not.
-
-They reduce the cost of threads.  
-They do not remove:
-
-- race conditions
-- bad shared-state design
-- blocking calls that pin platform resources in the wrong places
+The naive version is to use why virtual threads matter without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-The wrong mental model is "virtual threads make concurrency problems disappear."
+It keeps direct blocking-style code practical for very many mostly waiting tasks.
 
-They do not.
-
-They reduce the cost of threads.  
-They do not remove:
-
-- race conditions
-- bad shared-state design
-- blocking calls that pin platform resources in the wrong places
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Virtual threads reduce thread cost for many waiting tasks.  
-They do not remove the need for safe coordination, clear ownership, or good shared-state design.
+A virtual thread is still a thread, but its cost model is much better for waiting-heavy workloads.
+
+Run [WhyVirtualThreadsMatter.java](WhyVirtualThreadsMatter.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [WhyVirtualThreadsMatter.java](WhyVirtualThreadsMatter.java) and compare the output with the explanation below.
 
-This example is best run locally on a modern JDK because it depends on newer Java support.
-
-### Expected Result
-
-The main point is not a flashy output string.  
-The point is that many blocking tasks can be modeled with a much simpler one-task-per-thread style again.
+```java
+    public static void main(String[] args) throws InterruptedException {
+        explainWhy();
+        wrongMentalModel();
+        runBlockingTaskExample();
+        System.out.println();
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- a virtual thread is still a Thread");
+        System.out.println("- virtual threads are useful when tasks spend time waiting");
+        System.out.println("- they improve the cost model, not the business logic");
+    }
+```
 
 ## Walkthrough
 
-Virtual threads make thread-per-task style practical again for many I/O-heavy workflows.  
-That often improves clarity because the code can read in straight lines instead of callback chains.
+1. Start one virtual thread.
+2. Let it block in a simple style.
+3. Compare the model with traditional expensive thread-per-task thinking.
+
+What to observe:
+
+- inventory check finished on VirtualThread...
 
 ## Mental Model
 
-![Virtual threads single-look visual](./VirtualThreadsVisual.svg)
-
-One glance should tell you the real story:
-
-- platform threads are limited, expensive workers
-- virtual threads are much lighter for waiting-heavy tasks
-- the business code can stay direct and blocking-style
-
-| Question | Platform thread | Virtual thread |
-| --- | --- | --- |
-| Best for | long-lived heavier worker threads | many waiting tasks |
-| Cost per thread | higher | much lower |
-| Blocking style code | possible but costly at scale | practical again |
-| Removes race conditions | no | no |
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-The wrong mental model is "virtual threads make concurrency problems disappear."
-
-They do not.
-
-They reduce the cost of threads.  
-They do not remove:
-
-- race conditions
-- bad shared-state design
-- blocking calls that pin platform resources in the wrong places
+- reading Why virtual threads matter as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-| Question | Platform thread | Virtual thread |
-| --- | --- | --- |
-| Best for | long-lived heavier worker threads | many waiting tasks |
-| Cost per thread | higher | much lower |
-| Blocking style code | possible but costly at scale | practical again |
-| Removes race conditions | no | no |
+The gain is clarity or correctness.
 
-The most useful benchmark question is not "which thread is faster?"
-
-It is:
-
-- how many waiting tasks can I model clearly
-- what happens to throughput when many requests block on I/O
-- does the simpler thread-per-task model lower code complexity
-
-Virtual threads shine when most time is spent waiting, not burning CPU.
-
-When you compare executor pools and virtual threads, measure:
-
-- total concurrent requests handled
-- average and tail latency
-- memory growth
-- blocked or pinned behavior
-- code complexity and failure handling, not just raw timing
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- your tasks spend time waiting on I/O
-- the one-request-one-thread model fits the business flow
-- readability matters more than low-level concurrency tricks
-
-### Avoid It When
-
-- the workload is dominated by heavy CPU computation
-- you still have unsafe shared mutable state
-- you have not checked whether frameworks and libraries are ready for the new model
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether why virtual threads matter still behaves the way you expected.
-
-### After That
-
-Read the executor-based virtual thread example next, then compare it with structured concurrency.
+Change one line in [WhyVirtualThreadsMatter.java](WhyVirtualThreadsMatter.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-- virtual threads are still threads, not magic background jobs
-- they reduce thread cost for waiting-heavy workloads
-- they improve the cost model, but not the need for safe shared-state design
+After this topic, you should be able to explain why Why virtual threads matter exists, what problem it solves, and what the runnable file proves.

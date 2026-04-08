@@ -9,149 +9,100 @@ estimated: 10 min
 
 ## Why This Exists
 
-Filtering and mapping are only half the story.
+Concept: Collectors.
+
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## The Pain Before It
 
-Filtering and mapping are only half the story.
+business code often filters, transforms, groups, and summarizes data.
 
-Most business code eventually wants a final result like:
-
-- a grouped map
-- a count
-- a summary
-- a joined string
-- a partitioned result
-
-That is where many stream users get stuck.
+This topic uses order processing and reporting to make the concept easier to understand.
 
 ## Java Creator Mindset
 
-Use the collector that matches the final result shape:
-
-- `toList()` when order matters
-- `toSet()` when uniqueness matters
-- `groupingBy(...)` when many values belong to one key
-- `partitioningBy(...)` when the answer is naturally yes/no
-- `summarizingInt(...)` when you need count, sum, min, max, and average together
+First understand the problem in plain language, then map that idea to the Java code.
 
 ## How You Might Invent It
 
-Use the collector that matches the final result shape:
+1. Identify the business data or behavior.
+2. Choose the Java construct that expresses the idea clearly.
+3. Run the example and compare the output with the explanation.
 
 ## Naive Attempt
 
-Two common mistakes:
-
-- using `toMap()` when duplicate keys are possible
-- building complex mutable maps by hand when the collector already expresses the intent
+The naive version is to use collectors without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-Two common mistakes:
+business code often filters, transforms, groups, and summarizes data.
 
-- using `toMap()` when duplicate keys are possible
-- building complex mutable maps by hand when the collector already expresses the intent
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Use the collector that matches the final result shape:
+First understand the problem in plain language, then map that idea to the Java code.
 
-- `toList()` when order matters
-- `toSet()` when uniqueness matters
-- `groupingBy(...)` when many values belong to one key
-- `partitioningBy(...)` when the answer is naturally yes/no
-- `summarizingInt(...)` when you need count, sum, min, max, and average together
+Run [Collectors.java](Collectors.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [Collectors.java](Collectors.java) and compare the output with the explanation below.
 
-Run the example and focus on four shapes:
-
-- list/set output
-- grouped map output
-- true/false partition output
-- summary output
-
-### Expected Result
-
-- uppercase category names in list and set form
-- grouped product names by category
-- pass/fail partition for scores
-- summary statistics for order prices
+```java
+    public static void main(String[] args) {
+        overview();
+        wrongExample();
+        toListExample();
+        groupingByExample();
+        partitioningByExample();
+        summarizingExample();
+        pitfalls();
+        examTrap();
+        interviewQuestion();
+        exercise();
+        solution();
+    }
+```
 
 ## Walkthrough
 
-Collectors make the *shape of the answer* explicit.
+1. Identify the business data or behavior.
+2. Choose the Java construct that expresses the idea clearly.
+3. Run the example and compare the output with the explanation.
 
-That improves readability because a reviewer can often understand the result structure without reading low-level mutation code.
+What to observe:
+
+- Read the inline comments and printed lines in main() to see the expected behavior.
 
 ## Mental Model
 
-| Need | Collector |
-| --- | --- |
-| Keep all values in a list | `toList()` |
-| Remove duplicates | `toSet()` |
-| Group many values by key | `groupingBy(...)` |
-| Split into true/false groups | `partitioningBy(...)` |
-| Count per group | `groupingBy(..., counting())` |
-| Summarize numeric values | `summarizingInt(...)` |
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-Two common mistakes:
-
-- using `toMap()` when duplicate keys are possible
-- building complex mutable maps by hand when the collector already expresses the intent
+- reading Collectors as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-| Need | Collector |
-| --- | --- |
-| Keep all values in a list | `toList()` |
-| Remove duplicates | `toSet()` |
-| Group many values by key | `groupingBy(...)` |
-| Split into true/false groups | `partitioningBy(...)` |
-| Count per group | `groupingBy(..., counting())` |
-| Summarize numeric values | `summarizingInt(...)` |
+The gain is clarity or correctness.
 
-The useful question is not “are collectors fast?”
-
-The useful question is:
-
-“Does this collector express the result clearly enough that the code is easy to trust and review?”
-
-Performance concerns usually come later:
-
-- unnecessary intermediate allocations
-- expensive mapping logic
-- poor key choice for grouping
-
-If the code becomes hard to explain, simplify it before arguing about micro-performance.
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- the final result has a clear structure
-- grouping, counting, partitioning, or summarizing is the main goal
-
-### Avoid It When
-
-- a plain loop is much easier to explain
-- duplicate-key behavior is unclear and unhandled
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether collectors still behaves the way you expected.
-
-### After That
-
-Return to the stream pipeline topic if the full filter-map-collect flow still feels unclear, then compare streams with loops in the compare guide.
+Change one line in [Collectors.java](Collectors.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-- collectors describe the final result shape of a stream
-- `groupingBy` and `partitioningBy` solve different kinds of result grouping
-- `toMap()` needs extra care when duplicate keys are possible
+After this topic, you should be able to explain why Collectors exists, what problem it solves, and what the runnable file proves.

@@ -5,161 +5,114 @@ runner: embedded
 estimated: 9 min
 ---
 
-# HashMap Buckets And Collisions
+# HashMap buckets and collisions
 
 ## Why This Exists
 
-`HashMap` feels instant until two questions arrive:
+Concept: HashMap buckets and collisions.
 
-- what happens when keys collide
-- why do `equals()` and `hashCode()` matter so much
+HashMap looks like instant lookup until collisions and hashing quality become relevant.
 
 ## The Pain Before It
 
-`HashMap` feels instant until two questions arrive:
+It explains why average lookup is fast, what collisions mean, and why equals/hashCode correctness matters.
 
-- what happens when keys collide
-- why do `equals()` and `hashCode()` matter so much
-
-This topic exists because many developers can use `HashMap`, but fewer can explain why it is fast on average and where the risks come from.
+A session store keeps statuses by user ID in a map.
 
 ## Java Creator Mindset
 
-Think in two layers:
-
-1. average lookup is fast because keys are spread out
-2. collisions and poor key design increase the amount of work inside a bucket
+HashMap spreads keys across buckets; collisions mean multiple keys share one bucket and more work happens there.
 
 ## How You Might Invent It
 
-![HashMap buckets single-look visual](./HashMapBucketsVisual.svg)
-
-Read the picture in one pass:
-
-- keys are spread into buckets
-- collisions mean more than one key lands in the same bucket
-- correct `equals()` and `hashCode()` keep lookup correct
+1. Store several keys with the same hash.
+2. Read one value back.
+3. See that correctness still depends on equals/hashCode, even when collisions exist.
 
 ## Naive Attempt
 
-Treat `HashMap` as magical constant-time lookup with no caveats.
-
-That usually leads to:
-
-- ignoring key design
-- weak reasoning about collisions
-- confusion when behavior is correct but slower than expected
+The naive version is to use hashmap buckets and collisions without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-Treat `HashMap` as magical constant-time lookup with no caveats.
+It explains why average lookup is fast, what collisions mean, and why equals/hashCode correctness matters.
 
-That usually leads to:
-
-- ignoring key design
-- weak reasoning about collisions
-- confusion when behavior is correct but slower than expected
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Think in two layers:
+HashMap spreads keys across buckets; collisions mean multiple keys share one bucket and more work happens there.
 
-1. average lookup is fast because keys are spread out
-2. collisions and poor key design increase the amount of work inside a bucket
+Run [HashMapBucketsAndCollisions.java](HashMapBucketsAndCollisions.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [HashMapBucketsAndCollisions.java](HashMapBucketsAndCollisions.java) and compare the output with the explanation below.
 
-Run the example and notice that collisions do not break correctness by themselves.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: HashMap collisions");
+        System.out.println("Problem: fast lookup depends on good key distribution, not on magic.");
+        System.out.println();
 
-The real lesson is:
+        Map<CollidingKey, String> sessions = new HashMap<>();
+        sessions.put(new CollidingKey("user-101"), "ACTIVE");
+        sessions.put(new CollidingKey("user-205"), "EXPIRED");
+        sessions.put(new CollidingKey("user-309"), "LOCKED");
 
-- bad hashing increases work
-- bad `equals()` or `hashCode()` breaks map behavior
-
-### Expected Result
-
-- the stored status is found correctly
-- several keys share the same bucket
-- correctness still holds because the key contract is correct
+        // Expected output:
+        // status = EXPIRED
+        // sameBucketCount = 3
+        System.out.println("status = " + sessions.get(new CollidingKey("user-205")));
+        System.out.println("sameBucketCount = " + sessions.size());
+        System.out.println("Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.");
+        System.out.println("Common mistake: assuming HashMap is always O(1) without thinking about collision patterns.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- HashMap lookup is usually O(1) on average");
+        System.out.println("- collisions mean multiple keys land in the same bucket");
+        System.out.println("- correct equals/hashCode keeps lookups correct even when collisions happen");
+    }
+```
 
 ## Walkthrough
 
-Walk through the example in order: start state, rule application, final result.
+1. Store several keys with the same hash.
+2. Read one value back.
+3. See that correctness still depends on equals/hashCode, even when collisions exist.
+
+What to observe:
+
+- status = EXPIRED
+- sameBucketCount = 3
 
 ## Mental Model
 
-![HashMap buckets single-look visual](./HashMapBucketsVisual.svg)
-
-Read the picture in one pass:
-
-- keys are spread into buckets
-- collisions mean more than one key lands in the same bucket
-- correct `equals()` and `hashCode()` keep lookup correct
-
-| Need | `HashMap` | `TreeMap` |
-| --- | --- | --- |
-| Fast average lookup by key | strong fit | usually slower |
-| Sorted keys | no | yes |
-| Simple key-value storage | strong fit | fine, but adds ordering cost |
-| Understand collision behavior | required | not the same design issue |
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-Treat `HashMap` as magical constant-time lookup with no caveats.
-
-That usually leads to:
-
-- ignoring key design
-- weak reasoning about collisions
-- confusion when behavior is correct but slower than expected
+- reading HashMap buckets and collisions as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-| Need | `HashMap` | `TreeMap` |
-| --- | --- | --- |
-| Fast average lookup by key | strong fit | usually slower |
-| Sorted keys | no | yes |
-| Simple key-value storage | strong fit | fine, but adds ordering cost |
-| Understand collision behavior | required | not the same design issue |
+The gain is clarity or correctness.
 
-The right mental model is:
-
-- lookup is usually near constant average time
-- collision-heavy buckets can do more work
-- key design affects speed and correctness
-
-When performance matters, the useful measurements are:
-
-- lookup time with realistic keys
-- map size growth
-- collision rate under real data shape
-- memory cost per entry
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- you need key-based lookup
-- ordering is not the main requirement
-- average fast access matters
-
-### Avoid It When
-
-- you need sorted traversal by key
-- the real problem is uniqueness only, not key-to-value lookup
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether hashmap buckets and collisions still behaves the way you expected.
-
-### After That
-
-Go back and compare this with `ArrayList` growth and lookup. Together they explain two of the most important everyday Java performance tradeoffs.
+Change one line in [HashMapBucketsAndCollisions.java](HashMapBucketsAndCollisions.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-- `HashMap` speed depends on good key distribution, not magic
-- collisions increase work but do not automatically break correctness
-- correct `equals()` and `hashCode()` are part of the data-structure contract
+After this topic, you should be able to explain why HashMap buckets and collisions exists, what problem it solves, and what the runnable file proves.

@@ -6,141 +6,113 @@ estimated: 7 min
 mode: interview
 ---
 
-# Idempotent Reservations
+# idempotent reservations
 
 ## Why This Exists
 
-Reservation systems live in a world of retries.
+Concept: idempotent reservations.
 
-Networks time out, clients retry, and load balancers repeat requests. If the server treats every retry as a brand-new reservation, the system creates duplicate business actions.
+Booking, checkout, and order systems are retried under network failure.
 
 ## The Pain Before It
 
-A booking endpoint often receives the same intent more than once:
+It prevents duplicate reservations when the same request is sent again.
 
-- the user taps again
-- the mobile app retries
-- the client never received the first success response
-
-Without duplicate protection, one user action can create multiple reservations or overbook limited inventory.
+A flash-sale reservation endpoint receives duplicate calls for the same booking request.
 
 ## Java Creator Mindset
 
-The important idea is not "use a map." The important idea is "give the business action a stable identity."
-
-Once the request has an idempotency key, the server can:
-
-- store the first result
-- return the same result on retry
-- avoid repeating the side effect
+A business action needs a stable request identity so the server can return the same result on retry.
 
 ## How You Might Invent It
 
-Start with the business promise:
-
-"If the same reservation request arrives again, the customer should get the same answer, not a second booking."
-
-That promise naturally pushes you toward request identity and stored results.
+1. Accept a request id.
+2. Store the first result under that id.
+3. Return the stored result on duplicate calls.
 
 ## Naive Attempt
 
-Write the reservation logic as if every request is brand new:
-
-- create the reservation
-- decrement capacity
-- return success
-
-This works in the happy path demo and fails under retry pressure.
+The naive version is to use idempotent reservations without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-The same logical request can be processed twice.
+It prevents duplicate reservations when the same request is sent again.
 
-That creates risks like:
-
-- duplicate reservations
-- incorrect inventory counts
-- hard-to-explain customer support cases
-
-The failure is not only technical. It is a business correctness failure.
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-The runnable example uses a `requestId` as the stable key.
+A business action needs a stable request identity so the server can return the same result on retry.
 
-`ReservationService.reserve(...)` stores the first `ReservationResult` in `resultsByRequestId` and returns that stored value for the same request on later calls. In the sample run, the status is `RESERVED` both times, but `createdReservationCount()` stays at `1`.
+Run [IdempotentReservations.java](IdempotentReservations.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [IdempotentReservations.java](IdempotentReservations.java) and compare the output with the explanation below.
 
-Run the same request twice and notice that only one reservation is created.
+```java
+    public static void main(String[] args) {
+        ReservationService service = new ReservationService();
 
-### Expected Result
+        ReservationResult firstResult = service.reserve("req-501", "show-101", 2);
+        ReservationResult secondResult = service.reserve("req-501", "show-101", 2);
 
-- `firstResult = RESERVED`
-- `secondResult = RESERVED`
-- `reservationsCreated = 1`
+        // Expected output:
+        // firstResult = RESERVED
+        // secondResult = RESERVED
+        // reservationsCreated = 1
+        System.out.println("firstResult = " + firstResult.status());
+        System.out.println("secondResult = " + secondResult.status());
+        System.out.println("reservationsCreated = " + service.createdReservationCount());
+        System.out.println("Why it works: the same request id returns the same stored reservation result.");
+        System.out.println("Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- idempotency protects business actions under retry");
+        System.out.println("- the server must own duplicate protection");
+        System.out.println("- reservation systems need stable request identity");
+    }
+```
 
 ## Walkthrough
 
-The key line is `computeIfAbsent(requestId, ...)`.
+1. Accept a request id.
+2. Store the first result under that id.
+3. Return the stored result on duplicate calls.
 
-That line says:
+What to observe:
 
-- if this request id was already seen, reuse the stored result
-- if not, create the reservation once and save the result
-
-That is enough to demonstrate the interview idea clearly: duplicate calls should repeat the answer, not the side effect.
+- firstResult = RESERVED
+- secondResult = RESERVED
+- reservationsCreated = 1
 
 ## Mental Model
 
-Think of idempotency as a receipt:
-
-- the first successful request creates the receipt
-- later retries show the same receipt
-- the business action is not performed again
-
-The request id is how the server recognizes that the receipt already exists.
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-- trusting the client not to retry
-- generating a new idempotency key on each retry
-- storing the key but not the result
-- protecting only the HTTP layer without protecting the business action itself
+- reading idempotent reservations as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-| Gain | Cost |
-| --- | --- |
-| prevents duplicate business actions | needs stable request identity |
-| makes retries safe | needs durable storage in real systems |
-| improves customer trust and operational clarity | adds lifecycle rules for stored results |
+The gain is clarity or correctness.
 
-For interviews, mention that an in-memory map is only a teaching model. Real systems usually need shared durable storage.
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- the action changes money, inventory, seats, orders, or reservations
-- retries are normal and expected
-- duplicate execution would create business damage
-
-### Avoid It When
-
-- the operation is naturally read-only
-- the action has no meaningful side effect to protect
-- you are using the word idempotent without defining the stable identity rule
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one input in [IdempotentReservations.java](IdempotentReservations.java), rerun it, and write down what changed.
+Change one line in [IdempotentReservations.java](IdempotentReservations.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-- retries are normal in booking and checkout systems
-- idempotency means the same logical request should return the same result
-- the core move is stable request identity plus stored first result
-- a strong interview answer ties idempotency to business correctness, not only API style
+After this topic, you should be able to explain why idempotent reservations exists, what problem it solves, and what the runnable file proves.

@@ -164,6 +164,268 @@ def first_java_file(topic_dir: Path) -> Path | None:
     return java_files[0] if java_files else None
 
 
+def parse_java_topic_comment(java_path: Path) -> dict[str, str]:
+    text = java_path.read_text()
+    match = re.search(r"/\*\*([\s\S]*?)\*/", text)
+    if not match:
+        return {}
+
+    fields = {
+        "concept": "",
+        "why this concept is needed": "",
+        "what problem this solves": "",
+        "real-world setup": "",
+        "how to think about it": "",
+        "how to code it": "",
+        "expected output": "",
+    }
+
+    labels = {
+        "concept": "concept",
+        "why this concept is needed": "why this concept is needed",
+        "what problem this solves": "what problem this solves",
+        "real-world setup": "real-world setup",
+        "how to think about it": "how to think about it",
+        "how to code it": "how to code it",
+        "expected output": "expected output",
+    }
+
+    current_key = ""
+    for raw_line in match.group(1).splitlines():
+        line = raw_line.strip()
+        if line.startswith("*"):
+            line = line[1:].lstrip()
+        if not line:
+            continue
+
+        lowered = line.lower()
+        matched_label = next((label for label in labels if lowered.startswith(f"{label}:")), "")
+        if matched_label:
+            current_key = labels[matched_label]
+            fields[current_key] = line[len(matched_label) + 1 :].strip()
+            continue
+
+        if current_key:
+            if current_key == "expected output":
+                fields[current_key] = (
+                    f"{fields[current_key]}\n{line}".strip() if fields[current_key] else line
+                )
+            else:
+                fields[current_key] = f"{fields[current_key]} {line}".strip()
+
+    return fields
+
+
+def parse_front_matter_value(front_matter: str, key: str) -> str:
+    for raw_line in front_matter.splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("---") or ":" not in line:
+            continue
+        current_key, value = line.split(":", 1)
+        if current_key.strip().lower() == key.lower():
+            return value.strip()
+    return ""
+
+
+def extract_main_snippet(java_path: Path) -> str:
+    lines = java_path.read_text().splitlines()
+    start = None
+    for index, line in enumerate(lines):
+        if re.search(r"\bpublic\s+static\s+void\s+main\s*\(", line):
+            start = index
+            break
+    if start is None:
+        return ""
+
+    snippet: list[str] = []
+    brace_depth = 0
+    in_block = False
+
+    for line in lines[start:]:
+        if "{" in line:
+            brace_depth += line.count("{")
+            in_block = True
+        if in_block:
+            snippet.append(line.rstrip())
+        if "}" in line and in_block:
+            brace_depth -= line.count("}")
+            if brace_depth <= 0:
+                break
+
+    if not snippet:
+        return ""
+
+    return "\n".join(snippet).rstrip()
+
+
+def split_step_lines(text: str) -> list[str]:
+    compact = " ".join(line.strip() for line in text.splitlines() if line.strip())
+    if not compact:
+        return []
+
+    matches = re.findall(r"\d+\.\s*(.*?)(?=(?:\d+\.\s)|$)", compact)
+    if len(matches) > 1:
+        return [match.strip() for match in matches if match.strip()]
+
+    return [part.strip() for part in re.split(r"[.;]\s+", compact) if part.strip()]
+
+
+def split_output_lines(text: str) -> list[str]:
+    lines = []
+    for line in text.splitlines():
+        stripped = line.strip()
+        if stripped:
+            lines.append(stripped)
+    return lines
+
+
+def fenced_java(code: str) -> str:
+    if not code.strip():
+        return ""
+    return f"```java\n{code.rstrip()}\n```"
+
+
+def topic_sections_from_java(
+    java_path: Path,
+    guide_title: str,
+    visual_mode: str = "",
+    visual_asset: str = "",
+) -> OrderedDict[str, str]:
+    meta = parse_java_topic_comment(java_path)
+    concept = meta.get("concept") or guide_title or java_path.stem
+    why_needed = meta.get("why this concept is needed", "")
+    problem = meta.get("what problem this solves", "")
+    setup = meta.get("real-world setup", "")
+    think = meta.get("how to think about it", "")
+    code_steps = meta.get("how to code it", "")
+    expected = meta.get("expected output", "")
+    main_snippet = extract_main_snippet(java_path)
+    file_link = f"[{java_path.name}]({java_path.name})"
+    topic_dir = java_path.parent
+    visual_name = visual_asset or next((path.name for path in topic_dir.glob("*.svg")), "")
+    visual_block = ""
+    if visual_mode.lower() == "required" and visual_name:
+        visual_block = f"![{concept} visual](./{visual_name})"
+
+    steps = split_step_lines(code_steps) or [
+        "Run the Java file once without changing it.",
+        "Change one input or one line.",
+        "Compare the new output with the explanation.",
+    ]
+    observations = split_output_lines(expected) or [
+        "Check whether the output matches the rule in the comment header.",
+        "Check whether the edge case you changed still behaves as expected.",
+    ]
+
+    return OrderedDict(
+        [
+            (
+                "Why This Exists",
+                join_blocks(
+                    f"Concept: {concept}.",
+                    why_needed,
+                ),
+            ),
+            (
+                "The Pain Before It",
+                join_blocks(
+                    problem,
+                    setup,
+                ),
+            ),
+            (
+                "Java Creator Mindset",
+                think or f"Make the rule behind {concept.lower()} obvious so the safer choice is also the clearer one.",
+            ),
+            (
+                "How You Might Invent It",
+                join_blocks(
+                    numbered_list(steps),
+                    visual_block,
+                ),
+            ),
+            (
+                "Naive Attempt",
+                f"The naive version is to use {concept.lower()} without checking what rule it is supposed to protect.",
+            ),
+            (
+                "Why It Breaks",
+                join_blocks(
+                    problem or f"If you ignore the rule behind {concept.lower()}, the example becomes harder to trust.",
+                    "Edge cases usually show the bug first.",
+                ),
+            ),
+            (
+                "Final Java Solution",
+                join_blocks(
+                    think or f"Use the Java file to make the rule behind {concept.lower()} explicit and repeatable.",
+                    f"Run {file_link} as the source of truth for the example.",
+                ),
+            ),
+            (
+                "Code",
+                join_blocks(
+                    f"Run {file_link} and compare the output with the explanation below.",
+                    fenced_java(main_snippet),
+                ),
+            ),
+            (
+                "Walkthrough",
+                join_blocks(
+                    numbered_list(steps),
+                    "What to observe:",
+                    bullet_list(observations),
+                ),
+            ),
+            (
+                "Mental Model",
+                join_blocks(
+                    visual_block,
+                    bullet_list(
+                        [
+                            "What rule is being enforced?",
+                            "What changes when you change one input?",
+                            "What does the output prove about the rule?",
+                        ]
+                    ),
+                ),
+            ),
+            (
+                "Mistakes",
+                bullet_list(
+                    [
+                        f"reading {concept} as syntax instead of a rule",
+                        "changing more than one thing at once",
+                        "skipping the runnable file and only reading the prose",
+                    ]
+                ),
+            ),
+            (
+                "Tradeoffs",
+                join_blocks(
+                    "The gain is clarity or correctness.",
+                    "The cost is usually one more rule, one more API, or one more concept to remember.",
+                ),
+            ),
+            (
+                "Use / Avoid",
+                join_blocks(
+                    "Use it when the problem in the header comment matches the real code you are writing.",
+                    "Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.",
+                ),
+            ),
+            (
+                "Practice",
+                f"Change one line in {file_link}, rerun it, and write down what changed before and after the edit.",
+            ),
+            (
+                "Summary",
+                f"After this topic, you should be able to explain why {concept} exists, what problem it solves, and what the runnable file proves.",
+            ),
+        ]
+    )
+
+
 def write_markdown(
     path: Path,
     front_matter: str,
@@ -593,16 +855,18 @@ def section_chapter_entries(section_dir: Path) -> list[dict[str, str]]:
 def normalize_topic(path: Path) -> None:
     front_matter, title, intro, sections = parse_markdown(path)
     topic_dir = path.parent
-    if not title:
-        java_file = first_java_file(topic_dir)
-        title = camel_to_title(java_file.stem) if java_file else humanize_slug(topic_dir.name)
+    visual_mode = parse_front_matter_value(front_matter, "visual")
+    visual_asset = parse_front_matter_value(front_matter, "visual_asset")
+    java_file = first_java_file(topic_dir)
+    if java_file:
+        java_meta = parse_java_topic_comment(java_file)
+        title = java_meta.get("concept") or title or camel_to_title(java_file.stem)
+        required = topic_sections_from_java(java_file, title, visual_mode, visual_asset)
+    else:
+        title = title or humanize_slug(topic_dir.name)
+        required = topic_required_sections(title, intro, sections, topic_dir)
 
-    write_markdown(
-        path,
-        front_matter,
-        title,
-        topic_required_sections(title, intro, sections, topic_dir),
-    )
+    write_markdown(path, front_matter, title, required)
 
 
 def normalize_chapter(path: Path) -> None:

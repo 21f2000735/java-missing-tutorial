@@ -12,111 +12,94 @@ visual_asset: ClassLoadingLifecycleVisual.svg
 
 ## Why This Exists
 
-This topic exists because static initialization timing surprises many Java developers.
+Concept: Class Loading Lifecycle.
 
 ## The Pain Before It
 
-A learner sees output like:
 
-`CustomerConfig static initialization running`
-
-and asks:
-
-- why did that print before the next line?
-- did the class load at startup?
-- what exactly triggered it?
 
 ## Java Creator Mindset
 
-Do not compress everything into the phrase "class loading."
-
-Separate:
-
-- loading
-- linking
-- initialization
+Make the rule behind class loading lifecycle obvious so the safer choice is also the clearer one.
 
 ## How You Might Invent It
 
-If every class ran all static setup eagerly at startup, programs would pay work before it was needed.
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
-Java instead activates classes closer to actual use.
-
-![Class loading and initialization timeline](ClassLoadingLifecycleVisual.svg)
-
-What to notice:
-
-- class metadata becomes available before static initialization necessarily runs
-- active use is what matters
-- initialization is the stage where static setup code executes
+![Class Loading Lifecycle visual](./ClassLoadingLifecycleVisual.svg)
 
 ## Naive Attempt
 
-The naive answer is:
-
-"The class loads once the JVM starts."
+The naive version is to use class loading lifecycle without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-That answer misses the important runtime detail: the class can become known before its static initialization is triggered.
+If you ignore the rule behind class loading lifecycle, the example becomes harder to trust.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Use this progression:
+Use the Java file to make the rule behind class loading lifecycle explicit and repeatable.
 
-- loading makes the class available
-- linking prepares it
-- initialization runs static setup when active use demands it
+Run [ClassLoadingLifecycle.java](ClassLoadingLifecycle.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [ClassLoadingLifecycle.java](ClassLoadingLifecycle.java) and compare the output with the explanation below.
 
-Run the example and watch when the static initialization message appears relative to the field access.
-
-### Expected Result
-
-- `Concept: classes are loaded and initialized only when the JVM decides they are needed.`
-- `Accessing CustomerConfig.DEFAULT_REGION triggers class initialization.`
-- `CustomerConfig static initialization running`
-- `region = IN`
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: classes are loaded and initialized only when the JVM decides they are needed.");
+        System.out.println("Accessing CustomerConfig.DEFAULT_REGION triggers class initialization.");
+        System.out.println("region = " + CustomerConfig.DEFAULT_REGION);
+        System.out.println("Why it works: loading makes class data available, linking prepares it, and initialization runs static setup.");
+    }
+```
 
 ## Walkthrough
 
-`CustomerConfig.DEFAULT_REGION` is backed by a method call, so accessing it triggers initialization of the nested class.
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
-That is why the message prints before the region value is shown.
+What to observe:
+
+- Check whether the output matches the rule in the comment header.
+- Check whether the edge case you changed still behaves as expected.
 
 ## Mental Model
 
-Think of initialization as the moment the JVM commits to running static setup for the class.
+![Class Loading Lifecycle visual](./ClassLoadingLifecycleVisual.svg)
+
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-- using "loaded" when you mean "initialized"
-- assuming every static member behaves like a compile-time constant
-- missing the trigger point in the code
+- reading Class Loading Lifecycle as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-Lazy activation improves startup behavior and avoids unnecessary work, but it means timing questions become important when debugging static side effects.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- explaining static initialization timing
-- debugging class startup behavior
-- answering JVM lifecycle interview questions
-
-### Avoid It When
-
-- you are calling every static access the same thing without checking whether initialization actually ran
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one input in [ClassLoadingLifecycle.java](ClassLoadingLifecycle.java), rerun it, and write down what changed.
+Change one line in [ClassLoadingLifecycle.java](ClassLoadingLifecycle.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain why touching one static field can trigger class initialization at that exact point in execution.
+After this topic, you should be able to explain why Class Loading Lifecycle exists, what problem it solves, and what the runnable file proves.

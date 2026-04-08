@@ -5,99 +5,111 @@ runner: embedded
 estimated: 7 min
 ---
 
-# Transfer Idempotency
+# transfer idempotency
 
 ## Why This Exists
 
-Financial systems cannot treat duplicate requests as harmless noise.
+Concept: transfer idempotency.
+
+Payment and transfer APIs must survive retries without moving money twice.
 
 ## The Pain Before It
 
-Financial systems cannot treat duplicate requests as harmless noise.
+It binds a transfer request id to one durable result.
+
+A wallet transfer endpoint gets retried after a client timeout.
 
 ## Java Creator Mindset
 
-### Interview Angle
-
-Mention:
-
-- idempotency key
-- persisted result
-- ledger truth
-- source-of-truth versus derived views
-
-### Company Lens
-
-- Coinbase: correctness first
-- Apple: boundary contracts still matter here too
+One business action should map to one result, even if the request arrives more than once.
 
 ## How You Might Invent It
 
-Treat transfer idempotency as a practical decision tool, not just a term to memorize.
+1. Accept an idempotency key.
+2. Store the result for that key.
+3. Return the same result on retry.
 
 ## Naive Attempt
 
-The first instinct is usually to solve the problem directly with local code and hope the edge cases stay small.
+The naive version is to use transfer idempotency without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-The common mistake is to use transfer idempotency by pattern-matching on syntax instead of understanding the decision behind it.
+It binds a transfer request id to one durable result.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-### Interview Angle
+One business action should map to one result, even if the request arrives more than once.
 
-Mention:
-
-- idempotency key
-- persisted result
-- ledger truth
-- source-of-truth versus derived views
-
-### Company Lens
-
-- Coinbase: correctness first
-- Apple: boundary contracts still matter here too
+Run [TransferIdempotency.java](TransferIdempotency.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [TransferIdempotency.java](TransferIdempotency.java) and compare the output with the explanation below.
 
-Run the same transfer twice and notice that the system keeps one ledger entry.
+```java
+    public static void main(String[] args) {
+        TransferService service = new TransferService();
+        Transfer firstTransfer = service.transfer("tx-909", new BigDecimal("125.00"));
+        Transfer retryTransfer = service.transfer("tx-909", new BigDecimal("125.00"));
+
+        // Expected output:
+        // firstTransfer = COMPLETED
+        // retryTransfer = COMPLETED
+        // ledgerEntries = 1
+        System.out.println("firstTransfer = " + firstTransfer.status());
+        System.out.println("retryTransfer = " + retryTransfer.status());
+        System.out.println("ledgerEntries = " + service.ledgerEntries());
+        System.out.println("Company lens: Coinbase answers should say correctness before convenience.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- idempotency keys belong in money-moving APIs");
+        System.out.println("- retries are normal and should be safe");
+        System.out.println("- ledger truth must not duplicate on client timeout");
+    }
+```
 
 ## Walkthrough
 
-Mention:
+1. Accept an idempotency key.
+2. Store the result for that key.
+3. Return the same result on retry.
 
-- idempotency key
-- persisted result
-- ledger truth
-- source-of-truth versus derived views
+What to observe:
+
+- firstTransfer = COMPLETED
+- retryTransfer = COMPLETED
+- ledgerEntries = 1
 
 ## Mental Model
 
-Use a small mental model first: identify the input, the rule, and the outcome that transfer idempotency should guarantee.
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-The common mistake is to use transfer idempotency by pattern-matching on syntax instead of understanding the decision behind it.
+- reading transfer idempotency as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-Use it when it makes the code clearer or safer. Avoid it when a simpler direct approach explains the intent better.
+Use it when the problem in the header comment matches the real code you are writing.
+
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether transfer idempotency still behaves the way you expected.
-
-### After That
-
-Read `RunningMedianPrices` next for the algorithm and invariant side of high-bar interviews.
+Change one line in [TransferIdempotency.java](TransferIdempotency.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain transfer idempotency, run the example, and defend when it helps versus when it adds noise.
+After this topic, you should be able to explain why transfer idempotency exists, what problem it solves, and what the runnable file proves.

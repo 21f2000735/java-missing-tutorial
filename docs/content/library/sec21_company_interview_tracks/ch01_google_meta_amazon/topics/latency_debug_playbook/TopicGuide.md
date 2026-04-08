@@ -5,100 +5,118 @@ runner: embedded
 estimated: 7 min
 ---
 
-# Latency Debug Playbook
+# latency debug playbook
 
 ## Why This Exists
 
-Good interviewers ask what you do when production gets slower, because debugging quality predicts engineering quality.
+Concept: latency debug playbook.
+
+Strong companies care how you debug production regressions, not just how you code fresh features.
 
 ## The Pain Before It
 
-Good interviewers ask what you do when production gets slower, because debugging quality predicts engineering quality.
+It shows a disciplined way to find the likely bottleneck instead of guessing.
+
+A checkout service got slower after a new release.
 
 ## Java Creator Mindset
 
-### Interview Angle
-
-Mention:
-
-- compare baseline and current release
-- identify the worst changed dependency
-- decide whether rollback is needed
-- inspect error rate, GC, and downstream timing together
-
-### Company Lens
-
-- Google: disciplined narrowing
-- Meta: practical production response
+Compare before and after metrics, identify the largest change, then narrow the blast radius.
 
 ## How You Might Invent It
 
-Treat latency debug playbook as a practical decision tool, not just a term to memorize.
+1. Model component timings.
+2. Compare baselines with the new release.
+3. Inspect the largest regression first.
 
 ## Naive Attempt
 
-The first instinct is usually to solve the problem directly with local code and hope the edge cases stay small.
+The naive version is to use latency debug playbook without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-The common mistake is to use latency debug playbook by pattern-matching on syntax instead of understanding the decision behind it.
+It shows a disciplined way to find the likely bottleneck instead of guessing.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-### Interview Angle
+Compare before and after metrics, identify the largest change, then narrow the blast radius.
 
-Mention:
-
-- compare baseline and current release
-- identify the worst changed dependency
-- decide whether rollback is needed
-- inspect error rate, GC, and downstream timing together
-
-### Company Lens
-
-- Google: disciplined narrowing
-- Meta: practical production response
+Run [LatencyDebugPlaybook.java](LatencyDebugPlaybook.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [LatencyDebugPlaybook.java](LatencyDebugPlaybook.java) and compare the output with the explanation below.
 
-Run the comparison and notice that the answer is not "optimize everything."
-It is "identify the largest change first."
+```java
+    public static void main(String[] args) {
+        List<ComponentLatency> baseline = List.of(
+                new ComponentLatency("gateway", 22),
+                new ComponentLatency("pricing-api", 40),
+                new ComponentLatency("inventory-api", 35)
+        );
+        List<ComponentLatency> current = List.of(
+                new ComponentLatency("gateway", 25),
+                new ComponentLatency("pricing-api", 150),
+                new ComponentLatency("inventory-api", 39)
+        );
+
+        Regression regression = findPrimaryRegression(baseline, current);
+
+        // Expected output:
+        // primaryRegression = pricing-api
+        // latencyDeltaMs = 110
+        System.out.println("primaryRegression = " + regression.component());
+        System.out.println("latencyDeltaMs = " + regression.deltaMs());
+        System.out.println("Why it works: the approach compares metrics first and guesses later.");
+        System.out.println("Company lens: Google values methodical debugging and measurable reasoning.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- compare before and after before chasing symptoms");
+        System.out.println("- isolate the biggest regression first");
+        System.out.println("- good debugging answers mention rollback, metrics, and blast radius");
+    }
+```
 
 ## Walkthrough
 
-Mention:
+1. Model component timings.
+2. Compare baselines with the new release.
+3. Inspect the largest regression first.
 
-- compare baseline and current release
-- identify the worst changed dependency
-- decide whether rollback is needed
-- inspect error rate, GC, and downstream timing together
+What to observe:
+
+- primaryRegression = pricing-api
+- latencyDeltaMs = 110
 
 ## Mental Model
 
-Use a small mental model first: identify the input, the rule, and the outcome that latency debug playbook should guarantee.
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-The common mistake is to use latency debug playbook by pattern-matching on syntax instead of understanding the decision behind it.
+- reading latency debug playbook as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-Use it when it makes the code clearer or safer. Avoid it when a simpler direct approach explains the intent better.
+Use it when the problem in the header comment matches the real code you are writing.
+
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether latency debug playbook still behaves the way you expected.
-
-### After That
-
-Go to `ch02_apple_coinbase_jane_street` for correctness, API design, and algorithm-heavy questions.
+Change one line in [LatencyDebugPlaybook.java](LatencyDebugPlaybook.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain latency debug playbook, run the example, and defend when it helps versus when it adds noise.
+After this topic, you should be able to explain why latency debug playbook exists, what problem it solves, and what the runnable file proves.

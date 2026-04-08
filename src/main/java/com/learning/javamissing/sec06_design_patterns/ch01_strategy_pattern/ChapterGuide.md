@@ -85,7 +85,7 @@ The caller depends on the contract, not on one concrete discount formula.
 
 ## Study Order
 
-1. Run [Choosing Behavior With Strategy](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
+1. Run [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
 
 ## What To Notice
 

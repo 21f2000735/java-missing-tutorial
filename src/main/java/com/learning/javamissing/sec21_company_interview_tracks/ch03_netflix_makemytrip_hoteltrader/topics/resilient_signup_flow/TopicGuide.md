@@ -5,86 +5,104 @@ runner: embedded
 estimated: 7 min
 ---
 
-# Resilient Signup Flow
+# resilient signup flow
 
 ## Why This Exists
 
-Netflix-style systems questions usually test whether you can fail in a controlled way.
+Concept: resilient signup flow.
+
+Distributed systems fail in pieces, not all at once.
 
 ## The Pain Before It
 
-Netflix-style systems questions usually test whether you can fail in a controlled way.
+It shows how a signup flow can continue when one non-critical dependency fails.
+
+Signup depends on account creation, billing, and welcome-email steps.
 
 ## Java Creator Mindset
 
-### Interview Angle
-
-Mention:
-
-- critical versus non-critical dependencies
-- fallback or deferred recovery
-- visibility into degraded outcomes
+Decide which steps are critical and which can degrade safely.
 
 ## How You Might Invent It
 
-Treat resilient signup flow as a practical decision tool, not just a term to memorize.
+1. Run critical steps first.
+2. Catch non-critical failure separately.
+3. Return an honest degraded result.
 
 ## Naive Attempt
 
-The first instinct is usually to solve the problem directly with local code and hope the edge cases stay small.
+The naive version is to use resilient signup flow without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-The common mistake is to use resilient signup flow by pattern-matching on syntax instead of understanding the decision behind it.
+It shows how a signup flow can continue when one non-critical dependency fails.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-### Interview Angle
+Decide which steps are critical and which can degrade safely.
 
-Mention:
-
-- critical versus non-critical dependencies
-- fallback or deferred recovery
-- visibility into degraded outcomes
+Run [ResilientSignupFlow.java](ResilientSignupFlow.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [ResilientSignupFlow.java](ResilientSignupFlow.java) and compare the output with the explanation below.
 
-Run the flow and notice that a non-critical dependency fails without destroying the whole user action.
+```java
+    public static void main(String[] args) {
+        SignupResult result = signup();
+
+        // Expected output:
+        // signupStatus = PARTIAL_SUCCESS
+        System.out.println("signupStatus = " + result.status());
+        System.out.println("deferredActions = " + result.deferredActions());
+        System.out.println("Company lens: Netflix-style answers should show graceful degradation, not all-or-nothing panic.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- not every dependency deserves the same failure boundary");
+        System.out.println("- degraded success can be better than total failure");
+        System.out.println("- reliability answers need explicit recovery plans");
+    }
+```
 
 ## Walkthrough
 
-Mention:
+1. Run critical steps first.
+2. Catch non-critical failure separately.
+3. Return an honest degraded result.
 
-- critical versus non-critical dependencies
-- fallback or deferred recovery
-- visibility into degraded outcomes
+What to observe:
+
+- signupStatus = PARTIAL_SUCCESS
 
 ## Mental Model
 
-Use a small mental model first: identify the input, the rule, and the outcome that resilient signup flow should guarantee.
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-The common mistake is to use resilient signup flow by pattern-matching on syntax instead of understanding the decision behind it.
+- reading resilient signup flow as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-Use it when it makes the code clearer or safer. Avoid it when a simpler direct approach explains the intent better.
+Use it when the problem in the header comment matches the real code you are writing.
+
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether resilient signup flow still behaves the way you expected.
-
-### After That
-
-Read `HotelSearchCache` next to move from resilience into travel search performance.
+Change one line in [ResilientSignupFlow.java](ResilientSignupFlow.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain resilient signup flow, run the example, and defend when it helps versus when it adds noise.
+After this topic, you should be able to explain why resilient signup flow exists, what problem it solves, and what the runnable file proves.

@@ -32,9 +32,9 @@ Read the chapter as a small set of related ideas around netflix, MakeMyTrip, Hot
 
 ## Study Order
 
-1. Run [Availability Freshness](topics/availability_freshness/AvailabilityFreshness.java)
-2. Run [Hotel Search Cache](topics/hotel_search_cache/HotelSearchCache.java)
-3. Run [Resilient Signup Flow](topics/resilient_signup_flow/ResilientSignupFlow.java)
+1. Run [availability freshness](topics/availability_freshness/AvailabilityFreshness.java)
+2. Run [hotel search cache](topics/hotel_search_cache/HotelSearchCache.java)
+3. Run [resilient signup flow](topics/resilient_signup_flow/ResilientSignupFlow.java)
 
 ## What To Notice
 

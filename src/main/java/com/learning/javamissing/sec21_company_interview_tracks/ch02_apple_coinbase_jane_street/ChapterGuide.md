@@ -32,9 +32,9 @@ Read the chapter as a small set of related ideas around apple, Coinbase, Jane St
 
 ## Study Order
 
-1. Run [Running Median Prices](topics/running_median_prices/RunningMedianPrices.java)
-2. Run [Safe API Design](topics/safe_api_design/SafeApiDesign.java)
-3. Run [Transfer Idempotency](topics/transfer_idempotency/TransferIdempotency.java)
+1. Run [running median prices](topics/running_median_prices/RunningMedianPrices.java)
+2. Run [safe API design](topics/safe_api_design/SafeApiDesign.java)
+3. Run [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java)
 
 ## What To Notice
 

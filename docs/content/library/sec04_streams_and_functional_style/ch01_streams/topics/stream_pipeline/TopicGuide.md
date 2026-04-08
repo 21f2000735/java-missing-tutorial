@@ -9,176 +9,99 @@ estimated: 9 min
 
 ## Why This Exists
 
-You have a list of data.  
-You want to:
+Concept: Stream Pipeline.
 
-- filter it
-- transform it
-- collect the result
+Many business tasks are really data transformations, and the code should show that clearly.
 
 ## The Pain Before It
 
-You have a list of data.  
-You want to:
+It expresses filtering and mapping as a readable sequence of steps.
 
-- filter it
-- transform it
-- collect the result
-
-The question is not "can Java do this?"  
-The question is "how do I express that flow clearly?"
+An order screen needs only priority items and only the fields needed for the next step.
 
 ## Java Creator Mindset
 
-Use streams when the work is really a data transformation pipeline.
-
-If the code reads naturally as:
-
-1. keep these items
-2. change them this way
-3. collect the result
-
-then a stream is probably a good fit.
+A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.
 
 ## How You Might Invent It
 
-![Stream pipeline single-look visual](./StreamPipelineVisual.svg)
-
-Read the picture left to right:
-
-- raw data goes in
-- filters remove what does not qualify
-- map reshapes what remains
-- collect produces the final answer
+1. Start with a collection.
+2. Add filter and map steps in the same order as the business rule.
+3. Finish with a terminal operation that produces the answer.
 
 ## Naive Attempt
 
-A common mistake is to use streams only because they look modern.
-
-That leads to:
-
-- heavy nesting
-- hard-to-debug side effects
-- collectors that are harder to read than a loop
+The naive version is to use stream pipeline without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-A common mistake is to use streams only because they look modern.
+It expresses filtering and mapping as a readable sequence of steps.
 
-That leads to:
-
-- heavy nesting
-- hard-to-debug side effects
-- collectors that are harder to read than a loop
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Use streams when the work is really a data transformation pipeline.
+A pipeline reads like: start with data, keep what matters, reshape it, finish with a result.
 
-If the code reads naturally as:
-
-1. keep these items
-2. change them this way
-3. collect the result
-
-then a stream is probably a good fit.
+Run [StreamPipeline.java](StreamPipeline.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [StreamPipeline.java](StreamPipeline.java) and compare the output with the explanation below.
 
-Run the Java example and read the pipeline left to right.
-
-### Expected Result
-
-Compare the output with the pipeline stages:
-
-- what got filtered out
-- what got transformed
-- what got collected at the end
+```java
+    public static void main(String[] args) {
+        printOverview();
+        wrongExample();
+        basicExample();
+        betterExample();
+        commonPitfalls();
+        examTrap();
+        interviewQuestion();
+        exercise();
+        solution();
+    }
+```
 
 ## Walkthrough
 
-Streams separate *what should happen* from the low-level loop mechanics.  
-That can make business rules easier to scan, especially for filtering, mapping, grouping, and aggregating.
+1. Start with a collection.
+2. Add filter and map steps in the same order as the business rule.
+3. Finish with a terminal operation that produces the answer.
+
+What to observe:
+
+- longNames = [liam, alex]
+- priorityTotal = 3798
 
 ## Mental Model
 
-![Stream pipeline single-look visual](./StreamPipelineVisual.svg)
-
-Read the picture left to right:
-
-- raw data goes in
-- filters remove what does not qualify
-- map reshapes what remains
-- collect produces the final answer
-
-| Question | Plain loop | Stream pipeline |
-| --- | --- | --- |
-| Best for | explicit step-by-step local state | data transformation flow |
-| Easier to debug line by line | usually yes | sometimes no |
-| Easier to read for filter-map-collect work | sometimes no | often yes |
-| Safer for side effects | clearer because mutation is visible | risky when side effects are hidden in pipeline stages |
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-A common mistake is to use streams only because they look modern.
-
-That leads to:
-
-- heavy nesting
-- hard-to-debug side effects
-- collectors that are harder to read than a loop
+- reading Stream Pipeline as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-| Question | Plain loop | Stream pipeline |
-| --- | --- | --- |
-| Best for | explicit step-by-step local state | data transformation flow |
-| Easier to debug line by line | usually yes | sometimes no |
-| Easier to read for filter-map-collect work | sometimes no | often yes |
-| Safer for side effects | clearer because mutation is visible | risky when side effects are hidden in pipeline stages |
+The gain is clarity or correctness.
 
-Do not teach streams with "always faster" language. The useful rule is:
-
-- stream readability is the first reason to use streams
-- allocation, boxing, and pipeline overhead can matter in hot loops
-- side effects and poor collector choices usually hurt clarity before they hurt speed
-
-If performance is critical, benchmark the real pipeline with realistic data size instead of arguing from style.
-
-When you compare a loop and a stream, keep these conditions the same:
-
-- same input size
-- same result shape
-- warm-up before measuring
-- no logging inside the measured code
-- do not confuse parallel work with simple sequential transformation
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- the code is mainly about transforming data
-- each step can be read left to right
-- the collector clearly shows the desired result
-
-### Avoid It When
-
-- side effects are the main point
-- the pipeline becomes harder to explain than a loop
-- debugging needs very explicit step-by-step local state
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether stream pipeline still behaves the way you expected.
-
-### After That
-
-Open the collectors topic after this one. It is where many stream users become unsure, and it deserves extra attention.
+Change one line in [StreamPipeline.java](StreamPipeline.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-- a stream pipeline is a good fit when the business rule naturally reads as filter, map, then finish
-- stream clarity is more important than stream cleverness
-- performance discussions should start with measurement, not assumption
+After this topic, you should be able to explain why Stream Pipeline exists, what problem it solves, and what the runnable file proves.

@@ -5,160 +5,112 @@ runner: embedded
 estimated: 8 min
 ---
 
-# ArrayList Growth And Lookup
+# ArrayList growth and lookup
 
 ## Why This Exists
 
-Many developers can use `ArrayList`, but fewer can explain why it is usually fast and where it becomes costly.
+Concept: ArrayList growth and lookup.
+
+ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.
 
 ## The Pain Before It
 
-Many developers can use `ArrayList`, but fewer can explain why it is usually fast and where it becomes costly.
+It explains why indexed reads are fast and why occasional resize cost appears during append-heavy workloads.
 
-That gap matters because performance problems often begin with the wrong mental model, not the wrong syntax.
+An order dashboard keeps appending recent orders and later reads them by index.
 
 ## Java Creator Mindset
 
-`ArrayList` stores elements in an array.  
-That gives fast index access, but growth sometimes needs a bigger array and element copying.
+ArrayList is fast because data stays in a backing array, but growth sometimes copies old elements.
 
 ## How You Might Invent It
 
-![ArrayList growth single-look visual](./ArrayListGrowthAndLookupVisual.svg)
-
-The picture tells the whole story:
-
-- items sit in an array
-- index lookup jumps straight to a slot
-- growth occasionally copies old items into a larger array
+1. Append items while estimating resize-copy work.
+2. Read one item by index.
+3. Compare cheap common appends with occasional expensive growth.
 
 ## Naive Attempt
 
-The wrong mental model is "every append is always O(1) with no caveat."
-
-The better mental model is:
-
-- most appends are cheap
-- resizing is occasional
-- average append cost stays good because the expensive resize does not happen every time
+The naive version is to use arraylist growth and lookup without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-The wrong mental model is "every append is always O(1) with no caveat."
+It explains why indexed reads are fast and why occasional resize cost appears during append-heavy workloads.
 
-The better mental model is:
-
-- most appends are cheap
-- resizing is occasional
-- average append cost stays good because the expensive resize does not happen every time
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-`ArrayList` stores elements in an array.  
-That gives fast index access, but growth sometimes needs a bigger array and element copying.
+ArrayList is fast because data stays in a backing array, but growth sometimes copies old elements.
+
+Run [ArrayListGrowthAndLookup.java](ArrayListGrowthAndLookup.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [ArrayListGrowthAndLookup.java](ArrayListGrowthAndLookup.java) and compare the output with the explanation below.
 
-Run the example and focus on these ideas:
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: ArrayList internals");
+        System.out.println("Problem: appends look cheap, but hidden resize work still exists.");
+        System.out.println();
 
-- indexed lookup
-- append behavior
-- resizing cost
+        List<String> recentOrders = new ArrayList<>();
+        int copiedDuringGrowth = appendWithEstimatedCopyWork(recentOrders, 12);
 
-### Expected Result
-
-The printed output should make it clear that:
-
-- lookup by index is direct
-- appending is usually cheap
-- occasional growth has a larger one-time cost
+        // Expected output:
+        // itemAtIndex4 = order-5
+        // estimatedCopiesDuringGrowth = 10
+        System.out.println("itemAtIndex4 = " + recentOrders.get(4));
+        System.out.println("estimatedCopiesDuringGrowth = " + copiedDuringGrowth);
+        System.out.println("Why it works: index access is direct, but resizing copies old elements into a larger array.");
+        System.out.println("Common mistake: saying append is always free instead of amortized.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- index lookup is fast because ArrayList stores elements in a contiguous backing array");
+        System.out.println("- growth is usually cheap but occasional resize copies old elements");
+        System.out.println("- append is amortized O(1), not magically free");
+    }
+```
 
 ## Walkthrough
 
-`ArrayList` stores elements in an array.  
-That gives fast index access, but growth sometimes needs a bigger array and element copying.
+1. Append items while estimating resize-copy work.
+2. Read one item by index.
+3. Compare cheap common appends with occasional expensive growth.
+
+What to observe:
+
+- itemAtIndex4 = order-5
+- estimatedCopiesDuringGrowth = 10
 
 ## Mental Model
 
-![ArrayList growth single-look visual](./ArrayListGrowthAndLookupVisual.svg)
-
-The picture tells the whole story:
-
-- items sit in an array
-- index lookup jumps straight to a slot
-- growth occasionally copies old items into a larger array
-
-| Need | `ArrayList` | `LinkedList` |
-| --- | --- | --- |
-| Read by index | strong fit | weak fit |
-| Append often | strong fit | fine, but rarely worth the tradeoff |
-| Insert in middle often | can be costly | can help if you already have the node position |
-| Cache-friendly iteration | usually better | usually worse |
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-The wrong mental model is "every append is always O(1) with no caveat."
-
-The better mental model is:
-
-- most appends are cheap
-- resizing is occasional
-- average append cost stays good because the expensive resize does not happen every time
+- reading ArrayList growth and lookup as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-| Need | `ArrayList` | `LinkedList` |
-| --- | --- | --- |
-| Read by index | strong fit | weak fit |
-| Append often | strong fit | fine, but rarely worth the tradeoff |
-| Insert in middle often | can be costly | can help if you already have the node position |
-| Cache-friendly iteration | usually better | usually worse |
+The gain is clarity or correctness.
 
-The key metric is not "does resize happen?"  
-It is "how often does the expensive resize happen compared with cheap appends?"
-
-That is why the right phrase is:
-
-- append is amortized `O(1)`
-- indexed lookup is `O(1)`
-- middle insertion is often `O(n)`
-
-If you measure `ArrayList`, watch these operations separately:
-
-- append at end
-- read by index
-- insert in middle
-- remove in middle
-
-Those four numbers teach more than one generic "ArrayList benchmark" ever will.
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- order matters
-- index-based lookup matters
-- duplicates are fine
-- append-heavy workloads are common
-
-### Avoid It When
-
-- frequent middle insertions dominate
-- uniqueness is the main requirement
-- key-based lookup is the real problem
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether arraylist growth and lookup still behaves the way you expected.
-
-### After That
-
-Read the HashMap buckets and collisions topic next. Together, these two topics form the base of practical Java collection judgment.
+Change one line in [ArrayListGrowthAndLookup.java](ArrayListGrowthAndLookup.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-- `ArrayList` is fast because it uses an array, not because it is magically optimized for everything
-- occasional resize cost is the tradeoff behind usually-cheap append
-- complexity language becomes much easier once you connect it to actual storage shape
+After this topic, you should be able to explain why ArrayList growth and lookup exists, what problem it solves, and what the runnable file proves.

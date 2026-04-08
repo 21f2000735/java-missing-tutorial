@@ -12,107 +12,102 @@ visual_asset: RuntimeLayersVisual.svg
 
 ## Why This Exists
 
-This topic exists because JVM, JRE, and JDK are often repeated together but rarely separated clearly.
+Concept: Runtime Layers.
 
 ## The Pain Before It
 
-Many answers stay too vague:
 
-- JDK and JVM get treated as the same thing
-- runtime and toolchain get mixed together
-- learners can run Java but cannot explain what each layer is doing
 
 ## Java Creator Mindset
 
-Separate the responsibility before memorizing the names.
+Make the rule behind runtime layers obvious so the safer choice is also the clearer one.
 
 ## How You Might Invent It
 
-If Java had one giant unlabeled runtime box, developers would constantly mix up:
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
-- compiling code
-- packaging tools
-- bytecode execution
-
-That is why the ecosystem is easier to understand as layers.
-
-![JDK, JRE, and JVM layers](RuntimeLayersVisual.svg)
-
-What to notice:
-
-- the JDK is the outer development layer
-- the JVM is the execution engine inside the runtime story
-- the layers answer different questions
+![Runtime Layers visual](./RuntimeLayersVisual.svg)
 
 ## Naive Attempt
 
-The naive answer is:
-
-"The JVM is Java."
+The naive version is to use runtime layers without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-That breaks as soon as someone asks where `javac` lives or why an environment may need tools for development but not for every runtime use case.
+If you ignore the rule behind runtime layers, the example becomes harder to trust.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Use one clean mapping:
+Use the Java file to make the rule behind runtime layers explicit and repeatable.
 
-- JDK = tools plus runtime pieces for development
-- JRE = runtime pieces needed to run Java programs
-- JVM = engine that executes bytecode
+Run [RuntimeLayers.java](RuntimeLayers.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [RuntimeLayers.java](RuntimeLayers.java) and compare the output with the explanation below.
 
-Run the example and read each printed line as one responsibility layer, not as a synonym list.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: JVM, JRE, and JDK answer different questions.");
+        System.out.println("Real-world problem: a new developer can run code in the IDE but cannot explain what the runtime and toolchain actually are.");
+        System.out.println();
 
-### Expected Result
-
-- `JVM = executes bytecode`
-- `JRE = runtime pieces needed to run Java programs`
-- `JDK = tools + runtime for developing Java`
+        // Expected output:
+        // JVM = executes bytecode
+        // JRE = runtime pieces needed to run Java programs
+        // JDK = tools + runtime for developing Java
+        System.out.println("JVM = executes bytecode");
+        System.out.println("JRE = runtime pieces needed to run Java programs");
+        System.out.println("JDK = tools + runtime for developing Java");
+        System.out.println("Why it matters: the JDK contains tools like javac, while the JVM is the execution engine inside the larger runtime story.");
+    }
+```
 
 ## Walkthrough
 
-The code is simple because the concept is separation, not algorithmic complexity.
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
-The important move is to connect each printed line to one practical question:
+What to observe:
 
-- building?
-- running?
-- executing bytecode?
+- Check whether the output matches the rule in the comment header.
+- Check whether the edge case you changed still behaves as expected.
 
 ## Mental Model
 
-Think "toolchain outside, execution engine inside."
+![Runtime Layers visual](./RuntimeLayersVisual.svg)
+
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-- using JVM as shorthand for the full Java development stack
-- memorizing the acronyms without mapping each one to a responsibility
+- reading Runtime Layers as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-The terminology adds complexity, but it avoids much bigger confusion about what Java needs at build time versus runtime.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- answering Java environment questions
-- explaining development versus execution responsibilities
-- preparing for JVM interview basics
-
-### Avoid It When
-
-- you are giving one fuzzy definition for all three terms
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one input in [RuntimeLayers.java](RuntimeLayers.java), rerun it, and write down what changed.
+Change one line in [RuntimeLayers.java](RuntimeLayers.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain JDK, JRE, and JVM as layers with different jobs rather than as interchangeable names.
+After this topic, you should be able to explain why Runtime Layers exists, what problem it solves, and what the runnable file proves.

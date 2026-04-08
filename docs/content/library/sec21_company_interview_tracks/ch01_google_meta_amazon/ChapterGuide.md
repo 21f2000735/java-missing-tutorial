@@ -36,9 +36,9 @@ Read the chapter as a small set of related ideas around google, Meta, Amazon, no
 
 ## Study Order
 
-1. Run [Idempotent Reservations](topics/idempotent_reservations/IdempotentReservations.java)
-2. Run [Latency Debug Playbook](topics/latency_debug_playbook/LatencyDebugPlaybook.java)
-3. Run [Search Autocomplete Design](topics/search_autocomplete_design/SearchAutocompleteDesign.java)
+1. Run [idempotent reservations](topics/idempotent_reservations/IdempotentReservations.java)
+2. Run [latency debug playbook](topics/latency_debug_playbook/LatencyDebugPlaybook.java)
+3. Run [search autocomplete design](topics/search_autocomplete_design/SearchAutocompleteDesign.java)
 
 ## What To Notice
 

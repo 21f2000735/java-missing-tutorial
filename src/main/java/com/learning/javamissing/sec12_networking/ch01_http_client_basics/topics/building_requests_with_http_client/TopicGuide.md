@@ -9,97 +9,102 @@ estimated: 7 min
 
 ## Why This Exists
 
-Modern Java applications call external services all the time.
+Concept: Building Requests With HttpClient.
 
 ## The Pain Before It
 
-Modern Java applications call external services all the time.
 
-Even the basic request should still read clearly:
-
-- where are we calling?
-- what method are we using?
-- what format do we expect back?
 
 ## Java Creator Mindset
 
-Build the request in one small readable block:
-
-- URI
-- headers
-- method
-
-That keeps the outbound call easy to review.
+Make the rule behind building requests with httpclient obvious so the safer choice is also the clearer one.
 
 ## How You Might Invent It
 
-Build the request in one small readable block:
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
 ## Naive Attempt
 
-Scatter request details across many lines or helper methods so the actual HTTP intent is hard to see.
+The naive version is to use building requests with httpclient without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-Scatter request details across many lines or helper methods so the actual HTTP intent is hard to see.
+If you ignore the rule behind building requests with httpclient, the example becomes harder to trust.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Build the request in one small readable block:
+Use the Java file to make the rule behind building requests with httpclient explicit and repeatable.
 
-- URI
-- headers
-- method
-
-That keeps the outbound call easy to review.
+Run [BuildingRequestsWithHttpClient.java](BuildingRequestsWithHttpClient.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [BuildingRequestsWithHttpClient.java](BuildingRequestsWithHttpClient.java) and compare the output with the explanation below.
 
-Run the example and check the request method and host.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: build a clear outbound HTTP request");
+        System.out.println("Real-world problem: a Java service calls a shipping-rate API.");
+        System.out.println();
 
-### Expected Result
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.example.com/shipping/rates"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
 
-- method is `GET`
-- host is `api.example.com`
+        // Expected output:
+        // method = GET
+        // host = api.example.com
+        System.out.println("method = " + request.method());
+        System.out.println("host = " + request.uri().getHost());
+        System.out.println("Why it works: the request object collects HTTP intent before any network call is made.");
+    }
+```
 
 ## Walkthrough
 
-The request object captures HTTP intent before the call happens.  
-That improves readability and makes future changes safer.
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
+
+What to observe:
+
+- Check whether the output matches the rule in the comment header.
+- Check whether the edge case you changed still behaves as expected.
 
 ## Mental Model
 
-Use a small mental model first: identify the input, the rule, and the outcome that building requests with httpclient should guarantee.
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-Scatter request details across many lines or helper methods so the actual HTTP intent is hard to see.
+- reading Building Requests With HttpClient as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-The gain is usually safety or clarity. The cost is usually more structure, more rules, or less flexibility in the wrong place.
+The gain is clarity or correctness.
+
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- you want a clear standard-library HTTP client
-- outbound service calls are part of your everyday code
-
-### Avoid It When
-
-- request-building is so abstracted that readers cannot tell what the call is doing
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether building requests with httpclient still behaves the way you expected.
-
-### After That
-
-Read exception handling and retry-related topics next, because networking and failure handling are tightly connected.
+Change one line in [BuildingRequestsWithHttpClient.java](BuildingRequestsWithHttpClient.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain building requests with httpclient, run the example, and defend when it helps versus when it adds noise.
+After this topic, you should be able to explain why Building Requests With HttpClient exists, what problem it solves, and what the runnable file proves.

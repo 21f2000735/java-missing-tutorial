@@ -12,106 +12,102 @@ visual_asset: GcStrategiesVisual.svg
 
 ## Why This Exists
 
-This topic exists because "Which garbage collector is best?" is the wrong first JVM question.
+Concept: GC Strategies.
 
 ## The Pain Before It
 
-Learners hear collector names such as:
 
-- G1
-- ZGC
-- Shenandoah
-
-but cannot explain what tradeoff each name is trying to optimize.
 
 ## Java Creator Mindset
 
-Start with runtime goals, not collector brands.
+Make the rule behind gc strategies obvious so the safer choice is also the clearer one.
 
 ## How You Might Invent It
 
-One application wants balanced server defaults. Another wants very low pause time. Another cares about concurrent compaction behavior.
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
-That is why one fixed collector is not enough.
-
-![GC strategy tradeoff map](GcStrategiesVisual.svg)
-
-What to notice:
-
-- G1 is a broad default for many server workloads
-- ZGC pushes harder toward very low pauses
-- Shenandoah also focuses on low pauses with concurrent compaction emphasis
+![GC Strategies visual](./GcStrategiesVisual.svg)
 
 ## Naive Attempt
 
-The naive answer is:
-
-"Use the newest collector. It must be the best."
+The naive version is to use gc strategies without checking what rule it is supposed to protect.
 
 ## Why It Breaks
 
-Collector choice is workload-specific. A low-pause collector is not automatically the best choice for every throughput goal or operational constraint.
+If you ignore the rule behind gc strategies, the example becomes harder to trust.
+
+Edge cases usually show the bug first.
 
 ## Final Java Solution
 
-Use collector names as tradeoff labels:
+Use the Java file to make the rule behind gc strategies explicit and repeatable.
 
-- balanced default
-- low pause focus
-- concurrent compaction and low pause focus
+Run [GcStrategies.java](GcStrategies.java) as the source of truth for the example.
 
 ## Code
 
-### Run It
+Run [GcStrategies.java](GcStrategies.java) and compare the output with the explanation below.
 
-Run the example and read each collector line as a runtime goal summary, not as a tuning guide.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: different garbage collectors optimize for different tradeoffs.");
+        List<String> collectors = List.of("G1", "ZGC", "Shenandoah");
 
-### Expected Result
-
-- `G1 -> balanced default for many server workloads`
-- `ZGC -> very low pause time focus`
-- `Shenandoah -> low pause time with concurrent compaction focus`
+        // Expected output:
+        // G1 -> balanced default for many server workloads
+        // ZGC -> very low pause time focus
+        // Shenandoah -> low pause time with concurrent compaction focus
+        System.out.println("G1 -> balanced default for many server workloads");
+        System.out.println("ZGC -> very low pause time focus");
+        System.out.println("Shenandoah -> low pause time with concurrent compaction focus");
+        System.out.println("collector count = " + collectors.size());
+        System.out.println("Use this when: you need a first mental model before reading deeper GC tuning material.");
+    }
+```
 
 ## Walkthrough
 
-The code is intentionally simple. The important idea is the comparison:
+1. Run the Java file once without changing it.
+2. Change one input or one line.
+3. Compare the new output with the explanation.
 
-- same problem category
-- different optimization priorities
+What to observe:
+
+- Check whether the output matches the rule in the comment header.
+- Check whether the edge case you changed still behaves as expected.
 
 ## Mental Model
 
-Garbage collectors are strategy choices for reclaiming memory under different latency and throughput pressures.
+![GC Strategies visual](./GcStrategiesVisual.svg)
+
+- What rule is being enforced?
+- What changes when you change one input?
+- What does the output prove about the rule?
 
 ## Mistakes
 
-- asking for one universal best collector
-- repeating collector names without explaining the workload goal
-- treating GC as one fixed algorithm
+- reading GC Strategies as syntax instead of a rule
+- changing more than one thing at once
+- skipping the runnable file and only reading the prose
 
 ## Tradeoffs
 
-Collectors trade among:
+The gain is clarity or correctness.
 
-- pause time
-- throughput
-- runtime complexity
+The cost is usually one more rule, one more API, or one more concept to remember.
 
 ## Use / Avoid
 
-### Use It When
+Use it when the problem in the header comment matches the real code you are writing.
 
-- building first-pass JVM interview intuition
-- comparing latency-sensitive and throughput-oriented workloads
-
-### Avoid It When
-
-- pretending one collector name solves every runtime problem
+Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
 
 ## Practice
 
-Change one input in [GcStrategies.java](GcStrategies.java), rerun it, and write down what changed.
+Change one line in [GcStrategies.java](GcStrategies.java), rerun it, and write down what changed before and after the edit.
 
 ## Summary
 
-After this topic, you should be able to explain collector choice as a tradeoff discussion rather than as brand memorization.
+After this topic, you should be able to explain why GC Strategies exists, what problem it solves, and what the runnable file proves.
