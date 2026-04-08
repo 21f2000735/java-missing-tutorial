@@ -1,36 +1,37 @@
-import { marked } from 'marked';
-import {
-  badgeClassForTone,
-  bulletItems,
-  findGuideSection,
-  inferTopicMode,
-  modePresentation,
-  parseGuide,
-  resolveVersionMeta,
-  scoreLabel,
-  statusTone,
-  truncateText
-} from '../../lib/content-helpers.js';
-import { MarkdownBlock } from '../content/MarkdownContent.jsx';
+import { badgeClassForTone, bulletItems, inferTopicMode, modePresentation, parseGuide, resolveVersionMeta, scoreLabel, statusTone, truncateText } from '../../lib/content-helpers.js';
 import {
   FeedbackBar,
   HeaderPanel,
-  InPageToc,
   PageLayout,
   ReadingStateBar,
   BulletList
 } from '../common/AppChrome.jsx';
 
-function chunkIntoGroups(items, groupCount = 3) {
+function splitIntoGroups(items, maxGroups = 3) {
   if (!items.length) {
     return [];
   }
-  const size = Math.ceil(items.length / groupCount);
+  const groupCount = Math.min(maxGroups, Math.max(1, Math.ceil(items.length / 3)));
+  const base = Math.floor(items.length / groupCount);
+  let remainder = items.length % groupCount;
   const groups = [];
-  for (let index = 0; index < items.length; index += size) {
+  let index = 0;
+  for (let groupIndex = 0; groupIndex < groupCount; groupIndex += 1) {
+    const size = base + (remainder > 0 ? 1 : 0);
+    remainder -= remainder > 0 ? 1 : 0;
     groups.push(items.slice(index, index + size));
+    index += size;
   }
-  return groups;
+  return groups.filter((group) => group.length);
+}
+
+function practiceItems(raw) {
+  const items = bulletItems(raw || '');
+  return items.length ? items : [
+    'Run the first topic again and explain the behavior out loud.',
+    'Change one assumption and note what stays stable.',
+    'Move to the next chapter only after the rule is clear.'
+  ];
 }
 
 function ChapterPager({ previousChapter, nextChapter, isCompleted, onToggleDone }) {
@@ -83,9 +84,8 @@ function TopicPreviewCard({ section, chapter, topic }) {
           <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>{versionMeta.display}</span>
         ) : null}
       </div>
-      <h3 className="h5 mb-2">{topic.title}</h3>
-      <p className="muted-copy mb-3">{summary}</p>
-      {topic.preview.storyHook ? <div className="topic-story-hook mb-2">{topic.preview.storyHook}</div> : null}
+      <h3 className="h6 mb-2">{topic.title}</h3>
+      <p className="muted-copy mb-2">{summary}</p>
       <div className="topic-kicker">Run the file, observe one change, then move on.</div>
     </a>
   );
@@ -98,14 +98,9 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
   const previousChapter = chapterIndex > 0 ? manifest.chapterOrder[chapterIndex - 1] : null;
   const nextChapter = chapterIndex >= 0 && chapterIndex < manifest.chapterOrder.length - 1 ? manifest.chapterOrder[chapterIndex + 1] : null;
   const isChapterDone = readingState.completedChapters.includes(routeKey);
-  const problem = findGuideSection(guide, ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story']);
-  const practice = findGuideSection(guide, ['Practice', 'Try This', 'Exercise']);
-  const topicGroups = chunkIntoGroups(data.chapter.topics, 3);
-  const chapterToc = [
-    { href: '#start-with-examples', label: 'Start With Examples' },
-    { href: '#chapter-guide', label: 'Chapter Guide' },
-    { href: '#practice', label: 'Practice' }
-  ];
+  const problem = guide.sections.find((section) => ['What Problem This Chapter Solves', 'The Problem', 'Mini Case Study', 'The Story'].includes(section.title));
+  const practice = guide.sections.find((section) => ['Practice', 'Try This', 'Exercise'].includes(section.title));
+  const topicGroups = splitIntoGroups(data.chapter.topics, 3);
 
   return (
     <PageLayout
@@ -113,7 +108,7 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
         <HeaderPanel
           title={data.chapter.title}
           eyebrow={`${data.section.title} · Chapter`}
-          summary={truncateText(problem?.plain || guide.intro || 'Use this chapter to understand the concept, then run the topic files.', 220)}
+          summary={truncateText(problem?.plain || guide.intro || 'Use this chapter to understand the concept, then run the topic files.', 200)}
           sourcePath={data.chapter.guide.sourcePath}
           actions={(
             <>
@@ -127,9 +122,9 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
     >
       <ReadingStateBar routeKey={routeKey} {...readingState} />
 
-      <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
+      <div className="content-layout content-layout-single">
         <div className="content-main">
-          <div id="start-with-examples" className="content-card mb-4">
+          <div className="content-card mb-4">
             <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
               <h2 className="page-title mb-0">Start With Examples</h2>
               <div className="d-flex flex-wrap gap-2">
@@ -139,7 +134,7 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
             </div>
             <div className="section-flow-grid">
               {topicGroups.map((group, index) => (
-                <div className="content-card section-path-card chapter-topic-group" key={`${data.chapter.slug}-group-${index}`}>
+                <div className="section-path-card" key={`${data.chapter.slug}-group-${index}`}>
                   <div className="d-flex justify-content-between align-items-center gap-2 mb-3">
                     <div>
                       <div className="eyebrow mb-1">Group {index + 1}</div>
@@ -157,15 +152,7 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
             </div>
           </div>
 
-          <div id="chapter-guide" className="content-card mb-4">
-            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-              <h2 className="page-title mb-0">Chapter Guide</h2>
-              <span className="badge rounded-pill badge-soft">Read this after the first example</span>
-            </div>
-            <MarkdownBlock html={marked.parse(data.guideRaw)} manifest={manifest} contentPath={data.chapter.guide.contentPath} />
-          </div>
-
-          <div id="practice" className="content-card mb-4">
+          <div className="content-card mb-4">
             <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
               <h2 className="page-title mb-0">Practice</h2>
               <span className="badge rounded-pill badge-soft">2 to 4 concrete tasks</span>
@@ -173,14 +160,14 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
             <div className="practice-grid">
               <div className="practice-card">
                 <div className="eyebrow mb-2">Try this</div>
-                <BulletList items={bulletItems(practice?.raw || '')} />
+                <BulletList items={practiceItems(practice?.raw)} />
               </div>
               <div className="practice-card">
-                <div className="eyebrow mb-2">Move Next</div>
+                <div className="eyebrow mb-2">Quick Check</div>
                 <BulletList items={[
-                  'Run the first topic again and explain the behavior out loud.',
-                  'Change one assumption and note what stays stable.',
-                  'Move to the next chapter only after the rule is clear.'
+                  'Can you explain the problem in one sentence?',
+                  'Can you describe what changes when the assumption changes?',
+                  'Can you name the rule before moving on?'
                 ]} />
               </div>
             </div>
@@ -193,12 +180,6 @@ export default function ChapterPage({ manifest, data, readingState, feedbackStat
             onToggleDone={() => readingState.toggleChapterCompleted(routeKey)}
           />
         </div>
-
-        {!uiPreferences.readingMode ? (
-          <div className="content-side">
-            <InPageToc items={chapterToc} />
-          </div>
-        ) : null}
       </div>
 
       <FeedbackBar routeKey={routeKey} feedbackState={feedbackState} />

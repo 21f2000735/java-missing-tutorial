@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import {
   badgeClassForTone,
+  bulletItems,
   effectiveRunner,
   extractTopicLessonFlow,
   firstNonEmpty,
   inferTopicMode,
   modePresentation,
-  normalizeInterviewQuestions,
   resolveVersionMeta,
   statusTone,
   titleFromSlug,
   truncateText
 } from '../../lib/content-helpers.js';
 import { PLAYGROUND_LINKS } from '../../lib/site-data.js';
-import { CodeBlock, LessonSectionContent } from '../content/MarkdownContent.jsx';
+import { CodeBlock } from '../content/MarkdownContent.jsx';
 import {
   BulletList,
   FeedbackBar,
@@ -108,7 +108,12 @@ function TopicPager({ previousTopic, nextTopic, chapterRoute }) {
   );
 }
 
-export default function TopicPage({ manifest, data, readingState, feedbackState, uiPreferences }) {
+function compactBullets(section, fallback = []) {
+  const items = bulletItems(section?.raw || '');
+  return items.length ? items : fallback;
+}
+
+export default function TopicPage({ data, readingState, feedbackState, uiPreferences }) {
   const topicSummary = data.preview;
   const lessonFlow = extractTopicLessonFlow(data.lessonRaw);
   const topicRunner = effectiveRunner(topicSummary, data.lessonMeta);
@@ -117,23 +122,20 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
   const routeKey = `#topic/${data.section.slug}/${data.chapter.slug}/${data.topic.slug}`;
   const conceptLabel = topicSummary.concept || data.topic.concept || titleFromSlug(data.topic.slug);
   const topicSummaryLine = firstNonEmpty(
-    lessonFlow.whyExists?.plain,
-    lessonFlow.pain?.plain,
+    lessonFlow.concept?.plain,
     topicSummary.problem,
     topicSummary.realWorld,
     topicSummary.mentalModel,
     'Understand the pressure first, then jump into the Java code.'
   );
-  const ideaSummary = firstNonEmpty(
-    lessonFlow.finalSolution?.plain,
-    lessonFlow.creatorMindset?.plain,
+  const whyItMatters = firstNonEmpty(
+    lessonFlow.whyItMatters?.plain,
     topicSummary.whyThisWorks,
-    topicSummary.mentalModel,
     topicSummary.why,
-    'The Java shape should feel like the natural answer to the problem.'
+    'The rule matters because it keeps the design correct when the assumption changes.'
   );
   const ruleSummary = firstNonEmpty(
-    lessonFlow.summary?.plain,
+    lessonFlow.rule?.plain,
     topicSummary.whyThisWorks,
     topicSummary.mentalModel,
     'Use the rule that keeps the code predictable when the assumption changes.'
@@ -141,12 +143,36 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
   const topicIndex = typeof data.topic.topicIndex === 'number' ? data.topic.topicIndex : data.chapter.topics.findIndex((item) => item.slug === data.topic.slug);
   const previousTopic = topicIndex > 0 ? data.chapter.topics[topicIndex - 1] : null;
   const nextTopic = topicIndex >= 0 && topicIndex < data.chapter.topics.length - 1 ? data.chapter.topics[topicIndex + 1] : null;
-  const interviewQuestions = normalizeInterviewQuestions(data.lessonMeta.interviewQ);
 
-  const steps = [
-    { title: 'See the pressure', detail: truncateText(firstNonEmpty(lessonFlow.pain?.plain, topicSummary.problem, topicSummary.realWorld, topicSummary.storyHook, topicSummaryLine), 130) },
-    { title: 'Run the example', detail: truncateText(firstNonEmpty(topicSummary.howToCode, lessonFlow.walkthrough?.plain, 'Run the code, then change one assumption and compare the output.'), 130) },
-    { title: 'Lock the rule', detail: truncateText(ruleSummary, 130) }
+  const blocks = [
+    {
+      title: 'What happens',
+      items: compactBullets(lessonFlow.whatHappens, ['Run the example and compare the output with the rule.'])
+    },
+    {
+      title: 'What stays stable',
+      items: compactBullets(lessonFlow.whatStaysStable, ['The core rule stays the same even when the input changes.'])
+    },
+    {
+      title: 'What changes',
+      items: compactBullets(lessonFlow.whatChanges, ['Change one assumption and see how the output changes.'])
+    },
+    {
+      title: 'Why it matters',
+      items: [whyItMatters]
+    },
+    {
+      title: 'Rule',
+      items: [`👉 Rule: ${ruleSummary}`]
+    },
+    {
+      title: 'Try this',
+      items: compactBullets(lessonFlow.tryThis, [
+        'Replace the main assumption with a smaller one and rerun the file.',
+        'Change one line and note what stays stable.',
+        'Explain the result in one sentence before moving on.'
+      ])
+    }
   ];
 
   return (
@@ -155,7 +181,7 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
         <HeaderPanel
           title={data.topic.title}
           eyebrow={`${data.section.title} · ${data.chapter.title}`}
-          summary={truncateText(topicSummaryLine, 220)}
+          summary={truncateText(topicSummaryLine, 200)}
           sourcePath={data.topic.sourcePath}
           actions={(
             <>
@@ -168,61 +194,24 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
     >
       <ReadingStateBar routeKey={routeKey} {...readingState} />
 
-      <div className={`content-layout ${uiPreferences.readingMode ? 'content-layout-reading' : ''}`}>
+      <div className="content-layout content-layout-single">
         <div className="content-main">
-          <div id="start-here" className="content-card mb-4">
+          <div className="content-card mb-4">
             <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-              <h2 className="page-title mb-0">Start Here</h2>
-              <span className="badge rounded-pill badge-soft">Read → Run → Observe</span>
-            </div>
-            <div className="learning-focus mb-3">
-              <div className="eyebrow mb-2">Concept</div>
-              <h3 className="h4 mb-2">{conceptLabel}</h3>
-              <p className="mb-0">{topicSummaryLine}</p>
-            </div>
-            <div className="learning-step-grid">
-              {steps.map((step, index) => (
-                <div className="learning-step-card" key={step.title}>
-                  <div className="learning-step-number">{index + 1}</div>
-                  <div>
-                    <h3 className="h6 mb-2">{step.title}</h3>
-                    <p className="mb-0 muted-copy">{step.detail}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div id="source-code" className="content-card mb-4">
-            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-              <h2 className="page-title mb-0">Try The Code</h2>
-              <span className="badge rounded-pill badge-soft">See the Java shape early</span>
-            </div>
-            <div className="topic-meta mb-3">
-              <span className="badge rounded-pill badge-soft">{conceptLabel}</span>
-              <span className="badge rounded-pill badge-soft">Java Source</span>
-              {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
-              <span className={`badge rounded-pill ${lessonModeUi.badgeClass}`}>Mode: {lessonModeUi.label}</span>
-              {versionMeta.display ? <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>{versionMeta.display}</span> : null}
-            </div>
-            <div className="topic-brief-grid mb-3">
-              <div className="topic-brief-card">
-                <div className="eyebrow mb-2">What to observe</div>
-                <p className="mb-0">{topicSummary.expectedOutput || 'Run the code, compare the output, and note what changes when you tweak one line.'}</p>
-              </div>
-              <div className="topic-brief-card">
-                <div className="eyebrow mb-2">Why it matters</div>
-                <p className="mb-0">{ideaSummary}</p>
-              </div>
-            </div>
-            <div className="code-cta mb-3">
               <div>
-                <div className="eyebrow mb-1">Copy Or Try This Code</div>
-                <div className="muted-copy mb-0">Copy the snippet or open it in a playground, then compare the output with the rule.</div>
+                <div className="eyebrow mb-2">Concept</div>
+                <h2 className="page-title mb-0">{conceptLabel}</h2>
               </div>
-              <TopicActionButtons code={data.raw} runner={topicRunner} copyLabel="Copy Code Snippet" />
+              <div className="d-flex flex-wrap gap-2">
+                <span className="badge rounded-pill badge-soft">{lessonModeUi.label}</span>
+                {versionMeta.display ? <span className={`badge rounded-pill ${badgeClassForTone(statusTone(versionMeta.status))}`}>{versionMeta.display}</span> : null}
+                {topicSummary.previewRequired ? <span className="badge rounded-pill badge-warning-soft">Preview-sensitive</span> : null}
+              </div>
             </div>
-            <div className="code-panel">
+
+            <p className="mb-3 muted-copy">{topicSummaryLine}</p>
+
+            <div className="code-panel mb-3">
               <div className="code-toolbar">
                 <div>
                   <div className="fw-semibold">{data.topic.title}</div>
@@ -231,62 +220,17 @@ export default function TopicPage({ manifest, data, readingState, feedbackState,
               </div>
               <CodeBlock code={data.raw} />
             </div>
-          </div>
 
-          <div className="topic-insight-grid mb-4">
-            <div className="content-card">
-              <div className="eyebrow mb-2">What happens</div>
-              <div className="muted-copy mb-0">
-                <LessonSectionContent section={lessonFlow.walkthrough || lessonFlow.summary} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-              </div>
-            </div>
-            <div className="content-card">
-              <div className="eyebrow mb-2">What stays stable</div>
-              <div className="muted-copy mb-0">
-                <LessonSectionContent section={lessonFlow.mentalModel || lessonFlow.creatorMindset} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-              </div>
-            </div>
-            <div className="content-card">
-              <div className="eyebrow mb-2">What changes</div>
-              <div className="muted-copy mb-0">
-                <LessonSectionContent section={lessonFlow.naiveAttempt || lessonFlow.whyBreaks} manifest={manifest} contentPath={data.topic.guide?.contentPath} />
-              </div>
-            </div>
-          </div>
-
-          <div className="content-card mb-4">
-            <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-              <h2 className="page-title mb-0">Rule</h2>
-              <span className="badge rounded-pill badge-soft">Keep the design correct</span>
-            </div>
-            <p className="mb-0">{ruleSummary}</p>
-          </div>
-
-          {topicSummary.tryThisNext ? (
-            <div className="content-card mb-4">
-              <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
-                <h2 className="page-title mb-0">Try This</h2>
-                <span className="badge rounded-pill badge-soft">2 to 4 concrete tasks</span>
-              </div>
-              <p className="mb-0 muted-copy">{topicSummary.tryThisNext}</p>
-            </div>
-          ) : null}
-
-          {interviewQuestions.length ? (
-            <div className="content-card mb-4">
-              <details>
-                <summary className="eyebrow mb-3">Interview Questions</summary>
-                <div className="interview-question-list">
-                  {interviewQuestions.map((item) => (
-                    <div className="interview-question-item" key={item.question}>
-                      <div className="fw-semibold mb-2">{item.question}</div>
-                      <div className="muted-copy mb-0">{item.answer || 'Answer not added yet.'}</div>
-                    </div>
-                  ))}
+            <div className="topic-brief-grid mb-3">
+              {blocks.map((block) => (
+                <div className="topic-brief-card" key={block.title}>
+                  <div className="eyebrow mb-2">{block.title}</div>
+                  <BulletList items={block.items} />
                 </div>
-              </details>
+              ))}
             </div>
-          ) : null}
+
+          </div>
 
           <TopicPager
             previousTopic={previousTopic}

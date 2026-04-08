@@ -10,16 +10,22 @@ import {
   PageLayout
 } from '../common/AppChrome.jsx';
 
-function chunkIntoGroups(items, groupCount = 3) {
+function splitIntoGroups(items, maxGroups = 3) {
   if (!items.length) {
     return [];
   }
-  const size = Math.ceil(items.length / groupCount);
+  const groupCount = Math.min(maxGroups, Math.max(1, Math.ceil(items.length / 3)));
+  const base = Math.floor(items.length / groupCount);
+  let remainder = items.length % groupCount;
   const groups = [];
-  for (let index = 0; index < items.length; index += size) {
+  let index = 0;
+  for (let groupIndex = 0; groupIndex < groupCount; groupIndex += 1) {
+    const size = base + (remainder > 0 ? 1 : 0);
+    remainder -= remainder > 0 ? 1 : 0;
     groups.push(items.slice(index, index + size));
+    index += size;
   }
-  return groups;
+  return groups.filter((group) => group.length);
 }
 
 function SectionPager({ previousSection, nextSection }) {
@@ -52,7 +58,7 @@ export default function SectionPage({ manifest, section, raw, uiPreferences }) {
   const previousSection = sectionIndex > 0 ? manifest.sections[sectionIndex - 1] : null;
   const nextSection = sectionIndex >= 0 && sectionIndex < manifest.sections.length - 1 ? manifest.sections[sectionIndex + 1] : null;
   const visibleChapters = section.chapters.filter((chapter) => matchesVersionFilter(chapter.javaVersion, uiPreferences.versionFilter));
-  const chapterGroups = chunkIntoGroups(visibleChapters, 3);
+  const chapterGroups = splitIntoGroups(visibleChapters, 3);
   const purpose = truncateText(profile.hook || guide.intro || 'Use this section to move from problem to practice with a small set of related chapters.', 160);
   const startHere = profile.problems?.slice(0, 3) || [];
   const practice = [

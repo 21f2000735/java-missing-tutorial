@@ -625,41 +625,51 @@ export function extractTopicLessonFlow(raw = '') {
   if (!raw.trim()) {
     return {
       guide: null,
-      whyExists: null,
-      pain: null,
-      creatorMindset: null,
-      inventIt: null,
-      naiveAttempt: null,
-      whyBreaks: null,
-      finalSolution: null,
-      walkthrough: null,
-      mentalModel: null,
-      mistakes: null,
-      tradeoffs: null,
-      useAvoid: null,
-      summary: null,
-      why: null,
-      invention: null
+      concept: null,
+      example: null,
+      whatHappens: null,
+      whatStaysStable: null,
+      whatChanges: null,
+      whyItMatters: null,
+      rule: null,
+      tryThis: null
     };
   }
 
   const guide = parseGuide(raw);
+  const concept = findGuideSection(guide, ['Concept']);
+  const example = findGuideSection(guide, ['Example']);
+  const whatHappens = findGuideSection(guide, ['What Happens']);
+  const whatStaysStable = findGuideSection(guide, ['What Stays Stable']);
+  const whatChanges = findGuideSection(guide, ['What Changes']);
+  const whyItMatters = findGuideSection(guide, ['Why It Matters']);
+  const rule = findGuideSection(guide, ['Rule']);
+  const tryThis = findGuideSection(guide, ['Try This']);
+
   return {
     guide,
-    whyExists: findGuideSection(guide, ['Why This Exists', 'Why This Matters', 'Why This Topic Exists']),
-    pain: findGuideSection(guide, ['The Pain Before It', 'The Problem Before This', 'Problem Statement']),
-    creatorMindset: findGuideSection(guide, ['Java Creator Mindset', 'Core Idea']),
-    inventIt: findGuideSection(guide, ['How You Might Invent It', 'How To Think About Inventing It', 'Intuition']),
-    naiveAttempt: findGuideSection(guide, ['Naive Attempt']),
-    whyBreaks: findGuideSection(guide, ['Why It Breaks']),
-    finalSolution: findGuideSection(guide, ['Final Java Solution']),
-    mentalModel: findGuideSection(guide, ['Mental Model', 'Better Mental Model']),
-    mistakes: findGuideSection(guide, ['Mistakes', 'Common Mistakes']),
-    walkthrough: findGuideSection(guide, ['Walkthrough', 'Code Walkthrough', 'Step-by-Step Working']),
-    tradeoffs: findGuideSection(guide, ['Tradeoffs', 'Rules / Syntax']),
-    useAvoid: findGuideSection(guide, ['Use / Avoid', 'Use And Avoid', 'When To Use / When Not To Use']),
-    summary: findGuideSection(guide, ['Summary']),
-    why: findGuideSection(guide, ['Why This Exists', 'Why This Matters', 'Why This Topic Exists']),
-    invention: findGuideSection(guide, ['How You Might Invent It', 'How To Think About Inventing It', 'Intuition'])
+    concept,
+    example,
+    whatHappens,
+    whatStaysStable,
+    whatChanges,
+    whyItMatters,
+    rule,
+    tryThis,
+    whyExists: concept,
+    pain: whyItMatters,
+    creatorMindset: whatStaysStable,
+    inventIt: concept,
+    naiveAttempt: whatChanges,
+    whyBreaks: whatChanges,
+    finalSolution: rule,
+    walkthrough: whatHappens,
+    mentalModel: whatStaysStable,
+    mistakes: whatChanges,
+    tradeoffs: whyItMatters,
+    useAvoid: whyItMatters,
+    summary: tryThis,
+    why: whyItMatters,
+    invention: concept
   };
 }

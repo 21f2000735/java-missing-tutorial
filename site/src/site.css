@@ -686,6 +686,10 @@ input:focus-visible {
   align-items: start;
 }
 
+.content-layout-single {
+  grid-template-columns: minmax(0, 1fr);
+}
+
 .content-layout-reading {
   grid-template-columns: 1fr;
 }
