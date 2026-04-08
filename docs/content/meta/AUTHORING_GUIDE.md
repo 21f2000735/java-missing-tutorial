@@ -83,6 +83,7 @@ Choose the template based on the primary learner outcome:
 - [INTERVIEW_TOPIC_TEMPLATE.md](INTERVIEW_TOPIC_TEMPLATE.md) for interview-readiness topics
 - [CERTIFICATION_TOPIC_TEMPLATE.md](CERTIFICATION_TOPIC_TEMPLATE.md) for Java 25 certification-oriented revision topics
 - [VISUAL_LESSON_STANDARD.md](VISUAL_LESSON_STANDARD.md) for topics that should teach through diagrams first
+- [RESOURCE_PAGE_TEMPLATE.md](RESOURCE_PAGE_TEMPLATE.md) for repeatable markdown resource pages such as compare guides, indexes, roadmaps, and migration pages
 
 Use `runner: embedded` for stable single-file examples that can be pushed to JDoodle from the site.  
 Use `runner: local` for preview-sensitive or multi-file examples.

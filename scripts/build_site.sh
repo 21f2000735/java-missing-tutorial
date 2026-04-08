@@ -21,6 +21,7 @@ resource_files=(
   "planning/AUTHORING_GUIDE.md"
   "planning/INTERVIEW_TOPIC_TEMPLATE.md"
   "planning/CERTIFICATION_TOPIC_TEMPLATE.md"
+  "planning/RESOURCE_PAGE_TEMPLATE.md"
   "planning/VISUAL_LESSON_STANDARD.md"
   "planning/CHAPTER_QUALITY_CHECKLIST.md"
   "planning/TOPIC_QUALITY_RUBRIC.md"

@@ -1,7 +1,7 @@
 {
   "siteTitle": "Java Missing Book",
   "repoRoot": "/Users/indiadelhi/repo/career/java-missing-tutorial/code",
-  "generatedAt": "2026-04-07T22:23:36Z",
+  "generatedAt": "2026-04-08T03:27:00Z",
   "stats": {
     "sections": 22,
     "chapters": 56,
@@ -16,6 +16,7 @@
     {"slug": "AUTHORING_GUIDE", "title": "AUTHORING GUIDE", "sourcePath": "planning/AUTHORING_GUIDE.md", "contentPath": "content/meta/AUTHORING_GUIDE.md", "type": "markdown"},
     {"slug": "INTERVIEW_TOPIC_TEMPLATE", "title": "INTERVIEW TOPIC TEMPLATE", "sourcePath": "planning/INTERVIEW_TOPIC_TEMPLATE.md", "contentPath": "content/meta/INTERVIEW_TOPIC_TEMPLATE.md", "type": "markdown"},
     {"slug": "CERTIFICATION_TOPIC_TEMPLATE", "title": "CERTIFICATION TOPIC TEMPLATE", "sourcePath": "planning/CERTIFICATION_TOPIC_TEMPLATE.md", "contentPath": "content/meta/CERTIFICATION_TOPIC_TEMPLATE.md", "type": "markdown"},
+    {"slug": "RESOURCE_PAGE_TEMPLATE", "title": "RESOURCE PAGE TEMPLATE", "sourcePath": "planning/RESOURCE_PAGE_TEMPLATE.md", "contentPath": "content/meta/RESOURCE_PAGE_TEMPLATE.md", "type": "markdown"},
     {"slug": "VISUAL_LESSON_STANDARD", "title": "VISUAL LESSON STANDARD", "sourcePath": "planning/VISUAL_LESSON_STANDARD.md", "contentPath": "content/meta/VISUAL_LESSON_STANDARD.md", "type": "markdown"},
     {"slug": "CHAPTER_QUALITY_CHECKLIST", "title": "CHAPTER QUALITY CHECKLIST", "sourcePath": "planning/CHAPTER_QUALITY_CHECKLIST.md", "contentPath": "content/meta/CHAPTER_QUALITY_CHECKLIST.md", "type": "markdown"},
     {"slug": "TOPIC_QUALITY_RUBRIC", "title": "TOPIC QUALITY RUBRIC", "sourcePath": "planning/TOPIC_QUALITY_RUBRIC.md", "contentPath": "content/meta/TOPIC_QUALITY_RUBRIC.md", "type": "markdown"},

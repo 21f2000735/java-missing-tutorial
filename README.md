@@ -298,7 +298,7 @@ The release track is now split out into [planning/JAVA_7_TO_25.md](planning/JAVA
 Secondary user paths live in [planning/OCJP_TRACK.md](planning/OCJP_TRACK.md) and [planning/MODERN_JAVA_TRACK.md](planning/MODERN_JAVA_TRACK.md).
 Detailed topic coverage is mapped in [planning/TOPIC_COVERAGE_MAP.md](planning/TOPIC_COVERAGE_MAP.md).
 Detailed authoring rules are tracked in [planning/AUTHORING_GUIDE.md](planning/AUTHORING_GUIDE.md).
-Topic-writing templates now split by audience: [planning/INTERVIEW_TOPIC_TEMPLATE.md](planning/INTERVIEW_TOPIC_TEMPLATE.md) and [planning/CERTIFICATION_TOPIC_TEMPLATE.md](planning/CERTIFICATION_TOPIC_TEMPLATE.md).
+Topic-writing templates now split by audience: [planning/INTERVIEW_TOPIC_TEMPLATE.md](planning/INTERVIEW_TOPIC_TEMPLATE.md), [planning/CERTIFICATION_TOPIC_TEMPLATE.md](planning/CERTIFICATION_TOPIC_TEMPLATE.md), and [planning/RESOURCE_PAGE_TEMPLATE.md](planning/RESOURCE_PAGE_TEMPLATE.md) for repeatable markdown reference pages.
 Visual-first internal-working topics are guided by [planning/VISUAL_LESSON_STANDARD.md](planning/VISUAL_LESSON_STANDARD.md).
 Topic quality is checked against [planning/TOPIC_QUALITY_RUBRIC.md](planning/TOPIC_QUALITY_RUBRIC.md).
 Book sources are tracked in [planning/TOP_20_BOOKS.md](planning/TOP_20_BOOKS.md).

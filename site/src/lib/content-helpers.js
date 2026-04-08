@@ -622,15 +622,44 @@ export function effectiveRunner(preview, lessonMeta = {}) {
 }
 
 export function extractTopicLessonFlow(raw = '') {
+  if (!raw.trim()) {
+    return {
+      guide: null,
+      whyExists: null,
+      pain: null,
+      creatorMindset: null,
+      inventIt: null,
+      naiveAttempt: null,
+      whyBreaks: null,
+      finalSolution: null,
+      walkthrough: null,
+      mentalModel: null,
+      mistakes: null,
+      tradeoffs: null,
+      useAvoid: null,
+      summary: null,
+      why: null,
+      invention: null
+    };
+  }
+
   const guide = parseGuide(raw);
   return {
-    why: findGuideSection(guide, ['Why This Exists', 'Why This Topic Exists']),
-    pain: findGuideSection(guide, ['The Pain Before It', 'The Problem Before This']),
-    invention: findGuideSection(guide, ['How You Might Invent It', 'How To Think About Inventing It']),
+    guide,
+    whyExists: findGuideSection(guide, ['Why This Exists', 'Why This Matters', 'Why This Topic Exists']),
+    pain: findGuideSection(guide, ['The Pain Before It', 'The Problem Before This', 'Problem Statement']),
+    creatorMindset: findGuideSection(guide, ['Java Creator Mindset', 'Core Idea']),
+    inventIt: findGuideSection(guide, ['How You Might Invent It', 'How To Think About Inventing It', 'Intuition']),
+    naiveAttempt: findGuideSection(guide, ['Naive Attempt']),
+    whyBreaks: findGuideSection(guide, ['Why It Breaks']),
+    finalSolution: findGuideSection(guide, ['Final Java Solution']),
     mentalModel: findGuideSection(guide, ['Mental Model', 'Better Mental Model']),
     mistakes: findGuideSection(guide, ['Mistakes', 'Common Mistakes']),
-    walkthrough: findGuideSection(guide, ['Walkthrough', 'Code Walkthrough']),
-    useAvoid: findGuideSection(guide, ['Use / Avoid', 'Use And Avoid']),
-    summary: findGuideSection(guide, ['Summary'])
+    walkthrough: findGuideSection(guide, ['Walkthrough', 'Code Walkthrough', 'Step-by-Step Working']),
+    tradeoffs: findGuideSection(guide, ['Tradeoffs', 'Rules / Syntax']),
+    useAvoid: findGuideSection(guide, ['Use / Avoid', 'Use And Avoid', 'When To Use / When Not To Use']),
+    summary: findGuideSection(guide, ['Summary']),
+    why: findGuideSection(guide, ['Why This Exists', 'Why This Matters', 'Why This Topic Exists']),
+    invention: findGuideSection(guide, ['How You Might Invent It', 'How To Think About Inventing It', 'Intuition'])
   };
 }
