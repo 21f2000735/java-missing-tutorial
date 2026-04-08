@@ -50,6 +50,24 @@ marked.setOptions({
   headerIds: false
 });
 
+const LOAD_TIMEOUT_MS = 15000;
+
+function withTimeout(promise, label, timeoutMs = LOAD_TIMEOUT_MS) {
+  let timer;
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => {
+      timer = window.setTimeout(() => {
+        reject(new Error(`Timed out loading ${label}`));
+      }, timeoutMs);
+    })
+  ]).finally(() => {
+    if (timer) {
+      window.clearTimeout(timer);
+    }
+  });
+}
+
 function sidebarRouteFromHashRoute(route) {
   if (route.type === 'section') {
     return `#section/${route.sectionSlug}`;
@@ -92,7 +110,7 @@ export default function App() {
 
     async function loadManifest() {
       try {
-        const data = await fetchJson('data/site.json');
+        const data = await withTimeout(fetchJson('data/site.json'), 'site manifest');
         const normalizedManifest = normalizeManifest(data);
         const chapterOrder = [];
         const routeToChapter = new Map();
@@ -154,7 +172,7 @@ export default function App() {
       return contentCache.current.get(path);
     }
 
-    const text = await fetchTextFromRuntime(path);
+    const text = await withTimeout(fetchTextFromRuntime(path), path);
     contentCache.current.set(path, text);
     return text;
   }, []);
