@@ -26,6 +26,15 @@ TOPIC_REQUIRED = [
     "Summary",
 ]
 
+TOPIC_REQUIRED_SIMPLE = [
+    "Topic / Problem",
+    "Intuition",
+    "Small Code Snippet",
+    "Internal Working",
+    "Comparison With Other",
+    "Famous Company Interview Question",
+]
+
 TOPIC_APPENDIX = {
     "After Reading This, You Should Know",
     "Avoid This When",
@@ -189,6 +198,20 @@ def h2_headings(text: str) -> list[str]:
     return re.findall(r"^## (.+)$", text, flags=re.MULTILINE)
 
 
+def validate_topic(path: Path, headings: list[str]) -> list[str]:
+    if not headings:
+        return ["empty guide"]
+
+    if headings[0] == "Topic / Problem":
+        required = TOPIC_REQUIRED_SIMPLE
+        appendix = set()
+    else:
+        required = TOPIC_REQUIRED
+        appendix = TOPIC_APPENDIX
+
+    return validate(path, required, appendix)
+
+
 def validate(path: Path, required: list[str], appendix: set[str]) -> list[str]:
     headings = h2_headings(strip_front_matter(path.read_text()))
     errors = []
@@ -222,7 +245,8 @@ def main() -> int:
 
     for path in sorted(SOURCE_ROOT.rglob("TopicGuide.md")):
         rel = path.relative_to(ROOT)
-        for error in validate(path, TOPIC_REQUIRED, TOPIC_APPENDIX):
+        headings = h2_headings(strip_front_matter(path.read_text()))
+        for error in validate_topic(path, headings):
             failures.append(f"{rel}: {error}")
 
     for path in sorted(SOURCE_ROOT.rglob("ChapterGuide.md")):

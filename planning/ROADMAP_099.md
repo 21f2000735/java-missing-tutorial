@@ -75,12 +75,20 @@ When new material is added:
 Examples:
 
 - `sec06_design_patterns/ch02_factory_pattern`
+- `sec06_design_patterns/ch02_creational_patterns` expanding with `Singleton`
 - `sec06_design_patterns/ch03_builder_pattern`
 - `sec08_internal_of_jvm/ch02_class_loading`
 - `sec12_networking/ch02_socket_programming_basics`
 - `sec15_clean_code_and_refactoring/ch02_refactoring_small_examples`
 - `sec20_data_structures_and_complexity/ch05_trees_graphs_and_traversal`
 - `sec20_data_structures_and_complexity/ch06_heaps_priority_queues_and_scheduling`
+
+Likely next additions from the current backlog:
+
+- `sec02_collections/ch01_collections` expanding with `ArrayList` vs `LinkedList` vs `ArrayDeque`
+- `sec04_streams_and_functional_style/ch02_functional_interfaces` expanding with functional composition helpers
+- `sec06_design_patterns/ch02_creational_patterns` adding `Singleton`
+- `sec09_hidden_java_features/ch01_underused_core_utilities` adding `Sequenced Collections`
 
 ## Chapter Requirements
 
