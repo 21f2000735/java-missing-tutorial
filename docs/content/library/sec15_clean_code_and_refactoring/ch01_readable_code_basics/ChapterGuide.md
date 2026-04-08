@@ -1,61 +1,106 @@
 # Readable Code Basics Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Readable code matters because most code is read more often than it is written.
+This chapter shows what breaks when readable code basics is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for readable code basics, the APIs feel like isolated facts instead of answers to one connected problem.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
+## Failure
 
-Read the chapter as a small set of related ideas around readable Code Basics, not as isolated trivia.
+- The naive choice works for a tiny case and fails when the assumption changes.
+- The failure is usually visible in order, ownership, or cleanup.
+- The bug matters because the code still looks reasonable at a glance.
 
-## How You Might Invent It
+## Fix
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around readable Code Basics, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java)
 
-## What To Notice
+Example:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: small names and extracted steps make code easier to read");
+        System.out.println("Real-world problem: checkout total code becomes hard to follow when too much logic stays inline.");
+        System.out.println();
 
-## Mental Model
+        int subtotal = 2_000;
+        int shipping = 150;
+        int grandTotal = calculateGrandTotal(subtotal, shipping);
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+        // Expected output:
+        // grandTotal = 2150
+        System.out.println("grandTotal = " + grandTotal);
+        System.out.println("Why it works: the main method reads at the business level while smaller methods carry the detail.");
+    }
+```
 
-## Common Mistakes
+What happens:
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+- Real-world problem: checkout total code becomes hard to follow when too much logic stays inline.
+- Why it works: the main method reads at the business level while smaller methods carry the detail.
 
-## Tradeoffs
+Why it matters:
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+After this chapter, you can explain the rule behind readable code basics and choose the right approach with less guesswork.
 
-## Use / Avoid
+## Improvement
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Example:
 
-## Practice
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: small names and extracted steps make code easier to read");
+        System.out.println("Real-world problem: checkout total code becomes hard to follow when too much logic stays inline.");
+        System.out.println();
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+        int subtotal = 2_000;
+        int shipping = 150;
+        int grandTotal = calculateGrandTotal(subtotal, shipping);
 
-## Summary
+        // Expected output:
+        // grandTotal = 2150
+        System.out.println("grandTotal = " + grandTotal);
+        System.out.println("Why it works: the main method reads at the business level while smaller methods carry the detail.");
+    }
+```
 
-After this chapter, you should be able to explain the main decisions behind readable code basics and connect them back to the runnable examples.
+What happens:
+
+- Real-world problem: checkout total code becomes hard to follow when too much logic stays inline.
+- Why it works: the main method reads at the business level while smaller methods carry the detail.
+
+Why it matters:
+
+After this chapter, you can explain the rule behind readable code basics and choose the right approach with less guesswork.
+
+After this chapter, you should be able to explain why Readable Code Basics exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
+
+## What stays stable
+
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java), [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java), and [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java) starts with the raw behavior, [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java) adds the safety rule, and [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
+
+## Try this
+
+- Run [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java) and note the first thing that breaks.
+- Run [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java) and remove the safety rule or coordination step.
+- Run [Renaming And Extracting Methods](topics/renaming_and_extracting_methods/RenamingAndExtractingMethods.java) and compare the result with the naive approach.

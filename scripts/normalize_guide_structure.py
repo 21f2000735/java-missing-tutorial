@@ -396,10 +396,110 @@ def pick_printed_line(lines: list[str], prefixes: list[str]) -> str:
     return ""
 
 
+def printed_bullets_after(lines: list[str], prefixes: list[str], limit: int = 3) -> list[str]:
+    for prefix in prefixes:
+        lowered_prefix = prefix.lower()
+        for index, line in enumerate(lines):
+            if not line.lower().startswith(lowered_prefix):
+                continue
+            collected: list[str] = []
+            for next_line in lines[index + 1 :]:
+                stripped = next_line.strip()
+                if not stripped:
+                    continue
+                if stripped.endswith(":") and not stripped.startswith("-"):
+                    break
+                stripped = re.sub(r"^[-*]\s+", "", stripped)
+                if stripped:
+                    collected.append(stripped)
+                if len(collected) >= limit:
+                    return collected
+            if collected:
+                return collected
+    return []
+
+
 def fenced_java(code: str) -> str:
     if not code.strip():
         return ""
     return f"```java\n{code.rstrip()}\n```"
+
+
+def topic_detail(topic_dir: Path) -> dict[str, object]:
+    java_path = first_java_file(topic_dir)
+    comment = parse_java_topic_comment(java_path) if java_path else {}
+    printed_lines = extract_printed_lines(java_path) if java_path else []
+    main_snippet = extract_main_snippet(java_path) if java_path else ""
+    return {
+        "title": topic_title(topic_dir),
+        "java_path": java_path,
+        "comment": comment,
+        "printed_lines": printed_lines,
+        "main_snippet": main_snippet,
+    }
+
+
+def topic_summary(detail: dict[str, object]) -> str:
+    comment = detail.get("comment", {})
+    if isinstance(comment, dict):
+        return first_non_empty(
+            comment.get("why this concept is needed", ""),
+            comment.get("what problem this solves", ""),
+            comment.get("real-world setup", ""),
+            comment.get("how to think about it", ""),
+        )
+    return ""
+
+
+def topic_rule(detail: dict[str, object]) -> str:
+    comment = detail.get("comment", {})
+    if isinstance(comment, dict):
+        return first_non_empty(
+            comment.get("how to think about it", ""),
+            comment.get("how to code it", ""),
+        )
+    return ""
+
+
+def topic_example(detail: dict[str, object]) -> str:
+    main_snippet = detail.get("main_snippet", "")
+    if isinstance(main_snippet, str):
+        return fenced_java(main_snippet)
+    return ""
+
+
+def topic_output(detail: dict[str, object], prefixes: list[str], limit: int = 3) -> str:
+    printed_lines = detail.get("printed_lines", [])
+    if isinstance(printed_lines, list):
+        bullets = printed_bullets_after(printed_lines, prefixes, limit)
+        if bullets:
+            return bullet_list(bullets)
+        line = pick_printed_line(printed_lines, prefixes)
+        if line:
+            return bullet_list([line])
+    return ""
+
+
+def order_topics_for_chapter(chapter_name: str, entries: list[dict[str, str]]) -> list[dict[str, str]]:
+    if normalize_key(chapter_name) == normalize_key("Concurrency Basics Learning Kit"):
+        preferred = ["Threads", "Synchronization", "Executors"]
+        remaining = entries.copy()
+        ordered: list[dict[str, str]] = []
+        for title in preferred:
+            match_index = next(
+                (
+                    index
+                    for index, entry in enumerate(remaining)
+                    if normalize_key(entry["title"]) == normalize_key(title)
+                ),
+                None,
+            )
+            if match_index is None:
+                continue
+            ordered.append(remaining.pop(match_index))
+        ordered.extend(remaining)
+        return ordered
+    return entries
 
 
 def topic_sections_from_java(
@@ -1050,6 +1150,8 @@ def chapter_topic_entries(chapter_dir: Path, sections: OrderedDict[str, str] | N
                 "title": topic_title(topic_dir),
                 "link_label": java_file.name,
                 "link_path": f"topics/{topic_dir.name}/{java_file.name}",
+                "java_path": java_file,
+                "topic_dir": topic_dir,
             }
         )
     if not sections:
@@ -1142,6 +1244,10 @@ def normalize_chapter(path: Path) -> None:
         title = f"{humanize_slug(chapter_dir.name)} Learning Kit"
 
     topic_entries = chapter_topic_entries(chapter_dir, sections)
+    topic_entries = order_topics_for_chapter(title, topic_entries)
+    topic_details = [
+        topic_detail(entry["topic_dir"]) for entry in topic_entries if entry.get("topic_dir")
+    ]
     topic_links = [f"[{entry['title']}]({entry['link_path']})" for entry in topic_entries]
     study_order = numbered_list([f"Run {link}" for link in topic_links])
     if not study_order:
@@ -1151,34 +1257,52 @@ def normalize_chapter(path: Path) -> None:
     first_topic = topic_links[0] if topic_links else "the first topic"
     middle_topic = topic_links[len(topic_links) // 2] if topic_links else "the middle topic"
     last_topic = topic_links[-1] if topic_links else "the last topic"
+    first_detail = topic_details[0] if topic_details else {}
+    middle_detail = topic_details[len(topic_details) // 2] if topic_details else {}
+    last_detail = topic_details[-1] if topic_details else {}
 
-    problem = first_non_empty(
+    problem_source = first_non_empty(
         usable_paragraph(sections.get("Why This Chapter Exists", "")),
         usable_paragraph(sections.get("Why This Chapter Matters", "")),
         usable_paragraph(intro),
+        topic_summary(first_detail),
         usable_paragraph(sections.get("What Problem This Chapter Solves", "")),
         usable_paragraph(sections.get("The Problem", "")),
         defaults["Problem"],
     )
-    naive = first_non_empty(
-        usable_paragraph(sections.get("Naive Attempt", "")),
-        usable_paragraph(sections.get("How You Might Invent It", "")),
-        usable_paragraph(sections.get("Compare With", "")),
-        defaults["Naive Approach"],
-    )
-    failure = bullet_excerpt(
-        first_non_empty(
-            sections.get("Why It Breaks", ""),
-            sections.get("Common Confusion", ""),
-            sections.get("Avoid This Pattern When", ""),
-            sections.get("Avoid This Approach When", ""),
-            sections.get("Avoid Wrong Expectations", ""),
-            sections.get("OCJP Traps", ""),
-            defaults["Failure"],
-        ),
+    problem = shorten_text(problem_source, 2)
+
+    naive_bullets = printed_bullets_after(
+        first_detail.get("printed_lines", []) if isinstance(first_detail.get("printed_lines"), list) else [],
+        ["Common mistake:", "Wrong example:"],
         3,
     )
-    if not failure:
+    if naive_bullets:
+        naive = bullet_list(naive_bullets)
+    else:
+        naive = first_non_empty(
+            usable_paragraph(sections.get("Naive Attempt", "")),
+            usable_paragraph(sections.get("How You Might Invent It", "")),
+            usable_paragraph(sections.get("Compare With", "")),
+            defaults["Naive Approach"],
+        )
+
+    failure_bullets: list[str] = []
+    for detail in topic_details[:3]:
+        printed_lines = detail.get("printed_lines", [])
+        if isinstance(printed_lines, list):
+            bullets = printed_bullets_after(printed_lines, ["Common mistake:", "Wrong example:"], 2)
+        else:
+            bullets = []
+        if bullets:
+            failure_bullets.extend(f"{detail.get('title', 'Topic')}: {bullet}" for bullet in bullets[:2])
+            continue
+        summary = topic_summary(detail)
+        if summary:
+            failure_bullets.append(f"{detail.get('title', 'Topic')}: {first_sentence(summary)}")
+    if failure_bullets:
+        failure = bullet_list(failure_bullets[:4])
+    else:
         failure = bullet_list(
             [
                 "The naive choice works for a tiny case and fails when the assumption changes.",
@@ -1190,32 +1314,62 @@ def normalize_chapter(path: Path) -> None:
     fix = join_blocks(
         "Run the topics in this order:",
         study_order,
-        "What to observe:",
-        bullet_list(
+        "Example:",
+        topic_example(middle_detail),
+        "What happens:",
+        topic_output(
+            middle_detail,
             [
-                f"Which topic shows the failure first: {first_topic}.",
-                f"Which topic narrows the rule: {middle_topic}.",
-                f"Which topic shows the cleaner abstraction: {last_topic}.",
-            ]
+                "Run this example:",
+                "Run this first:",
+                "Wrong example:",
+                "Common mistake:",
+                "What to notice:",
+                "Lesson:",
+                "Common confusion:",
+                "Concept:",
+                "Topic:",
+                "Why it matters:",
+                "Real-world problem:",
+            ],
+            3,
         ),
+        "Why it matters:",
+        shorten_text(topic_summary(middle_detail) or defaults["Improvement"], 2),
     )
 
     improvement = join_blocks(
-        first_non_empty(
-            usable_paragraph(sections.get("Final Java Direction", "")),
-            usable_paragraph(sections.get("What To Notice", "")),
-            usable_paragraph(sections.get("Mental Model", "")),
-            usable_paragraph(sections.get("Summary", "")),
-            defaults["Improvement"],
+        "Example:",
+        topic_example(last_detail),
+        "What happens:",
+        topic_output(
+            last_detail,
+            [
+                "Run this example:",
+                "Run this first:",
+                "Wrong example:",
+                "Common mistake:",
+                "What to notice:",
+                "Lesson:",
+                "Common confusion:",
+                "Concept:",
+                "Topic:",
+                "Why it matters:",
+                "Real-world problem:",
+            ],
+            3,
         ),
+        "Why it matters:",
+        shorten_text(topic_summary(last_detail) or defaults["Improvement"], 2),
         f"After this chapter, you should be able to explain why {humanize_slug(chapter_dir.name)} exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.",
     )
 
     what_stays_stable = bullet_list(
         [
             defaults["What stays stable"],
-            "The chapter keeps the same learning loop: run, observe, change one thing, and compare.",
-            "The real pressure stays the same even when the API changes.",
+            "The learning loop stays the same: run, observe, change one thing, and compare.",
+            "The underlying pressure stays the same even when the API changes.",
+            f"{first_topic}, {middle_topic}, and {last_topic} all protect the same design pressure from different angles.",
         ]
     )
 
@@ -1225,11 +1379,15 @@ def normalize_chapter(path: Path) -> None:
             "The API shape changes from topic to topic.",
             "The failure mode changes when one assumption is removed.",
             "The abstraction cost changes as the fix becomes stronger.",
+            f"{first_topic} starts with the raw behavior, {middle_topic} adds the safety rule, and {last_topic} moves to the cleaner abstraction.",
         ]
     )
 
     rule = first_sentence(
         first_non_empty(
+            topic_rule(middle_detail),
+            topic_rule(last_detail),
+            topic_rule(first_detail),
             usable_paragraph(sections.get("Final Java Direction", "")),
             usable_paragraph(sections.get("Mental Model", "")),
             usable_paragraph(sections.get("Summary", "")),
@@ -1240,7 +1398,7 @@ def normalize_chapter(path: Path) -> None:
     try_this = bullet_list(
         [
             f"Run {first_topic} and note the first thing that breaks.",
-            f"Run {middle_topic} and write down what the rule becomes.",
+            f"Run {middle_topic} and remove the safety rule or coordination step.",
             f"Run {last_topic} and compare the result with the naive approach.",
         ]
     )

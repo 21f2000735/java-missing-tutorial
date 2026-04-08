@@ -2,15 +2,17 @@
 
 ## Problem
 
-This chapter shows what breaks when optional is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## Naive Approach
 
-The naive move is to pick the first obvious API and assume it will stay correct in every case.
+- Using Optional for every field in every model object usually adds noise instead of clarity.
 
 ## Failure
 
-- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- Choosing Optional Boundaries: Using Optional for every field in every model object usually adds noise instead of clarity.
+- Representing Optional Values: Optional.of(null) throws NullPointerException immediately.
+- Representing Optional Values: Topic: Optional Creation
 
 ## Fix
 
@@ -21,23 +23,67 @@ Run the topics in this order:
 3. Run [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java)
 4. Run [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java)
 
-What to observe:
+Example:
 
-- Which topic shows the failure first: [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java).
-- Which topic narrows the rule: [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java).
-- Which topic shows the cleaner abstraction: [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java).
+```java
+    public static void main(String[] args) {
+        printOverview();
+        wrongExample();
+        basicExample();
+        betterExample();
+        commonPitfalls();
+        examTrap();
+        interviewQuestion();
+        exercise();
+        solution();
+    }
+```
+
+What happens:
+
+- Optional.of(null) throws NullPointerException immediately.
+- Topic: Optional Creation
+- Chapter: Optional
+
+Why it matters:
+
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## Improvement
 
-After this chapter, you can explain the rule behind optional and choose the right approach with less guesswork.
+Example:
+
+```java
+    public static void main(String[] args) {
+        overview();
+        wrongExample();
+        // Expected output:
+        // the display domain from customer@shopnow.com is shopnow.com
+        Optional<String> email = Optional.of("customer@shopnow.com");
+        String domain = extractDomain(email);
+        System.out.println("domain = " + domain);
+        System.out.println("Lesson: map transforms the present value without forcing manual null checks.");
+        System.out.println("Common confusion: map changes the value inside Optional, it does not unwrap it permanently.");
+        System.out.println("Real-world value: a profile page can show email domain details without fragile null checks.");
+    }
+```
+
+What happens:
+
+- Calling get() too early defeats the purpose of Optional and can fail if the value is absent.
+
+Why it matters:
+
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 After this chapter, you should be able to explain why Optional exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
 ## What stays stable
 
 - The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
-- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
-- The real pressure stays the same even when the API changes.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java), [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java), and [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java) all protect the same design pressure from different angles.
 
 ## What changes
 
@@ -45,13 +91,14 @@ After this chapter, you should be able to explain why Optional exists, what brea
 - The API shape changes from topic to topic.
 - The failure mode changes when one assumption is removed.
 - The abstraction cost changes as the fix becomes stronger.
+- [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java) starts with the raw behavior, [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java) adds the safety rule, and [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java) moves to the cleaner abstraction.
 
 ## Rule
 
-👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
+👉 Rule: First understand the problem in plain language, then map that idea to the Java code.
 
 ## Try this
 
 - Run [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java) and note the first thing that breaks.
-- Run [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java) and write down what the rule becomes.
+- Run [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java) and remove the safety rule or coordination step.
 - Run [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java) and compare the result with the naive approach.

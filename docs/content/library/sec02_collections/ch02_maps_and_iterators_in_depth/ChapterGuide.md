@@ -1,40 +1,22 @@
 # Maps And Iterators In Depth Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter fills the gap between “I know `Map` exists” and “I can choose the right map and explain iterator behavior under pressure.”
+This chapter shows what breaks when maps and iterators in depth is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-## The Pain Before It
+## Naive Approach
 
-Teams often pick `HashMap` by reflex, then later discover they needed stable iteration order, sorted keys, or safer concurrent reads.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
+## Failure
 
-- `HashMap` basics: hashing, buckets, resize pressure, load factor intuition
-- `TreeMap` vs `LinkedHashMap`
-- fail-fast vs weakly consistent iteration
-- `ConcurrentHashMap` vs `Collections.synchronizedMap`
+- The naive choice works for a tiny case and fails when the assumption changes.
+- The failure is usually visible in order, ownership, or cleanup.
+- The bug matters because the code still looks reasonable at a glance.
 
-## How You Might Invent It
+## Fix
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-- do not memorize “HashMap is fast” without asking what kind of access, ordering, and concurrency you need
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- `HashMap` basics: hashing, buckets, resize pressure, load factor intuition
-- `TreeMap` vs `LinkedHashMap`
-- fail-fast vs weakly consistent iteration
-- `ConcurrentHashMap` vs `Collections.synchronizedMap`
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Concurrent Maps And Iterators](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java)
 2. Run [Fail-Fast Vs Fail-Safe Iterators](topics/fail_fast_vs_fail_safe_iterators/FailFastVsFailSafeIterators.java)
@@ -43,36 +25,93 @@ That breaks when the same mistake repeats across files, teams, or interview ques
 5. Run [Map Tradeoffs](topics/map_tradeoffs/MapTradeoffs.java)
 6. Run [PriorityQueue And Heap Internals](topics/priority_queue_heap_internals/PriorityQueueHeapInternals.java)
 
-## What To Notice
+Example:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+```java
+    public static void main(String[] args) {
+        LruCache cache = new LruCache(3);
+        cache.put("home", "cached");
+        cache.put("product", "cached");
+        cache.put("cart", "cached");
+        cache.get("home");
+        cache.put("payment", "cached");
 
-## Mental Model
+        System.out.println("Concept: access-order LinkedHashMap can act like a small LRU cache.");
+        System.out.println("cache keys = " + cache.keySet());
+        System.out.println("home = " + cache.get("home"));
+        System.out.println("cart = " + cache.get("cart"));
+        System.out.println("Why it matters: the least recently used entry is evicted automatically when size goes past the cap.");
+    }
+```
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+What happens:
 
-## Common Mistakes
+- Why it matters: the least recently used entry is evicted automatically when size goes past the cap.
 
-- do not memorize “HashMap is fast” without asking what kind of access, ordering, and concurrency you need
+Why it matters:
 
-## Tradeoffs
+After this chapter, you can explain the rule behind maps and iterators in depth and choose the right approach with less guesswork.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+## Improvement
 
-## Use / Avoid
+Example:
 
-### Use It When
+```java
+    public static void main(String[] args) {
+        PriorityQueue<Integer> minHeap = new PriorityQueue<>();
+        minHeap.addAll(List.of(40, 10, 70, 20, 50));
+        System.out.println("Concept: PriorityQueue is a min-heap by default.");
+        System.out.println("min peek = " + minHeap.peek());
+        System.out.println("min poll = " + minHeap.poll());
 
-- you are choosing a map for real application data
-- interviewers ask why one map implementation fits better
-- iterator behavior or concurrent updates start causing confusion
+        PriorityQueue<Integer> maxHeap = new PriorityQueue<>(Comparator.reverseOrder());
+        maxHeap.addAll(List.of(40, 10, 70, 20, 50));
+        System.out.println("max peek = " + maxHeap.peek());
+        System.out.println("max poll = " + maxHeap.poll());
 
-## Practice
+        PriorityQueue<Integer> top3 = new PriorityQueue<>();
+        for (int value : List.of(8, 21, 3, 55, 13, 34)) {
+            top3.offer(value);
+            if (top3.size() > 3) {
+                top3.poll();
+            }
+        }
+        System.out.println("top3 heap = " + top3);
+        System.out.println("Why it matters: add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.");
+    }
+```
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+What happens:
 
-## Summary
+- Why it matters: add() and poll() are O(log n), which makes PriorityQueue good for top-K and scheduling problems.
 
-- when insertion order matters more than sort order
-- why concurrent maps change iteration guarantees
-- why iterator behavior is a correctness topic, not just an interview trivia topic
+Why it matters:
+
+After this chapter, you can explain the rule behind maps and iterators in depth and choose the right approach with less guesswork.
+
+After this chapter, you should be able to explain why Maps And Iterators In Depth exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
+
+## What stays stable
+
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Concurrent Maps And Iterators](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java), [LinkedHashMap As LRU Cache](topics/linkedhashmap_lru_cache/LinkedHashMapLruCache.java), and [PriorityQueue And Heap Internals](topics/priority_queue_heap_internals/PriorityQueueHeapInternals.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Concurrent Maps And Iterators](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java) starts with the raw behavior, [LinkedHashMap As LRU Cache](topics/linkedhashmap_lru_cache/LinkedHashMapLruCache.java) adds the safety rule, and [PriorityQueue And Heap Internals](topics/priority_queue_heap_internals/PriorityQueueHeapInternals.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
+
+## Try this
+
+- Run [Concurrent Maps And Iterators](topics/concurrent_maps_and_iterators/ConcurrentMapsAndIterators.java) and note the first thing that breaks.
+- Run [LinkedHashMap As LRU Cache](topics/linkedhashmap_lru_cache/LinkedHashMapLruCache.java) and remove the safety rule or coordination step.
+- Run [PriorityQueue And Heap Internals](topics/priority_queue_heap_internals/PriorityQueueHeapInternals.java) and compare the result with the naive approach.

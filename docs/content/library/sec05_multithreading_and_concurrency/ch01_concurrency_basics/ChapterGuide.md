@@ -1,85 +1,116 @@
 # Concurrency Basics Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Goal: understand what breaks when work overlaps.
+Concurrency starts with one hard fact: two units of work can overlap in time.
 
-## The Pain Before It
+## Naive Approach
 
-As soon as two tasks overlap, the design has to answer three things:
+- calling run() directly and expecting a new thread
+- sharing mutable state before understanding the execution model
 
-- how work starts
-- how you wait for it
-- what happens when both tasks touch the same mutable state
+## Failure
 
-## Java Creator Mindset
+- Threads: calling run() directly and expecting a new thread
+- Threads: sharing mutable state before understanding the execution model
+- Synchronization: assuming count++ is safe because it is one short line
+- Executors: creating a brand-new thread for every small task
 
-Make the safe path obvious: start work explicitly, protect shared state explicitly, and hand off worker management when the codebase grows.
+## Fix
 
-## How You Might Invent It
+Run the topics in this order:
 
-1. Start with one task that runs on its own.
-2. Share state and watch the bug appear.
-3. Move coordination into a tool that owns the workers.
-
-## Naive Attempt
-
-Create a thread whenever you need work and let each task touch shared data directly.
-
-## Why It Breaks
-
-- `run()` does not create a new thread
-- `count++` is not safe when two threads share the same field
-- raw threads make ownership and cleanup hard to scale
-
-## Final Java Direction
-
-`Threads` shows how work starts, `Synchronization` shows what happens when shared state is unsafe, and `Executors` show how task submission and worker management separate cleanly.
-
-## Study Order
-
-1. Run [Executors](topics/executors/Executors.java)
+1. Run [Threads](topics/threads/Threads.java)
 2. Run [Synchronization](topics/synchronization/Synchronization.java)
-3. Run [Threads](topics/threads/Threads.java)
+3. Run [Executors](topics/executors/Executors.java)
 
-## What To Notice
+Example:
 
-- `Threads` shows that `start()` creates a new thread while `run()` stays on the current one
-- `Synchronization` shows that a tiny counter can still fail when two threads share it
-- `Executors` show that task code stays cleaner when worker management moves out of the business logic
+```java
+    public static void main(String[] args) throws InterruptedException {
+        System.out.println("The problem:");
+        System.out.println("Two tasks update the same counter. Without protection, some increments may disappear.");
+        System.out.println();
+        wrongExample();
 
-## Mental Model
+        int count = incrementWithTwoThreads(1_000);
+        System.out.println("Run this example:");
+        System.out.println("count = " + count);
+        System.out.println("Why it works: only one thread can execute the synchronized counter logic at a time.");
+        System.out.println("Use this when: threads really share mutable state and correctness matters.");
+        System.out.println("Avoid this when: state can be isolated instead of shared.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- synchronization protects invariants on shared mutable state");
+        System.out.println("- count++ is not safe just because it looks small");
+        System.out.println("- isolated state is often simpler than shared synchronized state");
+    }
+```
 
-Think in layers: thread creation answers "how does work begin?", synchronization answers "how does shared state stay correct?", and executors answer "who manages the workers?"
+What happens:
 
-## Common Mistakes
+- Why it works: only one thread can execute the synchronized counter logic at a time.
+- Use this when: threads really share mutable state and correctness matters.
+- Avoid this when: state can be isolated instead of shared.
 
-- treating concurrency as only "faster code"
-- reading the API name without the ownership model
-- expecting raw threads to solve shared-state problems automatically
+Why it matters:
 
-## Tradeoffs
+Overlapping access to shared mutable state causes bugs that are hard to reproduce.
 
-Raw threads are direct but fragile; synchronization protects correctness but adds coordination; executors improve structure but add an abstraction layer.
+## Improvement
 
-## Use / Avoid
+Example:
 
-### Use It When
+```java
+    public static void main(String[] args) throws Exception {
+        overview();
+        wrongExample();
+        TaskSummary summary = computeReportLengthAndRetryCount();
+        System.out.println("Run this example:");
+        System.out.println("reportLength = " + summary.reportLength());
+        System.out.println("retryCount = " + summary.retryCount());
+        System.out.println("Why it works: task logic is separate from thread creation and waiting.");
+        System.out.println("Use this when: many tasks need cleaner lifecycle management than raw threads.");
+        System.out.println("Avoid this when: you are only trying to understand what a thread is doing at the lowest level.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- executors separate task submission from worker management");
+        System.out.println("- Futures let you wait for task results explicitly");
+        System.out.println("- executor-based code usually scales better as systems grow");
+    }
+```
 
-- you need the foundation before virtual threads or structured concurrency
-- you want to see how overlapping work actually fails
-- you are deciding whether state should be shared at all
+What happens:
 
-## Practice
+- Why it works: task logic is separate from thread creation and waiting.
+- Use this when: many tasks need cleaner lifecycle management than raw threads.
+- Avoid this when: you are only trying to understand what a thread is doing at the lowest level.
 
-1. Replace `start()` with `run()` in [Threads.java](topics/threads/Threads.java) and note the thread name.
-2. Remove `synchronized` in [Synchronization.java](topics/synchronization/Synchronization.java) and rerun it a few times.
-3. Change the pool size in [Executors.java](topics/executors/Executors.java) from `2` to `1` and watch how the result flow changes.
+Why it matters:
 
-## Summary
+Most production code should separate task submission from low-level thread management.
 
-After this chapter, you should be able to explain how work starts, how shared state stays correct, and why executors are usually the cleaner production choice.
+After this chapter, you should be able to explain why Concurrency Basics exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-## Next Chapter
+## What stays stable
 
-Move to [Virtual Threads Learning Kit](../ch02_virtual_threads/ChapterGuide.md) after this chapter.
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Threads](topics/threads/Threads.java), [Synchronization](topics/synchronization/Synchronization.java), and [Executors](topics/executors/Executors.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Threads](topics/threads/Threads.java) starts with the raw behavior, [Synchronization](topics/synchronization/Synchronization.java) adds the safety rule, and [Executors](topics/executors/Executors.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Shared state needs one safety rule, not lucky timing.
+
+## Try this
+
+- Run [Threads](topics/threads/Threads.java) and note the first thing that breaks.
+- Run [Synchronization](topics/synchronization/Synchronization.java) and remove the safety rule or coordination step.
+- Run [Executors](topics/executors/Executors.java) and compare the result with the naive approach.

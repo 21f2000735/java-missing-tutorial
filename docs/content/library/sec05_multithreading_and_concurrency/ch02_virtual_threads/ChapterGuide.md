@@ -1,85 +1,102 @@
 # Virtual Threads Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter is about one practical question: what changes when Java can afford a much cheaper thread-per-task model for waiting-heavy work?
+Cheap threads do not remove design mistakes around locking and blocking.
 
-## The Pain Before It
+## Naive Approach
 
-Traditional platform threads become expensive when you need huge numbers of tasks that mostly wait:
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-- remote service calls
-- database waits
-- socket waits
-- file waits
+## Failure
 
-Virtual threads help when the work is mostly waiting. They do not repair bad locking, CPU-heavy algorithms, or poor resource design.
+- Avoiding Virtual Thread Misuse: Cheap threads do not remove design mistakes around locking and blocking.
+- Running Tasks With Virtual Thread Executor: Real request flows often need many independent waiting tasks.
+- Why virtual threads matter: assuming virtual threads make every workload faster
+- Why virtual threads matter: Why it works: the code stays simple and blocking-style, but the thread is lightweight.
 
-## Java Creator Mindset
+## Fix
 
-Read the chapter as a small set of related ideas around virtual Threads, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-- virtual threads are not “automatic performance mode”
-- they do not make CPU-bound work faster
-- they do not justify long blocking inside synchronized code
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around virtual Threads, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Avoiding Virtual Thread Misuse](topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java)
 2. Run [Running Tasks With Virtual Thread Executor](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java)
 3. Run [Why virtual threads matter](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java)
 
-## What To Notice
+Example:
 
-- a virtual thread is still a `Thread`
-- the coding style can stay direct and blocking
-- the main win is the cost model for waiting-heavy tasks
-- poor locking and poor design still hurt
+```java
+    public static void main(String[] args) throws Exception {
+        explainWhy();
+        runRequestFanOutExample();
+        System.out.println();
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- a virtual-thread-per-task executor matches request-style code well");
+        System.out.println("- each task can block independently without forcing callback-style code");
+        System.out.println("- you still need to think about failure and resource usage");
+    }
+```
 
-## Mental Model
+What happens:
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+- Why it works: each submitted task gets a lightweight thread and the caller waits for results normally.
+- Use this when: many tasks mostly wait and the code should stay direct.
+- Avoid this when: you still need complex shared-state coordination or CPU-heavy optimization.
 
-## Common Mistakes
+Why it matters:
 
-- virtual threads are not “automatic performance mode”
-- they do not make CPU-bound work faster
-- they do not justify long blocking inside synchronized code
+Real request flows often need many independent waiting tasks.
 
-## Tradeoffs
+## Improvement
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Example:
 
-## Use / Avoid
+```java
+    public static void main(String[] args) throws InterruptedException {
+        explainWhy();
+        wrongMentalModel();
+        runBlockingTaskExample();
+        System.out.println();
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- a virtual thread is still a Thread");
+        System.out.println("- virtual threads are useful when tasks spend time waiting");
+        System.out.println("- they improve the cost model, not the business logic");
+    }
+```
 
-### Use It When
+What happens:
 
-- you are handling many blocking tasks
-- callback-heavy code is hurting readability
-- you want a clearer request-per-task style
+- assuming virtual threads make every workload faster
+- Why it works: the code stays simple and blocking-style, but the thread is lightweight.
+- Use this when: tasks mostly wait on external systems.
 
-## Practice
+Why it matters:
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+Waiting-heavy systems need a cheaper way to express many concurrent tasks.
 
-## Summary
+After this chapter, you should be able to explain why Virtual Threads exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-After this chapter, you should be able to explain the main decisions behind virtual threads and connect them back to the runnable examples.
+## What stays stable
 
-## Next Chapter
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Avoiding Virtual Thread Misuse](topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java), [Running Tasks With Virtual Thread Executor](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java), and [Why virtual threads matter](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java) all protect the same design pressure from different angles.
 
-Move to [Structured Concurrency Learning Kit](../ch03_structured_concurrency/ChapterGuide.md) after this chapter.
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Avoiding Virtual Thread Misuse](topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java) starts with the raw behavior, [Running Tasks With Virtual Thread Executor](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java) adds the safety rule, and [Why virtual threads matter](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: One task can map naturally to one lightweight thread.
+
+## Try this
+
+- Run [Avoiding Virtual Thread Misuse](topics/avoiding_virtual_thread_misuse/AvoidingVirtualThreadMisuse.java) and note the first thing that breaks.
+- Run [Running Tasks With Virtual Thread Executor](topics/running_tasks_with_virtual_thread_executor/RunningTasksWithVirtualThreadExecutor.java) and remove the safety rule or coordination step.
+- Run [Why virtual threads matter](topics/why_virtual_threads_matter/WhyVirtualThreadsMatter.java) and compare the result with the naive approach.

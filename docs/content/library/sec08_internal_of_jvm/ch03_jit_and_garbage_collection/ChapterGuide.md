@@ -1,141 +1,102 @@
 # JIT And Garbage Collection Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter exists because many developers know the words JIT and GC but cannot connect them to runtime behavior.
+This chapter shows what breaks when jit and garbage collection is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-## The Pain Before It
+## Naive Approach
 
-Weak JVM explanations often sound like this:
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-- "Java is interpreted."
-- "The garbage collector just deletes memory."
-- "G1, ZGC, and Shenandoah are just names."
+## Failure
 
-Those answers miss the real design pressure: Java is trying to run managed code fast enough while still reclaiming memory safely.
+- The naive choice works for a tiny case and fails when the assumption changes.
+- The failure is usually visible in order, ownership, or cleanup.
+- The bug matters because the code still looks reasonable at a glance.
 
-## Java Creator Mindset
+## Fix
 
-Read this chapter around two moving runtime loops:
-
-- hot code gets optimized
-- unreachable objects get reclaimed
-
-The JVM is not frozen after startup. It keeps adapting while the program runs.
-
-## How You Might Invent It
-
-If Java only interpreted bytecode forever, long-running applications would leave a lot of performance on the table.
-
-If Java never reclaimed unreachable objects, server processes would just keep growing.
-
-So the runtime needs two ongoing systems:
-
-- JIT compilation for hot paths
-- garbage collection for memory recovery
-
-## Naive Attempt
-
-The naive mental model is:
-
-- compilation happens only before runtime
-- memory cleanup is one fixed delete algorithm
-
-## Why It Breaks
-
-That breaks when you need to explain:
-
-- why repeated code paths can become faster over time
-- why low-pause collectors exist
-- why GC choice is about tradeoffs, not one universal "best collector"
-
-## Final Java Direction
-
-Keep this chapter simple:
-
-- JIT is about optimizing frequently executed code
-- GC is about reclaiming memory with different pause/throughput tradeoffs
-
-Do not pretend to be a JVM tuner. Build the first correct mental model.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [GC Algorithms Comparison](topics/gc_algorithms_comparison/GcAlgorithmsComparison.java)
 2. Run [GC Strategies](topics/gc_strategies/GcStrategies.java)
 3. Run [JIT Compilation And Tiered Compilation](topics/jit_and_tiered_compilation/JitAndTieredCompilation.java)
 4. Run [Jit Basics](topics/jit_basics/JitBasics.java)
 
-## What To Notice
+Example:
 
-- repeated execution is the signal that attracts stronger optimization
-- GC strategy names matter because runtime goals differ
-- low pause and high throughput are related but not identical goals
+```java
+    public static void main(String[] args) {
+        long sum = 0;
+        for (int i = 0; i < 100_000; i++) {
+            sum += hotMethod(i);
+        }
+        System.out.println("Concept: hot methods get optimized by the JIT over time.");
+        System.out.println("sum = " + sum);
+        System.out.println("Use -XX:+PrintCompilation to observe compilation decisions when needed.");
+        System.out.println("Why it matters: tiered compilation moves from interpreted code to faster compiled code for hot paths.");
+    }
+```
 
-### Compare With
+What happens:
 
-| Compare | Left Side | Right Side |
-| --- | --- | --- |
-| interpreted only | simpler mental model | lower long-run performance |
-| JIT compilation | more adaptive runtime | more complex implementation |
-| GC choice | throughput focus | pause-time focus |
+- Use -XX:+PrintCompilation to observe compilation decisions when needed.
+- Why it matters: tiered compilation moves from interpreted code to faster compiled code for hot paths.
 
-### Interview Focus
+Why it matters:
 
-Q: What is the simplest correct explanation of JIT?  
-A: The JVM watches hot code and compiles frequently used paths more aggressively while the program runs.
+After this chapter, you can explain the rule behind jit and garbage collection and choose the right approach with less guesswork.
 
-Q: Why are there multiple collectors?  
-A: Because workloads trade throughput, latency, and memory behavior differently.
+## Improvement
 
-## Mental Model
+Example:
 
-Use this runtime picture:
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: the JVM optimizes hot code paths while the program is running.");
+        long sum = 0;
+        for (int round = 0; round < 10_000; round++) {
+            sum += round % 10;
+        }
 
-- your code runs
-- the JVM observes patterns
-- hot code gets optimized
-- unreachable objects become GC candidates
+        // Expected output:
+        // sum = 45000
+        System.out.println("sum = " + sum);
+        System.out.println("Why it matters: the JIT watches frequently executed code and compiles it more aggressively than cold paths.");
+    }
+```
 
-The runtime keeps making decisions after startup.
+What happens:
 
-## Common Mistakes
+- Why it matters: the JIT watches frequently executed code and compiles it more aggressively than cold paths.
 
-- saying Java is "only interpreted"
-- treating GC like one universal algorithm
-- answering collector questions with brand names but no tradeoff explanation
+Why it matters:
 
-## Tradeoffs
+After this chapter, you can explain the rule behind jit and garbage collection and choose the right approach with less guesswork.
 
-JIT gives you better long-run performance but adds runtime complexity.
+After this chapter, you should be able to explain why Jit And Garbage Collection exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-GC gives you managed memory but forces tradeoffs among:
+## What stays stable
 
-- pause time
-- throughput
-- memory overhead
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [GC Algorithms Comparison](topics/gc_algorithms_comparison/GcAlgorithmsComparison.java), [JIT Compilation And Tiered Compilation](topics/jit_and_tiered_compilation/JitAndTieredCompilation.java), and [Jit Basics](topics/jit_basics/JitBasics.java) all protect the same design pressure from different angles.
 
-## Use / Avoid
+## What changes
 
-### Use It When
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [GC Algorithms Comparison](topics/gc_algorithms_comparison/GcAlgorithmsComparison.java) starts with the raw behavior, [JIT Compilation And Tiered Compilation](topics/jit_and_tiered_compilation/JitAndTieredCompilation.java) adds the safety rule, and [Jit Basics](topics/jit_basics/JitBasics.java) moves to the cleaner abstraction.
 
-- you need a first JVM performance model
-- you are preparing for backend interviews
-- you want to talk about GC choices without hand-waving
+## Rule
 
-### Avoid It When
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
 
-- you are guessing collector names without explaining the runtime goal behind them
+## Try this
 
-## Practice
-
-### Small Exercise
-
-Take a service with latency-sensitive traffic. Explain why a low-pause collector might be discussed, and then explain why that still does not mean "always best."
-
-## Summary
-
-After this chapter, you should be able to explain the JVM as an adaptive runtime:
-
-- JIT optimizes hot paths
-- GC reclaims memory
-- collector choice is about tradeoffs, not magic
+- Run [GC Algorithms Comparison](topics/gc_algorithms_comparison/GcAlgorithmsComparison.java) and note the first thing that breaks.
+- Run [JIT Compilation And Tiered Compilation](topics/jit_and_tiered_compilation/JitAndTieredCompilation.java) and remove the safety rule or coordination step.
+- Run [Jit Basics](topics/jit_basics/JitBasics.java) and compare the result with the naive approach.

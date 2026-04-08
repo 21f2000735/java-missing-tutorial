@@ -1,61 +1,114 @@
 # HTTP Client Basics Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Many systems call external APIs. Before worrying about retries and resilience, the learner should understand the basic request model.
+This chapter shows what breaks when http client basics is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for http client basics, the APIs feel like isolated facts instead of answers to one connected problem.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
+## Failure
 
-Read the chapter as a small set of related ideas around hTTP Client Basics, not as isolated trivia.
+- The naive choice works for a tiny case and fails when the assumption changes.
+- The failure is usually visible in order, ownership, or cleanup.
+- The bug matters because the code still looks reasonable at a glance.
 
-## How You Might Invent It
+## Fix
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around hTTP Client Basics, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java)
 
-## What To Notice
+Example:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: build a clear outbound HTTP request");
+        System.out.println("Real-world problem: a Java service calls a shipping-rate API.");
+        System.out.println();
 
-## Mental Model
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.example.com/shipping/rates"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+        // Expected output:
+        // method = GET
+        // host = api.example.com
+        System.out.println("method = " + request.method());
+        System.out.println("host = " + request.uri().getHost());
+        System.out.println("Why it works: the request object collects HTTP intent before any network call is made.");
+    }
+```
 
-## Common Mistakes
+What happens:
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+- Real-world problem: a Java service calls a shipping-rate API.
+- Why it works: the request object collects HTTP intent before any network call is made.
 
-## Tradeoffs
+Why it matters:
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+After this chapter, you can explain the rule behind http client basics and choose the right approach with less guesswork.
 
-## Use / Avoid
+## Improvement
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Example:
 
-## Practice
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: build a clear outbound HTTP request");
+        System.out.println("Real-world problem: a Java service calls a shipping-rate API.");
+        System.out.println();
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("https://api.example.com/shipping/rates"))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
 
-## Summary
+        // Expected output:
+        // method = GET
+        // host = api.example.com
+        System.out.println("method = " + request.method());
+        System.out.println("host = " + request.uri().getHost());
+        System.out.println("Why it works: the request object collects HTTP intent before any network call is made.");
+    }
+```
 
-After this chapter, you should be able to explain the main decisions behind http client basics and connect them back to the runnable examples.
+What happens:
+
+- Real-world problem: a Java service calls a shipping-rate API.
+- Why it works: the request object collects HTTP intent before any network call is made.
+
+Why it matters:
+
+After this chapter, you can explain the rule behind http client basics and choose the right approach with less guesswork.
+
+After this chapter, you should be able to explain why Http Client Basics exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
+
+## What stays stable
+
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java), [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java), and [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) starts with the raw behavior, [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) adds the safety rule, and [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
+
+## Try this
+
+- Run [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) and note the first thing that breaks.
+- Run [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) and remove the safety rule or coordination step.
+- Run [Building Requests With HttpClient](topics/building_requests_with_http_client/BuildingRequestsWithHttpClient.java) and compare the result with the naive approach.

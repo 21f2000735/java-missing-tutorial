@@ -1,134 +1,107 @@
 # Collections Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Collections are the first place where Java starts feeling like API choice matters, not just syntax.
-This chapter teaches the difference between `List`, `Set`, `Map`, immutable collections, and `Comparator`.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-## The Pain Before It
+## Naive Approach
 
-Before a learner has a mental model for collections, the APIs feel like unrelated facts instead of answers to one connected problem.
+- Sorting only by one fixed rule inside the class makes it harder to sort the same object in different ways later.
 
-## Java Creator Mindset
+## Failure
 
-- `List` keeps order and allows duplicates.
-- `Set` keeps unique values.
-- `Map` stores `key -> value` pairs.
-- immutable collections protect shared data from accidental change.
-- `Comparator` lets Java sort the same object in different ways.
+- Comparator: Sorting only by one fixed rule inside the class makes it harder to sort the same object in different ways later.
+- Immutability: Sharing one mutable list across many methods can create bugs when one method changes it unexpectedly.
+- List Set Map: Using a List for coupon codes can keep the same coupon more than once by mistake.
 
-## How You Might Invent It
+## Fix
 
-```mermaid
-mindmap
-  root((Collections))
-    List
-      ordered
-      duplicates allowed
-    Set
-      unique values
-    Map
-      key value pairs
-    Comparator
-      custom sorting
-    Immutability
-      safer reads
-      no accidental updates
-```
-
-## Naive Attempt
-
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| `List` vs `Set` | order and duplicates matter | uniqueness matters more than duplicates |
-| mutable vs immutable collection | the same owner must keep updating data | callers should not accidentally change shared data |
-| built-in order vs comparator | one natural order is enough everywhere | sorting rules change by use case |
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- use `List` when order matters.
-- use `Set` when duplicates should not exist.
-- use `Map` when you need lookup by key.
-- use immutable collections when callers should not mutate shared data.
-- use `Comparator` when sorting rules must be explicit.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Comparator](topics/comparator/Comparator.java)
 2. Run [Immutability](topics/immutability/Immutability.java)
 3. Run [List Set Map](topics/list_set_map/ListSetMap.java)
 
-## What To Notice
+Example:
 
-- the collection type is part of the API contract, not just a storage detail
-- immutable collections reduce defensive coding and make concurrent reading safer
-- comparator design affects correctness, reproducibility, and sometimes cache or query behavior
+```java
+    public static void main(String[] args) {
+        wrongExample();
+        // Expected output:
+        // Java prints the list, then shows that modification is not allowed.
+        List<String> fixedTopics = sampleTopics();
+        System.out.println("fixedTopics = " + fixedTopics);
+        try {
+            fixedTopics.add("modules");
+        } catch (UnsupportedOperationException exception) {
+            System.out.println("cannot modify immutable list");
+        }
+        System.out.println("Lesson: immutable collections prevent accidental updates.");
+        System.out.println("Senior note: immutability reduces defensive-copy pressure and makes shared-state bugs rarer.");
+    }
+```
 
-## Mental Model
+What happens:
 
-Think of the chapter as three questions:
+- Sharing one mutable list across many methods can create bugs when one method changes it unexpectedly.
 
-1. Do I need order, uniqueness, or key lookup?
-2. Should the data be mutable or protected?
-3. Do I need one default sort or a custom sort rule?
+Why it matters:
 
-## Common Mistakes
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-- memorizing labels without building a mental model for when the concept actually helps
-- choosing `Set` when duplicates are meaningful
-- choosing `Map` when plain ordered values are enough
+## Improvement
 
-## Tradeoffs
+Example:
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| `List` vs `Set` | order and duplicates matter | uniqueness matters more than duplicates |
-| mutable vs immutable collection | the same owner must keep updating data | callers should not accidentally change shared data |
-| built-in order vs comparator | one natural order is enough everywhere | sorting rules change by use case |
+```java
+    public static void main(String[] args) {
+        overview();
+        wrongExample();
+        // Expected output:
+        // cartItems keeps duplicates, couponCodes stay unique, quantities support product lookup.
+        List<String> cartItems = sampleCartItems();
+        Set<String> couponCodes = sampleCouponCodes();
+        Map<String, Integer> quantitiesBySku = sampleQuantitiesBySku();
+        System.out.println("cartItems = " + cartItems);
+        System.out.println("couponCodes = " + couponCodes);
+        System.out.println("quantitiesBySku = " + quantitiesBySku);
+        System.out.println("What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU.");
+        System.out.println("Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.");
+        System.out.println("Senior note: collection choice affects API clarity, mutation rules, and algorithmic cost.");
+    }
+```
 
-## Use / Avoid
+What happens:
 
-### Use It When
+- Using a List for coupon codes can keep the same coupon more than once by mistake.
 
-- use `List` when order matters
-- use `Set` when duplicates should not exist
-- use `Map` when you need lookup by key
-- use `Comparator` when sorting rules must be explicit
+Why it matters:
 
-### Avoid It When
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-- do not use `Set` if duplicates are meaningful
-- do not use `Map` if you only need plain ordered values
-- do not use mutable collections if shared code should not update them
+After this chapter, you should be able to explain why Collections exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-## Practice
+## What stays stable
 
-1. Which collection type allows duplicates and keeps order?
-2. What happens if you call `add()` on `List.of(...)`?
-3. When is a comparator better than changing the class itself?
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Comparator](topics/comparator/Comparator.java), [Immutability](topics/immutability/Immutability.java), and [List Set Map](topics/list_set_map/ListSetMap.java) all protect the same design pressure from different angles.
 
-### Mini Case Study
+## What changes
 
-Imagine a shopping app.
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Comparator](topics/comparator/Comparator.java) starts with the raw behavior, [Immutability](topics/immutability/Immutability.java) adds the safety rule, and [List Set Map](topics/list_set_map/ListSetMap.java) moves to the cleaner abstraction.
 
-- `List` keeps products in cart order
-- `Set` keeps unique coupon codes
-- `Map` stores product id to quantity
-- `Comparator` sorts products by price or name
-- immutable collections protect a final order summary
+## Rule
 
-## Summary
+👉 Rule: First understand the problem in plain language, then map that idea to the Java code.
 
-- `List` keeps order and allows duplicates
-- `Set` keeps unique values
-- `Map` stores `key -> value` pairs
-- immutable collections protect shared data
-- `Comparator` makes sorting rules explicit
+## Try this
 
-## Next Chapter
-
-Move to [Maps And Iterators In Depth Learning Kit](../ch02_maps_and_iterators_in_depth/ChapterGuide.md) after this chapter.
+- Run [Comparator](topics/comparator/Comparator.java) and note the first thing that breaks.
+- Run [Immutability](topics/immutability/Immutability.java) and remove the safety rule or coordination step.
+- Run [List Set Map](topics/list_set_map/ListSetMap.java) and compare the result with the naive approach.

@@ -1,61 +1,84 @@
 # Metadata And Annotations Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter teaches the concept of attaching meaning to code beyond plain statements.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for metadata and annotations, the APIs feel like isolated facts instead of answers to one connected problem.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
+## Failure
 
-Read the chapter as a small set of related ideas around metadata And Annotations, not as isolated trivia.
+- Marking Api Contracts: Java programs stay useful when they are organized around ideas, not only syntax.
 
-## How You Might Invent It
+## Fix
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around metadata And Annotations, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java)
 
-## What To Notice
+Example:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+```java
+    public static void main(String[] args) {
+        PremiumDiscountService service = new PremiumDiscountService();
+        System.out.println("discount = " + service.discountInCents());
+        System.out.println("Concept: annotations can communicate intent to readers, compilers, and tools.");
+    }
+```
 
-## Mental Model
+What happens:
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+- annotations can communicate intent to readers, compilers, and tools.
 
-## Common Mistakes
+Why it matters:
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-## Tradeoffs
+## Improvement
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Example:
 
-## Use / Avoid
+```java
+    public static void main(String[] args) {
+        PremiumDiscountService service = new PremiumDiscountService();
+        System.out.println("discount = " + service.discountInCents());
+        System.out.println("Concept: annotations can communicate intent to readers, compilers, and tools.");
+    }
+```
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+What happens:
 
-## Practice
+- annotations can communicate intent to readers, compilers, and tools.
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+Why it matters:
 
-## Summary
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-After this chapter, you should be able to explain the main decisions behind metadata and annotations and connect them back to the runnable examples.
+After this chapter, you should be able to explain why Metadata And Annotations exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
+
+## What stays stable
+
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java), [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java), and [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java) starts with the raw behavior, [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java) adds the safety rule, and [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: First understand the problem in plain language, then map that idea to the Java code.
+
+## Try this
+
+- Run [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java) and note the first thing that breaks.
+- Run [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java) and remove the safety rule or coordination step.
+- Run [Marking Api Contracts](topics/marking_api_contracts/MarkingApiContracts.java) and compare the result with the naive approach.

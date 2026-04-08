@@ -1,169 +1,90 @@
 # Classes And Objects Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Business software is full of things with identity and behavior:
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-- a student
-- a vehicle
-- an order
-- a notification
+## Naive Approach
 
-If the code cannot model those clearly, everything later becomes harder:
-validation, testing, maintenance, and debugging.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## The Pain Before It
+## Failure
 
-- how to model a student, product, or notification in code
-- how to avoid copy-paste behavior across similar types
-- how to write code that depends on abstractions instead of concrete classes
+- Classes Objects: Java programs stay useful when they are organized around ideas, not only syntax.
+- Inheritance: Java programs stay useful when they are organized around ideas, not only syntax.
+- Polymorphism: Java programs stay useful when they are organized around ideas, not only syntax.
 
-## Java Creator Mindset
+## Fix
 
-### Classes And Objects
-
-- a class is the blueprint
-- an object is the working instance
-- fields describe state
-- methods describe behavior
-
-### Inheritance
-
-- inheritance models an `is-a` relationship
-- it is useful when a child type is a specialized version of a parent type
-- it becomes harmful when used only to reuse code mechanically
-
-### Polymorphism
-
-- polymorphism lets one contract support many implementations
-- it is useful when the caller should not care about the exact subtype
-
-## How You Might Invent It
-
-```mermaid
-mindmap
-  root((Classes And Objects))
-    Classes and Objects
-      state
-      behavior
-    Inheritance
-      reuse
-      specialization
-    Polymorphism
-      common contract
-      different behavior
-```
-
-## Naive Attempt
-
-- class vs object:
-  a class defines the shape, an object is one real instance
-- inheritance vs composition:
-  inheritance specializes a parent, composition builds behavior from parts
-- compile-time type vs runtime type:
-  the reference type and the real object type are not always the same
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-### Classes And Objects
-
-- a class is the blueprint
-- an object is the working instance
-- fields describe state
-- methods describe behavior
-
-### Inheritance
-
-- inheritance models an `is-a` relationship
-- it is useful when a child type is a specialized version of a parent type
-- it becomes harmful when used only to reuse code mechanically
-
-### Polymorphism
-
-- polymorphism lets one contract support many implementations
-- it is useful when the caller should not care about the exact subtype
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Classes Objects](topics/classes_objects/ClassesObjects.java)
 2. Run [Inheritance](topics/inheritance/Inheritance.java)
 3. Run [Polymorphism](topics/polymorphism/Polymorphism.java)
 
-## What To Notice
+Example:
 
-### Compare With
-
-- class vs object:
-  a class defines the shape, an object is one real instance
-- inheritance vs composition:
-  inheritance specializes a parent, composition builds behavior from parts
-- compile-time type vs runtime type:
-  the reference type and the real object type are not always the same
-
-### Interview Focus
-
-Q: When is inheritance a bad choice?  
-A: When the relationship is only code reuse and not true specialization.
-
-Q: Why is polymorphism useful in production code?  
-A: It reduces coupling by letting callers depend on behavior contracts instead of concrete implementations.
-
-Q: What is the difference between composition and inheritance?  
-A: Composition builds behavior from collaborating objects, while inheritance reuses and specializes a parent type.
-
-## Mental Model
-
-```mermaid
-mindmap
-  root((Classes And Objects))
-    Classes and Objects
-      state
-      behavior
-    Inheritance
-      reuse
-      specialization
-    Polymorphism
-      common contract
-      different behavior
+```java
+    public static void main(String[] args) {
+        Vehicle bike = new Bike("Road Bike");
+        Vehicle car = new Car("City Car");
+        System.out.println(bike.describe());
+        System.out.println(car.describe());
+        System.out.println("Lesson: subclasses reuse common state and specialize behavior.");
+    }
 ```
 
-## Common Mistakes
+What happens:
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+- subclasses reuse common state and specialize behavior.
 
-## Tradeoffs
+Why it matters:
 
-- class vs object:
-  a class defines the shape, an object is one real instance
-- inheritance vs composition:
-  inheritance specializes a parent, composition builds behavior from parts
-- compile-time type vs runtime type:
-  the reference type and the real object type are not always the same
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-## Use / Avoid
+## Improvement
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Example:
 
-## Practice
+```java
+    public static void main(String[] args) {
+        List<Notification> notifications = List.of(new Email(), new Sms(), new Push());
+        notifications.forEach(notification -> System.out.println(notification.send("Discount starts at 8 PM")));
+        System.out.println("Lesson: the same interface call can trigger different behavior based on the actual object.");
+    }
+```
 
-1. What is the difference between a class and an object?
-2. Why is overriding resolved differently from field access?
-3. When would composition be safer than inheritance?
+What happens:
 
-### Mini Case Study
+- the same interface call can trigger different behavior based on the actual object.
 
-Imagine a notification system.
+Why it matters:
 
-- a base notification contract defines `send()`
-- email, SMS, and push notifications implement it differently
-- the caller only knows it is sending a notification
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-That is a small but real example of polymorphism helping design.
+After this chapter, you should be able to explain why Classes And Objects exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-## Summary
+## What stays stable
 
-After this chapter, you should be able to explain the main decisions behind classes and objects and connect them back to the runnable examples.
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Classes Objects](topics/classes_objects/ClassesObjects.java), [Inheritance](topics/inheritance/Inheritance.java), and [Polymorphism](topics/polymorphism/Polymorphism.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Classes Objects](topics/classes_objects/ClassesObjects.java) starts with the raw behavior, [Inheritance](topics/inheritance/Inheritance.java) adds the safety rule, and [Polymorphism](topics/polymorphism/Polymorphism.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: First understand the problem in plain language, then map that idea to the Java code.
+
+## Try this
+
+- Run [Classes Objects](topics/classes_objects/ClassesObjects.java) and note the first thing that breaks.
+- Run [Inheritance](topics/inheritance/Inheritance.java) and remove the safety rule or coordination step.
+- Run [Polymorphism](topics/polymorphism/Polymorphism.java) and compare the result with the naive approach.

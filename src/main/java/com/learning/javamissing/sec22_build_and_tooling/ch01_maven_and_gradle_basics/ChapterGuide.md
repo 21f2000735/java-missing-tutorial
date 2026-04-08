@@ -2,15 +2,17 @@
 
 ## Problem
 
-This chapter gives the practical build-system explanation many Java learners never get early enough.
+This chapter shows what breaks when maven and gradle basics is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
 ## Naive Approach
 
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
 ## Failure
 
-- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- The naive choice works for a tiny case and fails when the assumption changes.
+- The failure is usually visible in order, ownership, or cleanup.
+- The bug matters because the code still looks reasonable at a glance.
 
 ## Fix
 
@@ -19,23 +21,60 @@ Run the topics in this order:
 1. Run [Build Files And Dependency Scopes](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java)
 2. Run [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java)
 
-What to observe:
+Example:
 
-- Which topic shows the failure first: [Build Files And Dependency Scopes](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java).
-- Which topic narrows the rule: [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java).
-- Which topic shows the cleaner abstraction: [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java).
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: packaging format should match deployment style.");
+        System.out.println("jar -> general Java archive");
+        System.out.println("war -> web archive for servlet containers");
+        System.out.println("fat jar -> app plus dependencies in one deployable unit");
+        System.out.println("Spring Boot made executable jars common because embedded servers simplified deployment.");
+    }
+```
+
+What happens:
+
+- jar -> general Java archive
+- war -> web archive for servlet containers
+- fat jar -> app plus dependencies in one deployable unit
+
+Why it matters:
+
+After this chapter, you can explain the rule behind maven and gradle basics and choose the right approach with less guesswork.
 
 ## Improvement
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+Example:
+
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: packaging format should match deployment style.");
+        System.out.println("jar -> general Java archive");
+        System.out.println("war -> web archive for servlet containers");
+        System.out.println("fat jar -> app plus dependencies in one deployable unit");
+        System.out.println("Spring Boot made executable jars common because embedded servers simplified deployment.");
+    }
+```
+
+What happens:
+
+- jar -> general Java archive
+- war -> web archive for servlet containers
+- fat jar -> app plus dependencies in one deployable unit
+
+Why it matters:
+
+After this chapter, you can explain the rule behind maven and gradle basics and choose the right approach with less guesswork.
 
 After this chapter, you should be able to explain why Maven And Gradle Basics exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
 ## What stays stable
 
 - The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
-- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
-- The real pressure stays the same even when the API changes.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Build Files And Dependency Scopes](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java), [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java), and [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java) all protect the same design pressure from different angles.
 
 ## What changes
 
@@ -43,13 +82,14 @@ After this chapter, you should be able to explain why Maven And Gradle Basics ex
 - The API shape changes from topic to topic.
 - The failure mode changes when one assumption is removed.
 - The abstraction cost changes as the fix becomes stronger.
+- [Build Files And Dependency Scopes](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java) starts with the raw behavior, [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java) adds the safety rule, and [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java) moves to the cleaner abstraction.
 
 ## Rule
 
-👉 Rule: Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
 
 ## Try this
 
 - Run [Build Files And Dependency Scopes](topics/build_files_and_dependency_scopes/BuildFilesAndDependencyScopes.java) and note the first thing that breaks.
-- Run [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java) and write down what the rule becomes.
+- Run [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java) and remove the safety rule or coordination step.
 - Run [Jar War And Spring Boot Why](topics/jar_war_and_spring_boot_why/JarWarAndSpringBootWhy.java) and compare the result with the naive approach.

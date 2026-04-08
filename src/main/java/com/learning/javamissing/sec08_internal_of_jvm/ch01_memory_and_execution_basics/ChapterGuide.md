@@ -10,9 +10,9 @@ The naive move is to pick the first obvious API and assume it will stay correct 
 
 ## Failure
 
-- That wrong model breaks when:
-- one alias mutates shared state
-- method calls appear to "change another variable"
+- The naive choice works for a tiny case and fails when the assumption changes.
+- The failure is usually visible in order, ownership, or cleanup.
+- The bug matters because the code still looks reasonable at a glance.
 
 ## Fix
 
@@ -21,13 +21,65 @@ Run the topics in this order:
 1. Run [GC Roots And Reference Types](topics/gc_roots_and_references/GcRootsAndReferences.java)
 2. Run [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java)
 
-What to observe:
+Example:
 
-- Which topic shows the failure first: [GC Roots And Reference Types](topics/gc_roots_and_references/GcRootsAndReferences.java).
-- Which topic narrows the rule: [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java).
-- Which topic shows the cleaner abstraction: [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java).
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: local variable values and object state are not the same thing");
+        System.out.println("Real-world problem: two variables point to the same cart object and one update surprises the learner.");
+        System.out.println();
+
+        Cart first = new Cart(2);
+        Cart second = first;
+        second.itemCount = 5;
+
+        // Expected output:
+        // first.itemCount = 5
+        // second.itemCount = 5
+        System.out.println("first.itemCount = " + first.itemCount);
+        System.out.println("second.itemCount = " + second.itemCount);
+        System.out.println("Why it works: both variables refer to the same heap object, so one mutation is visible through both references.");
+    }
+```
+
+What happens:
+
+- Real-world problem: two variables point to the same cart object and one update surprises the learner.
+- Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
+
+Why it matters:
+
+After this chapter, you can explain the rule behind memory and execution basics and choose the right approach with less guesswork.
 
 ## Improvement
+
+Example:
+
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: local variable values and object state are not the same thing");
+        System.out.println("Real-world problem: two variables point to the same cart object and one update surprises the learner.");
+        System.out.println();
+
+        Cart first = new Cart(2);
+        Cart second = first;
+        second.itemCount = 5;
+
+        // Expected output:
+        // first.itemCount = 5
+        // second.itemCount = 5
+        System.out.println("first.itemCount = " + first.itemCount);
+        System.out.println("second.itemCount = " + second.itemCount);
+        System.out.println("Why it works: both variables refer to the same heap object, so one mutation is visible through both references.");
+    }
+```
+
+What happens:
+
+- Real-world problem: two variables point to the same cart object and one update surprises the learner.
+- Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
+
+Why it matters:
 
 After this chapter, you can explain the rule behind memory and execution basics and choose the right approach with less guesswork.
 
@@ -36,8 +88,9 @@ After this chapter, you should be able to explain why Memory And Execution Basic
 ## What stays stable
 
 - The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
-- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
-- The real pressure stays the same even when the API changes.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [GC Roots And Reference Types](topics/gc_roots_and_references/GcRootsAndReferences.java), [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java), and [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) all protect the same design pressure from different angles.
 
 ## What changes
 
@@ -45,6 +98,7 @@ After this chapter, you should be able to explain why Memory And Execution Basic
 - The API shape changes from topic to topic.
 - The failure mode changes when one assumption is removed.
 - The abstraction cost changes as the fix becomes stronger.
+- [GC Roots And Reference Types](topics/gc_roots_and_references/GcRootsAndReferences.java) starts with the raw behavior, [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) adds the safety rule, and [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) moves to the cleaner abstraction.
 
 ## Rule
 
@@ -53,5 +107,5 @@ After this chapter, you should be able to explain why Memory And Execution Basic
 ## Try this
 
 - Run [GC Roots And Reference Types](topics/gc_roots_and_references/GcRootsAndReferences.java) and note the first thing that breaks.
-- Run [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) and write down what the rule becomes.
+- Run [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) and remove the safety rule or coordination step.
 - Run [Understanding Stack, Heap, And References](topics/understanding_stack_heap_and_references/UnderstandingStackHeapAndReferences.java) and compare the result with the naive approach.

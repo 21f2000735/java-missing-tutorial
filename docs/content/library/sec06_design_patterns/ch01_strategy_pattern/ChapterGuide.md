@@ -1,188 +1,130 @@
 # Strategy Pattern
 
-## Why This Chapter Exists
+## Problem
 
-Strategy solves one recurring design pressure: the workflow stays stable, but one business rule keeps changing.
+Business rules often change faster than the workflow that uses them.
 
-In this chapter, checkout is the stable workflow. Discount policy is the changing part.
+## Naive Approach
 
-## The Pain Before It
+- Watch out: if callers still choose concrete strategy classes everywhere, the branching just moved instead of disappearing.
+- Try this next: add a PremiumDiscount strategy and notice that applyDiscount does not need to change.
 
-Teams usually start with one branch:
+## Failure
 
-- festival discount
-- student discount
-- premium discount later
+- Strategy pattern: Watch out: if callers still choose concrete strategy classes everywhere, the branching just moved instead of disappearing.
+- Strategy pattern: Try this next: add a PremiumDiscount strategy and notice that applyDiscount does not need to change.
 
-The first version feels harmless. Then checkout becomes the place where every marketing rule lands.
+## Fix
 
-That creates three problems:
-
-- the checkout flow grows branching logic that is not really checkout logic
-- each new rule risks breaking an existing rule
-- testing one rule means mentally re-reading the whole method
-
-## Java Creator Mindset
-
-Do not ask, "How do I use the pattern name?"
-
-Ask:
-
-- what part of this code should stay stable?
-- what part is expected to vary?
-- can the changing part sit behind one small contract?
-
-That is the real strategy mindset.
-
-## How You Might Invent It
-
-Imagine writing checkout from scratch.
-
-You know checkout must:
-
-1. take an amount
-2. apply one discount rule
-3. return the final amount
-
-The purchase flow itself does not change much. The discount formula does.
-
-That suggests a split:
-
-- keep `applyDiscount()` simple
-- move each discount formula into its own implementation
-
-## Naive Attempt
-
-The naive design is a single method full of `if` or `switch` branches:
-
-```java
-if (customerType.equals("FESTIVAL")) { ... }
-else if (customerType.equals("STUDENT")) { ... }
-else if (customerType.equals("PREMIUM")) { ... }
-```
-
-It works at first, but the caller now owns every rule.
-
-## Why It Breaks
-
-That design breaks down when:
-
-- new rules keep arriving
-- each rule needs separate tests
-- more than one workflow needs the same discount logic
-
-You end up changing checkout for marketing reasons. That is the wrong responsibility boundary.
-
-## Final Java Direction
-
-The chapter direction is simple:
-
-- define a small behavior contract: `DiscountPolicy`
-- keep the stable workflow in one method: `applyDiscount()`
-- add one class per changing rule
-
-The caller depends on the contract, not on one concrete discount formula.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java)
 
-## What To Notice
+Example:
 
-- `applyDiscount(int amount, DiscountPolicy policy)` is the stable seam
-- `FestivalDiscount` and `StudentDiscount` vary independently
-- the design win is not "more classes"; it is "fewer reasons to change the caller"
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: choose one behavior through a strategy interface");
+        System.out.println("Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month.");
+        System.out.println("Real-world problem: checkout uses different discount rules for students and festivals.");
+        System.out.println("Mental model: checkout should not know every discount formula.");
+        System.out.println();
 
-### Compare With
+        int festivalFinalAmount = applyDiscount(2_000, new FestivalDiscount());
+        int studentFinalAmount = applyDiscount(2_000, new StudentDiscount());
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| `if/switch` | there are one or two tiny stable cases | new rules will keep appearing |
-| inheritance | the whole type meaning changes | only one behavior changes |
-| enum branching | logic is small and static | each rule needs its own growth and tests |
+        // Expected output:
+        // festivalFinalAmount = 1700
+        // studentFinalAmount = 1800
+        System.out.println("festivalFinalAmount = " + festivalFinalAmount);
+        System.out.println("studentFinalAmount = " + studentFinalAmount);
+        System.out.println("Why it works: checkout depends on the DiscountPolicy contract, not one hard-coded rule.");
+        System.out.println("Use this when: one small part of the workflow changes often while the surrounding flow stays stable.");
+        System.out.println("Avoid this when: you only have one or two tiny rules and they are unlikely to grow.");
+        System.out.println("Common mistake: replacing one huge switch with many strategies when the rule set is still tiny and stable.");
+        System.out.println("Watch out: if callers still choose concrete strategy classes everywhere, the branching just moved instead of disappearing.");
+        System.out.println("Try this next: add a PremiumDiscount strategy and notice that applyDiscount does not need to change.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- strategy moves changing behavior behind a contract");
+        System.out.println("- the caller stays stable while rules grow independently");
+        System.out.println("- strategy is strongest when behavior changes more often than the workflow");
+    }
+```
 
-### Interview Focus
+What happens:
 
-Q: What problem does strategy solve?  
-A: It isolates interchangeable behavior behind a contract so the caller stops growing branching logic.
+- Watch out: if callers still choose concrete strategy classes everywhere, the branching just moved instead of disappearing.
+- Try this next: add a PremiumDiscount strategy and notice that applyDiscount does not need to change.
 
-Q: What is the most common misuse?  
-A: Adding strategy when the rule set is tiny, stable, and clearer as one short method.
+Why it matters:
 
-## Mental Model
+Business rules often change faster than the workflow that uses them.
 
-Use this mental model:
+## Improvement
 
-- the workflow is the road
-- the strategy is the route choice
+Example:
 
-The road should not change every time you pick a different route.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: choose one behavior through a strategy interface");
+        System.out.println("Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month.");
+        System.out.println("Real-world problem: checkout uses different discount rules for students and festivals.");
+        System.out.println("Mental model: checkout should not know every discount formula.");
+        System.out.println();
 
-In code terms:
+        int festivalFinalAmount = applyDiscount(2_000, new FestivalDiscount());
+        int studentFinalAmount = applyDiscount(2_000, new StudentDiscount());
 
-- checkout owns the flow
-- strategy owns the rule
+        // Expected output:
+        // festivalFinalAmount = 1700
+        // studentFinalAmount = 1800
+        System.out.println("festivalFinalAmount = " + festivalFinalAmount);
+        System.out.println("studentFinalAmount = " + studentFinalAmount);
+        System.out.println("Why it works: checkout depends on the DiscountPolicy contract, not one hard-coded rule.");
+        System.out.println("Use this when: one small part of the workflow changes often while the surrounding flow stays stable.");
+        System.out.println("Avoid this when: you only have one or two tiny rules and they are unlikely to grow.");
+        System.out.println("Common mistake: replacing one huge switch with many strategies when the rule set is still tiny and stable.");
+        System.out.println("Watch out: if callers still choose concrete strategy classes everywhere, the branching just moved instead of disappearing.");
+        System.out.println("Try this next: add a PremiumDiscount strategy and notice that applyDiscount does not need to change.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- strategy moves changing behavior behind a contract");
+        System.out.println("- the caller stays stable while rules grow independently");
+        System.out.println("- strategy is strongest when behavior changes more often than the workflow");
+    }
+```
 
-## Common Mistakes
+What happens:
 
-- introducing strategy before there is real variation pressure
-- moving the rule into strategies but still branching all over the callers
-- creating many tiny classes when a short method is still clearer
+- Watch out: if callers still choose concrete strategy classes everywhere, the branching just moved instead of disappearing.
+- Try this next: add a PremiumDiscount strategy and notice that applyDiscount does not need to change.
 
-## Tradeoffs
+Why it matters:
 
-Strategy gives you:
+Business rules often change faster than the workflow that uses them.
 
-- smaller callers
-- independently testable rules
-- easier extension when new behaviors arrive
+After this chapter, you should be able to explain why Strategy Pattern exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Strategy costs you:
+## What stays stable
 
-- more types
-- one more abstraction layer
-- the need to place strategy selection somewhere sensible
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java), [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java), and [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) all protect the same design pressure from different angles.
 
-## Use / Avoid
+## What changes
 
-### Use It When
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) starts with the raw behavior, [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) adds the safety rule, and [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) moves to the cleaner abstraction.
 
-- one part of the workflow changes more often than the rest
-- new rules are likely to keep arriving
-- each rule should be tested or reused independently
+## Rule
 
-### Avoid It When
+👉 Rule: Keep the stable workflow in one place and move the changing rule behind a small contract.
 
-- there are only one or two tiny rules
-- the behavior is not expected to grow
-- the abstraction would hide a simpler design
+## Try this
 
-## Practice
-
-### Case Study
-
-Suppose discount logic is needed in:
-
-- checkout
-- order preview
-- analytics replay
-
-If checkout owns the formula, the other flows either duplicate it or call checkout for the wrong reason.
-
-Strategy keeps the rule reusable without making checkout the center of every pricing decision.
-
-### Try Next
-
-Add a `PremiumDiscount` policy and verify that only the new rule changes.
-
-## Summary
-
-After this chapter, you should be able to explain strategy in one sentence:
-
-Keep the stable workflow in one place and move the changing rule behind a small contract.
-
-If you cannot clearly name the changing behavior, you probably do not need strategy yet.
-
-## Next Chapter
-
-Move to [Creational Patterns](../ch02_creational_patterns/ChapterGuide.md) after this chapter.
+- Run [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) and note the first thing that breaks.
+- Run [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) and remove the safety rule or coordination step.
+- Run [Strategy pattern](topics/choosing_behavior_with_strategy/ChoosingBehaviorWithStrategy.java) and compare the result with the naive approach.

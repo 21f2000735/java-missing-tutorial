@@ -1,125 +1,122 @@
 # Reasoning About Time And Space Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Developers often hear:
+Timing alone does not explain how code behaves as the input keeps growing.
 
-- `O(1)`
-- `O(log n)`
-- `O(n)`
-- `O(n log n)`
+## Naive Approach
 
-But those labels stay shallow unless you can answer a simpler question:
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-What work grows as input grows?
+## Failure
 
-This chapter trains that question first.
+- Measuring Growth With Big O: Timing alone does not explain how code behaves as the input keeps growing.
 
-## The Pain Before It
+## Fix
 
-Developers often hear:
-
-- `O(1)`
-- `O(log n)`
-- `O(n)`
-- `O(n log n)`
-
-But those labels stay shallow unless you can answer a simpler question:
-
-What work grows as input grows?
-
-This chapter trains that question first.
-
-## Java Creator Mindset
-
-- Big-O is about growth trend, not exact milliseconds
-- linear search checks items one by one
-- binary search removes half the remaining search space each step
-- complexity language becomes useful only when tied to an actual operation
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-| Compare | What It Tells You |
-| --- | --- |
-| timing result vs Big-O | timing shows one environment, Big-O shows how the work grows |
-| `O(n)` vs `O(log n)` | both may look fine at small sizes, but growth diverges sharply as input becomes large |
-| time complexity vs space complexity | one tracks how much work grows, the other tracks how much memory grows |
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- Big-O is about growth trend, not exact milliseconds
-- linear search checks items one by one
-- binary search removes half the remaining search space each step
-- complexity language becomes useful only when tied to an actual operation
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java)
 
-## What To Notice
+Example:
 
-### Compare With
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: Big-O");
+        System.out.println("Problem: two search approaches may feel similar on small data but scale very differently.");
+        System.out.println();
 
-| Compare | What It Tells You |
-| --- | --- |
-| timing result vs Big-O | timing shows one environment, Big-O shows how the work grows |
-| `O(n)` vs `O(log n)` | both may look fine at small sizes, but growth diverges sharply as input becomes large |
-| time complexity vs space complexity | one tracks how much work grows, the other tracks how much memory grows |
+        List<Integer> sortedRollNumbers = List.of(3, 7, 11, 15, 19, 24, 31, 42);
 
-### Interview Focus
+        int linearSteps = linearSearchSteps(sortedRollNumbers, 31);
+        int binarySteps = binarySearchSteps(sortedRollNumbers, 31);
 
-Q: Why is `O(log n)` usually better than `O(n)` for search?  
-A: Because the work grows much more slowly as the input size becomes large.
+        // Expected output:
+        // linearSteps = 7
+        // binarySteps = 3
+        System.out.println("linearSteps = " + linearSteps);
+        System.out.println("binarySteps = " + binarySteps);
+        System.out.println("Why it works: linear search checks one by one, while binary search removes half the remaining space each step.");
+        System.out.println("Common mistake: treating Big-O as exact runtime instead of a growth model.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- Big-O is about growth, not one machine's clock");
+        System.out.println("- linear search inspects items one by one");
+        System.out.println("- binary search removes half the search space each step");
+    }
+```
 
-Q: Why is Big-O not the same as benchmarking?  
-A: Because Big-O describes growth shape, while benchmarking measures one implementation under one environment.
+What happens:
 
-## Mental Model
+- Problem: two search approaches may feel similar on small data but scale very differently.
+- Why it works: linear search checks one by one, while binary search removes half the remaining space each step.
+- Common mistake: treating Big-O as exact runtime instead of a growth model.
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Why it matters:
 
-## Common Mistakes
+Timing alone does not explain how code behaves as the input keeps growing.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## Improvement
 
-## Tradeoffs
+Example:
 
-| Compare | What It Tells You |
-| --- | --- |
-| timing result vs Big-O | timing shows one environment, Big-O shows how the work grows |
-| `O(n)` vs `O(log n)` | both may look fine at small sizes, but growth diverges sharply as input becomes large |
-| time complexity vs space complexity | one tracks how much work grows, the other tracks how much memory grows |
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: Big-O");
+        System.out.println("Problem: two search approaches may feel similar on small data but scale very differently.");
+        System.out.println();
 
-## Use / Avoid
+        List<Integer> sortedRollNumbers = List.of(3, 7, 11, 15, 19, 24, 31, 42);
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+        int linearSteps = linearSearchSteps(sortedRollNumbers, 31);
+        int binarySteps = binarySearchSteps(sortedRollNumbers, 31);
 
-## Practice
+        // Expected output:
+        // linearSteps = 7
+        // binarySteps = 3
+        System.out.println("linearSteps = " + linearSteps);
+        System.out.println("binarySteps = " + binarySteps);
+        System.out.println("Why it works: linear search checks one by one, while binary search removes half the remaining space each step.");
+        System.out.println("Common mistake: treating Big-O as exact runtime instead of a growth model.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- Big-O is about growth, not one machine's clock");
+        System.out.println("- linear search inspects items one by one");
+        System.out.println("- binary search removes half the search space each step");
+    }
+```
 
-### Mini Case Study
+What happens:
 
-Imagine a student portal searching for a roll number.
+- Problem: two search approaches may feel similar on small data but scale very differently.
+- Why it works: linear search checks one by one, while binary search removes half the remaining space each step.
+- Common mistake: treating Big-O as exact runtime instead of a growth model.
 
-- scanning every entry works for a small class list
-- repeated searching across a large, sorted list changes the tradeoff completely
+Why it matters:
 
-This is why complexity matters. It tells you when a design will stop scaling comfortably.
+Timing alone does not explain how code behaves as the input keeps growing.
 
-## Summary
+After this chapter, you should be able to explain why Reasoning About Time And Space exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-- Big-O is about growth trend, not exact milliseconds
-- linear search checks items one by one
-- binary search removes half the remaining search space each step
-- complexity language becomes useful only when tied to an actual operation
+## What stays stable
 
-## Next Chapter
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java), [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java), and [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) all protect the same design pressure from different angles.
 
-Move to [Collections Internals And Tradeoffs Learning Kit](../ch02_collections_internals_and_tradeoffs/ChapterGuide.md) after this chapter.
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) starts with the raw behavior, [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) adds the safety rule, and [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Ask what work grows as the input grows, not only how fast one run felt.
+
+## Try this
+
+- Run [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) and note the first thing that breaks.
+- Run [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) and remove the safety rule or coordination step.
+- Run [Measuring Growth With Big O](topics/measuring_growth_with_big_o/MeasuringGrowthWithBigO.java) and compare the result with the naive approach.

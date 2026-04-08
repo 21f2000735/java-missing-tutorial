@@ -2,7 +2,7 @@
 
 ## Problem
 
-This chapter shows what breaks when classes and objects is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## Naive Approach
 
@@ -10,7 +10,9 @@ The naive move is to pick the first obvious API and assume it will stay correct 
 
 ## Failure
 
-- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- Classes Objects: Java programs stay useful when they are organized around ideas, not only syntax.
+- Inheritance: Java programs stay useful when they are organized around ideas, not only syntax.
+- Polymorphism: Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## Fix
 
@@ -20,23 +22,54 @@ Run the topics in this order:
 2. Run [Inheritance](topics/inheritance/Inheritance.java)
 3. Run [Polymorphism](topics/polymorphism/Polymorphism.java)
 
-What to observe:
+Example:
 
-- Which topic shows the failure first: [Classes Objects](topics/classes_objects/ClassesObjects.java).
-- Which topic narrows the rule: [Inheritance](topics/inheritance/Inheritance.java).
-- Which topic shows the cleaner abstraction: [Polymorphism](topics/polymorphism/Polymorphism.java).
+```java
+    public static void main(String[] args) {
+        Vehicle bike = new Bike("Road Bike");
+        Vehicle car = new Car("City Car");
+        System.out.println(bike.describe());
+        System.out.println(car.describe());
+        System.out.println("Lesson: subclasses reuse common state and specialize behavior.");
+    }
+```
+
+What happens:
+
+- subclasses reuse common state and specialize behavior.
+
+Why it matters:
+
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## Improvement
 
-After this chapter, you should be able to explain the main decisions behind classes and objects and connect them back to the runnable examples.
+Example:
+
+```java
+    public static void main(String[] args) {
+        List<Notification> notifications = List.of(new Email(), new Sms(), new Push());
+        notifications.forEach(notification -> System.out.println(notification.send("Discount starts at 8 PM")));
+        System.out.println("Lesson: the same interface call can trigger different behavior based on the actual object.");
+    }
+```
+
+What happens:
+
+- the same interface call can trigger different behavior based on the actual object.
+
+Why it matters:
+
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 After this chapter, you should be able to explain why Classes And Objects exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
 ## What stays stable
 
 - The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
-- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
-- The real pressure stays the same even when the API changes.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Classes Objects](topics/classes_objects/ClassesObjects.java), [Inheritance](topics/inheritance/Inheritance.java), and [Polymorphism](topics/polymorphism/Polymorphism.java) all protect the same design pressure from different angles.
 
 ## What changes
 
@@ -44,13 +77,14 @@ After this chapter, you should be able to explain why Classes And Objects exists
 - The API shape changes from topic to topic.
 - The failure mode changes when one assumption is removed.
 - The abstraction cost changes as the fix becomes stronger.
+- [Classes Objects](topics/classes_objects/ClassesObjects.java) starts with the raw behavior, [Inheritance](topics/inheritance/Inheritance.java) adds the safety rule, and [Polymorphism](topics/polymorphism/Polymorphism.java) moves to the cleaner abstraction.
 
 ## Rule
 
-👉 Rule: After this chapter, you should be able to explain the main decisions behind classes and objects and connect them back to the runnable examples.
+👉 Rule: First understand the problem in plain language, then map that idea to the Java code.
 
 ## Try this
 
 - Run [Classes Objects](topics/classes_objects/ClassesObjects.java) and note the first thing that breaks.
-- Run [Inheritance](topics/inheritance/Inheritance.java) and write down what the rule becomes.
+- Run [Inheritance](topics/inheritance/Inheritance.java) and remove the safety rule or coordination step.
 - Run [Polymorphism](topics/polymorphism/Polymorphism.java) and compare the result with the naive approach.

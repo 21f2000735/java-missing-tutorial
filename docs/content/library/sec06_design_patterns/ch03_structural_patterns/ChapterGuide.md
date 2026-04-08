@@ -1,108 +1,125 @@
 # Structural Patterns
 
-## Why This Chapter Exists
+## Problem
 
-Structural patterns help when the business logic is mostly fine, but the edges between parts of the code are awkward.
+Stable code often needs extra behavior without being rewritten for each new feature.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for structural patterns, the APIs feel like isolated facts instead of answers to one connected problem.
+- Watch out: if decorators become hard to order or reason about, you may be stacking too many responsibilities.
+- Try this next: add a RetryNotifierDecorator and decide in which order retry and audit should wrap the base notifier.
 
-## Java Creator Mindset
+## Failure
 
-Read the chapter as a small set of related ideas around structural Patterns, not as isolated trivia.
+- Adding Features With Decorator: Watch out: if decorators become hard to order or reason about, you may be stacking too many responsibilities.
+- Adding Features With Decorator: Try this next: add a RetryNotifierDecorator and decide in which order retry and audit should wrap the base notifier.
+- Translating Incompatible Apis With Adapter: Watch out: if the adapter starts carrying business rules, it has stopped being a translator and become a hidden service.
+- Translating Incompatible Apis With Adapter: Try this next: add request logging inside the adapter and decide whether that belongs there or in a decorator.
 
-## How You Might Invent It
+## Fix
 
-Two common frustrations show up in mature codebases:
-
-- new code wants one interface, but a legacy library gives another
-- a stable class needs extra behavior like logging, auditing, retries, or caching
-
-The pain is not "what should the business rule be?"  
-The pain is "how do these objects fit together cleanly?"
-
-## Naive Attempt
-
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| adapter vs decorator | interfaces do not match | interfaces match and you need extra behavior |
-| subclassing vs decorator | extension is intrinsic to the base class | behavior should be optional and composable |
-
-## Why It Breaks
-
-- avoid adapter if you control both sides and can align the interface directly
-- avoid decorator if the "extra behavior" is really a different service with a different responsibility
-- avoid creating wrappers that hide where the real work happens
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around structural Patterns, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Adding Features With Decorator](topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java)
 2. Run [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java)
 
-## What To Notice
+Example:
 
-- adapter changes the shape of collaboration
-- decorator preserves the interface and adds behavior around it
-- both patterns are strongest near integration boundaries
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: adapter");
+        System.out.println("Story hook: your new service speaks one interface, but the old gateway everyone still depends on speaks another.");
+        System.out.println("Problem: new code expects pay(), but the legacy gateway exposes makePayment().");
+        System.out.println();
 
-### Compare With
+        PaymentProcessor processor = new LegacyGatewayAdapter(new LegacyGateway());
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| adapter vs decorator | interfaces do not match | interfaces match and you need extra behavior |
-| subclassing vs decorator | extension is intrinsic to the base class | behavior should be optional and composable |
+        // Expected output:
+        // result = legacy gateway paid 2300
+        System.out.println("result = " + processor.pay(2_300));
+        System.out.println("Why it works: only the adapter knows about the legacy API shape.");
+        System.out.println("Use this when: a dependency is useful but its interface does not match what your current code wants.");
+        System.out.println("Avoid this when: you control both sides and can simply align the interface directly.");
+        System.out.println("Common mistake: leaking the old API into the new code instead of keeping the translation local.");
+        System.out.println("Watch out: if the adapter starts carrying business rules, it has stopped being a translator and become a hidden service.");
+        System.out.println("Try this next: add request logging inside the adapter and decide whether that belongs there or in a decorator.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- adapter lets new code depend on a cleaner interface");
+        System.out.println("- legacy code stays untouched");
+        System.out.println("- the translation logic lives in one bridge class");
+    }
+```
 
-### Interview Focus
+What happens:
 
-Q: Adapter vs decorator?  
-A: Adapter changes the interface shape. Decorator keeps the same interface and adds behavior around it.
+- Watch out: if the adapter starts carrying business rules, it has stopped being a translator and become a hidden service.
+- Try this next: add request logging inside the adapter and decide whether that belongs there or in a decorator.
 
-Q: Why are these patterns common in framework code?  
-A: Because framework code often integrates third-party APIs and layers optional cross-cutting behavior.
+Why it matters:
 
-## Mental Model
+New code and legacy code often expose different interfaces even when they do similar work.
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+## Improvement
 
-## Common Mistakes
+Example:
 
-- avoid adapter if you control both sides and can align the interface directly
-- avoid decorator if the "extra behavior" is really a different service with a different responsibility
-- avoid creating wrappers that hide where the real work happens
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: adapter");
+        System.out.println("Story hook: your new service speaks one interface, but the old gateway everyone still depends on speaks another.");
+        System.out.println("Problem: new code expects pay(), but the legacy gateway exposes makePayment().");
+        System.out.println();
 
-## Tradeoffs
+        PaymentProcessor processor = new LegacyGatewayAdapter(new LegacyGateway());
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| adapter vs decorator | interfaces do not match | interfaces match and you need extra behavior |
-| subclassing vs decorator | extension is intrinsic to the base class | behavior should be optional and composable |
+        // Expected output:
+        // result = legacy gateway paid 2300
+        System.out.println("result = " + processor.pay(2_300));
+        System.out.println("Why it works: only the adapter knows about the legacy API shape.");
+        System.out.println("Use this when: a dependency is useful but its interface does not match what your current code wants.");
+        System.out.println("Avoid this when: you control both sides and can simply align the interface directly.");
+        System.out.println("Common mistake: leaking the old API into the new code instead of keeping the translation local.");
+        System.out.println("Watch out: if the adapter starts carrying business rules, it has stopped being a translator and become a hidden service.");
+        System.out.println("Try this next: add request logging inside the adapter and decide whether that belongs there or in a decorator.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- adapter lets new code depend on a cleaner interface");
+        System.out.println("- legacy code stays untouched");
+        System.out.println("- the translation logic lives in one bridge class");
+    }
+```
 
-## Use / Avoid
+What happens:
 
-### Use It When
+- Watch out: if the adapter starts carrying business rules, it has stopped being a translator and become a hidden service.
+- Try this next: add request logging inside the adapter and decide whether that belongs there or in a decorator.
 
-- use adapter when you cannot or should not rewrite a dependency
-- use decorator when you want optional behavior around a stable interface
-- use these patterns when changing the original type would spread risk
+Why it matters:
 
-## Practice
+New code and legacy code often expose different interfaces even when they do similar work.
 
-### Case Study
+After this chapter, you should be able to explain why Structural Patterns exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-You migrate a payment gateway but still depend on an old vendor API.  
-Adapter lets new code talk through a cleaner interface.  
-Later operations asks for audit logging around notifications without editing the stable notifier.  
-Decorator adds that feature without changing callers.
+## What stays stable
 
-## Summary
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Adding Features With Decorator](topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java), [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java), and [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java) all protect the same design pressure from different angles.
 
-After this chapter, you should be able to explain the main decisions behind structural patterns and connect them back to the runnable examples.
+## What changes
 
-## Next Chapter
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Adding Features With Decorator](topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java) starts with the raw behavior, [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java) adds the safety rule, and [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java) moves to the cleaner abstraction.
 
-Move to [Behavioral Patterns](../ch04_behavioral_patterns/ChapterGuide.md) after this chapter.
+## Rule
+
+👉 Rule: Put the translation in one bridge class so the rest of the code can depend on the cleaner contract.
+
+## Try this
+
+- Run [Adding Features With Decorator](topics/adding_features_with_decorator/AddingFeaturesWithDecorator.java) and note the first thing that breaks.
+- Run [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java) and remove the safety rule or coordination step.
+- Run [Translating Incompatible Apis With Adapter](topics/translating_incompatible_apis_with_adapter/TranslatingIncompatibleApisWithAdapter.java) and compare the result with the naive approach.

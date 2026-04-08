@@ -1,65 +1,86 @@
 # Designing Classes Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter teaches the concept of giving each class one clear responsibility.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for designing classes, the APIs feel like isolated facts instead of answers to one connected problem.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
+## Failure
 
-Read the chapter as a small set of related ideas around designing Classes, not as isolated trivia.
+- Separating Responsibilities: Java programs stay useful when they are organized around ideas, not only syntax.
 
-## How You Might Invent It
+## Fix
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around designing Classes, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java)
 
-## What To Notice
+Example:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+```java
+    public static void main(String[] args) {
+        InvoiceCalculator calculator = new InvoiceCalculator();
+        int total = calculator.totalInCents(2, 1_500);
+        System.out.println("invoiceTotal = " + total);
+        System.out.println("Concept: one class should own one kind of decision clearly.");
+    }
+```
 
-## Mental Model
+What happens:
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+- one class should own one kind of decision clearly.
 
-## Common Mistakes
+Why it matters:
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-## Tradeoffs
+## Improvement
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Example:
 
-## Use / Avoid
+```java
+    public static void main(String[] args) {
+        InvoiceCalculator calculator = new InvoiceCalculator();
+        int total = calculator.totalInCents(2, 1_500);
+        System.out.println("invoiceTotal = " + total);
+        System.out.println("Concept: one class should own one kind of decision clearly.");
+    }
+```
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+What happens:
 
-## Practice
+- one class should own one kind of decision clearly.
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+Why it matters:
 
-## Summary
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-After this chapter, you should be able to explain the main decisions behind designing classes and connect them back to the runnable examples.
+After this chapter, you should be able to explain why Designing Classes exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-## Next Chapter
+## What stays stable
 
-Move to [Immutability And Value Objects Learning Kit](../ch02_immutability_and_value_objects/ChapterGuide.md) after this chapter.
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java), [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java), and [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) starts with the raw behavior, [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) adds the safety rule, and [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: First understand the problem in plain language, then map that idea to the Java code.
+
+## Try this
+
+- Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) and note the first thing that breaks.
+- Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) and remove the safety rule or coordination step.
+- Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) and compare the result with the naive approach.

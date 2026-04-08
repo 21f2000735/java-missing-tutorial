@@ -1,80 +1,124 @@
 # Data Grouping And Aggregation Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter is about moving from raw rows to business answers like totals, counts, grouped maps, and summaries.
+Business users usually ask for summaries by category, status, or region instead of raw rows.
 
-## The Pain Before It
+## Naive Approach
 
-Decision-makers rarely want:
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-- every row exactly as stored
+## Failure
 
-They usually want:
+- Grouping Sales: Business users usually ask for summaries by category, status, or region instead of raw rows.
 
-- sales by category
-- total revenue by region
-- pass/fail buckets
-- counts by status
+## Fix
 
-That means grouping and aggregation.
-
-## Java Creator Mindset
-
-Read the chapter as a small set of related ideas around data Grouping And Aggregation, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-- the result does not need grouping at all
-- the pipeline becomes more complex than a direct loop for a tiny dataset
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around data Grouping And Aggregation, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Grouping Sales](topics/grouping_sales/GroupingSales.java)
 
-## What To Notice
+Example:
 
-- the grouping key answers “by what dimension?”
-- the aggregation answers “what final fact do we want?”
-- collectors make the shape of the final result explicit
+```java
+    public static void main(String[] args) {
+        System.out.println("The problem:");
+        System.out.println("Finance does not want every sale row. It wants totals by category.");
+        System.out.println();
+        List<Sale> sales = List.of(
+                new Sale("Books", 899),
+                new Sale("Books", 499),
+                new Sale("Electronics", 1_599)
+        );
 
-## Mental Model
+        Map<String, Integer> totalsByCategory = sales.stream()
+                .collect(Collectors.groupingBy(Sale::category, Collectors.summingInt(Sale::amountInCents)));
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+        System.out.println("Run this example:");
+        System.out.println("totalsByCategory = " + totalsByCategory);
+        System.out.println("Why it works: groupingBy creates one bucket per category and summingInt adds the amounts in each bucket.");
+        System.out.println("Use this when: the business question starts with 'by category', 'by status', or 'by region'.");
+        System.out.println("Avoid this when: the result is flat and does not need grouped summaries.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- grouping needs a business key");
+        System.out.println("- aggregation needs a final summary operation");
+        System.out.println("- collectors make grouped results explicit");
+    }
+```
 
-## Common Mistakes
+What happens:
 
-- the result does not need grouping at all
-- the pipeline becomes more complex than a direct loop for a tiny dataset
+- Why it works: groupingBy creates one bucket per category and summingInt adds the amounts in each bucket.
+- Use this when: the business question starts with 'by category', 'by status', or 'by region'.
+- Avoid this when: the result is flat and does not need grouped summaries.
 
-## Tradeoffs
+Why it matters:
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Business users usually ask for summaries by category, status, or region instead of raw rows.
 
-## Use / Avoid
+## Improvement
 
-### Use It When
+Example:
 
-- you need maps of grouped values
-- you need totals, counts, or summaries from many rows
-- the business question starts with “by category,” “by status,” or “by region”
+```java
+    public static void main(String[] args) {
+        System.out.println("The problem:");
+        System.out.println("Finance does not want every sale row. It wants totals by category.");
+        System.out.println();
+        List<Sale> sales = List.of(
+                new Sale("Books", 899),
+                new Sale("Books", 499),
+                new Sale("Electronics", 1_599)
+        );
 
-## Practice
+        Map<String, Integer> totalsByCategory = sales.stream()
+                .collect(Collectors.groupingBy(Sale::category, Collectors.summingInt(Sale::amountInCents)));
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+        System.out.println("Run this example:");
+        System.out.println("totalsByCategory = " + totalsByCategory);
+        System.out.println("Why it works: groupingBy creates one bucket per category and summingInt adds the amounts in each bucket.");
+        System.out.println("Use this when: the business question starts with 'by category', 'by status', or 'by region'.");
+        System.out.println("Avoid this when: the result is flat and does not need grouped summaries.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- grouping needs a business key");
+        System.out.println("- aggregation needs a final summary operation");
+        System.out.println("- collectors make grouped results explicit");
+    }
+```
 
-## Summary
+What happens:
 
-After this chapter, you should be able to explain the main decisions behind data grouping and aggregation and connect them back to the runnable examples.
+- Why it works: groupingBy creates one bucket per category and summingInt adds the amounts in each bucket.
+- Use this when: the business question starts with 'by category', 'by status', or 'by region'.
+- Avoid this when: the result is flat and does not need grouped summaries.
+
+Why it matters:
+
+Business users usually ask for summaries by category, status, or region instead of raw rows.
+
+After this chapter, you should be able to explain why Data Grouping And Aggregation exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
+
+## What stays stable
+
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Grouping Sales](topics/grouping_sales/GroupingSales.java), [Grouping Sales](topics/grouping_sales/GroupingSales.java), and [Grouping Sales](topics/grouping_sales/GroupingSales.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Grouping Sales](topics/grouping_sales/GroupingSales.java) starts with the raw behavior, [Grouping Sales](topics/grouping_sales/GroupingSales.java) adds the safety rule, and [Grouping Sales](topics/grouping_sales/GroupingSales.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: First decide the grouping key, then decide the final summary for each group.
+
+## Try this
+
+- Run [Grouping Sales](topics/grouping_sales/GroupingSales.java) and note the first thing that breaks.
+- Run [Grouping Sales](topics/grouping_sales/GroupingSales.java) and remove the safety rule or coordination step.
+- Run [Grouping Sales](topics/grouping_sales/GroupingSales.java) and compare the result with the naive approach.

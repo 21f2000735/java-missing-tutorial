@@ -1,183 +1,133 @@
 # Creational Patterns
 
-## Why This Chapter Exists
+## Problem
 
-This chapter exists to answer one design question:
+Constructors become hard to read when required and optional values mix together.
 
-How should object creation read once constructors start hiding business intent?
+## Naive Approach
 
-## The Pain Before It
+- Watch out: a builder should protect readability, not become a second mutable domain object that floats around everywhere.
+- Try this next: add an exportFormat option and see that the call site still reads like a checklist.
 
-Object creation starts small:
+## Failure
 
-- one constructor
-- a few required fields
-- no ambiguity about type
+- Assembling Objects With Builder: Watch out: a builder should protect readability, not become a second mutable domain object that floats around everywhere.
+- Assembling Objects With Builder: Try this next: add an exportFormat option and see that the call site still reads like a checklist.
+- Creating Objects With Factory Method: Watch out: if every factory branch leaks into the caller anyway, the factory is not simplifying anything.
+- Creating Objects With Factory Method: Try this next: add a WalletGateway branch and keep the caller code unchanged.
 
-Then pressure builds:
+## Fix
 
-- optional values multiply
-- callers should not know the concrete implementation
-- validation must happen before the object becomes usable
-- long parameter lists stop telling a clear story
-
-That is where factory method and builder become useful.
-
-## Java Creator Mindset
-
-Do not start from pattern names. Start from creation pressure.
-
-Ask:
-
-- does the caller know the concrete type already?
-- is the main problem type selection or call-site readability?
-- would one more constructor make the code harder to read?
-
-Those questions usually tell you whether to use constructors, factories, or builders.
-
-## How You Might Invent It
-
-Imagine two separate problems.
-
-Problem one:
-
-- checkout needs a payment processor
-- the caller should ask for `"CARD"` or `"UPI"` behavior
-- the implementation choice should stay hidden
-
-Problem two:
-
-- report creation needs required fields plus many optional ones
-- the caller already knows it wants a report
-- the problem is readability, not type selection
-
-Those two pressures lead to two different creational patterns.
-
-## Naive Attempt
-
-The naive fix is usually one of these:
-
-- keep adding overloaded constructors
-- expose every concrete class directly to callers
-- push validation into scattered setters after creation
-
-All three work for a while, but they make object creation harder to follow.
-
-## Why It Breaks
-
-That approach breaks when:
-
-- callers must know too much about implementation choice
-- positional constructor arguments become hard to verify by eye
-- partially built objects are possible before validation is complete
-
-## Final Java Direction
-
-Use a factory when the caller should ask for a capability and the implementation choice should stay hidden.
-
-Use a builder when the caller already knows the type but creation needs to read like a checklist.
-
-Keep plain constructors when the object is still tiny and obvious.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Assembling Objects With Builder](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java)
 2. Run [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java)
 
-## What To Notice
+Example:
 
-- factory hides which implementation gets created
-- builder improves how object assembly reads
-- neither pattern is automatically better than a small direct constructor
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: factory method");
+        System.out.println("Story hook: your checkout service should ask for a payment capability, not know every gateway class by name.");
+        System.out.println("Problem: checkout code should request a payment gateway without branching everywhere.");
+        System.out.println("Mental model: callers request behavior, factories choose implementation.");
+        System.out.println();
 
-### Compare With
+        PaymentGateway cardGateway = PaymentGatewayFactory.forMethod("CARD");
+        PaymentGateway upiGateway = PaymentGatewayFactory.forMethod("UPI");
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| constructor vs factory | one concrete type is obvious | implementation choice should stay hidden |
-| constructor vs builder | only a few required values exist | optional values and readability matter |
-| factory vs builder | you need the right implementation | you already know the type but need readable assembly |
+        // Expected output:
+        // card result = CARD payment accepted for 1500
+        // upi result = UPI payment accepted for 800
+        System.out.println("card result = " + cardGateway.charge(1_500));
+        System.out.println("upi result = " + upiGateway.charge(800));
+        System.out.println("Why it works: object creation stays in one place and the caller depends on the PaymentGateway contract.");
+        System.out.println("Use this when: callers should ask for a behavior or capability while concrete implementation choice stays hidden.");
+        System.out.println("Avoid this when: object creation is obvious and there is no meaningful selection logic.");
+        System.out.println("Common mistake: hiding simple constructor calls behind a factory when no real selection logic exists.");
+        System.out.println("Watch out: if every factory branch leaks into the caller anyway, the factory is not simplifying anything.");
+        System.out.println("Try this next: add a WalletGateway branch and keep the caller code unchanged.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- the caller asks for a type of behavior");
+        System.out.println("- the factory decides the concrete class");
+        System.out.println("- object creation stays in one place instead of spreading across the codebase");
+    }
+```
 
-### Interview Focus
+What happens:
 
-Q: When is a factory method better than a constructor?  
-A: When the caller should depend on behavior while the implementation choice stays inside one creation point.
+- Watch out: if every factory branch leaks into the caller anyway, the factory is not simplifying anything.
+- Try this next: add a WalletGateway branch and keep the caller code unchanged.
 
-Q: When is a builder better than telescoping constructors?  
-A: When optional values and readability make positional construction error-prone.
+Why it matters:
 
-## Mental Model
+Callers should often ask for a capability without knowing the concrete class behind it.
 
-Use this split:
+## Improvement
 
-- factory answers "what should be created?"
-- builder answers "how should this object be assembled?"
+Example:
 
-If you mix up those two questions, the patterns start looking interchangeable when they are not.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: factory method");
+        System.out.println("Story hook: your checkout service should ask for a payment capability, not know every gateway class by name.");
+        System.out.println("Problem: checkout code should request a payment gateway without branching everywhere.");
+        System.out.println("Mental model: callers request behavior, factories choose implementation.");
+        System.out.println();
 
-## Common Mistakes
+        PaymentGateway cardGateway = PaymentGatewayFactory.forMethod("CARD");
+        PaymentGateway upiGateway = PaymentGatewayFactory.forMethod("UPI");
 
-- using a factory when there is no real selection logic
-- using a builder for tiny value objects with obvious required fields
-- adding a pattern that makes creation harder to read than before
+        // Expected output:
+        // card result = CARD payment accepted for 1500
+        // upi result = UPI payment accepted for 800
+        System.out.println("card result = " + cardGateway.charge(1_500));
+        System.out.println("upi result = " + upiGateway.charge(800));
+        System.out.println("Why it works: object creation stays in one place and the caller depends on the PaymentGateway contract.");
+        System.out.println("Use this when: callers should ask for a behavior or capability while concrete implementation choice stays hidden.");
+        System.out.println("Avoid this when: object creation is obvious and there is no meaningful selection logic.");
+        System.out.println("Common mistake: hiding simple constructor calls behind a factory when no real selection logic exists.");
+        System.out.println("Watch out: if every factory branch leaks into the caller anyway, the factory is not simplifying anything.");
+        System.out.println("Try this next: add a WalletGateway branch and keep the caller code unchanged.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- the caller asks for a type of behavior");
+        System.out.println("- the factory decides the concrete class");
+        System.out.println("- object creation stays in one place instead of spreading across the codebase");
+    }
+```
 
-## Tradeoffs
+What happens:
 
-Factories give you:
+- Watch out: if every factory branch leaks into the caller anyway, the factory is not simplifying anything.
+- Try this next: add a WalletGateway branch and keep the caller code unchanged.
 
-- hidden implementation choice
-- cleaner caller dependency boundaries
+Why it matters:
 
-Builders give you:
+Callers should often ask for a capability without knowing the concrete class behind it.
 
-- readable creation for optional data
-- one place for assembly validation
+After this chapter, you should be able to explain why Creational Patterns exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-Both cost you:
+## What stays stable
 
-- more structure
-- more types or steps than a plain constructor
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Assembling Objects With Builder](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java), [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java), and [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java) all protect the same design pressure from different angles.
 
-## Use / Avoid
+## What changes
 
-### Use It When
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Assembling Objects With Builder](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java) starts with the raw behavior, [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java) adds the safety rule, and [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java) moves to the cleaner abstraction.
 
-- factory fits when callers should ask for behavior, not concrete classes
-- builder fits when object assembly needs readable optional steps
-- constructors still fit when the object is small, direct, and obvious
+## Rule
 
-### Avoid It When
+👉 Rule: The caller asks for a payment behavior; the factory chooses the implementation.
 
-- there is no real implementation choice to hide
-- optional construction is still small enough for one clear constructor
-- the pattern would impress more than it would clarify
+## Try this
 
-## Practice
-
-### Case Study
-
-Imagine a reporting module.
-
-- report type is required
-- delivery email is optional
-- chart inclusion is optional
-- row limit is optional
-
-Builder makes that call site read like a checklist.
-
-Now imagine payment processors.
-
-The caller should request card or UPI behavior, not instantiate those classes directly. That is factory territory.
-
-## Summary
-
-After this chapter, you should be able to explain creational patterns as two different creation pressures:
-
-- hide type choice with factories
-- improve readable assembly with builders
-
-If neither pressure exists, use a constructor and move on.
-
-## Next Chapter
-
-Move to [Structural Patterns](../ch03_structural_patterns/ChapterGuide.md) after this chapter.
+- Run [Assembling Objects With Builder](topics/assembling_objects_with_builder/AssemblingObjectsWithBuilder.java) and note the first thing that breaks.
+- Run [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java) and remove the safety rule or coordination step.
+- Run [Creating Objects With Factory Method](topics/creating_objects_with_factory_method/CreatingObjectsWithFactoryMethod.java) and compare the result with the naive approach.

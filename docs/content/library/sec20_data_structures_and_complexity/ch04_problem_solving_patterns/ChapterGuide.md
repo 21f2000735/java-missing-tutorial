@@ -1,96 +1,114 @@
 # Problem Solving Patterns Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Many brute-force solutions repeat work they do not need to repeat:
+Sorted data often lets you avoid nested loops if you scan from both sides intelligently.
 
-- recalculate every overlapping window from scratch
-- scan the same sorted data with nested loops
+## Naive Approach
 
-Sliding window and two pointers are valuable because they reduce repeated work without making the code magical.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## The Pain Before It
+## Failure
 
-Many brute-force solutions repeat work they do not need to repeat:
+- Scanning Sorted Data With Two Pointers: Sorted data often lets you avoid nested loops if you scan from both sides intelligently.
+- Sliding Window Problems: Many range problems recalculate overlapping work from scratch even though most of the window stays the same.
 
-- recalculate every overlapping window from scratch
-- scan the same sorted data with nested loops
+## Fix
 
-Sliding window and two pointers are valuable because they reduce repeated work without making the code magical.
-
-## Java Creator Mindset
-
-- sliding window reuses work from the previous range
-- two pointers exploit sorted order to remove nested loops
-- these patterns matter because they turn repeated recalculation into incremental progress
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| brute-force subarray scan | the data is tiny and clarity is more important | windows overlap heavily and repeated recalculation dominates |
-| nested loops on sorted data | the size is tiny | the data is sorted and a left/right scan can shrink work |
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- sliding window reuses work from the previous range
-- two pointers exploit sorted order to remove nested loops
-- these patterns matter because they turn repeated recalculation into incremental progress
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Scanning Sorted Data With Two Pointers](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java)
 2. Run [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java)
 
-## What To Notice
+Example:
 
-### Compare With
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: sliding window");
+        System.out.println("Problem: recalculating every overlapping range from scratch wastes work.");
+        System.out.println();
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| brute-force subarray scan | the data is tiny and clarity is more important | windows overlap heavily and repeated recalculation dominates |
-| nested loops on sorted data | the size is tiny | the data is sorted and a left/right scan can shrink work |
+        int[] hourlyOrders = {3, 5, 2, 6, 8, 1, 4};
 
-## Mental Model
+        // Expected output:
+        // bestThreeHourWindow = 16
+        System.out.println("bestThreeHourWindow = " + maxWindowSum(hourlyOrders, 3));
+        System.out.println("Why it works: each step reuses the previous window by adding one value and removing one value.");
+        System.out.println("Common mistake: using sliding window when the problem does not actually involve overlapping ranges.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- sliding window reuses work from the previous range");
+        System.out.println("- you add the incoming value and remove the outgoing value");
+        System.out.println("- this turns many O(n*k) loops into O(n)");
+    }
+```
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+What happens:
 
-## Common Mistakes
+- Problem: recalculating every overlapping range from scratch wastes work.
+- Why it works: each step reuses the previous window by adding one value and removing one value.
+- Common mistake: using sliding window when the problem does not actually involve overlapping ranges.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+Why it matters:
 
-## Tradeoffs
+Many range problems recalculate overlapping work from scratch even though most of the window stays the same.
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| brute-force subarray scan | the data is tiny and clarity is more important | windows overlap heavily and repeated recalculation dominates |
-| nested loops on sorted data | the size is tiny | the data is sorted and a left/right scan can shrink work |
+## Improvement
 
-## Use / Avoid
+Example:
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: sliding window");
+        System.out.println("Problem: recalculating every overlapping range from scratch wastes work.");
+        System.out.println();
 
-## Practice
+        int[] hourlyOrders = {3, 5, 2, 6, 8, 1, 4};
 
-### Mini Case Study
+        // Expected output:
+        // bestThreeHourWindow = 16
+        System.out.println("bestThreeHourWindow = " + maxWindowSum(hourlyOrders, 3));
+        System.out.println("Why it works: each step reuses the previous window by adding one value and removing one value.");
+        System.out.println("Common mistake: using sliding window when the problem does not actually involve overlapping ranges.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- sliding window reuses work from the previous range");
+        System.out.println("- you add the incoming value and remove the outgoing value");
+        System.out.println("- this turns many O(n*k) loops into O(n)");
+    }
+```
 
-Imagine two analytics tasks.
+What happens:
 
-- find the best three-hour sales window
-- find two prices in a sorted list that match a target budget
+- Problem: recalculating every overlapping range from scratch wastes work.
+- Why it works: each step reuses the previous window by adding one value and removing one value.
+- Common mistake: using sliding window when the problem does not actually involve overlapping ranges.
 
-Both tasks look like nested-loop problems at first. Both become simpler when you recognize the right scanning pattern.
+Why it matters:
 
-## Summary
+Many range problems recalculate overlapping work from scratch even though most of the window stays the same.
 
-- sliding window reuses work from the previous range
-- two pointers exploit sorted order to remove nested loops
-- these patterns matter because they turn repeated recalculation into incremental progress
+After this chapter, you should be able to explain why Problem Solving Patterns exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
+
+## What stays stable
+
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Scanning Sorted Data With Two Pointers](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java), [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java), and [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Scanning Sorted Data With Two Pointers](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java) starts with the raw behavior, [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) adds the safety rule, and [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Keep one moving window, add the incoming value, and remove the outgoing value.
+
+## Try this
+
+- Run [Scanning Sorted Data With Two Pointers](topics/scanning_sorted_data_with_two_pointers/ScanningSortedDataWithTwoPointers.java) and note the first thing that breaks.
+- Run [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) and remove the safety rule or coordination step.
+- Run [Sliding Window Problems](topics/sliding_window_problems/SlidingWindowProblems.java) and compare the result with the naive approach.

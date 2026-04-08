@@ -1,106 +1,122 @@
 # Request Routing Patterns
 
-## Why This Chapter Exists
+## Problem
 
-This chapter focuses on chain of responsibility because request processing is where design patterns stop feeling theoretical very quickly.
+Request handling often contains several independent checks that should stay separate.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for request routing patterns, the APIs feel like isolated facts instead of answers to one connected problem.
+- Watch out: if handlers secretly depend on each other, the chain looks modular but behaves like tangled hidden flow.
+- Try this next: add an InventoryAvailableHandler before payment and see how easy it is to insert a new rule.
 
-## Java Creator Mindset
+## Failure
 
-Read the chapter as a small set of related ideas around request Routing Patterns, not as isolated trivia.
+- Request Validation Chain: Watch out: if handlers secretly depend on each other, the chain looks modular but behaves like tangled hidden flow.
+- Request Validation Chain: Try this next: add an InventoryAvailableHandler before payment and see how easy it is to insert a new rule.
 
-## How You Might Invent It
+## Fix
 
-Checkout validation starts with one rule:
-
-- cart must not be empty
-
-Then more rules arrive:
-
-- address must be present
-- payment must be ready
-- inventory may need to be checked
-- user may need authorization
-
-One long validation method becomes noisy, hard to reorder, and hard to extend.
-
-## Naive Attempt
-
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| one method | validation is short and stable | rules will grow and change independently |
-| chain of responsibility | stages may stop early or be reordered | every step must always run in one fixed batch |
-
-## Why It Breaks
-
-- the rules are tiny and very stable
-- one short method is still easier to explain
-- handlers secretly depend on each other and stop being independent
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around request Routing Patterns, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java)
 
-## What To Notice
+Example:
 
-- each handler owns one decision
-- the request moves in sequence
-- the chain may stop early when a rule fails
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: chain of responsibility");
+        System.out.println("Story hook: checkout validation keeps gaining new guardrails, and one giant validation method is turning unreadable.");
+        System.out.println("Problem: checkout validation should keep each rule separate and stop early on failure.");
+        System.out.println();
 
-### Compare With
+        CheckoutHandler chain = new NotEmptyCartHandler(new AddressPresentHandler(new PaymentReadyHandler(null)));
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| one method | validation is short and stable | rules will grow and change independently |
-| chain of responsibility | stages may stop early or be reordered | every step must always run in one fixed batch |
+        // Expected output:
+        // checkout validation = READY
+        System.out.println("checkout validation = " + chain.handle(new CheckoutRequest(true, true, true)));
+        System.out.println("Why it works: each handler owns one decision and the chain controls the request flow.");
+        System.out.println("Use this when: request handling is a sequence of independent checks that may stop early.");
+        System.out.println("Avoid this when: the rules are tiny, fixed, and clearer in one short validation method.");
+        System.out.println("Common mistake: hiding one simple validation method behind too many handlers when the rules are tiny and stable.");
+        System.out.println("Watch out: if handlers secretly depend on each other, the chain looks modular but behaves like tangled hidden flow.");
+        System.out.println("Try this next: add an InventoryAvailableHandler before payment and see how easy it is to insert a new rule.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- each handler checks one rule");
+        System.out.println("- the request moves down the chain until a rule fails or the chain finishes");
+        System.out.println("- chain of responsibility fits request validation and middleware pipelines");
+    }
+```
 
-### Interview Focus
+What happens:
 
-Q: What problem does chain of responsibility solve?  
-A: It separates request handling into small handlers so rules can evolve independently and the request can move stage by stage.
+- Watch out: if handlers secretly depend on each other, the chain looks modular but behaves like tangled hidden flow.
+- Try this next: add an InventoryAvailableHandler before payment and see how easy it is to insert a new rule.
 
-Q: What is the most common misuse?  
-A: Turning a very small fixed validation method into many handlers that add ceremony without adding flexibility.
+Why it matters:
 
-## Mental Model
+Request handling often contains several independent checks that should stay separate.
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+## Improvement
 
-## Common Mistakes
+Example:
 
-- the rules are tiny and very stable
-- one short method is still easier to explain
-- handlers secretly depend on each other and stop being independent
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: chain of responsibility");
+        System.out.println("Story hook: checkout validation keeps gaining new guardrails, and one giant validation method is turning unreadable.");
+        System.out.println("Problem: checkout validation should keep each rule separate and stop early on failure.");
+        System.out.println();
 
-## Tradeoffs
+        CheckoutHandler chain = new NotEmptyCartHandler(new AddressPresentHandler(new PaymentReadyHandler(null)));
 
-| Compare | Use Left When | Use Right When |
-| --- | --- | --- |
-| one method | validation is short and stable | rules will grow and change independently |
-| chain of responsibility | stages may stop early or be reordered | every step must always run in one fixed batch |
+        // Expected output:
+        // checkout validation = READY
+        System.out.println("checkout validation = " + chain.handle(new CheckoutRequest(true, true, true)));
+        System.out.println("Why it works: each handler owns one decision and the chain controls the request flow.");
+        System.out.println("Use this when: request handling is a sequence of independent checks that may stop early.");
+        System.out.println("Avoid this when: the rules are tiny, fixed, and clearer in one short validation method.");
+        System.out.println("Common mistake: hiding one simple validation method behind too many handlers when the rules are tiny and stable.");
+        System.out.println("Watch out: if handlers secretly depend on each other, the chain looks modular but behaves like tangled hidden flow.");
+        System.out.println("Try this next: add an InventoryAvailableHandler before payment and see how easy it is to insert a new rule.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- each handler checks one rule");
+        System.out.println("- the request moves down the chain until a rule fails or the chain finishes");
+        System.out.println("- chain of responsibility fits request validation and middleware pipelines");
+    }
+```
 
-## Use / Avoid
+What happens:
 
-### Use It When
+- Watch out: if handlers secretly depend on each other, the chain looks modular but behaves like tangled hidden flow.
+- Try this next: add an InventoryAvailableHandler before payment and see how easy it is to insert a new rule.
 
-- request handling is a series of independent checks
-- you need to insert, remove, or reorder stages over time
-- middleware or validation should read as a pipeline
+Why it matters:
 
-## Practice
+Request handling often contains several independent checks that should stay separate.
 
-### Case Study
+After this chapter, you should be able to explain why Request Routing Patterns exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-A servlet filter chain, Spring interceptor chain, or checkout validation pipeline all share the same basic pressure:  
-small stages, local decisions, and forward movement until something fails or the request is done.
+## What stays stable
 
-## Summary
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java), [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java), and [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) all protect the same design pressure from different angles.
 
-After this chapter, you should be able to explain the main decisions behind request routing patterns and connect them back to the runnable examples.
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) starts with the raw behavior, [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) adds the safety rule, and [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Each handler decides one rule and forwards the request only if that rule passes.
+
+## Try this
+
+- Run [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) and note the first thing that breaks.
+- Run [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) and remove the safety rule or coordination step.
+- Run [Request Validation Chain](topics/request_validation_chain/RequestValidationChain.java) and compare the result with the naive approach.

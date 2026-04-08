@@ -1,72 +1,89 @@
 # Exception Design And Resources Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter goes beyond “catch the exception” and focuses on designing exception flow well.
+This chapter shows what breaks when exception design and resources is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-## The Pain Before It
+## Naive Approach
 
-Teams often mix checked and unchecked exceptions without a clear rule, then lose context while handling files, network calls, or database work.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## Java Creator Mindset
+## Failure
 
-- checked vs unchecked design philosophy
-- custom exceptions that carry meaning
-- try-with-resources
-- exception chaining with causes
-- when not to catch an exception too early
+- The naive choice works for a tiny case and fails when the assumption changes.
+- The failure is usually visible in order, ownership, or cleanup.
+- The bug matters because the code still looks reasonable at a glance.
 
-## How You Might Invent It
+## Fix
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- checked vs unchecked design philosophy
-- custom exceptions that carry meaning
-- try-with-resources
-- exception chaining with causes
-- when not to catch an exception too early
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Checked Unchecked And Custom](topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java)
 2. Run [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java)
 
-## What To Notice
+Example:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+```java
+    public static void main(String[] args) {
+        try {
+            loadInvoice();
+        } catch (IllegalStateException exception) {
+            System.out.println("topLevelMessage = " + exception.getMessage());
+            System.out.println("causeType = " + exception.getCause().getClass().getSimpleName());
+        }
+    }
+```
 
-## Mental Model
+What happens:
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Why it matters:
 
-## Common Mistakes
+After this chapter, you can explain the rule behind exception design and resources and choose the right approach with less guesswork.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+## Improvement
 
-## Tradeoffs
+Example:
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+```java
+    public static void main(String[] args) {
+        try {
+            loadInvoice();
+        } catch (IllegalStateException exception) {
+            System.out.println("topLevelMessage = " + exception.getMessage());
+            System.out.println("causeType = " + exception.getCause().getClass().getSimpleName());
+        }
+    }
+```
 
-## Use / Avoid
+What happens:
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+Why it matters:
 
-## Practice
+After this chapter, you can explain the rule behind exception design and resources and choose the right approach with less guesswork.
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+After this chapter, you should be able to explain why Exception Design And Resources exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-## Summary
+## What stays stable
 
-- why some failures belong in the type system and some do not
-- how resource handling became cleaner after try-with-resources
-- why wrapping an exception without context usually makes debugging worse
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Checked Unchecked And Custom](topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java), [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java), and [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Checked Unchecked And Custom](topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java) starts with the raw behavior, [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java) adds the safety rule, and [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
+
+## Try this
+
+- Run [Checked Unchecked And Custom](topics/checked_unchecked_and_custom/CheckedUncheckedAndCustom.java) and note the first thing that breaks.
+- Run [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java) and remove the safety rule or coordination step.
+- Run [Try With Resources And Chaining](topics/try_with_resources_and_chaining/TryWithResourcesAndChaining.java) and compare the result with the naive approach.

@@ -1,210 +1,104 @@
 # Optional Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-- represent missing values with `Optional` safely
-- transform present values without manual null checks
-- choose where `Optional` belongs in an API
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-## The Pain Before It
+## Naive Approach
 
-Before learners build a mental model for optional, the APIs feel like isolated facts instead of answers to one connected problem.
+- Using Optional for every field in every model object usually adds noise instead of clarity.
 
-## Java Creator Mindset
+## Failure
 
-### Representing Optional Values
+- Choosing Optional Boundaries: Using Optional for every field in every model object usually adds noise instead of clarity.
+- Representing Optional Values: Optional.of(null) throws NullPointerException immediately.
+- Representing Optional Values: Topic: Optional Creation
 
-- `Optional.of(value)` means the value must not be null
-- `Optional.ofNullable(value)` is safe when null is possible
-- `Optional.empty()` means no value is present
+## Fix
 
-### Transforming Optional Values
-
-- `map(...)` changes the inside value if present
-- `orElse(...)` gives a fallback if missing
-
-### Choosing Optional Boundaries
-
-- `Optional` is useful in method returns
-- it is not a replacement for every field or every parameter
-
-## How You Might Invent It
-
-```mermaid
-mindmap
-  root((Optional))
-    Creation
-      of
-      ofNullable
-      empty
-    Transform
-      map
-      orElse
-    Best Practices
-      method return values
-      avoid misuse
-```
-
-## Naive Attempt
-
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| `null` vs `Optional` | almost never for a meaningful API boundary | absence should be explicit to the caller |
-| `of()` vs `ofNullable()` | you already know the value must exist | the input may be null |
-| `map()` vs `orElse()` | you want to transform the present value | you want a fallback result when the value is absent |
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-### Representing Optional Values
-
-- `Optional.of(value)` means the value must not be null
-- `Optional.ofNullable(value)` is safe when null is possible
-- `Optional.empty()` means no value is present
-
-### Transforming Optional Values
-
-- `map(...)` changes the inside value if present
-- `orElse(...)` gives a fallback if missing
-
-### Choosing Optional Boundaries
-
-- `Optional` is useful in method returns
-- it is not a replacement for every field or every parameter
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java)
 2. Run [Optional Correct Usage](topics/optional_correct_usage/OptionalCorrectUsage.java)
 3. Run [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java)
 4. Run [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java)
 
-## What To Notice
+Example:
 
-### Compare With
-
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| `null` vs `Optional` | almost never for a meaningful API boundary | absence should be explicit to the caller |
-| `of()` vs `ofNullable()` | you already know the value must exist | the input may be null |
-| `map()` vs `orElse()` | you want to transform the present value | you want a fallback result when the value is absent |
-
-### Interview Focus
-
-Q: Why return `Optional` from a method?  
-A: It makes the missing-value case explicit for the caller.
-
-Q: Why avoid `Optional.get()` in normal code?  
-A: Because it can fail at runtime if the value is absent.
-
-Q: When is `orElse(...)` useful?  
-A: When you want a clear fallback value.
-
-### Senior Lens
-
-- Optional is most valuable at API boundaries where absence is business-meaningful
-- using Optional everywhere often adds ceremony without clarifying the model
-- `get()` is rarely the right abstraction because it bypasses the contract
-- good Optional usage reduces null-handling bugs and makes call sites more explicit
-
-### Decision Guide
-
-```mermaid
-flowchart TD
-  A[Value may be missing] --> B{Returning from a method?}
-  B -->|Yes| C[Consider Optional]
-  B -->|No| D{Is this a field or parameter?}
-  D -->|Yes| E[Usually prefer plain types plus clear validation]
-  D -->|No| F[Use the simplest explicit approach]
-  C --> G{Input may be null?}
-  G -->|Yes| H[Use ofNullable]
-  G -->|No| I[Use of]
+```java
+    public static void main(String[] args) {
+        printOverview();
+        wrongExample();
+        basicExample();
+        betterExample();
+        commonPitfalls();
+        examTrap();
+        interviewQuestion();
+        exercise();
+        solution();
+    }
 ```
 
-## Mental Model
+What happens:
 
-```mermaid
-mindmap
-  root((Optional))
-    Creation
-      of
-      ofNullable
-      empty
-    Transform
-      map
-      orElse
-    Best Practices
-      method return values
-      avoid misuse
+- Optional.of(null) throws NullPointerException immediately.
+- Topic: Optional Creation
+- Chapter: Optional
+
+Why it matters:
+
+Java programs stay useful when they are organized around ideas, not only syntax.
+
+## Improvement
+
+Example:
+
+```java
+    public static void main(String[] args) {
+        overview();
+        wrongExample();
+        // Expected output:
+        // the display domain from customer@shopnow.com is shopnow.com
+        Optional<String> email = Optional.of("customer@shopnow.com");
+        String domain = extractDomain(email);
+        System.out.println("domain = " + domain);
+        System.out.println("Lesson: map transforms the present value without forcing manual null checks.");
+        System.out.println("Common confusion: map changes the value inside Optional, it does not unwrap it permanently.");
+        System.out.println("Real-world value: a profile page can show email domain details without fragile null checks.");
+    }
 ```
 
-## Common Mistakes
+What happens:
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+- Calling get() too early defeats the purpose of Optional and can fail if the value is absent.
 
-## Tradeoffs
+Why it matters:
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| `null` vs `Optional` | almost never for a meaningful API boundary | absence should be explicit to the caller |
-| `of()` vs `ofNullable()` | you already know the value must exist | the input may be null |
-| `map()` vs `orElse()` | you want to transform the present value | you want a fallback result when the value is absent |
+Java programs stay useful when they are organized around ideas, not only syntax.
 
-- Optional is most valuable at API boundaries where absence is business-meaningful
-- using Optional everywhere often adds ceremony without clarifying the model
-- `get()` is rarely the right abstraction because it bypasses the contract
-- good Optional usage reduces null-handling bugs and makes call sites more explicit
+After this chapter, you should be able to explain why Optional exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-## Use / Avoid
+## What stays stable
 
-### Use It When
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java), [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java), and [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java) all protect the same design pressure from different angles.
 
-- use `Optional` for return values when absence is normal
-- use it when you want the caller to think about the missing case
+## What changes
 
-### Avoid It When
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java) starts with the raw behavior, [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java) adds the safety rule, and [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java) moves to the cleaner abstraction.
 
-- do not use `Optional.of(...)` on a possibly null value
-- do not use `Optional` only for style
-- do not call `get()` without proving the value exists
+## Rule
 
-## Practice
+👉 Rule: First understand the problem in plain language, then map that idea to the Java code.
 
-1. What is the difference between `of()` and `ofNullable()`?
-2. What does `map()` do on an empty `Optional`?
-3. Why is `Optional` better than hidden null checks in some APIs?
+## Try this
 
-### Mini Case Study
-
-Imagine a user profile page.
-
-- nickname may be present or missing
-- middle name may be missing
-- profile picture URL may be missing
-
-`Optional` helps the code handle those missing values clearly.
-
-## Summary
-
-### Representing Optional Values
-
-- `Optional.of(value)` means the value must not be null
-- `Optional.ofNullable(value)` is safe when null is possible
-- `Optional.empty()` means no value is present
-
-### Transforming Optional Values
-
-- `map(...)` changes the inside value if present
-- `orElse(...)` gives a fallback if missing
-
-### Choosing Optional Boundaries
-
-- `Optional` is useful in method returns
-- it is not a replacement for every field or every parameter
-
-## Next Chapter
-
-Move to [Date And Time Learning Kit](../ch02_date_and_time/ChapterGuide.md) after this chapter.
+- Run [Choosing Optional Boundaries](topics/choosing_optional_boundaries/ChoosingOptionalBoundaries.java) and note the first thing that breaks.
+- Run [Representing Optional Values](topics/representing_optional_values/RepresentingOptionalValues.java) and remove the safety rule or coordination step.
+- Run [Transforming Optional Values](topics/transforming_optional_values/TransformingOptionalValues.java) and compare the result with the naive approach.

@@ -1,81 +1,98 @@
 # Structured Concurrency Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter teaches a design idea first: related tasks should live and die together.
+This chapter shows what breaks when structured concurrency is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-## The Pain Before It
+## Naive Approach
 
-Many request flows need multiple subtasks:
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-- fetch user profile
-- fetch plan
-- fetch recommendations
+## Failure
 
-If those tasks are scattered across futures and helpers, they can outlive the request, fail independently, or keep running after their result is no longer useful. Structured concurrency keeps them inside one parent scope.
+- Collecting Results From Child Tasks: Some workflows are incomplete until every required subtask succeeds.
 
-## Java Creator Mindset
+## Fix
 
-Read the chapter as a small set of related ideas around structured Concurrency, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-- tasks are truly independent long-lived jobs
-- you are not ready to track JDK preview changes for this API
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around structured Concurrency, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Choosing First Successful Result](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java)
 2. Run [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java)
 3. Run [Keeping Child Tasks Inside One Request](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java)
 
-## What To Notice
+Example:
 
-- task lifetime belongs to the parent operation
-- “need all results” and “need first success” are different business decisions
-- cancellation and failure policy should be explicit where tasks are launched
+```java
+    public static void main(String[] args) throws Exception {
+        explainWhy();
+        runDashboardExample();
+        System.out.println();
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- some workflows require every child result");
+        System.out.println("- result handling policy should be explicit at the scope boundary");
+        System.out.println("- success and failure should be read as one operation outcome");
+    }
+```
 
-## Mental Model
+What happens:
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+- Why it works: the joiner waits until all required child tasks succeed.
+- Use this when: the workflow truly needs every result.
+- Avoid this when: one successful answer is enough and slower siblings should stop.
 
-## Common Mistakes
+Why it matters:
 
-- tasks are truly independent long-lived jobs
-- you are not ready to track JDK preview changes for this API
+Some workflows are incomplete until every required subtask succeeds.
 
-## Tradeoffs
+## Improvement
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Example:
 
-## Use / Avoid
+```java
+    public static void main(String[] args) throws Exception {
+        explainWhy();
+        runProfileRequestExample();
+        System.out.println();
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- child tasks belong to one parent operation");
+        System.out.println("- joining inside one scope keeps lifetime easier to reason about");
+        System.out.println("- structured concurrency is about ownership, not just parallel execution");
+    }
+```
 
-### Use It When
+What happens:
 
-- several tasks belong to one request or workflow
-- task cancellation should follow request cancellation
-- failure handling should stay local and readable
+- Real-world problem: a profile page request needs account data and notification status together.
+- Mental model: if tasks belong to one request, their lifetime should stay inside one scope.
+- Why it works: both subtasks stay tied to one parent request scope.
 
-## Practice
+Why it matters:
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+After this chapter, you can explain the rule behind structured concurrency and choose the right approach with less guesswork.
 
-## Summary
+After this chapter, you should be able to explain why Structured Concurrency exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-After this chapter, you should be able to explain the main decisions behind structured concurrency and connect them back to the runnable examples.
+## What stays stable
 
-## Next Chapter
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Choosing First Successful Result](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java), [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java), and [Keeping Child Tasks Inside One Request](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java) all protect the same design pressure from different angles.
 
-Move to [Scoped Values Learning Kit](../ch04_scoped_values/ChapterGuide.md) after this chapter.
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Choosing First Successful Result](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java) starts with the raw behavior, [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java) adds the safety rule, and [Keeping Child Tasks Inside One Request](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: If the screen needs both pieces, the whole operation is incomplete until both succeed.
+
+## Try this
+
+- Run [Choosing First Successful Result](topics/choosing_first_successful_result/ChoosingFirstSuccessfulResult.java) and note the first thing that breaks.
+- Run [Collecting Results From Child Tasks](topics/collecting_results_from_child_tasks/CollectingResultsFromChildTasks.java) and remove the safety rule or coordination step.
+- Run [Keeping Child Tasks Inside One Request](topics/keeping_child_tasks_inside_one_request/KeepingChildTasksInsideOneRequest.java) and compare the result with the naive approach.

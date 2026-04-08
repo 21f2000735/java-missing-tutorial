@@ -1,106 +1,114 @@
 # Sorting Searching And Binary Search Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Real systems often need repeated lookups and ordered output:
+Sorting costs work upfront, so the decision is only good when later operations benefit from the order.
 
-- sort invoices by amount
-- search a sorted list of IDs
-- answer range questions quickly
+## Naive Approach
 
-Without a sorting/searching model, code either stays brute-force or uses binary search incorrectly on unsorted data.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## The Pain Before It
+## Failure
 
-Real systems often need repeated lookups and ordered output:
+- Sorting Tradeoffs: Sorting costs work upfront, so the decision is only good when later operations benefit from the order.
+- Using Binary Search Correctly: It is one of the clearest examples of how sorted data changes search cost.
 
-- sort invoices by amount
-- search a sorted list of IDs
-- answer range questions quickly
+## Fix
 
-Without a sorting/searching model, code either stays brute-force or uses binary search incorrectly on unsorted data.
-
-## Java Creator Mindset
-
-- sorting costs work now so later operations can become easier
-- binary search only works on sorted data
-- the value of sorting depends on how often you search or compare later
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| unsorted scan | you search once or the data is tiny | you search repeatedly and can justify sorting first |
-| sort now | later lookups, paging, or ranking matter | the data is one-off and sorting adds unnecessary cost |
-| binary search | the data is sorted and random-access lookup is available | the data is unsorted or the structure does not support practical indexed access |
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- sorting costs work now so later operations can become easier
-- binary search only works on sorted data
-- the value of sorting depends on how often you search or compare later
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Sorting Tradeoffs](topics/sorting_tradeoffs/SortingTradeoffs.java)
 2. Run [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java)
 
-## What To Notice
+Example:
 
-### Compare With
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: binary search");
+        System.out.println("Problem: repeated lookups on sorted data should not scan every value.");
+        System.out.println();
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| unsorted scan | you search once or the data is tiny | you search repeatedly and can justify sorting first |
-| sort now | later lookups, paging, or ranking matter | the data is one-off and sorting adds unnecessary cost |
-| binary search | the data is sorted and random-access lookup is available | the data is unsorted or the structure does not support practical indexed access |
+        List<Integer> sortedInvoiceIds = List.of(101, 105, 110, 118, 130, 144, 156);
 
-## Mental Model
+        // Expected output:
+        // foundIndex = 3
+        System.out.println("foundIndex = " + binarySearch(sortedInvoiceIds, 118));
+        System.out.println("Why it works: each comparison removes half of the remaining search space.");
+        System.out.println("Common mistake: applying binary search to unsorted data.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- binary search only works on sorted data");
+        System.out.println("- each step removes half the remaining search space");
+        System.out.println("- the return value is an index, not the item itself");
+    }
+```
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+What happens:
 
-## Common Mistakes
+- Problem: repeated lookups on sorted data should not scan every value.
+- Why it works: each comparison removes half of the remaining search space.
+- Common mistake: applying binary search to unsorted data.
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+Why it matters:
 
-## Tradeoffs
+It is one of the clearest examples of how sorted data changes search cost.
 
-| Compare | Prefer Left When | Prefer Right When |
-| --- | --- | --- |
-| unsorted scan | you search once or the data is tiny | you search repeatedly and can justify sorting first |
-| sort now | later lookups, paging, or ranking matter | the data is one-off and sorting adds unnecessary cost |
-| binary search | the data is sorted and random-access lookup is available | the data is unsorted or the structure does not support practical indexed access |
+## Improvement
 
-## Use / Avoid
+Example:
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: binary search");
+        System.out.println("Problem: repeated lookups on sorted data should not scan every value.");
+        System.out.println();
 
-## Practice
+        List<Integer> sortedInvoiceIds = List.of(101, 105, 110, 118, 130, 144, 156);
 
-### Mini Case Study
+        // Expected output:
+        // foundIndex = 3
+        System.out.println("foundIndex = " + binarySearch(sortedInvoiceIds, 118));
+        System.out.println("Why it works: each comparison removes half of the remaining search space.");
+        System.out.println("Common mistake: applying binary search to unsorted data.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- binary search only works on sorted data");
+        System.out.println("- each step removes half the remaining search space");
+        System.out.println("- the return value is an index, not the item itself");
+    }
+```
 
-Think about invoice data.
+What happens:
 
-- finance wants the cheapest invoices first
-- support wants to check whether one invoice ID exists
-- search operations happen repeatedly
+- Problem: repeated lookups on sorted data should not scan every value.
+- Why it works: each comparison removes half of the remaining search space.
+- Common mistake: applying binary search to unsorted data.
 
-This is when paying an upfront sort cost can make later operations simpler and faster.
+Why it matters:
 
-## Summary
+It is one of the clearest examples of how sorted data changes search cost.
 
-- sorting costs work now so later operations can become easier
-- binary search only works on sorted data
-- the value of sorting depends on how often you search or compare later
+After this chapter, you should be able to explain why Sorting Searching And Binary Search exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-## Next Chapter
+## What stays stable
 
-Move to [Problem Solving Patterns Learning Kit](../ch04_problem_solving_patterns/ChapterGuide.md) after this chapter.
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Sorting Tradeoffs](topics/sorting_tradeoffs/SortingTradeoffs.java), [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java), and [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Sorting Tradeoffs](topics/sorting_tradeoffs/SortingTradeoffs.java) starts with the raw behavior, [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) adds the safety rule, and [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Compare the target to the middle, then throw away half the remaining search space each step.
+
+## Try this
+
+- Run [Sorting Tradeoffs](topics/sorting_tradeoffs/SortingTradeoffs.java) and note the first thing that breaks.
+- Run [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) and remove the safety rule or coordination step.
+- Run [Using Binary Search Correctly](topics/using_binary_search_correctly/UsingBinarySearchCorrectly.java) and compare the result with the naive approach.

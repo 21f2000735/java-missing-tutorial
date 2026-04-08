@@ -2,15 +2,15 @@
 
 ## Problem
 
-This chapter teaches the concept of giving each class one clear responsibility.
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## Naive Approach
 
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
 ## Failure
 
-- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- Separating Responsibilities: Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## Fix
 
@@ -18,23 +18,54 @@ Run the topics in this order:
 
 1. Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java)
 
-What to observe:
+Example:
 
-- Which topic shows the failure first: [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java).
-- Which topic narrows the rule: [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java).
-- Which topic shows the cleaner abstraction: [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java).
+```java
+    public static void main(String[] args) {
+        InvoiceCalculator calculator = new InvoiceCalculator();
+        int total = calculator.totalInCents(2, 1_500);
+        System.out.println("invoiceTotal = " + total);
+        System.out.println("Concept: one class should own one kind of decision clearly.");
+    }
+```
+
+What happens:
+
+- one class should own one kind of decision clearly.
+
+Why it matters:
+
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 ## Improvement
 
-Read the chapter as a small set of related ideas around designing Classes, not as isolated trivia.
+Example:
+
+```java
+    public static void main(String[] args) {
+        InvoiceCalculator calculator = new InvoiceCalculator();
+        int total = calculator.totalInCents(2, 1_500);
+        System.out.println("invoiceTotal = " + total);
+        System.out.println("Concept: one class should own one kind of decision clearly.");
+    }
+```
+
+What happens:
+
+- one class should own one kind of decision clearly.
+
+Why it matters:
+
+Java programs stay useful when they are organized around ideas, not only syntax.
 
 After this chapter, you should be able to explain why Designing Classes exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
 ## What stays stable
 
 - The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
-- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
-- The real pressure stays the same even when the API changes.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java), [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java), and [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) all protect the same design pressure from different angles.
 
 ## What changes
 
@@ -42,13 +73,14 @@ After this chapter, you should be able to explain why Designing Classes exists, 
 - The API shape changes from topic to topic.
 - The failure mode changes when one assumption is removed.
 - The abstraction cost changes as the fix becomes stronger.
+- [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) starts with the raw behavior, [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) adds the safety rule, and [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) moves to the cleaner abstraction.
 
 ## Rule
 
-👉 Rule: Read the chapter as a small set of related ideas around designing Classes, not as isolated trivia.
+👉 Rule: First understand the problem in plain language, then map that idea to the Java code.
 
 ## Try this
 
 - Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) and note the first thing that breaks.
-- Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) and write down what the rule becomes.
+- Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) and remove the safety rule or coordination step.
 - Run [Separating Responsibilities](topics/separating_responsibilities/SeparatingResponsibilities.java) and compare the result with the naive approach.

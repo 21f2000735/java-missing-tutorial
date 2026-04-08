@@ -1,99 +1,124 @@
 # Collections Internals And Tradeoffs Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Many developers know how to use `ArrayList` and `HashMap`, but not what costs appear when data grows:
+ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.
 
-- `ArrayList` appends usually feel fast, so resize cost gets ignored
-- `HashMap` lookups usually feel instant, so collisions get ignored
+## Naive Approach
 
-This chapter turns those hidden costs into visible mental models.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-## The Pain Before It
+## Failure
 
-Many developers know how to use `ArrayList` and `HashMap`, but not what costs appear when data grows:
+- ArrayList growth and lookup: ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.
+- HashMap buckets and collisions: HashMap looks like instant lookup until collisions and hashing quality become relevant.
 
-- `ArrayList` appends usually feel fast, so resize cost gets ignored
-- `HashMap` lookups usually feel instant, so collisions get ignored
+## Fix
 
-This chapter turns those hidden costs into visible mental models.
-
-## Java Creator Mindset
-
-- `ArrayList` index lookup is fast because elements live in a backing array
-- growth is amortized: most appends are cheap, occasional resizes copy old elements
-- `HashMap` lookup is fast on average when hashes spread keys well
-- collisions do not break correctness if `equals` and `hashCode` are implemented properly, but they affect lookup work
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-- `ArrayList` index lookup is fast because elements live in a backing array
-- growth is amortized: most appends are cheap, occasional resizes copy old elements
-- `HashMap` lookup is fast on average when hashes spread keys well
-- collisions do not break correctness if `equals` and `hashCode` are implemented properly, but they affect lookup work
-
-## Study Order
+Run the topics in this order:
 
 1. Run [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java)
 2. Run [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java)
 
-## What To Notice
+Example:
 
-### Interview Focus
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: HashMap collisions");
+        System.out.println("Problem: fast lookup depends on good key distribution, not on magic.");
+        System.out.println();
 
-Q: Why is `ArrayList` append called amortized `O(1)`?  
-A: Because most appends are cheap, but occasional growth resizes and copies old elements.
+        Map<CollidingKey, String> sessions = new HashMap<>();
+        sessions.put(new CollidingKey("user-101"), "ACTIVE");
+        sessions.put(new CollidingKey("user-205"), "EXPIRED");
+        sessions.put(new CollidingKey("user-309"), "LOCKED");
 
-Q: Why can `HashMap` performance degrade?  
-A: Because collisions increase the amount of work inside buckets when many keys land together.
+        // Expected output:
+        // status = EXPIRED
+        // sameBucketCount = 3
+        System.out.println("status = " + sessions.get(new CollidingKey("user-205")));
+        System.out.println("sameBucketCount = " + sessions.size());
+        System.out.println("Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.");
+        System.out.println("Common mistake: assuming HashMap is always O(1) without thinking about collision patterns.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- HashMap lookup is usually O(1) on average");
+        System.out.println("- collisions mean multiple keys land in the same bucket");
+        System.out.println("- correct equals/hashCode keeps lookups correct even when collisions happen");
+    }
+```
 
-## Mental Model
+What happens:
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+- Problem: fast lookup depends on good key distribution, not on magic.
+- Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.
+- Common mistake: assuming HashMap is always O(1) without thinking about collision patterns.
 
-## Common Mistakes
+Why it matters:
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+HashMap looks like instant lookup until collisions and hashing quality become relevant.
 
-## Tradeoffs
+## Improvement
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Example:
 
-## Use / Avoid
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: HashMap collisions");
+        System.out.println("Problem: fast lookup depends on good key distribution, not on magic.");
+        System.out.println();
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+        Map<CollidingKey, String> sessions = new HashMap<>();
+        sessions.put(new CollidingKey("user-101"), "ACTIVE");
+        sessions.put(new CollidingKey("user-205"), "EXPIRED");
+        sessions.put(new CollidingKey("user-309"), "LOCKED");
 
-## Practice
+        // Expected output:
+        // status = EXPIRED
+        // sameBucketCount = 3
+        System.out.println("status = " + sessions.get(new CollidingKey("user-205")));
+        System.out.println("sameBucketCount = " + sessions.size());
+        System.out.println("Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.");
+        System.out.println("Common mistake: assuming HashMap is always O(1) without thinking about collision patterns.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- HashMap lookup is usually O(1) on average");
+        System.out.println("- collisions mean multiple keys land in the same bucket");
+        System.out.println("- correct equals/hashCode keeps lookups correct even when collisions happen");
+    }
+```
 
-### Mini Case Study
+What happens:
 
-Imagine an order dashboard.
+- Problem: fast lookup depends on good key distribution, not on magic.
+- Why it works: collisions do not break lookup when equals/hashCode are implemented correctly.
+- Common mistake: assuming HashMap is always O(1) without thinking about collision patterns.
 
-- new orders arrive at the end of a list
-- the UI often reads by index for pagination
-- user sessions are stored by ID in a map
+Why it matters:
 
-This looks simple until scale increases. Then growth cost and collision behavior start mattering.
+HashMap looks like instant lookup until collisions and hashing quality become relevant.
 
-## Summary
+After this chapter, you should be able to explain why Collections Internals And Tradeoffs exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-- `ArrayList` index lookup is fast because elements live in a backing array
-- growth is amortized: most appends are cheap, occasional resizes copy old elements
-- `HashMap` lookup is fast on average when hashes spread keys well
-- collisions do not break correctness if `equals` and `hashCode` are implemented properly, but they affect lookup work
+## What stays stable
 
-## Next Chapter
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java), [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java), and [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) all protect the same design pressure from different angles.
 
-Move to [Sorting Searching And Binary Search Learning Kit](../ch03_sorting_searching_and_binary_search/ChapterGuide.md) after this chapter.
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java) starts with the raw behavior, [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) adds the safety rule, and [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: HashMap spreads keys across buckets; collisions mean multiple keys share one bucket and more work happens there.
+
+## Try this
+
+- Run [ArrayList growth and lookup](topics/arraylist_growth_and_lookup/ArrayListGrowthAndLookup.java) and note the first thing that breaks.
+- Run [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) and remove the safety rule or coordination step.
+- Run [HashMap buckets and collisions](topics/hashmap_buckets_and_collisions/HashMapBucketsAndCollisions.java) and compare the result with the naive approach.

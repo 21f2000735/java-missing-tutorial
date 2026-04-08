@@ -1,65 +1,122 @@
 # Cache Design Basics Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-Cache design appears in interviews and in real systems because it forces tradeoff thinking:
+This chapter shows what breaks when cache design basics is treated as syntax instead of behavior. The real pressure is what changes when work, state, or rules overlap.
 
-- what to keep
-- when to evict
-- what consistency means
+## Naive Approach
 
-## The Pain Before It
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-Before learners build a mental model for cache design basics, the APIs feel like isolated facts instead of answers to one connected problem.
+## Failure
 
-## Java Creator Mindset
+- The naive choice works for a tiny case and fails when the assumption changes.
+- The failure is usually visible in order, ownership, or cleanup.
+- The bug matters because the code still looks reasonable at a glance.
 
-Read the chapter as a small set of related ideas around cache Design Basics, not as isolated trivia.
+## Fix
 
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around cache Design Basics, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java)
 
-## What To Notice
+Example:
 
-As you read, notice which choices improve clarity, which choices improve safety, and which tradeoffs matter in production code.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: keep the most recently used entries and evict older ones");
+        System.out.println("Real-world problem: a product service repeatedly looks up hot product details.");
+        System.out.println();
 
-## Mental Model
+        Map<String, String> cache = new LinkedHashMap<>(16, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+                return size() > 2;
+            }
+        };
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+        cache.put("P1", "Laptop");
+        cache.put("P2", "Mouse");
+        cache.get("P1");
+        cache.put("P3", "Keyboard");
 
-## Common Mistakes
+        // Expected output:
+        // keys = [P1, P3]
+        System.out.println("keys = " + cache.keySet());
+        System.out.println("Why it works: access-order LinkedHashMap can remove the least recently used entry.");
+    }
+```
 
-The most common mistake is to memorize labels without building a mental model for when the concept actually helps.
+What happens:
 
-## Tradeoffs
+- Real-world problem: a product service repeatedly looks up hot product details.
+- Why it works: access-order LinkedHashMap can remove the least recently used entry.
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Why it matters:
 
-## Use / Avoid
+After this chapter, you can explain the rule behind cache design basics and choose the right approach with less guesswork.
 
-Use this chapter when the surrounding design decision is still fuzzy. Do not force the patterns here into problems that are simpler than the examples.
+## Improvement
 
-## Practice
+Example:
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+```java
+    public static void main(String[] args) {
+        System.out.println("Concept: keep the most recently used entries and evict older ones");
+        System.out.println("Real-world problem: a product service repeatedly looks up hot product details.");
+        System.out.println();
 
-## Summary
+        Map<String, String> cache = new LinkedHashMap<>(16, 0.75f, true) {
+            @Override
+            protected boolean removeEldestEntry(Map.Entry<String, String> eldest) {
+                return size() > 2;
+            }
+        };
 
-After this chapter, you should be able to explain the main decisions behind cache design basics and connect them back to the runnable examples.
+        cache.put("P1", "Laptop");
+        cache.put("P2", "Mouse");
+        cache.get("P1");
+        cache.put("P3", "Keyboard");
+
+        // Expected output:
+        // keys = [P1, P3]
+        System.out.println("keys = " + cache.keySet());
+        System.out.println("Why it works: access-order LinkedHashMap can remove the least recently used entry.");
+    }
+```
+
+What happens:
+
+- Real-world problem: a product service repeatedly looks up hot product details.
+- Why it works: access-order LinkedHashMap can remove the least recently used entry.
+
+Why it matters:
+
+After this chapter, you can explain the rule behind cache design basics and choose the right approach with less guesswork.
+
+After this chapter, you should be able to explain why Cache Design Basics exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
+
+## What stays stable
+
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java), [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java), and [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java) all protect the same design pressure from different angles.
+
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java) starts with the raw behavior, [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java) adds the safety rule, and [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: Keep the design correct by making the important rule explicit and hard to misuse.
+
+## Try this
+
+- Run [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java) and note the first thing that breaks.
+- Run [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java) and remove the safety rule or coordination step.
+- Run [Building ASimple Lru Cache](topics/building_a_simple_lru_cache/BuildingASimpleLruCache.java) and compare the result with the naive approach.

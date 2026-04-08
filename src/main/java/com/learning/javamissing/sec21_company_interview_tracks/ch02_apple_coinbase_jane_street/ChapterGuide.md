@@ -2,15 +2,17 @@
 
 ## Problem
 
-This chapter mixes three interview styles that push on correctness and thought quality from different angles.
+Some interviewers want to see whether you can keep an invariant while data keeps arriving.
 
 ## Naive Approach
 
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
 ## Failure
 
-- That breaks when the same mistake repeats across files, teams, or interview questions and the code has no shared mental model.
+- running median prices: Some interviewers want to see whether you can keep an invariant while data keeps arriving.
+- safe API design: Good APIs reduce misuse before misuse becomes a production incident.
+- transfer idempotency: Payment and transfer APIs must survive retries without moving money twice.
 
 ## Fix
 
@@ -20,23 +22,69 @@ Run the topics in this order:
 2. Run [safe API design](topics/safe_api_design/SafeApiDesign.java)
 3. Run [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java)
 
-What to observe:
+Example:
 
-- Which topic shows the failure first: [running median prices](topics/running_median_prices/RunningMedianPrices.java).
-- Which topic narrows the rule: [safe API design](topics/safe_api_design/SafeApiDesign.java).
-- Which topic shows the cleaner abstraction: [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java).
+```java
+    public static void main(String[] args) {
+        NotificationRequest request = NotificationRequest.of("EMAIL", "ops@example.com", "Payment settled");
+
+        // Expected output:
+        // request = NotificationRequest[channel=EMAIL, recipient=ops@example.com, message=Payment settled]
+        System.out.println("request = " + request);
+        System.out.println("Why it works: the static factory validates required fields before the request exists.");
+        System.out.println("Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- good APIs prevent invalid states early");
+        System.out.println("- validation at the boundary improves correctness");
+        System.out.println("- safety is often more valuable than extra flexibility");
+    }
+```
+
+What happens:
+
+Why it matters:
+
+Good APIs reduce misuse before misuse becomes a production incident.
 
 ## Improvement
 
-Read the chapter as a small set of related ideas around apple, Coinbase, Jane Street, not as isolated trivia.
+Example:
+
+```java
+    public static void main(String[] args) {
+        TransferService service = new TransferService();
+        Transfer firstTransfer = service.transfer("tx-909", new BigDecimal("125.00"));
+        Transfer retryTransfer = service.transfer("tx-909", new BigDecimal("125.00"));
+
+        // Expected output:
+        // firstTransfer = COMPLETED
+        // retryTransfer = COMPLETED
+        // ledgerEntries = 1
+        System.out.println("firstTransfer = " + firstTransfer.status());
+        System.out.println("retryTransfer = " + retryTransfer.status());
+        System.out.println("ledgerEntries = " + service.ledgerEntries());
+        System.out.println("Company lens: Coinbase answers should say correctness before convenience.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- idempotency keys belong in money-moving APIs");
+        System.out.println("- retries are normal and should be safe");
+        System.out.println("- ledger truth must not duplicate on client timeout");
+    }
+```
+
+What happens:
+
+Why it matters:
+
+Payment and transfer APIs must survive retries without moving money twice.
 
 After this chapter, you should be able to explain why Apple Coinbase Jane Street exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
 ## What stays stable
 
 - The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
-- The chapter keeps the same learning loop: run, observe, change one thing, and compare.
-- The real pressure stays the same even when the API changes.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [running median prices](topics/running_median_prices/RunningMedianPrices.java), [safe API design](topics/safe_api_design/SafeApiDesign.java), and [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java) all protect the same design pressure from different angles.
 
 ## What changes
 
@@ -44,13 +92,14 @@ After this chapter, you should be able to explain why Apple Coinbase Jane Street
 - The API shape changes from topic to topic.
 - The failure mode changes when one assumption is removed.
 - The abstraction cost changes as the fix becomes stronger.
+- [running median prices](topics/running_median_prices/RunningMedianPrices.java) starts with the raw behavior, [safe API design](topics/safe_api_design/SafeApiDesign.java) adds the safety rule, and [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java) moves to the cleaner abstraction.
 
 ## Rule
 
-👉 Rule: Read the chapter as a small set of related ideas around apple, Coinbase, Jane Street, not as isolated trivia.
+👉 Rule: API safety means the happy path is obvious and invalid states are hard to construct.
 
 ## Try this
 
 - Run [running median prices](topics/running_median_prices/RunningMedianPrices.java) and note the first thing that breaks.
-- Run [safe API design](topics/safe_api_design/SafeApiDesign.java) and write down what the rule becomes.
+- Run [safe API design](topics/safe_api_design/SafeApiDesign.java) and remove the safety rule or coordination step.
 - Run [transfer idempotency](topics/transfer_idempotency/TransferIdempotency.java) and compare the result with the naive approach.

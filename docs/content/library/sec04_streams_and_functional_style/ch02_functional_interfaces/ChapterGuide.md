@@ -1,81 +1,112 @@
 # Functional Interfaces Learning Kit
 
-## Why This Chapter Exists
+## Problem
 
-This chapter exists because stream-style Java only feels natural once “passing behavior as data” stops feeling strange.
+Some rules should be supplied from outside the workflow instead of being hard-coded inside it.
 
-## The Pain Before It
+## Naive Approach
 
-Sometimes the important thing is not just the data. It is the rule:
+The naive move is to pick the first obvious API and assume it will stay correct in every case.
 
-- how to price
-- how to validate
-- how to transform
+## Failure
 
-If a rule should be supplied from outside, Java needs a way to pass that rule around. Functional interfaces are that shape.
+- Defining Functions: Some rules should be supplied from outside the workflow instead of being hard-coded inside it.
 
-## Java Creator Mindset
+## Fix
 
-Read the chapter as a small set of related ideas around functional Interfaces, not as isolated trivia.
-
-## How You Might Invent It
-
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
-
-## Naive Attempt
-
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
-
-## Why It Breaks
-
-- one small private method is enough
-- the behavior is not really meant to vary
-- introducing a functional interface makes the code harder to explain than before
-
-## Final Java Direction
-
-Read the chapter as a small set of related ideas around functional Interfaces, not as isolated trivia.
-
-## Study Order
+Run the topics in this order:
 
 1. Run [Defining Functions](topics/defining_functions/DefiningFunctions.java)
 
-## What To Notice
+Example:
 
-- one abstract method defines one action shape
-- different lambdas can satisfy that shape
-- code becomes more reusable when the rule is passed in instead of hard-coded
+```java
+    public static void main(String[] args) {
+        System.out.println("The problem:");
+        System.out.println("The checkout flow stays the same, but the discount rule changes.");
+        System.out.println();
+        PriceRule festiveDiscount = price -> price - 200;
+        PriceRule studentDiscount = price -> price - 150;
+        System.out.println("Run this example:");
+        System.out.println("festive price = " + festiveDiscount.apply(1_200));
+        System.out.println("student price = " + studentDiscount.apply(1_200));
+        System.out.println("Why it works: both lambdas satisfy the same PriceRule contract.");
+        System.out.println("Use this when: one workflow should accept different rules.");
+        System.out.println("Avoid this when: one simple method call is clearer than introducing a new function type.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- a functional interface represents one behavior shape");
+        System.out.println("- different lambdas can supply different business rules");
+        System.out.println("- this idea is the base for many stream operations");
+    }
+```
 
-## Mental Model
+What happens:
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+- Why it works: both lambdas satisfy the same PriceRule contract.
+- Use this when: one workflow should accept different rules.
+- Avoid this when: one simple method call is clearer than introducing a new function type.
 
-## Common Mistakes
+Why it matters:
 
-- one small private method is enough
-- the behavior is not really meant to vary
-- introducing a functional interface makes the code harder to explain than before
+Some rules should be supplied from outside the workflow instead of being hard-coded inside it.
 
-## Tradeoffs
+## Improvement
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Example:
 
-## Use / Avoid
+```java
+    public static void main(String[] args) {
+        System.out.println("The problem:");
+        System.out.println("The checkout flow stays the same, but the discount rule changes.");
+        System.out.println();
+        PriceRule festiveDiscount = price -> price - 200;
+        PriceRule studentDiscount = price -> price - 150;
+        System.out.println("Run this example:");
+        System.out.println("festive price = " + festiveDiscount.apply(1_200));
+        System.out.println("student price = " + studentDiscount.apply(1_200));
+        System.out.println("Why it works: both lambdas satisfy the same PriceRule contract.");
+        System.out.println("Use this when: one workflow should accept different rules.");
+        System.out.println("Avoid this when: one simple method call is clearer than introducing a new function type.");
+        System.out.println("After reading this example, you should know:");
+        System.out.println("- a functional interface represents one behavior shape");
+        System.out.println("- different lambdas can supply different business rules");
+        System.out.println("- this idea is the base for many stream operations");
+    }
+```
 
-### Use It When
+What happens:
 
-- one workflow should support changing rules
-- you want to understand the bridge between lambdas and real business code
-- stream operations like `map`, `filter`, and `reduce` still feel too magical
+- Why it works: both lambdas satisfy the same PriceRule contract.
+- Use this when: one workflow should accept different rules.
+- Avoid this when: one simple method call is clearer than introducing a new function type.
 
-## Practice
+Why it matters:
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+Some rules should be supplied from outside the workflow instead of being hard-coded inside it.
 
-## Summary
+After this chapter, you should be able to explain why Functional Interfaces exists, what breaks if you skip the rule, and why the better abstraction is worth the cost.
 
-After this chapter, you should be able to explain the main decisions behind functional interfaces and connect them back to the runnable examples.
+## What stays stable
 
-## Next Chapter
+- The underlying pressure stays the same: correctness still depends on the rule being visible and testable.
+- The learning loop stays the same: run, observe, change one thing, and compare.
+- The underlying pressure stays the same even when the API changes.
+- [Defining Functions](topics/defining_functions/DefiningFunctions.java), [Defining Functions](topics/defining_functions/DefiningFunctions.java), and [Defining Functions](topics/defining_functions/DefiningFunctions.java) all protect the same design pressure from different angles.
 
-Move to [Data Filtering And Mapping Learning Kit](../ch03_data_filtering_and_mapping/ChapterGuide.md) after this chapter.
+## What changes
+
+- The API shape, ownership model, or execution behavior changes from topic to topic.
+- The API shape changes from topic to topic.
+- The failure mode changes when one assumption is removed.
+- The abstraction cost changes as the fix becomes stronger.
+- [Defining Functions](topics/defining_functions/DefiningFunctions.java) starts with the raw behavior, [Defining Functions](topics/defining_functions/DefiningFunctions.java) adds the safety rule, and [Defining Functions](topics/defining_functions/DefiningFunctions.java) moves to the cleaner abstraction.
+
+## Rule
+
+👉 Rule: A functional interface is one behavior shape that many rules can satisfy.
+
+## Try this
+
+- Run [Defining Functions](topics/defining_functions/DefiningFunctions.java) and note the first thing that breaks.
+- Run [Defining Functions](topics/defining_functions/DefiningFunctions.java) and remove the safety rule or coordination step.
+- Run [Defining Functions](topics/defining_functions/DefiningFunctions.java) and compare the result with the naive approach.
