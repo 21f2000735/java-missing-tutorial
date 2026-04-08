@@ -1,0 +1,449 @@
+[
+  {
+    "id": "q001",
+    "company": ["Amazon", "Google", "Microsoft"],
+    "topic": "Core Java",
+    "subtopic": "Equality and hashing",
+    "level": "intermediate",
+    "question": "Why do `==` and `.equals()` behave differently in Java?",
+    "answer": "`==` compares references, so it tells you whether two variables point to the same object. `.equals()` compares logical content when a class overrides it. For user records, orders, or money objects, you usually want `.equals()` so two different objects with the same data still count as equal. If you override `.equals()`, override `hashCode()` too so collections stay correct.",
+    "codeExample": "String a = new String(\"java\"); String b = new String(\"java\"); System.out.println(a == b); System.out.println(a.equals(b));",
+    "tags": ["equals", "hashcode", "string", "core-java"]
+  },
+  {
+    "id": "q002",
+    "company": ["Flipkart", "Uber", "Swiggy"],
+    "topic": "Core Java",
+    "subtopic": "Immutability",
+    "level": "fresher",
+    "question": "Why are immutable objects safer for shared data like payment snapshots?",
+    "answer": "Immutable objects cannot be changed after creation, so they are easier to reason about and safer to share across threads. A payment snapshot, order summary, or config object should not change unexpectedly while multiple parts of the app read it. In Java, make fields `final`, avoid setters, and return defensive copies when needed.",
+    "codeExample": "record PaymentSnapshot(String orderId, long amount) {} System.out.println(new PaymentSnapshot(\"o-1\", 4999));",
+    "tags": ["immutable", "record", "defensive-copy", "core-java"]
+  },
+  {
+    "id": "q003",
+    "company": ["Amazon", "Paytm"],
+    "topic": "Core Java",
+    "subtopic": "Pass by value",
+    "level": "intermediate",
+    "question": "Does Java pass objects by reference or by value?",
+    "answer": "Java always passes by value. For objects, the value being passed is the reference itself, so the callee gets a copy of the reference. That means it can change the object's state, but it cannot replace the caller's reference with a new object. This is why swapping two order objects inside a method does not affect the original variables outside.",
+    "codeExample": "static void reset(StringBuilder sb) { sb = new StringBuilder(\"new\"); } StringBuilder cart = new StringBuilder(\"old\"); reset(cart); System.out.println(cart);",
+    "tags": ["pass-by-value", "reference", "objects", "core-java"]
+  },
+  {
+    "id": "q004",
+    "company": ["Google", "Microsoft", "Zepto"],
+    "topic": "Core Java",
+    "subtopic": "String performance",
+    "level": "fresher",
+    "question": "Why is `StringBuilder` faster than repeated string concatenation inside a loop?",
+    "answer": "`String` is immutable, so every concatenation creates a new object. In a loop that builds an invoice, log line, or SQL statement, that becomes expensive. `StringBuilder` mutates the same buffer, so it avoids repeated allocations. Use `StringBuffer` only when you need synchronized access.",
+    "codeExample": "StringBuilder sb = new StringBuilder(); for (int i = 0; i < 3; i++) { sb.append(\"item-\").append(i).append(' '); } System.out.println(sb.toString());",
+    "tags": ["stringbuilder", "stringbuffer", "performance", "core-java"]
+  },
+  {
+    "id": "q005",
+    "company": ["Amazon", "Flipkart", "Paytm"],
+    "topic": "Core Java",
+    "subtopic": "Wrapper cache",
+    "level": "senior",
+    "question": "Why can autoboxing on small numbers produce surprising `==` results?",
+    "answer": "Wrapper classes like `Integer` cache small values, so two boxed values can point to the same cached object for a limited range. That makes `==` appear to work for some numbers and fail for others, which is exactly why using `.equals()` is safer for numeric comparisons. For money or IDs, compare values, not references.",
+    "codeExample": "Integer x = 127; Integer y = 127; Integer a = 128; Integer b = 128; System.out.println(x == y); System.out.println(a == b);",
+    "tags": ["autoboxing", "integer-cache", "equals", "core-java"]
+  },
+
+  {
+    "id": "q006",
+    "company": ["Amazon", "Google"],
+    "topic": "OOP",
+    "subtopic": "Encapsulation",
+    "level": "fresher",
+    "question": "How does encapsulation help in a checkout or order object?",
+    "answer": "Encapsulation keeps fields private and exposes only safe operations. That lets you protect invariants such as non-negative quantity, valid status transitions, or correct totals. A checkout service should call methods like `addItem()` or `confirm()` instead of editing fields directly.",
+    "codeExample": "class Order { private int total; void addAmount(int amount) { if (amount < 0) throw new IllegalArgumentException(); total += amount; } }",
+    "tags": ["encapsulation", "invariants", "oop", "design"]
+  },
+  {
+    "id": "q007",
+    "company": ["Microsoft", "Uber", "Swiggy"],
+    "topic": "OOP",
+    "subtopic": "Composition over inheritance",
+    "level": "intermediate",
+    "question": "Why is composition often better than inheritance for payment or delivery logic?",
+    "answer": "Composition lets you assemble behavior from smaller objects instead of forcing everything into a rigid parent class. A delivery app may need different payment rules for cards, wallets, or UPI, and composition keeps those variations separate. In practice, this reduces brittle hierarchies and makes testing easier.",
+    "codeExample": "interface PaymentStrategy { void pay(int amount); } class Checkout { private final PaymentStrategy strategy; Checkout(PaymentStrategy strategy) { this.strategy = strategy; } }",
+    "tags": ["composition", "inheritance", "strategy", "oop"]
+  },
+  {
+    "id": "q008",
+    "company": ["Google", "Flipkart"],
+    "topic": "OOP",
+    "subtopic": "Interface vs abstract class",
+    "level": "intermediate",
+    "question": "When should you use an interface instead of an abstract class?",
+    "answer": "Use an interface when you want a contract that multiple unrelated classes can implement, like `NotificationSender` or `DiscountRule`. Use an abstract class when you need shared state or reusable base behavior. Interfaces are usually better for flexibility, while abstract classes are better for code reuse in one family of objects.",
+    "codeExample": "interface Notifier { void send(String msg); } abstract class BaseNotifier { protected void log(String msg) { System.out.println(msg); } }",
+    "tags": ["interface", "abstract-class", "oop", "contract"]
+  },
+  {
+    "id": "q009",
+    "company": ["Amazon", "Microsoft", "Paytm"],
+    "topic": "OOP",
+    "subtopic": "Polymorphism",
+    "level": "fresher",
+    "question": "How does runtime polymorphism help in a notification system?",
+    "answer": "Runtime polymorphism lets one reference call different implementations depending on the actual object. A notification service can treat email, SMS, and push senders through the same interface, then choose the right implementation at runtime. That keeps the calling code simple and open for extension.",
+    "codeExample": "Notifier n = new EmailNotifier(); n.send(\"Your OTP is 1234\");",
+    "tags": ["polymorphism", "interface", "notifications", "oop"]
+  },
+  {
+    "id": "q010",
+    "company": ["Google", "Zepto", "Swiggy"],
+    "topic": "OOP",
+    "subtopic": "Factory methods",
+    "level": "senior",
+    "question": "Why would you hide object creation behind a factory method?",
+    "answer": "A factory centralizes creation rules and keeps callers away from constructor details. That is useful when object creation depends on environment, validation, or feature flags. It also gives you one place to switch implementations without changing all callers.",
+    "codeExample": "class PaymentFactory { static PaymentStrategy create(String type) { return \"upi\".equals(type) ? new UpiPayment() : new CardPayment(); } }",
+    "tags": ["factory", "creation", "oop", "design"]
+  },
+
+  {
+    "id": "q011",
+    "company": ["Amazon", "Google", "Microsoft"],
+    "topic": "Collections",
+    "subtopic": "HashMap internals",
+    "level": "intermediate",
+    "question": "How does `HashMap` work internally in Java?",
+    "answer": "`HashMap` uses the key's `hashCode()` to choose a bucket, then uses `equals()` to find the exact entry inside that bucket. When collisions grow, Java 8 can convert a bucket from a linked list into a balanced tree to keep lookups fast. When the map becomes too full, it resizes and doubles capacity, which is why load factor matters for performance.",
+    "codeExample": "Map<String, Integer> stock = new HashMap<>(); stock.put(\"sku-1\", 10); System.out.println(stock.get(\"sku-1\"));",
+    "tags": ["hashmap", "hashing", "collision", "java8"]
+  },
+  {
+    "id": "q012",
+    "company": ["Flipkart", "Zepto", "Paytm"],
+    "topic": "Collections",
+    "subtopic": "ArrayList vs LinkedList vs ArrayDeque",
+    "level": "fresher",
+    "question": "When should you use `ArrayList`, `LinkedList`, or `ArrayDeque`?",
+    "answer": "Use `ArrayList` for fast random access and simple ordered data. Use `LinkedList` only when you really need frequent inserts or deletes in the middle and the access pattern justifies the overhead. Use `ArrayDeque` for queue or stack style operations because it is usually faster and cleaner than using `LinkedList` for those cases.",
+    "codeExample": "Deque<String> q = new ArrayDeque<>(); q.addLast(\"order-1\"); q.addLast(\"order-2\"); System.out.println(q.removeFirst());",
+    "tags": ["arraylist", "linkedlist", "arraydeque", "collections"]
+  },
+  {
+    "id": "q013",
+    "company": ["Amazon", "Google", "Microsoft", "Flipkart"],
+    "topic": "Collections",
+    "subtopic": "LinkedHashMap LRU",
+    "level": "senior",
+    "question": "How can `LinkedHashMap` be used to build an LRU cache?",
+    "answer": "Set access order to `true` so the map moves recently used entries to the end on every read. Then override `removeEldestEntry()` to drop the oldest entry when the cache exceeds its size limit. This gives you a simple in-memory LRU cache that is easy to explain in interviews.",
+    "codeExample": "class LruCache<K,V> extends LinkedHashMap<K,V> { private final int max; LruCache(int max) { super(16, 0.75f, true); this.max = max; } protected boolean removeEldestEntry(Map.Entry<K,V> e) { return size() > max; } }",
+    "tags": ["linkedhashmap", "lru", "cache", "collections"]
+  },
+  {
+    "id": "q014",
+    "company": ["Amazon", "Flipkart", "Uber"],
+    "topic": "Collections",
+    "subtopic": "Fail-fast iterators",
+    "level": "intermediate",
+    "question": "What causes `ConcurrentModificationException`, and how do you avoid it?",
+    "answer": "A fail-fast iterator notices that the collection was structurally modified while you were iterating it. That usually happens when one thread or one loop removes items directly from the same list or set. Fix it by using the iterator's `remove()` method, iterating over a copy, or choosing a concurrent collection when multiple threads are involved.",
+    "codeExample": "for (Iterator<String> it = items.iterator(); it.hasNext(); ) { if (it.next().startsWith(\"x\")) it.remove(); }",
+    "tags": ["fail-fast", "concurrentmodificationexception", "iterator", "collections"]
+  },
+  {
+    "id": "q015",
+    "company": ["Google", "Amazon", "Swiggy"],
+    "topic": "Collections",
+    "subtopic": "PriorityQueue and heap",
+    "level": "intermediate",
+    "question": "How does `PriorityQueue` help with the Top-K elements pattern?",
+    "answer": "`PriorityQueue` gives you heap-based ordering, so insert and remove operations are logarithmic. For Top-K problems, keep a min-heap of size `K` and evict the smallest item whenever the heap grows too large. That way the heap always stores the best `K` candidates without sorting the full data set.",
+    "codeExample": "PriorityQueue<Integer> topK = new PriorityQueue<>(); topK.offer(7); topK.offer(3); topK.offer(9); System.out.println(topK.poll());",
+    "tags": ["priorityqueue", "heap", "top-k", "collections"]
+  },
+
+  {
+    "id": "q016",
+    "company": ["Amazon", "Google", "Microsoft"],
+    "topic": "Java 8 Features",
+    "subtopic": "Lambdas",
+    "level": "fresher",
+    "question": "What do lambdas change in Java, and what is the hidden rule behind them?",
+    "answer": "Lambdas let you pass behavior as data, which makes code shorter and more expressive for filters, callbacks, and event handlers. The hidden rule is that variables captured from the surrounding scope must be effectively final. That keeps lambda behavior predictable and avoids accidental mutation from outer code.",
+    "codeExample": "List<String> names = List.of(\"alice\", \"bob\"); names.forEach(name -> System.out.println(name.toUpperCase()));",
+    "tags": ["lambda", "functional-interface", "java8", "stream"]
+  },
+  {
+    "id": "q017",
+    "company": ["Flipkart", "Zepto", "Paytm"],
+    "topic": "Java 8 Features",
+    "subtopic": "Streams",
+    "level": "intermediate",
+    "question": "Why are Java Streams called lazy?",
+    "answer": "Intermediate operations like `map()` and `filter()` do not execute immediately. They build a pipeline, and the work happens only when a terminal operation like `collect()` or `forEach()` runs. This is why streams are good for readable data processing, but they are not a replacement for every loop.",
+    "codeExample": "List<String> ids = orders.stream().filter(o -> o.total() > 1000).map(Order::id).toList();",
+    "tags": ["stream", "lazy-evaluation", "filter", "java8"]
+  },
+  {
+    "id": "q018",
+    "company": ["Amazon", "Google", "Swiggy", "Uber"],
+    "topic": "Java 8 Features",
+    "subtopic": "Optional",
+    "level": "intermediate",
+    "question": "How should you use `Optional` correctly in Java?",
+    "answer": "Use `Optional` to model an absent return value, not as a field or a method parameter. Prefer `orElseGet()` when computing a fallback is expensive, and use `orElseThrow()` when missing data is an error. Avoid `get()` unless you have already checked presence, because it pushes null-handling bugs back into the code.",
+    "codeExample": "Optional<String> email = findEmail(userId); String value = email.orElseGet(() -> \"no-email@example.com\");",
+    "tags": ["optional", "null-safety", "java8", "api-design"]
+  },
+  {
+    "id": "q019",
+    "company": ["Amazon", "Microsoft", "Flipkart"],
+    "topic": "Java 8 Features",
+    "subtopic": "Functional interfaces",
+    "level": "senior",
+    "question": "How do `Predicate`, `Function`, `Consumer`, and `Supplier` compose in real code?",
+    "answer": "`Predicate` tests a condition, `Function` transforms data, `Consumer` performs an action, and `Supplier` provides data on demand. In a notification pipeline, you can filter recipients with `Predicate`, format the message with `Function`, send it with `Consumer`, and lazily fetch config with `Supplier`. This makes small processing steps easy to combine.",
+    "codeExample": "Predicate<String> valid = s -> s.length() > 3; Function<String, String> upper = String::toUpperCase; System.out.println(valid.test(\"abcd\") ? upper.apply(\"done\") : \"skip\");",
+    "tags": ["predicate", "function", "consumer", "supplier"]
+  },
+  {
+    "id": "q020",
+    "company": ["Google", "Amazon", "Microsoft"],
+    "topic": "Java 8 Features",
+    "subtopic": "Collectors",
+    "level": "intermediate",
+    "question": "When would you use `Collectors.groupingBy()` or `partitioningBy()`?",
+    "answer": "Use `groupingBy()` when you want buckets such as orders by city, user by role, or products by category. Use `partitioningBy()` when there are only two buckets, such as paid vs unpaid or active vs inactive. Both are more readable than writing nested loops and manual maps.",
+    "codeExample": "Map<String, List<Order>> byCity = orders.stream().collect(Collectors.groupingBy(Order::city));",
+    "tags": ["collectors", "groupingby", "partitioningby", "java8"]
+  },
+
+  {
+    "id": "q021",
+    "company": ["Amazon", "Google", "Microsoft"],
+    "topic": "Multithreading & Concurrency",
+    "subtopic": "volatile",
+    "level": "senior",
+    "question": "What does the `volatile` keyword guarantee, and what does it not guarantee?",
+    "answer": "`volatile` guarantees visibility: when one thread writes a value, other threads see the latest write. It also creates a happens-before relationship for reads and writes around that field. It does not make compound operations like `count++` atomic, so you still need atomics or locks for increment style updates.",
+    "codeExample": "class Flag { volatile boolean running = true; void stop() { running = false; } }",
+    "tags": ["volatile", "visibility", "happens-before", "jmm"]
+  },
+  {
+    "id": "q022",
+    "company": ["Amazon", "Meta"],
+    "topic": "Multithreading & Concurrency",
+    "subtopic": "ThreadLocal",
+    "level": "intermediate",
+    "question": "Why is `ThreadLocal` useful in a web server, and what is the leak trap?",
+    "answer": "`ThreadLocal` gives each thread its own isolated value, which is useful for request context, user session IDs, or correlation IDs in a server thread pool. The trap is forgetting to call `remove()` in a `finally` block, because pooled threads live much longer than a single request and can retain stale data. That can leak memory and mix one user's state into another request.",
+    "codeExample": "try { USER_ID.set(\"u-101\"); handleRequest(); } finally { USER_ID.remove(); }",
+    "tags": ["threadlocal", "memory-leak", "request-context", "concurrency"]
+  },
+  {
+    "id": "q023",
+    "company": ["Google", "Netflix"],
+    "topic": "Multithreading & Concurrency",
+    "subtopic": "Coordination utilities",
+    "level": "intermediate",
+    "question": "How are `CountDownLatch`, `CyclicBarrier`, and `Phaser` different?",
+    "answer": "`CountDownLatch` is a one-time countdown that lets one or more threads wait for a set of events. `CyclicBarrier` is reusable and makes a group of threads wait for each other at the same point. `Phaser` is the most flexible because parties can register and deregister dynamically, which is handy for staged parallel work like loading, transforming, and merging data.",
+    "codeExample": "CountDownLatch latch = new CountDownLatch(3); latch.countDown(); latch.await();",
+    "tags": ["countdownlatch", "cyclicbarrier", "phaser", "coordination"]
+  },
+  {
+    "id": "q024",
+    "company": ["Amazon", "Google", "Meta"],
+    "topic": "Multithreading & Concurrency",
+    "subtopic": "ReentrantLock",
+    "level": "senior",
+    "question": "When should you prefer `ReentrantLock` over `synchronized`?",
+    "answer": "Use `ReentrantLock` when you need features like `tryLock()`, timed lock acquisition, interruptible waiting, or fairness policies. It is more explicit and more flexible than `synchronized`, but it also requires disciplined unlock handling in `finally`. For simple mutual exclusion, `synchronized` is still easier to read.",
+    "codeExample": "lock.lock(); try { updateInventory(); } finally { lock.unlock(); }",
+    "tags": ["reentrantlock", "synchronized", "deadlock", "locks"]
+  },
+  {
+    "id": "q025",
+    "company": ["Amazon", "Netflix"],
+    "topic": "Multithreading & Concurrency",
+    "subtopic": "CompletableFuture",
+    "level": "senior",
+    "question": "Why is `thenCompose()` different from `thenApply()` in `CompletableFuture`?",
+    "answer": "`thenApply()` maps one value to another, so it is like `map()`. `thenCompose()` flattens nested futures, so it behaves like `flatMap()`. In a fan-out API call flow, `allOf()` waits for all parallel calls, `anyOf()` returns when the first one completes, and `exceptionally()` or `handle()` can recover from failures.",
+    "codeExample": "CompletableFuture<User> user = fetchUser(id); CompletableFuture<Account> account = user.thenCompose(u -> fetchAccount(u.id()));",
+    "tags": ["completablefuture", "allof", "anyof", "async"]
+  },
+
+  {
+    "id": "q026",
+    "company": ["Netflix", "Google"],
+    "topic": "JVM Internals",
+    "subtopic": "GC algorithms",
+    "level": "senior",
+    "question": "How do Serial GC, Parallel GC, G1 GC, ZGC, and Shenandoah differ?",
+    "answer": "Serial GC is single-threaded and fits small heaps. Parallel GC uses multiple threads and focuses on throughput. G1 GC divides the heap into regions and aims for predictable pause times, which is why it became the default in modern Java. ZGC and Shenandoah are concurrent collectors built for very large heaps and very low pause times.",
+    "codeExample": "java -XX:+UseG1GC -XX:+UseZGC -version",
+    "tags": ["gc", "g1", "zgc", "shenandoah"]
+  },
+  {
+    "id": "q027",
+    "company": ["Amazon", "Google"],
+    "topic": "JVM Internals",
+    "subtopic": "GC roots and references",
+    "level": "intermediate",
+    "question": "What are GC roots, and why do soft, weak, and phantom references matter?",
+    "answer": "GC roots are the starting points for reachability, such as active threads, local variables, static fields, and JNI references. Strong references keep objects alive normally. Soft references are useful for caches, weak references are common in structures like `WeakHashMap`, and phantom references are used for cleanup after an object is truly unreachable. If something is still strongly reachable, GC will not reclaim it.",
+    "codeExample": "Map<Object, Object> cache = new WeakHashMap<>(); cache.put(new Object(), \"value\");",
+    "tags": ["gc-roots", "weakreference", "softreference", "memory"]
+  },
+  {
+    "id": "q028",
+    "company": ["Google", "Microsoft", "Amazon"],
+    "topic": "JVM Internals",
+    "subtopic": "Class loading",
+    "level": "senior",
+    "question": "How does class loading work, and why is class identity tied to the class loader?",
+    "answer": "The JVM loads classes through a parent-first delegation chain, starting from bootstrap and moving through application loaders. A class is identified by both its fully qualified name and the class loader that loaded it, which is why the same bytecode can exist as two different types in hot-deploy or plugin systems. When a class loader becomes unreachable, its classes can be unloaded too.",
+    "codeExample": "Class<?> type = Class.forName(\"com.example.InventoryService\"); System.out.println(type.getClassLoader());",
+    "tags": ["classloader", "delegation", "hot-deploy", "jvm"]
+  },
+  {
+    "id": "q029",
+    "company": ["Netflix", "Google"],
+    "topic": "JVM Internals",
+    "subtopic": "JIT and tiered compilation",
+    "level": "senior",
+    "question": "What does JIT compilation do, and how does tiered compilation improve performance?",
+    "answer": "The JVM starts by interpreting bytecode, then promotes hot methods to compiled code. Tiered compilation usually moves work from interpreter to C1 and then C2 so the JVM can optimize only the parts of the code that are actually hot. Inlining, escape analysis, and loop unrolling are some of the optimizations that make repeated code much faster than naive interpretation.",
+    "codeExample": "java -XX:+PrintCompilation -XX:+UnlockDiagnosticVMOptions -version",
+    "tags": ["jit", "tiered-compilation", "inlining", "performance"]
+  },
+  {
+    "id": "q030",
+    "company": ["Amazon", "Google", "Paytm"],
+    "topic": "JVM Internals",
+    "subtopic": "Stack vs heap",
+    "level": "fresher",
+    "question": "What is the practical difference between stack and heap memory?",
+    "answer": "The stack stores short-lived method frames, local variables, and return information for each thread. The heap stores objects that can outlive the method that created them. If you understand that split, debugging memory issues becomes much easier, because local variables disappear with the stack frame while shared objects stay on the heap until GC can collect them.",
+    "codeExample": "String user = \"alice\"; int attempts = 3; Order order = new Order();",
+    "tags": ["stack", "heap", "memory", "jvm"]
+  },
+
+  {
+    "id": "q031",
+    "company": ["Amazon", "Google", "Microsoft"],
+    "topic": "Design Patterns",
+    "subtopic": "Singleton",
+    "level": "senior",
+    "question": "Why is double-checked locking used in a thread-safe Singleton?",
+    "answer": "Double-checked locking avoids synchronizing every access after the instance is initialized. The `volatile` keyword is required so one thread does not see a partially constructed object. In modern Java, the initialization-on-demand holder or an `enum` singleton is usually simpler and safer, but double-checked locking is still a common interview question.",
+    "codeExample": "class Config { private static volatile Config instance; static Config get() { if (instance == null) synchronized (Config.class) { if (instance == null) instance = new Config(); } return instance; } }",
+    "tags": ["singleton", "volatile", "thread-safe", "design-patterns"]
+  },
+  {
+    "id": "q032",
+    "company": ["Flipkart", "Swiggy"],
+    "topic": "Design Patterns",
+    "subtopic": "Builder",
+    "level": "intermediate",
+    "question": "Why is the Builder pattern helpful for objects with many optional fields?",
+    "answer": "Builder keeps object creation readable when a class has many optional fields, like a shipment request, notification payload, or API client config. It avoids telescoping constructors and makes validation easier before the object is built. Inner static builders are a common Java style because they keep the fluent API close to the model class.",
+    "codeExample": "OrderRequest req = new OrderRequest.Builder().orderId(\"o-1\").priority(true).build();",
+    "tags": ["builder", "fluent-api", "immutability", "design-patterns"]
+  },
+  {
+    "id": "q033",
+    "company": ["Google", "Amazon", "Meta"],
+    "topic": "Design Patterns",
+    "subtopic": "Factory patterns",
+    "level": "intermediate",
+    "question": "What is the difference between Factory Method and Abstract Factory?",
+    "answer": "Factory Method creates one product through a method that subclasses or helpers can override. Abstract Factory creates a family of related objects together, such as a UI theme that needs matching buttons, text fields, and menus. In interviews, the key is to explain whether you are creating one object or a whole family of compatible objects.",
+    "codeExample": "PaymentGateway gateway = PaymentFactory.create(\"upi\");",
+    "tags": ["factory-method", "abstract-factory", "creational", "design-patterns"]
+  },
+  {
+    "id": "q034",
+    "company": ["Microsoft", "Uber", "Swiggy"],
+    "topic": "Design Patterns",
+    "subtopic": "Strategy",
+    "level": "fresher",
+    "question": "How does the Strategy pattern map naturally to lambdas in Java?",
+    "answer": "Strategy isolates interchangeable behavior behind one interface, so callers can swap algorithms without changing the client code. In Java 8+, many small strategies can be passed as lambdas instead of concrete classes. That makes code shorter for use cases like sorting rules, pricing rules, or notification selection.",
+    "codeExample": "Comparator<Order> byPrice = (a, b) -> Integer.compare(a.price(), b.price());",
+    "tags": ["strategy", "lambda", "behavioral", "design-patterns"]
+  },
+  {
+    "id": "q035",
+    "company": ["Amazon", "Google", "Paytm"],
+    "topic": "Design Patterns",
+    "subtopic": "Observer",
+    "level": "intermediate",
+    "question": "How does the Observer pattern map to listeners and events?",
+    "answer": "The Observer pattern lets one subject notify many listeners when its state changes. That is exactly how event listeners, UI updates, or order status notifications work. The main benefit is decoupling: the subject does not need to know the concrete type of every subscriber.",
+    "codeExample": "order.addListener(event -> notificationService.send(event.orderId()));",
+    "tags": ["observer", "events", "listeners", "design-patterns"]
+  },
+
+  {
+    "id": "q036",
+    "company": ["Amazon", "Google", "Microsoft"],
+    "topic": "System Design / LLD",
+    "subtopic": "LRU Cache",
+    "level": "senior",
+    "question": "How do you design an LRU cache with O(1) get and put?",
+    "answer": "Use a `HashMap` for O(1) key lookup and a doubly linked list to track recency. Every successful `get()` moves the node to the front, and every `put()` inserts or updates at the front. When the cache is full, evict the tail node, which is the least recently used entry.",
+    "codeExample": "LRUCache cache = new LRUCache(2); cache.put(1, 10); cache.put(2, 20); System.out.println(cache.get(1));",
+    "tags": ["lru-cache", "linked-list", "hashmap", "system-design"]
+  },
+  {
+    "id": "q037",
+    "company": ["Amazon", "Meta", "Netflix"],
+    "topic": "System Design / LLD",
+    "subtopic": "Rate limiter",
+    "level": "senior",
+    "question": "What is the difference between token bucket, leaky bucket, and sliding window rate limiting?",
+    "answer": "Token bucket allows bursts and refills tokens over time, so it is good for user-facing APIs. Leaky bucket smooths traffic into a fixed output rate. Sliding window counting gives a more accurate moving view of traffic and is common in distributed implementations backed by Redis or similar storage.",
+    "codeExample": "if (bucket.allowRequest()) { handleRequest(); } else { throw new TooManyRequestsException(); }",
+    "tags": ["rate-limiter", "token-bucket", "distributed-systems", "system-design"]
+  },
+  {
+    "id": "q038",
+    "company": ["Amazon", "Google"],
+    "topic": "System Design / LLD",
+    "subtopic": "Consistent hashing",
+    "level": "senior",
+    "question": "Why does consistent hashing reduce data movement when a node is added or removed?",
+    "answer": "Consistent hashing places both data and servers on the same hash ring, so only nearby ranges move when membership changes. Virtual nodes improve balancing by giving each physical server multiple positions on the ring. This pattern is widely used in distributed caches and storage systems because it scales more gracefully than plain modulo hashing.",
+    "codeExample": "TreeMap<Integer, String> ring = new TreeMap<>(); ring.put(hash(\"node-1\"), \"node-1\");",
+    "tags": ["consistent-hashing", "hash-ring", "distributed-cache", "system-design"]
+  },
+  {
+    "id": "q039",
+    "company": ["Amazon", "Swiggy", "Zepto"],
+    "topic": "System Design / LLD",
+    "subtopic": "Producer consumer",
+    "level": "intermediate",
+    "question": "How would you model a producer-consumer queue for order processing?",
+    "answer": "A blocking queue is the simplest model for a producer-consumer pipeline. Producers put work into the queue, and workers take it out when they are ready. If the queue is full, producers block; if the queue is empty, consumers block. This is the same shape as task dispatch, log buffering, and order fulfillment pipelines.",
+    "codeExample": "BlockingQueue<String> q = new ArrayBlockingQueue<>(100); q.put(\"order-1\"); System.out.println(q.take());",
+    "tags": ["blockingqueue", "producer-consumer", "queue", "system-design"]
+  },
+  {
+    "id": "q040",
+    "company": ["Google", "Microsoft", "Paytm"],
+    "topic": "System Design / LLD",
+    "subtopic": "Notification system",
+    "level": "senior",
+    "question": "How would you design a notification system for email, SMS, and push delivery?",
+    "answer": "Split the system into request intake, routing, delivery workers, retries, and per-channel adapters. The routing layer decides which channels to use, the worker layer sends the message, and retries handle transient failures. A clean design also keeps templates, user preferences, and delivery status separate so the system can scale without becoming one giant service.",
+    "codeExample": "NotificationRequest req = new NotificationRequest(\"user-1\", List.of(\"email\", \"sms\")); dispatcher.send(req);",
+    "tags": ["notification-system", "lld", "queues", "system-design"]
+  }
+]
