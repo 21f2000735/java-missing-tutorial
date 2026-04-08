@@ -9,136 +9,97 @@ estimated: 8 min
 
 ## Why This Exists
 
-Sometimes one flow of work is not enough.
+Concept: creating a thread. `start()` creates a new thread, while `run()` just calls a method on the current thread.
 
 ## The Pain Before It
 
-Sometimes one flow of work is not enough.
-
-Examples:
-
-- send a report while the main request continues
-- process many independent tasks
-- keep the UI or API responsive
-
-Threads are the oldest Java tool for that problem.
+Calling `run()` looks like concurrency, but it keeps the work on the current thread. That is the first thing beginners need to observe.
 
 ## Java Creator Mindset
 
-Call `start()` when you want the JVM to schedule a new thread.
+Use `start()` when you want the JVM to schedule a new thread and give the task its own execution path.
 
 ## How You Might Invent It
 
-![Threads single-look visual](./ThreadsVisual.svg)
-
-At one glance:
-
-- the main thread keeps moving
-- a worker thread handles a separate task
-- as soon as both touch shared state, design risk appears
+Start with one task, move it to a worker, and then check whether the output order stays the same.
 
 ## Naive Attempt
 
-A very common beginner mistake is to call `run()` directly and think a new thread started.
+```java
+Thread t = new Thread(() ->
+    System.out.println("worker: " + Thread.currentThread().getName())
+);
+t.run();
+```
 
-It did not.  
-That just ran the method on the current thread.
+`t.run()` looks like a thread start, but it still runs on the calling thread.
 
 ## Why It Breaks
 
-A very common beginner mistake is to call `run()` directly and think a new thread started.
-
-It did not.  
-That just ran the method on the current thread.
+- the work does not move off the current thread
+- the thread name does not change the way you expect
+- concurrency bugs stay hidden because nothing actually ran concurrently
 
 ## Final Java Solution
 
-Call `start()` when you want the JVM to schedule a new thread.
+Call `start()` when you want a new thread and then wait with `join()` if you need the result before continuing.
 
 ## Code
 
 ### Run It
 
-Run the example and watch the main flow and worker flow both print output.
+```java
+Thread t = new Thread(() -> {
+    System.out.println("worker: " + Thread.currentThread().getName());
+}, "report-worker");
+
+t.start();
+System.out.println("main: " + Thread.currentThread().getName());
+t.join();
+```
 
 ### Expected Result
 
-You should see work happening from more than one thread, but not necessarily in the same order every time.
-
-That non-deterministic order is part of the lesson.
+You should see both thread names print, and the order may change from run to run.
 
 ## Walkthrough
 
-Threads let the JVM schedule separate units of execution.  
-That gives you concurrency, but it also introduces coordination and shared-state risks.
+- `start()` creates a separate call stack
+- the worker and main thread can print in either order
+- `join()` keeps the main flow from exiting too early
 
 ## Mental Model
 
-![Threads single-look visual](./ThreadsVisual.svg)
-
-At one glance:
-
-- the main thread keeps moving
-- a worker thread handles a separate task
-- as soon as both touch shared state, design risk appears
-
-| Need | Raw `Thread` | `ExecutorService` | Virtual thread |
-| --- | --- | --- | --- |
-| Learn the mental model | best starting point | hides some basics | builds on thread mental model |
-| Run many managed tasks | weak fit | strong fit | strong fit for waiting-heavy work |
-| One-off demo | simple | more setup | needs newer JDK |
-| Production task orchestration | usually not ideal | common choice | increasingly useful |
+`start()` gives the task its own execution path. `run()` does not. If you want concurrency, the thread has to be started, not just called.
 
 ## Mistakes
 
-A very common beginner mistake is to call `run()` directly and think a new thread started.
-
-It did not.  
-That just ran the method on the current thread.
+- calling `run()` and expecting a new thread
+- assuming print order proves thread order
+- forgetting that shared state becomes the next problem after `start()`
 
 ## Tradeoffs
 
-| Need | Raw `Thread` | `ExecutorService` | Virtual thread |
-| --- | --- | --- | --- |
-| Learn the mental model | best starting point | hides some basics | builds on thread mental model |
-| Run many managed tasks | weak fit | strong fit | strong fit for waiting-heavy work |
-| One-off demo | simple | more setup | needs newer JDK |
-| Production task orchestration | usually not ideal | common choice | increasingly useful |
-
-Do not benchmark threads only by "time to print".
-
-The real costs are:
-
-- thread creation
-- waiting and blocking
-- coordination
-- contention on shared state
-
-For tiny demos the cost looks invisible.  
-For real systems the hidden cost appears when you create many threads, wait on slow I/O, or lock shared objects too often.
+Raw `Thread` is the simplest way to learn the model, but it is not the best production orchestration tool. Executors and virtual threads reduce the amount of manual lifecycle code.
 
 ## Use / Avoid
 
 ### Use It When
 
-- you are learning the basic mental model of concurrency
-- you need to understand what executors and virtual threads build on top of
+- you want to learn how a new thread actually starts
+- you need a tiny one-off concurrency demo
+- you are about to learn executors or virtual threads
 
 ### Avoid It When
 
-- production task orchestration would be clearer with executors or structured concurrency
-- shared mutable state is not well controlled
+- production task orchestration needs clearer ownership
+- you need a pool of managed tasks
+- shared mutable state is already hard to reason about
 
 ## Practice
 
-Change one part of the runnable example, rerun it, and explain whether threads still behaves the way you expected.
-
-### After That
-
-Move to executors after this one. That is the practical next step for most production code.
+Replace `start()` with `run()`, rerun the example, and write down what changed.
 
 ## Summary
 
-- `start()` and `run()` are not interchangeable
-- thread ordering is not guaranteed just because the source code has one order
-- concurrency problems usually begin when multiple threads share mutable state
+Key takeaway: `start()` creates a thread, `run()` does not. Once you see that difference, the rest of the chapter makes sense.

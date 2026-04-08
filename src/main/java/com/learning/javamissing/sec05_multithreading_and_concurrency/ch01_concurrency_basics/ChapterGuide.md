@@ -2,79 +2,81 @@
 
 ## Why This Chapter Exists
 
-This chapter exists for one reason: before virtual threads or modern APIs make sense, you need to understand what goes wrong when work overlaps in time.
+Concurrency becomes clear when you separate three questions: how work starts, how shared state stays correct, and who owns the worker lifecycle.
 
 ## The Pain Before It
 
-As soon as two tasks run concurrently, three things become important:
+As soon as two tasks overlap, the design has to answer three things:
 
 - how work starts
 - how you wait for it
 - what happens when both tasks touch the same mutable state
 
-If that model is unclear, every later concurrency feature feels like extra syntax instead of clearer design.
-
 ## Java Creator Mindset
 
-Read the chapter as a small set of related ideas around concurrency Basics, not as isolated trivia.
+Make the safe path obvious: start work explicitly, protect shared state explicitly, and hand off worker management when the codebase grows.
 
 ## How You Might Invent It
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+1. Start with one task that runs on its own.
+2. Share state and watch the bug appear.
+3. Move coordination into a tool that owns the workers.
 
 ## Naive Attempt
 
-The naive approach is to solve each small problem separately and miss the common design rule connecting them.
+Create a thread whenever you need work and let each task touch shared data directly.
 
 ## Why It Breaks
 
-- raw thread behavior is still unclear
-- race conditions still feel theoretical instead of concrete
+- `run()` does not create a new thread
+- `count++` is not safe when two threads share the same field
+- raw threads make ownership and cleanup hard to scale
 
 ## Final Java Direction
 
-Read the chapter as a small set of related ideas around concurrency Basics, not as isolated trivia.
+`Threads` shows how work starts, `Synchronization` shows how shared state stays correct, and `Executors` show how task submission and worker management separate cleanly.
 
 ## Study Order
 
-1. Run [Executors](topics/executors/Executors.java)
-2. Run [Synchronization](topics/synchronization/Synchronization.java)
-3. Run [Threads](topics/threads/Threads.java)
+1. Run [Threads.java](topics/threads/Threads.java) and [TopicGuide.md](topics/threads/TopicGuide.md)
+2. Run [Synchronization.java](topics/synchronization/Synchronization.java) and [TopicGuide.md](topics/synchronization/TopicGuide.md)
+3. Run [Executors.java](topics/executors/Executors.java) and [TopicGuide.md](topics/executors/TopicGuide.md)
 
 ## What To Notice
 
-- `start()` and `run()` are not the same thing
-- shared mutable state is where correctness starts to break
-- executors improve structure by separating task submission from thread management
+- `start()` creates a new thread while `run()` stays on the current one
+- a tiny counter can still fail when two threads share it
+- executors keep task code cleaner by owning worker reuse
 
 ## Mental Model
 
-Keep one question in mind while reading: what stays stable here, what changes, and what rule keeps the design correct?
+Think in layers: thread creation answers "how does work begin?", synchronization answers "how does shared state stay correct?", and executors answer "who manages the workers?"
 
 ## Common Mistakes
 
-- raw thread behavior is still unclear
-- race conditions still feel theoretical instead of concrete
+- treating concurrency as only "faster code"
+- reading the API name without the ownership model
+- expecting raw threads to solve shared-state problems automatically
 
 ## Tradeoffs
 
-Each chapter tool buys something valuable, but only by accepting some extra structure, constraints, or ceremony.
+Raw threads are direct but fragile; synchronization protects correctness but adds coordination; executors improve structure but add an abstraction layer.
 
 ## Use / Avoid
 
 ### Use It When
 
-- you are new to Java concurrency
-- concurrency still feels invisible or mysterious
-- you need the foundation before learning virtual threads or structured concurrency
+- you need the foundation before virtual threads or structured concurrency
+- you want to see how overlapping work actually fails
+- you are deciding whether state should be shared at all
 
 ## Practice
 
-Run the examples again, change one assumption, and explain how the chapter guidance changes.
+Pick one topic in this chapter, change one line in its example, and write down what behavior changed and why.
 
 ## Summary
 
-After this chapter, you should be able to explain the main decisions behind concurrency basics and connect them back to the runnable examples.
+After this chapter, you should be able to explain how work starts, how shared state stays correct, and why executors are usually the cleaner production choice.
 
 ## Next Chapter
 
