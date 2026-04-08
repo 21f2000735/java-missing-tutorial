@@ -14,14 +14,12 @@ Choose the expected shape first:
 
 A topic is strong only if it teaches:
 
-- what the concept is
-- why the concept exists
-- what real problem it solves
-- how to think about it
-- how to code it
-- what output to expect
-- what mistakes to avoid
-- what experienced engineers care about
+- what the topic or problem is
+- the intuition behind it
+- one small runnable code snippet
+- the internal working or boundary that matters
+- one useful comparison with another option
+- one famous company interview question related to the topic
 
 ## Scoring
 
@@ -40,64 +38,40 @@ Target:
 
 ## Categories
 
-### 1. Concept Clarity
+### 1. Topic And Problem
 
-- Does the topic explain the idea in plain English?
-- Can a fresher describe the concept after reading it?
+- Does the topic explain the problem in plain English?
+- Can a fresher describe what the topic is for after reading it?
 
-### 2. Why It Exists
+### 2. Intuition
 
-- Does the topic explain why Java needs this feature or idea?
-- Is the problem statement explicit?
+- Does the topic give a simple mental picture?
+- Does it avoid repeating the problem statement word for word?
 
-### 3. Real-World Relevance
+### 3. Small Code Snippet
 
-- Is the example tied to a believable domain?
-- Can the learner imagine seeing this in a real project?
+- Does the topic include a runnable snippet?
+- Is the example small enough to understand quickly?
 
-### 4. Runnable Example Quality
+### 4. Internal Working
 
-- Does the file contain actual runnable code?
-- Is the example small enough to understand in one sitting?
+- Does the topic explain what Java does under the hood?
+- Does it explain the boundary that matters most?
 
-### 5. Expected Output
+### 5. Comparison With Other
 
-- Is the output shown or described clearly?
-- Is the output explained, not only listed?
+- Does the topic compare the concept with the closest alternative?
+- Does it clearly say when to use each one?
 
-### 6. Mental Model
+### 6. Famous Company Interview Question
 
-- Does the topic teach how to think about the concept?
-- Does it help the learner reason, not only memorize?
+- Does the topic include a company-style interview question?
+- Is the answer short and reusable?
 
-### 7. Common Mistakes
-
-- Does the topic show at least one realistic mistake?
-- Does it explain why the mistake is wrong?
-
-### 8. Interview Value
-
-- Does the topic help the learner explain tradeoffs out loud?
-- Is there at least one useful interview-style question?
-
-### 9. Exam Value
-
-- Does the topic call out syntax traps or output traps where relevant?
-- Is the OCJP angle separated from real-world advice?
-
-### 10. Senior Value
-
-- Does the topic include at least one maintainability, API design, or correctness note for experienced developers?
-
-### 11. Focus And Non-Repetition
+### 7. Focus And Non-Repetition
 
 - Does each section add a new teaching step?
 - Has the topic avoided repeating the same idea under renamed headings?
-
-### 12. Visual Teaching Quality
-
-- For internal-working topics, does the topic use a useful picture before or alongside the code?
-- Does the diagram actually reduce confusion about the mechanism?
 
 ## Required Topic Shape
 
@@ -107,6 +81,7 @@ Every strong topic file should follow one primary template:
 - certification-first topic: [CERTIFICATION_TOPIC_TEMPLATE.md](CERTIFICATION_TOPIC_TEMPLATE.md)
 
 Do not merge both templates into one long page unless there is a strong reason.
+Do not add extra default sections unless they introduce new information.
 
 ## Deep Dive Rule
 
@@ -121,13 +96,7 @@ Good deep-dive candidates:
 - pattern matching
 - modules
 
-Deep dives should explain:
-
-- what is happening under the hood
-- what learners usually misunderstand
-- what design tradeoff matters in production code
-
-Internal topics should usually also include a diagram or visual flow. Use [VISUAL_LESSON_STANDARD.md](VISUAL_LESSON_STANDARD.md) when the main confusion is structural.
+Deep dives should still fit the six-block shape, but the `Internal Working` section can be longer when the mechanism is the real difficulty.
 
 ## Rewrite Trigger
 

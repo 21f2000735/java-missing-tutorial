@@ -76,7 +76,14 @@ Each topic file should include:
 
 ## Topic Guide Templates
 
-There is no longer one default topic-guide shape for every audience.
+Use the same compact topic spine for most content. The default topic page should stay on these six blocks:
+
+- topic/problem
+- intuition
+- small code snippet
+- internal working
+- comparison with other
+- famous company interview question
 
 Choose the template based on the primary learner outcome:
 
@@ -89,19 +96,10 @@ Use `runner: embedded` for stable single-file examples that can be pushed to JDo
 Use `runner: local` for preview-sensitive or multi-file examples.
 Set `mode` in topic front matter to one of `interview`, `certification`, or `shared`.
 Set `visual` in topic front matter to one of `required`, `recommended`, or `none`.
-For internal-working topics, prefer the visual-first order from [VISUAL_LESSON_STANDARD.md](VISUAL_LESSON_STANDARD.md): picture, what to notice, code, then explanation of why the design exists.
-Use `###` subheadings inside sections when you want to teach contrast quickly. Example: `### Wrong Mental Model`, `### Better Mental Model`, `### Bad Code`, `### Better Idea`.
-
-For topics with clear mental-model value, prefer adding:
-
-- one `.svg` visual that explains the idea in a single look
-- one comparison table
-- one performance or complexity lens
-
-Keep those explanations in `TopicGuide.md` instead of bloating the runnable Java file with too much teaching narration.
-Do not add a heavy prerequisite list. Write the topic so readers can infer for themselves what background they already have and what they need to revisit.
-Do not restate the same teaching point under multiple renamed headings. Every section must add new value.
-For string pool, JVM, memory, concurrency, lifecycle, and architecture topics, one strong diagram is usually worth more than several extra prose sections.
+For internal-working topics, use `VISUAL_LESSON_STANDARD.md` only when the picture truly reduces confusion.
+Do not restate the same teaching point under multiple renamed headings.
+If a section does not add new value, remove it.
+Do not add extra default sections like `Why It Matters`, `Naive Answer`, `Better Answer`, `Strong Interview Answer`, `Quick Quiz`, or `Decision Guide` unless they add genuinely new information.
 
 ## Naming Limits
 
@@ -194,88 +192,17 @@ Every chapter should contain these chapter-level files:
 - `RunChapter.java`
 - `RunAllTopics.java`
 
-`ChapterGuide.md` should club together:
-
-- theory
-- deep-dive notes
-- quick quiz
-- interview questions
-- sources
-- Effective Java mapping
-- OCJP trap notes
-- mindmap or chart
-
-Every `ChapterGuide.md` should also include:
-
-- a short line saying the chapter is beginner-friendly
-- the chapter-level form of the same invention-first order:
-
-```md
-# Chapter Name Learning Kit
-
-## Why This Chapter Exists
-## The Pain Before It
-## Java Creator Mindset
-## How You Might Invent It
-## Naive Attempt
-## Why It Breaks
-## Final Java Direction
-## Study Order
-## What To Notice
-## Mental Model
-## Common Mistakes
-## Tradeoffs
-## Use / Avoid
-## Practice
-## Summary
-
-## Sources
-## Effective Java Mapping
-## OCJP Focus
-## Next Chapter
-```
+`ChapterGuide.md` should stay short. It should introduce the chapter, point to the important topics, and give a simple comparison or study order.
+Do not repeat the full six-block topic template inside the chapter guide unless a section adds genuinely new value.
 
 ## Choosing The Right Template
 
-Use the interview template when the topic should help the learner:
+Use the interview template when the topic should help the learner explain a decision out loud, defend tradeoffs, and answer company-style follow-ups.
 
-- explain a decision out loud
-- defend tradeoffs
-- handle follow-up questions
-- connect code to backend or company-style discussion
-
-Use the certification template when the topic should help the learner:
-
-- predict output
-- predict compile behavior
-- revise a narrow Java rule
-- study quickly in exam order
+Use the certification template when the topic should help the learner predict output or compile behavior and revise a narrow Java rule quickly.
 
 If a topic tries to do both equally, the writing usually gets bloated.
 Pick a primary goal and let the secondary goal be a short appendix instead.
-
-## How `How You Might Invent It` Differs From `Mental Model`
-
-These are related but not the same:
-
-- `How You Might Invent It` should show the path from the problem to the solution. It is the derivation, the false starts, and the turning point.
-- `Mental Model` should give the learner a stable picture they can remember later. It is the compressed explanation after the code exists.
-
-If both sections say the same thing, merge them. Do not repeat the same explanation under two headings.
-
-## How The Middle Sections Differ
-
-Use these roles to avoid repetition:
-
-- `Quick Visual` or `Visual Map` should show the shape in one glance. It is the diagram, timeline, or block view.
-- `How You Might Invent It` should show the reasoning path from pressure to design. It is the derivation.
-- `Decision Guide` should help the learner choose: when to use it, when not to use it, and what to compare it against. Do not create it as a separate heading; fold that material into `Tradeoffs` or `Use / Avoid`.
-- `Mental Model` should give the learner the compact picture to remember after reading. It is the sticky summary, not a second derivation.
-
-If one section can be deleted without losing information, it was probably repeating another section.
-
-Keep chapter appendices such as `Sources`, `Effective Java Mapping`, `OCJP Focus`, `Compare With`, and `Next Chapter` after `## Summary`.
-Chapter guides should also keep a simple study order and a quick summary after each major idea.
 
 ## Layered Reader Rule
 

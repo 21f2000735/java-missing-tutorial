@@ -41,27 +41,19 @@ The learner should understand:
 
 ## Required Topic Pattern
 
-For a deep-dive topic, keep the standard topic order and deepen the middle of the lesson:
+For a deep-dive topic, keep the same six-block topic order and deepen the middle of the lesson:
 
-1. `Why This Exists`
-2. `The Pain Before It`
-3. `Java Creator Mindset`
-4. `How You Might Invent It`
-5. `Naive Attempt`
-6. `Why It Breaks`
-7. `Final Java Solution`
-8. `Code`
-9. `Walkthrough`
-10. `Mental Model`
-11. `Mistakes`
-12. `Tradeoffs`
-13. `Use / Avoid`
-14. `Summary`
+1. `Topic / Problem`
+2. `Intuition`
+3. `Small Code Snippet`
+4. `Internal Working`
+5. `Comparison With Other`
+6. `Famous Company Interview Question`
 
 Inside those sections, make sure the topic still covers:
 
-- wrong mental model
-- right mental model
+- wrong mental model where useful
+- right mental model where useful
 - compiler checks
 - runtime behavior
 - interview angle
@@ -69,12 +61,11 @@ Inside those sections, make sure the topic still covers:
 - senior note
 - exercise and explained solution
 
-`How You Might Invent It` and `Mental Model` must serve different jobs:
+`Internal Working` should do the job that used to be split across `How You Might Invent It` and `Mental Model`:
 
-- `How You Might Invent It` is the invention path from pressure to design.
-- `Mental Model` is the durable picture the reader should retain after the walkthrough.
-
-If the same sentences work for both, the section is too broad and should be split or merged.
+- it can show the invention path from pressure to design
+- it can show the durable picture the reader should retain after the walkthrough
+- if the same sentences would work in a separate section, keep them here instead of renaming them
 
 ## Deep-Dive Trigger Topics
 

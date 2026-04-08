@@ -20,29 +20,23 @@ Use this checklist before calling any chapter complete.
 - every topic file includes one interview question and answer
 - every topic file includes one exercise and one working solution
 - every `TopicGuide.md` follows this H2 order:
-  `Why This Exists`, `The Pain Before It`, `Java Creator Mindset`,
-  `How You Might Invent It`, `Naive Attempt`, `Why It Breaks`,
-  `Final Java Solution`, `Code`, `Walkthrough`, `Mental Model`,
-  `Mistakes`, `Tradeoffs`, `Use / Avoid`, `Summary`
-
-- `How You Might Invent It` must show the derivation path; `Mental Model` must show the retained model. Do not duplicate the same explanation in both sections.
-- `Decision Guide` is not a standalone chapter heading. Keep decision-making inside `Tradeoffs` or `Use / Avoid`.
+  `Topic / Problem`, `Intuition`, `Small Code Snippet`,
+  `Internal Working`, `Comparison With Other`,
+  `Famous Company Interview Question`
+- do not add extra default sections unless they add genuinely new information
+- the topic should stay focused on one concept, one code path, one comparison, and one interview question
 
 ## Chapter Guide
 
 - one `ChapterGuide.md` per chapter
 - clear study order
 - short beginner summary of each topic
-- quick quiz
-- interview questions
+- one comparison or study-order note if it adds value
+- quick quiz only if it adds new value
+- interview questions only if they are chapter-wide, not duplicated from topic files
 - Effective Java mapping
 - source links
-- at least one mindmap or flowchart
-- every `ChapterGuide.md` follows this H2 order:
-  `Why This Chapter Exists`, `The Pain Before It`, `Java Creator Mindset`,
-  `How You Might Invent It`, `Naive Attempt`, `Why It Breaks`,
-  `Final Java Direction`, `Study Order`, `What To Notice`, `Mental Model`,
-  `Common Mistakes`, `Tradeoffs`, `Use / Avoid`, `Practice`, `Summary`
+- every `ChapterGuide.md` should stay shorter than a topic file and avoid repeating the topic template
 
 ## Quality Bar
 

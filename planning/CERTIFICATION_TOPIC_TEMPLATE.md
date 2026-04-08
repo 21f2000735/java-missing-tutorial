@@ -2,23 +2,14 @@
 
 Use this template for topics whose main job is Java 25 certification-oriented revision.
 
-The learner should finish the topic able to:
+Keep the topic compact and exam-focused. The default shape is only:
 
-- recognize the rule the exam is testing
-- predict output or compile behavior
-- avoid common traps
-- connect the rule back to runnable Java code
-
-## Main Rule
-
-Keep the topic precise and exam-oriented, but do not let it become memorization-only.
-
-The learner should see:
-
-- the rule
-- the trap
-- the correct mental model
-- the runnable example
+1. topic/problem
+2. intuition
+3. small code snippet
+4. internal working
+5. comparison with other
+6. famous company interview question
 
 ## Required `TopicGuide.md` Shape
 
@@ -34,68 +25,29 @@ visual: recommended
 
 # Topic Name
 
-## Quick Visual
-- one simple picture that clarifies the rule, memory shape, flow, or compile/runtime boundary
+## Topic / Problem
+- what the rule or feature is
+- what problem it solves
 
-## Certification Focus
-- What Java rule, feature, or API area this topic revises
+## Intuition
+- the simplest way to remember it
+- the boundary that causes confusion
 
-## Why This Rule Exists
-- The plain-English reason behind the rule
+## Small Code Snippet
+- one small example
+- what compiles or prints
 
-## Core Rule
-- The exact rule to remember
-- The boundary where people get confused
+## Internal Working
+- what Java checks
+- what happens at runtime
 
-## Common Trap
-- The mistake the exam is likely to exploit
+## Comparison With Other
+- compare with the nearest alternative
+- note the rule difference
 
-## Runnable Example
-- Small example with expected result
-
-## Output / Compile Check
-- What compiles
-- What fails
-- What prints
-
-## Walkthrough
-- Explain the result step by step
-
-## Java 25 Note
-- Version-specific note when relevant
-
-## Mistakes To Avoid
-- Fast reminders for revision
-
-## Quick Revision
-- 3 to 5 short bullets the learner can recall later
-
-## Practice Check
-- One small question or prediction exercise
-
-## Next Revision Topic
-- The next topic in certification order
+## Famous Company Interview Question
+- a related company-style question
+- a short answer the learner can reuse
 ```
 
-## What To Emphasize
-
-- picture first when the exam confusion is about internal shape or flow
-- exactness
-- output prediction
-- compile-time reasoning
-- Java 25 awareness where it matters
-- short, clear revision language
-
-## Good Optional Additions
-
-- `## Compare With`
-- `## Version Notes`
-- `## Memory Aid`
-- `## Mini Quiz`
-
-## Avoid
-
-- long motivational prose
-- broad interview digressions
-- repeating the same rule under several headings
-- production architecture discussion unless it clarifies the exam rule
+Do not add extra headings unless they introduce new information.
