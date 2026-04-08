@@ -9,97 +9,98 @@ estimated: 8 min
 
 ## Why This Exists
 
-Concept: Threads.
-
-Concurrency starts with one hard fact: two units of work can overlap in time.
+Concept: start a new thread for a task that should run independently.
 
 ## The Pain Before It
 
-It shows how independent work starts and why shared state becomes risky.
+```java
+Thread t = new Thread(() -> System.out.println(Thread.currentThread().getName()));
+t.run();
+```
 
-A reporting task runs in the background while the main flow continues.
+This looks like concurrency, but it still runs on the current thread.
 
 ## Java Creator Mindset
 
-A thread is a unit of execution. Starting work and sharing state are separate concerns.
+Use `start()` when you want the JVM to create a new execution path.
 
 ## How You Might Invent It
 
-1. Start one background task.
-2. Wait with join() when you need the task finished.
-3. Notice how shared mutable state changes the design problem.
+1. Create one task.
+2. Run it with `run()` and notice that nothing new happens.
+3. Replace `run()` with `start()` and compare the thread name.
 
 ## Naive Attempt
 
-The naive version is to use threads without checking what rule it is supposed to protect.
+```java
+Thread t = new Thread(() ->
+    System.out.println("worker: " + Thread.currentThread().getName())
+);
+t.run();
+```
+
+`run()` is just a method call on the current thread.
 
 ## Why It Breaks
 
-It shows how independent work starts and why shared state becomes risky.
-
-Edge cases usually show the bug first.
+- the code stays on the caller thread
+- the thread name does not change the way you expect
+- there is no concurrency yet, so any later bug is hidden
 
 ## Final Java Solution
 
-A thread is a unit of execution. Starting work and sharing state are separate concerns.
-
-Run [Threads.java](Threads.java) as the source of truth for the example.
+Use `start()` to launch a new thread, then `join()` when the main flow must wait for it.
 
 ## Code
 
-Run [Threads.java](Threads.java) and compare the output with the explanation below.
-
 ```java
-    public static void main(String[] args) throws InterruptedException {
-        printOverview();
-        wrongExample();
-        basicExample();
-        betterExample();
-        commonPitfalls();
-        exercise();
-        solution();
-    }
+Thread t = new Thread(() -> {
+    System.out.println("worker: " + Thread.currentThread().getName());
+}, "report-worker");
+
+t.start();
+System.out.println("main: " + Thread.currentThread().getName());
+t.join();
 ```
 
 ## Walkthrough
 
-1. Start one background task.
-2. Wait with join() when you need the task finished.
-3. Notice how shared mutable state changes the design problem.
+What happens:
 
-What to observe:
+- `start()` creates a new thread named `report-worker`
+- the worker prints its own thread name
+- the main thread keeps running until `join()` waits for the worker
 
-- worker thread: prepare report
-- safe count = 2
+Why it matters:
+
+- `run()` does not create concurrency
+- `start()` does
+- thread order is not guaranteed, so the output can appear in a different order
 
 ## Mental Model
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+`start()` means "create a new place where this task can run." `run()` means "call this method here."
 
 ## Mistakes
 
-- reading Threads as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+- calling `run()` and expecting a new thread
+- assuming print order proves thread order
+- forgetting that the next problem is shared state, not thread creation
 
 ## Tradeoffs
 
-The gain is clarity or correctness.
-
-The cost is usually one more rule, one more API, or one more concept to remember.
+Raw threads are the clearest way to see the model, but they are not the best way to manage many tasks in production.
 
 ## Use / Avoid
 
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
+Use it when you need to understand how a thread begins. Avoid it when your goal is task orchestration instead of learning the base model.
 
 ## Practice
 
-Change one line in [Threads.java](Threads.java), rerun it, and write down what changed before and after the edit.
+1. Replace `start()` with `run()` and note what changes.
+2. Remove `join()` and observe whether the main flow can finish first.
+3. Change the thread name and confirm the output uses it.
 
 ## Summary
 
-After this topic, you should be able to explain why Threads exists, what problem it solves, and what the runnable file proves.
+Key takeaway: `start()` creates a new thread, `run()` does not.

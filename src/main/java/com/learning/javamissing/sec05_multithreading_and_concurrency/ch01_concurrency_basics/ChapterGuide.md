@@ -2,7 +2,7 @@
 
 ## Why This Chapter Exists
 
-Concurrency becomes clear when you separate three questions: how work starts, how shared state stays correct, and who owns the worker lifecycle.
+Goal: understand what breaks when work overlaps.
 
 ## The Pain Before It
 
@@ -34,19 +34,19 @@ Create a thread whenever you need work and let each task touch shared data direc
 
 ## Final Java Direction
 
-`Threads` shows how work starts, `Synchronization` shows how shared state stays correct, and `Executors` show how task submission and worker management separate cleanly.
+`Threads` shows how work starts, `Synchronization` shows what happens when shared state is unsafe, and `Executors` show how task submission and worker management separate cleanly.
 
 ## Study Order
 
-1. Run [Executors](topics/executors/Executors.java)
-2. Run [Synchronization](topics/synchronization/Synchronization.java)
-3. Run [Threads](topics/threads/Threads.java)
+1. Run [Threads.java](topics/threads/Threads.java)
+2. Run [Synchronization.java](topics/synchronization/Synchronization.java)
+3. Run [Executors.java](topics/executors/Executors.java)
 
 ## What To Notice
 
-- `start()` creates a new thread while `run()` stays on the current one
-- a tiny counter can still fail when two threads share it
-- executors keep task code cleaner by owning worker reuse
+- `Threads` shows that `start()` creates a new thread while `run()` stays on the current one
+- `Synchronization` shows that a tiny counter can still fail when two threads share it
+- `Executors` show that task code stays cleaner when worker management moves out of the business logic
 
 ## Mental Model
 
@@ -72,7 +72,9 @@ Raw threads are direct but fragile; synchronization protects correctness but add
 
 ## Practice
 
-Pick one topic in this chapter, change one line in its example, and write down what behavior changed and why.
+1. Replace `start()` with `run()` in [Threads.java](topics/threads/Threads.java) and note the thread name.
+2. Remove `synchronized` in [Synchronization.java](topics/synchronization/Synchronization.java) and rerun it a few times.
+3. Change the pool size in [Executors.java](topics/executors/Executors.java) from `2` to `1` and watch how the result flow changes.
 
 ## Summary
 
