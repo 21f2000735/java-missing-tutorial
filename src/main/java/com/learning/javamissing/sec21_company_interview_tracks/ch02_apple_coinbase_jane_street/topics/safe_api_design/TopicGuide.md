@@ -7,47 +7,13 @@ estimated: 6 min
 
 # safe API design
 
-## Why This Exists
+## safe API design
 
-Concept: safe API design.
+**Concept**
 
 Good APIs reduce misuse before misuse becomes a production incident.
 
-## The Pain Before It
-
-It shows how validation and small construction rules make invalid states harder to create.
-
-An internal notification API should reject incomplete requests early.
-
-## Java Creator Mindset
-
-API safety means the happy path is obvious and invalid states are hard to construct.
-
-## How You Might Invent It
-
-1. Validate required fields at creation time.
-2. Keep the object small and obvious.
-3. Expose clear methods instead of vague mutable state.
-
-## Naive Attempt
-
-The naive version is to use safe api design without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It shows how validation and small construction rules make invalid states harder to create.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-API safety means the happy path is obvious and invalid states are hard to construct.
-
-Run [SafeApiDesign.java](SafeApiDesign.java) as the source of truth for the example.
-
-## Code
-
-Run [SafeApiDesign.java](SafeApiDesign.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -65,44 +31,30 @@ Run [SafeApiDesign.java](SafeApiDesign.java) and compare the output with the exp
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Validate required fields at creation time.
-2. Keep the object small and obvious.
-3. Expose clear methods instead of vague mutable state.
+- Why it works: the static factory validates required fields before the request exists.
+- Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.
+- After reading this example, you should know:
 
-What to observe:
+**What stays stable**
 
-- request = NotificationRequest[channel=EMAIL, recipient=ops@example.com, message=Payment settled]
+- Why it works: the static factory validates required fields before the request exists. Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Why it works: the static factory validates required fields before the request exists. Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading safe API design as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Why it works: the static factory validates required fields before the request exists. Company lens: Apple-style answers should sound like 'hard to misuse' rather than 'more flexible'.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Why it works: the static factory validates required fields before the request exists.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [SafeApiDesign.java](SafeApiDesign.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why safe API design exists, what problem it solves, and what the runnable file proves.
+- Validate required fields at creation time. 2. Keep the object small and obvious. 3. Expose clear methods instead of vague mutable state.

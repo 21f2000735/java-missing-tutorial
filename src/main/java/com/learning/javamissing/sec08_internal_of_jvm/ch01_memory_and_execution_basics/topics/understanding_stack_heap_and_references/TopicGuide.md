@@ -15,45 +15,13 @@ interviewQ:
 
 # Understanding Stack, Heap, And References
 
-## Why This Exists
+## Understanding Stack, Heap, And References
 
-Concept: Understanding Stack, Heap, And References.
+**Concept**
 
-## The Pain Before It
+Concept: local variable values and object state are not the same thing
 
-
-
-## Java Creator Mindset
-
-Make the rule behind understanding stack, heap, and references obvious so the safer choice is also the clearer one.
-
-## How You Might Invent It
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-![Understanding Stack, Heap, And References visual](./StackHeapReferencesVisual.svg)
-
-## Naive Attempt
-
-The naive version is to use understanding stack, heap, and references without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-If you ignore the rule behind understanding stack, heap, and references, the example becomes harder to trust.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Use the Java file to make the rule behind understanding stack, heap, and references explicit and repeatable.
-
-Run [UnderstandingStackHeapAndReferences.java](UnderstandingStackHeapAndReferences.java) as the source of truth for the example.
-
-## Code
-
-Run [UnderstandingStackHeapAndReferences.java](UnderstandingStackHeapAndReferences.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -74,47 +42,34 @@ Run [UnderstandingStackHeapAndReferences.java](UnderstandingStackHeapAndReferenc
     }
 ```
 
-## Walkthrough
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-What to observe:
-
-- Check whether the output matches the rule in the comment header.
-- Check whether the edge case you changed still behaves as expected.
-
-## Mental Model
-
 ![Understanding Stack, Heap, And References visual](./StackHeapReferencesVisual.svg)
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+**What happens**
 
-## Mistakes
+- Concept: local variable values and object state are not the same thing
+- Real-world problem: two variables point to the same cart object and one update surprises the learner.
+- Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
 
-- reading Understanding Stack, Heap, And References as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+**What stays stable**
 
-## Tradeoffs
+- Concept: local variable values and object state are not the same thing Real-world problem: two variables point to the same cart object and one update surprises the learner. Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
+- The example keeps the same Java shape while you vary one thing.
 
-The gain is clarity or correctness.
+**What changes**
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+- Concept: local variable values and object state are not the same thing Real-world problem: two variables point to the same cart object and one update surprises the learner. Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
+- That change is what reveals the behavior you need to understand.
 
-## Use / Avoid
+**Why it matters**
 
-Use it when the problem in the header comment matches the real code you are writing.
+Concept: local variable values and object state are not the same thing Real-world problem: two variables point to the same cart object and one update surprises the learner. Why it works: both variables refer to the same heap object, so one mutation is visible through both references.
 
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
+**Rule**
 
-## Practice
+👉 Rule: Concept: local variable values and object state are not the same thing Real-world problem: two variables point to the same cart object and one update surprises the learner.
 
-Change one line in [UnderstandingStackHeapAndReferences.java](UnderstandingStackHeapAndReferences.java), rerun it, and write down what changed before and after the edit.
+**Try this**
 
-## Summary
-
-After this topic, you should be able to explain why Understanding Stack, Heap, And References exists, what problem it solves, and what the runnable file proves.
+- Concept: local variable values and object state are not the same thing
+- Real-world problem: two variables point to the same cart object and one update surprises the learner.
+- Why it works: both variables refer to the same heap object, so one mutation is visible through both references.

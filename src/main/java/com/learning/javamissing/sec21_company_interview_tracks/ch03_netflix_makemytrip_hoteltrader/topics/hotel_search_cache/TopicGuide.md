@@ -7,47 +7,13 @@ estimated: 7 min
 
 # hotel search cache
 
-## Why This Exists
+## hotel search cache
 
-Concept: hotel search cache.
+**Concept**
 
 Travel search is read-heavy, but stale prices and stale availability can hurt trust.
 
-## The Pain Before It
-
-It caches expensive search responses while keeping a short freshness window.
-
-A hotel search page repeatedly asks for the same city and dates.
-
-## Java Creator Mindset
-
-Cache the hot read, but separate stable search shape from freshness policy.
-
-## How You Might Invent It
-
-1. Build a cache key from search input.
-2. Return cached results when still fresh.
-3. Refresh after the freshness window expires.
-
-## Naive Attempt
-
-The naive version is to use hotel search cache without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It caches expensive search responses while keeping a short freshness window.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Cache the hot read, but separate stable search shape from freshness policy.
-
-Run [HotelSearchCache.java](HotelSearchCache.java) as the source of truth for the example.
-
-## Code
-
-Run [HotelSearchCache.java](HotelSearchCache.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -68,45 +34,30 @@ Run [HotelSearchCache.java](HotelSearchCache.java) and compare the output with t
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Build a cache key from search input.
-2. Return cached results when still fresh.
-3. Refresh after the freshness window expires.
+- Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together.
+- After reading this example, you should know:
+- cache keys should reflect the search shape
 
-What to observe:
+**What stays stable**
 
-- cacheHit = true
-- hotels = [Sea View, Central Stay]
+- Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together. After reading this example, you should know: - cache keys should reflect the search shape - short freshness windows are often safer for travel data - latency improvement is not enough if correctness degrades
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together. After reading this example, you should know: - cache keys should reflect the search shape - short freshness windows are often safer for travel data - latency improvement is not enough if correctness degrades
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading hotel search cache as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together. After reading this example, you should know: - cache keys should reflect the search shape - short freshness windows are often safer for travel data - latency improvement is not enough if correctness degrades
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Company lens: MakeMyTrip answers should mention cache hit rate and stale-result risk together.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [HotelSearchCache.java](HotelSearchCache.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why hotel search cache exists, what problem it solves, and what the runnable file proves.
+- Build a cache key from search input. 2. Return cached results when still fresh. 3. Refresh after the freshness window expires.

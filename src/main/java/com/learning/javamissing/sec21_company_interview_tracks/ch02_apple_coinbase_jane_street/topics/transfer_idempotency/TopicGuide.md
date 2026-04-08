@@ -7,47 +7,13 @@ estimated: 7 min
 
 # transfer idempotency
 
-## Why This Exists
+## transfer idempotency
 
-Concept: transfer idempotency.
+**Concept**
 
 Payment and transfer APIs must survive retries without moving money twice.
 
-## The Pain Before It
-
-It binds a transfer request id to one durable result.
-
-A wallet transfer endpoint gets retried after a client timeout.
-
-## Java Creator Mindset
-
-One business action should map to one result, even if the request arrives more than once.
-
-## How You Might Invent It
-
-1. Accept an idempotency key.
-2. Store the result for that key.
-3. Return the same result on retry.
-
-## Naive Attempt
-
-The naive version is to use transfer idempotency without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It binds a transfer request id to one durable result.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-One business action should map to one result, even if the request arrives more than once.
-
-Run [TransferIdempotency.java](TransferIdempotency.java) as the source of truth for the example.
-
-## Code
-
-Run [TransferIdempotency.java](TransferIdempotency.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -70,46 +36,30 @@ Run [TransferIdempotency.java](TransferIdempotency.java) and compare the output 
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Accept an idempotency key.
-2. Store the result for that key.
-3. Return the same result on retry.
+- Company lens: Coinbase answers should say correctness before convenience.
+- After reading this example, you should know:
+- idempotency keys belong in money-moving APIs
 
-What to observe:
+**What stays stable**
 
-- firstTransfer = COMPLETED
-- retryTransfer = COMPLETED
-- ledgerEntries = 1
+- Company lens: Coinbase answers should say correctness before convenience. After reading this example, you should know: - idempotency keys belong in money-moving APIs - retries are normal and should be safe - ledger truth must not duplicate on client timeout
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Company lens: Coinbase answers should say correctness before convenience. After reading this example, you should know: - idempotency keys belong in money-moving APIs - retries are normal and should be safe - ledger truth must not duplicate on client timeout
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading transfer idempotency as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Company lens: Coinbase answers should say correctness before convenience. After reading this example, you should know: - idempotency keys belong in money-moving APIs - retries are normal and should be safe - ledger truth must not duplicate on client timeout
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Company lens: Coinbase answers should say correctness before convenience.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [TransferIdempotency.java](TransferIdempotency.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why transfer idempotency exists, what problem it solves, and what the runnable file proves.
+- Accept an idempotency key. 2. Store the result for that key. 3. Return the same result on retry.

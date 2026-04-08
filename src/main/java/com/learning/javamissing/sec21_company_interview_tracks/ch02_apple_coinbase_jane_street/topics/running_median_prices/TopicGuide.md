@@ -7,47 +7,13 @@ estimated: 8 min
 
 # running median prices
 
-## Why This Exists
+## running median prices
 
-Concept: running median prices.
+**Concept**
 
 Some interviewers want to see whether you can keep an invariant while data keeps arriving.
 
-## The Pain Before It
-
-It maintains the median of a growing price stream.
-
-A trading dashboard wants the median of recent execution prices.
-
-## Java Creator Mindset
-
-Keep the lower half in a max heap and the upper half in a min heap, then rebalance.
-
-## How You Might Invent It
-
-1. Insert into the correct heap.
-2. Rebalance sizes.
-3. Read the median from heap tops.
-
-## Naive Attempt
-
-The naive version is to use running median prices without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It maintains the median of a growing price stream.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Keep the lower half in a max heap and the upper half in a min heap, then rebalance.
-
-Run [RunningMedianPrices.java](RunningMedianPrices.java) as the source of truth for the example.
-
-## Code
-
-Run [RunningMedianPrices.java](RunningMedianPrices.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -68,44 +34,30 @@ Run [RunningMedianPrices.java](RunningMedianPrices.java) and compare the output 
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Insert into the correct heap.
-2. Rebalance sizes.
-3. Read the median from heap tops.
+- Why it works: two heaps keep lower and upper halves balanced.
+- Company lens: Jane Street answers should explain invariants out loud.
+- After reading this example, you should know:
 
-What to observe:
+**What stays stable**
 
-- median = 101.0
+- Why it works: two heaps keep lower and upper halves balanced. Company lens: Jane Street answers should explain invariants out loud.
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Why it works: two heaps keep lower and upper halves balanced. Company lens: Jane Street answers should explain invariants out loud.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading running median prices as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Why it works: two heaps keep lower and upper halves balanced. Company lens: Jane Street answers should explain invariants out loud.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Why it works: two heaps keep lower and upper halves balanced.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [RunningMedianPrices.java](RunningMedianPrices.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why running median prices exists, what problem it solves, and what the runnable file proves.
+- Insert into the correct heap. 2. Rebalance sizes. 3. Read the median from heap tops.

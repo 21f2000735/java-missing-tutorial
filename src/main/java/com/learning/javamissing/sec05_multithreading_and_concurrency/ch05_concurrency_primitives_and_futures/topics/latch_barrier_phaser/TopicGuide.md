@@ -9,43 +9,13 @@ visual: recommended
 
 # CountDownLatch Vs CyclicBarrier Vs Phaser
 
-## Why This Exists
+## CountDownLatch Vs CyclicBarrier Vs Phaser
 
-Concept: CountDownLatch Vs CyclicBarrier Vs Phaser.
+**Concept**
 
-## The Pain Before It
+Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
 
-
-
-## Java Creator Mindset
-
-Make the rule behind countdownlatch vs cyclicbarrier vs phaser obvious so the safer choice is also the clearer one.
-
-## How You Might Invent It
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-## Naive Attempt
-
-The naive version is to use countdownlatch vs cyclicbarrier vs phaser without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-If you ignore the rule behind countdownlatch vs cyclicbarrier vs phaser, the example becomes harder to trust.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Use the Java file to make the rule behind countdownlatch vs cyclicbarrier vs phaser explicit and repeatable.
-
-Run [LatchBarrierPhaser.java](LatchBarrierPhaser.java) as the source of truth for the example.
-
-## Code
-
-Run [LatchBarrierPhaser.java](LatchBarrierPhaser.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) throws Exception {
@@ -56,45 +26,28 @@ Run [LatchBarrierPhaser.java](LatchBarrierPhaser.java) and compare the output wi
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
+- Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
 
-What to observe:
+**What stays stable**
 
-- Check whether the output matches the rule in the comment header.
-- Check whether the edge case you changed still behaves as expected.
+- Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading CountDownLatch Vs CyclicBarrier Vs Phaser as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [LatchBarrierPhaser.java](LatchBarrierPhaser.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why CountDownLatch Vs CyclicBarrier Vs Phaser exists, what problem it solves, and what the runnable file proves.
+- Why it matters: each tool waits differently, so choosing the right one keeps coordination readable.

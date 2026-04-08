@@ -7,100 +7,49 @@ estimated: 8 min
 
 # Threads
 
-## Why This Exists
+## Threads
 
-Concept: start a new thread for a task that should run independently.
+**Concept**
 
-## The Pain Before It
+Concurrency starts with one hard fact: two units of work can overlap in time.
 
-```java
-Thread t = new Thread(() -> System.out.println(Thread.currentThread().getName()));
-t.run();
-```
-
-This looks like concurrency, but it still runs on the current thread.
-
-## Java Creator Mindset
-
-Use `start()` when you want the JVM to create a new execution path.
-
-## How You Might Invent It
-
-1. Create one task.
-2. Run it with `run()` and notice that nothing new happens.
-3. Replace `run()` with `start()` and compare the thread name.
-
-## Naive Attempt
+**Example**
 
 ```java
-Thread t = new Thread(() ->
-    System.out.println("worker: " + Thread.currentThread().getName())
-);
-t.run();
+    public static void main(String[] args) throws InterruptedException {
+        printOverview();
+        wrongExample();
+        basicExample();
+        betterExample();
+        commonPitfalls();
+        exercise();
+        solution();
+    }
 ```
 
-`run()` is just a method call on the current thread.
+**What happens**
 
-## Why It Breaks
+- worker thread: prepare report
+- safe count = 2
 
-- the code stays on the caller thread
-- the thread name does not change the way you expect
-- there is no concurrency yet, so any later bug is hidden
+**What stays stable**
 
-## Final Java Solution
+- A thread is a unit of execution. Starting work and sharing state are separate concerns.
+- The example keeps the same Java shape while you vary one thing.
 
-Use `start()` to launch a new thread, then `join()` when the main flow must wait for it.
+**What changes**
 
-## Code
+- It shows how independent work starts and why shared state becomes risky.
+- That change is what reveals the behavior you need to understand.
 
-```java
-Thread t = new Thread(() -> {
-    System.out.println("worker: " + Thread.currentThread().getName());
-}, "report-worker");
+**Why it matters**
 
-t.start();
-System.out.println("main: " + Thread.currentThread().getName());
-t.join();
-```
+Concurrency starts with one hard fact: two units of work can overlap in time.
 
-## Walkthrough
+**Rule**
 
-What happens:
+👉 Rule: A thread is a unit of execution.
 
-- `start()` creates a new thread named `report-worker`
-- the worker prints its own thread name
-- the main thread keeps running until `join()` waits for the worker
+**Try this**
 
-Why it matters:
-
-- `run()` does not create concurrency
-- `start()` does
-- thread order is not guaranteed, so the output can appear in a different order
-
-## Mental Model
-
-`start()` means "create a new place where this task can run." `run()` means "call this method here."
-
-## Mistakes
-
-- calling `run()` and expecting a new thread
-- assuming print order proves thread order
-- forgetting that the next problem is shared state, not thread creation
-
-## Tradeoffs
-
-Raw threads are the clearest way to see the model, but they are not the best way to manage many tasks in production.
-
-## Use / Avoid
-
-Use it when you need to understand how a thread begins. Avoid it when your goal is task orchestration instead of learning the base model.
-
-## Practice
-
-1. Replace `start()` with `run()` and note what changes.
-2. Remove `join()` and observe whether the main flow can finish first.
-3. Change the thread name and confirm the output uses it.
-
-## Summary
-
-Key takeaway: `start()` creates a new thread, `run()` does not.
+- Start one background task. 2. Wait with join() when you need the task finished. 3. Notice how shared mutable state changes the design problem.

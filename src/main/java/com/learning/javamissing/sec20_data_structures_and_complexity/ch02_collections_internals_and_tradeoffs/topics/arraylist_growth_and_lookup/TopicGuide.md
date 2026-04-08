@@ -7,47 +7,13 @@ estimated: 8 min
 
 # ArrayList growth and lookup
 
-## Why This Exists
+## ArrayList growth and lookup
 
-Concept: ArrayList growth and lookup.
+**Concept**
 
 ArrayList feels simple on the surface, but its backing-array behavior explains why some operations are cheap and some are not.
 
-## The Pain Before It
-
-It explains why indexed reads are fast and why occasional resize cost appears during append-heavy workloads.
-
-An order dashboard keeps appending recent orders and later reads them by index.
-
-## Java Creator Mindset
-
-ArrayList is fast because data stays in a backing array, but growth sometimes copies old elements.
-
-## How You Might Invent It
-
-1. Append items while estimating resize-copy work.
-2. Read one item by index.
-3. Compare cheap common appends with occasional expensive growth.
-
-## Naive Attempt
-
-The naive version is to use arraylist growth and lookup without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It explains why indexed reads are fast and why occasional resize cost appears during append-heavy workloads.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-ArrayList is fast because data stays in a backing array, but growth sometimes copies old elements.
-
-Run [ArrayListGrowthAndLookup.java](ArrayListGrowthAndLookup.java) as the source of truth for the example.
-
-## Code
-
-Run [ArrayListGrowthAndLookup.java](ArrayListGrowthAndLookup.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -72,45 +38,30 @@ Run [ArrayListGrowthAndLookup.java](ArrayListGrowthAndLookup.java) and compare t
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Append items while estimating resize-copy work.
-2. Read one item by index.
-3. Compare cheap common appends with occasional expensive growth.
+- Concept: ArrayList internals
+- Problem: appends look cheap, but hidden resize work still exists.
+- Why it works: index access is direct, but resizing copies old elements into a larger array.
 
-What to observe:
+**What stays stable**
 
-- itemAtIndex4 = order-5
-- estimatedCopiesDuringGrowth = 10
+- Concept: ArrayList internals Problem: appends look cheap, but hidden resize work still exists. Why it works: index access is direct, but resizing copies old elements into a larger array.
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Concept: ArrayList internals Problem: appends look cheap, but hidden resize work still exists. Why it works: index access is direct, but resizing copies old elements into a larger array.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading ArrayList growth and lookup as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Concept: ArrayList internals Problem: appends look cheap, but hidden resize work still exists. Why it works: index access is direct, but resizing copies old elements into a larger array.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Concept: ArrayList internals Problem: appends look cheap, but hidden resize work still exists.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [ArrayListGrowthAndLookup.java](ArrayListGrowthAndLookup.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why ArrayList growth and lookup exists, what problem it solves, and what the runnable file proves.
+- Append items while estimating resize-copy work. 2. Read one item by index. 3. Compare cheap common appends with occasional expensive growth.

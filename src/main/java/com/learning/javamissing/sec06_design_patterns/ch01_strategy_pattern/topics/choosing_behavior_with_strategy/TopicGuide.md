@@ -13,47 +13,13 @@ interviewQ:
 
 # Strategy pattern
 
-## Why This Exists
+## Strategy pattern
 
-Concept: Strategy pattern.
+**Concept**
 
 Business rules often change faster than the workflow that uses them.
 
-## The Pain Before It
-
-It removes growing conditional logic from the caller when one behavior can vary.
-
-Checkout needs different discount rules for festival, student, and premium customers.
-
-## Java Creator Mindset
-
-Keep the stable workflow in one place and move the changing rule behind a small contract.
-
-## How You Might Invent It
-
-1. Define the behavior contract.
-2. Add one implementation per rule.
-3. Pass the chosen strategy into the stable workflow.
-
-## Naive Attempt
-
-The naive version is to use strategy pattern without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It removes growing conditional logic from the caller when one behavior can vary.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Keep the stable workflow in one place and move the changing rule behind a small contract.
-
-Run [ChoosingBehaviorWithStrategy.java](ChoosingBehaviorWithStrategy.java) as the source of truth for the example.
-
-## Code
-
-Run [ChoosingBehaviorWithStrategy.java](ChoosingBehaviorWithStrategy.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -84,45 +50,30 @@ Run [ChoosingBehaviorWithStrategy.java](ChoosingBehaviorWithStrategy.java) and c
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Define the behavior contract.
-2. Add one implementation per rule.
-3. Pass the chosen strategy into the stable workflow.
+- Concept: choose one behavior through a strategy interface
+- Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month.
+- Real-world problem: checkout uses different discount rules for students and festivals.
 
-What to observe:
+**What stays stable**
 
-- festivalFinalAmount = 1700
-- studentFinalAmount = 1800
+- Concept: choose one behavior through a strategy interface Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month. Real-world problem: checkout uses different discount rules for students and festivals.
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Concept: choose one behavior through a strategy interface Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month. Real-world problem: checkout uses different discount rules for students and festivals.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading Strategy pattern as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Concept: choose one behavior through a strategy interface Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month. Real-world problem: checkout uses different discount rules for students and festivals.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Concept: choose one behavior through a strategy interface Story hook: the checkout flow stays the same, but marketing keeps adding new discount campaigns every month.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [ChoosingBehaviorWithStrategy.java](ChoosingBehaviorWithStrategy.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why Strategy pattern exists, what problem it solves, and what the runnable file proves.
+- Define the behavior contract. 2. Add one implementation per rule. 3. Pass the chosen strategy into the stable workflow.

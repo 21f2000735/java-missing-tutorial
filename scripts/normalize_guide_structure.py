@@ -258,6 +258,16 @@ def extract_main_snippet(java_path: Path) -> str:
     return "\n".join(snippet).rstrip()
 
 
+def extract_printed_lines(java_path: Path) -> list[str]:
+    snippet = java_path.read_text()
+    lines: list[str] = []
+    for raw_line in snippet.splitlines():
+        match = re.search(r'System\.out\.println\("([^"]*)"\);', raw_line)
+        if match:
+            lines.append(match.group(1))
+    return lines
+
+
 def split_step_lines(text: str) -> list[str]:
     compact = " ".join(line.strip() for line in text.splitlines() if line.strip())
     if not compact:
@@ -279,6 +289,58 @@ def split_output_lines(text: str) -> list[str]:
     return lines
 
 
+def compact_text(text: str) -> str:
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def first_sentence(text: str) -> str:
+    compact = compact_text(text)
+    if not compact:
+        return ""
+
+    match = re.search(r"(?<=[.!?])\s", compact)
+    if match:
+        return compact[: match.start() + 1].strip()
+    return compact
+
+
+def shorten_text(text: str, max_sentences: int = 2) -> str:
+    compact = compact_text(text)
+    if not compact:
+        return ""
+
+    sentences = re.split(r"(?<=[.!?])\s+", compact)
+    chosen = [sentence.strip() for sentence in sentences if sentence.strip()][:max_sentences]
+    if chosen:
+        return " ".join(chosen)
+    return compact
+
+
+def bullet_excerpt(text: str, limit: int = 3) -> str:
+    bullets = []
+    for raw_line in text.splitlines():
+        stripped = raw_line.strip()
+        if not stripped or stripped.startswith("```"):
+            continue
+        stripped = re.sub(r"^[-*]\s+", "", stripped)
+        match = re.match(r"^\d+\.\s+(.*)$", stripped)
+        if match:
+            bullets.append(match.group(1).strip())
+            continue
+        if stripped.startswith(("What happens:", "What to observe:", "Why it matters:")):
+            continue
+        if stripped.endswith(":") and len(stripped.split()) <= 4:
+            continue
+        if stripped:
+            bullets.append(stripped)
+    if not bullets:
+        sentences = [sentence.strip() for sentence in re.split(r"(?<=[.!?])\s+", compact_text(text)) if sentence.strip()]
+        bullets = sentences
+    if not bullets:
+        return ""
+    return bullet_list(bullets[:limit])
+
+
 def fenced_java(code: str) -> str:
     if not code.strip():
         return ""
@@ -286,142 +348,172 @@ def fenced_java(code: str) -> str:
 
 
 def topic_sections_from_java(
-    java_path: Path,
+    java_path: Path | None,
     guide_title: str,
+    intro: str,
+    sections: OrderedDict[str, str],
     visual_mode: str = "",
     visual_asset: str = "",
 ) -> OrderedDict[str, str]:
-    meta = parse_java_topic_comment(java_path)
-    concept = meta.get("concept") or guide_title or java_path.stem
+    meta = parse_java_topic_comment(java_path) if java_path else {}
+    fallback_name = java_path.stem if java_path else guide_title
+    concept = meta.get("concept") or guide_title or fallback_name
+    concept_title = guide_title or camel_to_title(fallback_name or guide_title)
     why_needed = meta.get("why this concept is needed", "")
     problem = meta.get("what problem this solves", "")
     setup = meta.get("real-world setup", "")
     think = meta.get("how to think about it", "")
     code_steps = meta.get("how to code it", "")
     expected = meta.get("expected output", "")
-    main_snippet = extract_main_snippet(java_path)
-    file_link = f"[{java_path.name}]({java_path.name})"
-    topic_dir = java_path.parent
-    visual_name = visual_asset or next((path.name for path in topic_dir.glob("*.svg")), "")
+    main_snippet = extract_main_snippet(java_path) if java_path else ""
+    printed_lines = extract_printed_lines(java_path) if java_path else []
+    printed_text = "\n".join(printed_lines)
+    file_link = f"[{java_path.name}]({java_path.name})" if java_path else ""
+    topic_dir = java_path.parent if java_path else None
+    visual_name = visual_asset or (
+        next((path.name for path in topic_dir.glob("*.svg")), "") if topic_dir else ""
+    )
     visual_block = ""
-    if visual_mode.lower() == "required" and visual_name:
+    if visual_mode.lower() in {"required", "recommended"} and visual_name:
         visual_block = f"![{concept} visual](./{visual_name})"
 
-    steps = split_step_lines(code_steps) or [
-        "Run the Java file once without changing it.",
-        "Change one input or one line.",
-        "Compare the new output with the explanation.",
-    ]
-    observations = split_output_lines(expected) or [
-        "Check whether the output matches the rule in the comment header.",
-        "Check whether the edge case you changed still behaves as expected.",
-    ]
+    concept_source = first_non_empty(
+        sections.get("Concept", ""),
+        sections.get("Why This Exists", ""),
+        sections.get("Why This Matters", ""),
+        intro,
+        why_needed,
+        problem,
+        setup,
+        printed_text,
+    )
+    example_source = first_non_empty(
+        sections.get("Code", ""),
+        sections.get("Small Code Snippet", ""),
+        sections.get("Simple Example", ""),
+        sections.get("Run This Code", ""),
+    )
+    if not example_source and main_snippet:
+        example_source = fenced_java(main_snippet)
+    if not example_source and file_link:
+        example_source = f"Run {file_link} and change one assumption at a time."
+    if visual_block:
+        example_source = join_blocks(example_source, visual_block)
+
+    happens_source = first_non_empty(
+        printed_text,
+        sections.get("What happens", ""),
+        sections.get("Walkthrough", ""),
+        sections.get("Expected Output", ""),
+        expected,
+        code_steps,
+    )
+    stable_source = first_non_empty(
+        printed_text,
+        sections.get("What stays stable", ""),
+        sections.get("Mental Model", ""),
+        sections.get("Java Creator Mindset", ""),
+        sections.get("Core Idea", ""),
+        think,
+    )
+    changes_source = first_non_empty(
+        printed_text,
+        sections.get("What changes", ""),
+        sections.get("The Pain Before It", ""),
+        sections.get("Why It Breaks", ""),
+        sections.get("Common Mistakes", ""),
+        problem,
+        setup,
+    )
+    matters_source = first_non_empty(
+        printed_text,
+        sections.get("Why it matters", ""),
+        sections.get("Tradeoffs", ""),
+        sections.get("Use / Avoid", ""),
+        sections.get("Why This Matters", ""),
+        why_needed,
+        problem,
+    )
+    rule_source = first_non_empty(
+        printed_text,
+        sections.get("Rule", ""),
+        sections.get("Final Java Solution", ""),
+        sections.get("Java Creator Mindset", ""),
+        sections.get("How You Might Invent It", ""),
+        think,
+    )
+    try_this_source = first_non_empty(
+        sections.get("Try this", ""),
+        sections.get("Practice", ""),
+        sections.get("How You Might Invent It", ""),
+        code_steps,
+        printed_text,
+    )
+
+    concept_text = shorten_text(concept_source, 2)
+    if not concept_text:
+        concept_text = (
+            f"This topic explains {concept.lower()} by showing the rule that keeps the example correct."
+        )
+    if concept_text.lower().startswith("concept:") and printed_lines:
+        concept_text = printed_lines[0]
+
+    what_happens = bullet_excerpt(happens_source, 3) or bullet_list(
+        [
+            "Run the example and compare the output with the rule in the explanation.",
+            "Change one input or one line.",
+            "Observe what stayed the same and what changed.",
+        ]
+    )
+
+    stable_text = shorten_text(stable_source, 2)
+    if stable_text:
+        stable_text = bullet_excerpt(stable_source, 2)
+    if not stable_text:
+        stable_text = bullet_list(
+            [
+                f"The core rule behind {concept.lower()} stays the same.",
+                "The example keeps the same Java shape while you vary one thing.",
+            ]
+        )
+    what_stays_stable = stable_text
+
+    changes_text = bullet_excerpt(changes_source, 2)
+    if not changes_text:
+        changes_text = bullet_list(
+            [
+                "The input, state, or execution path is what changes.",
+                "That change is what reveals the behavior you need to understand.",
+            ]
+        )
+    what_changes = changes_text
+
+    why_it_matters = shorten_text(matters_source, 2)
+    if not why_it_matters:
+        why_it_matters = "This matters because the rule keeps the behavior predictable when the code gets real."
+
+    rule_text = first_sentence(rule_source)
+    if not rule_text:
+        rule_text = f"Use {concept.lower()} when it makes the design easier to trust."
+
+    try_this = bullet_excerpt(try_this_source, 3) or bullet_list(
+        [
+            "Change one line and rerun the file.",
+            "Make one assumption smaller or larger.",
+            "Write down what stayed stable and what changed.",
+        ]
+    )
 
     return OrderedDict(
         [
-            (
-                "Why This Exists",
-                join_blocks(
-                    f"Concept: {concept}.",
-                    why_needed,
-                ),
-            ),
-            (
-                "The Pain Before It",
-                join_blocks(
-                    problem,
-                    setup,
-                ),
-            ),
-            (
-                "Java Creator Mindset",
-                think or f"Make the rule behind {concept.lower()} obvious so the safer choice is also the clearer one.",
-            ),
-            (
-                "How You Might Invent It",
-                join_blocks(
-                    numbered_list(steps),
-                    visual_block,
-                ),
-            ),
-            (
-                "Naive Attempt",
-                f"The naive version is to use {concept.lower()} without checking what rule it is supposed to protect.",
-            ),
-            (
-                "Why It Breaks",
-                join_blocks(
-                    problem or f"If you ignore the rule behind {concept.lower()}, the example becomes harder to trust.",
-                    "Edge cases usually show the bug first.",
-                ),
-            ),
-            (
-                "Final Java Solution",
-                join_blocks(
-                    think or f"Use the Java file to make the rule behind {concept.lower()} explicit and repeatable.",
-                    f"Run {file_link} as the source of truth for the example.",
-                ),
-            ),
-            (
-                "Code",
-                join_blocks(
-                    f"Run {file_link} and compare the output with the explanation below.",
-                    fenced_java(main_snippet),
-                ),
-            ),
-            (
-                "Walkthrough",
-                join_blocks(
-                    numbered_list(steps),
-                    "What to observe:",
-                    bullet_list(observations),
-                ),
-            ),
-            (
-                "Mental Model",
-                join_blocks(
-                    visual_block,
-                    bullet_list(
-                        [
-                            "What rule is being enforced?",
-                            "What changes when you change one input?",
-                            "What does the output prove about the rule?",
-                        ]
-                    ),
-                ),
-            ),
-            (
-                "Mistakes",
-                bullet_list(
-                    [
-                        f"reading {concept} as syntax instead of a rule",
-                        "changing more than one thing at once",
-                        "skipping the runnable file and only reading the prose",
-                    ]
-                ),
-            ),
-            (
-                "Tradeoffs",
-                join_blocks(
-                    "The gain is clarity or correctness.",
-                    "The cost is usually one more rule, one more API, or one more concept to remember.",
-                ),
-            ),
-            (
-                "Use / Avoid",
-                join_blocks(
-                    "Use it when the problem in the header comment matches the real code you are writing.",
-                    "Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.",
-                ),
-            ),
-            (
-                "Practice",
-                f"Change one line in {file_link}, rerun it, and write down what changed before and after the edit.",
-            ),
-            (
-                "Summary",
-                f"After this topic, you should be able to explain why {concept} exists, what problem it solves, and what the runnable file proves.",
-            ),
+            ("Concept", concept_text),
+            ("Example", example_source),
+            ("What happens", what_happens),
+            ("What stays stable", what_stays_stable),
+            ("What changes", what_changes),
+            ("Why it matters", why_it_matters),
+            ("Rule", f"👉 Rule: {rule_text}"),
+            ("Try this", try_this),
         ]
     )
 
@@ -861,12 +953,34 @@ def normalize_topic(path: Path) -> None:
     if java_file:
         java_meta = parse_java_topic_comment(java_file)
         title = java_meta.get("concept") or title or camel_to_title(java_file.stem)
-        required = topic_sections_from_java(java_file, title, visual_mode, visual_asset)
     else:
         title = title or humanize_slug(topic_dir.name)
-        required = topic_required_sections(title, intro, sections, topic_dir)
 
-    write_markdown(path, front_matter, title, required)
+    required = topic_sections_from_java(
+        java_file,
+        title,
+        intro,
+        sections,
+        visual_mode,
+        visual_asset,
+    )
+
+    parts: list[str] = []
+    if front_matter:
+        parts.append(front_matter.strip())
+        parts.append("")
+
+    parts.append(f"# {title}")
+    parts.append("")
+    parts.append(f"## {title}")
+
+    for heading, content in required.items():
+        parts.append("")
+        parts.append(f"**{heading}**")
+        parts.append("")
+        parts.append(content.strip())
+
+    path.write_text("\n".join(parts).rstrip() + "\n")
 
 
 def normalize_chapter(path: Path) -> None:

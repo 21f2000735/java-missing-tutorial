@@ -10,45 +10,13 @@ visual_asset: GcStrategiesVisual.svg
 
 # GC Strategies
 
-## Why This Exists
+## GC Strategies
 
-Concept: GC Strategies.
+**Concept**
 
-## The Pain Before It
+Concept: different garbage collectors optimize for different tradeoffs.
 
-
-
-## Java Creator Mindset
-
-Make the rule behind gc strategies obvious so the safer choice is also the clearer one.
-
-## How You Might Invent It
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-![GC Strategies visual](./GcStrategiesVisual.svg)
-
-## Naive Attempt
-
-The naive version is to use gc strategies without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-If you ignore the rule behind gc strategies, the example becomes harder to trust.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Use the Java file to make the rule behind gc strategies explicit and repeatable.
-
-Run [GcStrategies.java](GcStrategies.java) as the source of truth for the example.
-
-## Code
-
-Run [GcStrategies.java](GcStrategies.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -67,47 +35,34 @@ Run [GcStrategies.java](GcStrategies.java) and compare the output with the expla
     }
 ```
 
-## Walkthrough
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-What to observe:
-
-- Check whether the output matches the rule in the comment header.
-- Check whether the edge case you changed still behaves as expected.
-
-## Mental Model
-
 ![GC Strategies visual](./GcStrategiesVisual.svg)
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+**What happens**
 
-## Mistakes
+- Concept: different garbage collectors optimize for different tradeoffs.
+- G1 -> balanced default for many server workloads
+- ZGC -> very low pause time focus
 
-- reading GC Strategies as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+**What stays stable**
 
-## Tradeoffs
+- Concept: different garbage collectors optimize for different tradeoffs. G1 -> balanced default for many server workloads ZGC -> very low pause time focus Shenandoah -> low pause time with concurrent compaction focus Use this when: you need a first mental model before reading deeper GC tuning material.
+- The example keeps the same Java shape while you vary one thing.
 
-The gain is clarity or correctness.
+**What changes**
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+- Concept: different garbage collectors optimize for different tradeoffs. G1 -> balanced default for many server workloads ZGC -> very low pause time focus Shenandoah -> low pause time with concurrent compaction focus Use this when: you need a first mental model before reading deeper GC tuning material.
+- That change is what reveals the behavior you need to understand.
 
-## Use / Avoid
+**Why it matters**
 
-Use it when the problem in the header comment matches the real code you are writing.
+Concept: different garbage collectors optimize for different tradeoffs. G1 -> balanced default for many server workloads ZGC -> very low pause time focus Shenandoah -> low pause time with concurrent compaction focus Use this when: you need a first mental model before reading deeper GC tuning material.
 
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
+**Rule**
 
-## Practice
+👉 Rule: Concept: different garbage collectors optimize for different tradeoffs.
 
-Change one line in [GcStrategies.java](GcStrategies.java), rerun it, and write down what changed before and after the edit.
+**Try this**
 
-## Summary
-
-After this topic, you should be able to explain why GC Strategies exists, what problem it solves, and what the runnable file proves.
+- Concept: different garbage collectors optimize for different tradeoffs.
+- G1 -> balanced default for many server workloads
+- ZGC -> very low pause time focus

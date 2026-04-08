@@ -9,43 +9,13 @@ visual: recommended
 
 # ThreadLocal
 
-## Why This Exists
+## ThreadLocal
 
-Concept: ThreadLocal.
+**Concept**
 
-## The Pain Before It
+Why it matters: each thread can carry request context without sharing mutable state.
 
-
-
-## Java Creator Mindset
-
-Make the rule behind threadlocal obvious so the safer choice is also the clearer one.
-
-## How You Might Invent It
-
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
-
-## Naive Attempt
-
-The naive version is to use threadlocal without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-If you ignore the rule behind threadlocal, the example becomes harder to trust.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-Use the Java file to make the rule behind threadlocal explicit and repeatable.
-
-Run [ThreadLocalContext.java](ThreadLocalContext.java) as the source of truth for the example.
-
-## Code
-
-Run [ThreadLocalContext.java](ThreadLocalContext.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) throws InterruptedException {
@@ -61,45 +31,28 @@ Run [ThreadLocalContext.java](ThreadLocalContext.java) and compare the output wi
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Run the Java file once without changing it.
-2. Change one input or one line.
-3. Compare the new output with the explanation.
+- Why it matters: each thread can carry request context without sharing mutable state.
 
-What to observe:
+**What stays stable**
 
-- Check whether the output matches the rule in the comment header.
-- Check whether the edge case you changed still behaves as expected.
+- Why it matters: each thread can carry request context without sharing mutable state.
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Why it matters: each thread can carry request context without sharing mutable state.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading ThreadLocal as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Why it matters: each thread can carry request context without sharing mutable state.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Why it matters: each thread can carry request context without sharing mutable state.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [ThreadLocalContext.java](ThreadLocalContext.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why ThreadLocal exists, what problem it solves, and what the runnable file proves.
+- Why it matters: each thread can carry request context without sharing mutable state.

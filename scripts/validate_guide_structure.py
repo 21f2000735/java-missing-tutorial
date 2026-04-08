@@ -10,88 +10,15 @@ ROOT = Path(__file__).resolve().parents[1]
 SOURCE_ROOT = ROOT / "src/main/java/com/learning/javamissing"
 
 TOPIC_REQUIRED = [
-    "Why This Exists",
-    "The Pain Before It",
-    "Java Creator Mindset",
-    "How You Might Invent It",
-    "Naive Attempt",
-    "Why It Breaks",
-    "Final Java Solution",
-    "Code",
-    "Walkthrough",
-    "Mental Model",
-    "Mistakes",
-    "Tradeoffs",
-    "Use / Avoid",
-    "Practice",
-    "Summary",
+    "Concept",
+    "Example",
+    "What happens",
+    "What stays stable",
+    "What changes",
+    "Why it matters",
+    "Rule",
+    "Try this",
 ]
-
-TOPIC_REQUIRED_SIMPLE = [
-    "Topic / Problem",
-    "Intuition",
-    "Small Code Snippet",
-    "Internal Working",
-    "Comparison With Other",
-    "Famous Company Interview Question",
-]
-
-TOPIC_APPENDIX = {
-    "After Reading This, You Should Know",
-    "Avoid This When",
-    "Common Mistakes",
-    "Core Idea",
-    "Code",
-    "Expected Output",
-    "Final Java Solution",
-    "How You Might Invent It",
-    "Intuition",
-    "Interview Angle",
-    "Java Creator Mindset",
-    "Mental Model",
-    "Mistakes",
-    "Naive Attempt",
-    "OCJP Angle",
-    "Practice",
-    "Problem Statement",
-    "Practice",
-    "Problem Statement",
-    "Real-World Decision Rule",
-    "Run This Code",
-    "Rules / Syntax",
-    "Simple Example",
-    "Simple Example",
-    "Step-by-Step Working",
-    "Step-by-Step Working",
-    "Strong Interview Answer",
-    "Summary",
-    "The Pain Before It",
-    "The Problem",
-    "Tradeoffs",
-    "Use / Avoid",
-    "Quick Visual",
-    "Comparison Snapshot",
-    "Performance Lens",
-    "Benchmark Checklist",
-    "Benchmark Lens",
-    "Company Lens",
-    "Version Notes",
-    "Watch Out",
-    "Watch The Right Metric",
-    "When To Use / When Not To Use",
-    "Why This Exists",
-    "Why It Breaks",
-    "Why This Matters",
-    "Why This Works",
-    "Wrong Example First",
-    "Walkthrough",
-    "Use This When",
-    "✅ Better Code",
-    "✅ Better Mental Model",
-    "❌ Bad Code",
-    "❌ Bad Mental Model",
-    "Next Topic",
-}
 
 CHAPTER_REQUIRED = [
     "Why This Chapter Exists",
@@ -199,18 +126,39 @@ def h2_headings(text: str) -> list[str]:
     return re.findall(r"^## (.+)$", text, flags=re.MULTILINE)
 
 
+def bold_labels(text: str) -> list[str]:
+    return [
+        match.strip()
+        for match in re.findall(r"^\*\*([^*]+)\*\*$", text, flags=re.MULTILINE)
+    ]
+
+
 def validate_topic(path: Path, headings: list[str]) -> list[str]:
     if not headings:
         return ["empty guide"]
 
-    if headings[0] == "Topic / Problem":
-        required = TOPIC_REQUIRED_SIMPLE
-        appendix = set()
-    else:
-        required = TOPIC_REQUIRED
-        appendix = TOPIC_APPENDIX
+    errors = []
+    if len(headings) != 1:
+        errors.append(
+            f"expected exactly 1 H2 heading, found {len(headings)}"
+        )
 
-    return validate(path, required, appendix)
+    labels = bold_labels(strip_front_matter(path.read_text()))
+    if len(labels) < len(TOPIC_REQUIRED):
+        errors.append(
+            f"expected at least {len(TOPIC_REQUIRED)} bold section labels, found {len(labels)}"
+        )
+        return errors
+
+    actual = labels[: len(TOPIC_REQUIRED)]
+    if actual != TOPIC_REQUIRED:
+        errors.append(
+            "required bold label order mismatch:\n"
+            f"  expected: {TOPIC_REQUIRED}\n"
+            f"  found:    {actual}"
+        )
+
+    return errors
 
 
 def validate(path: Path, required: list[str], appendix: set[str]) -> list[str]:

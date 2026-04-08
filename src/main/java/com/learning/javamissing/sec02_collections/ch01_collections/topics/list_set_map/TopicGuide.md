@@ -8,47 +8,13 @@ mode: shared
 
 # List Set Map
 
-## Why This Exists
+## List Set Map
 
-Concept: List Set Map.
+**Concept**
 
 Java programs stay useful when they are organized around ideas, not only syntax.
 
-## The Pain Before It
-
-teams must store repeated, unique, and keyed data correctly.
-
-This topic uses shopping cart, coupons, and product lookup to make the concept easier to understand.
-
-## Java Creator Mindset
-
-First understand the problem in plain language, then map that idea to the Java code.
-
-## How You Might Invent It
-
-1. Identify the business data or behavior.
-2. Choose the Java construct that expresses the idea clearly.
-3. Run the example and compare the output with the explanation.
-
-## Naive Attempt
-
-The naive version is to use list set map without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-teams must store repeated, unique, and keyed data correctly.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-First understand the problem in plain language, then map that idea to the Java code.
-
-Run [ListSetMap.java](ListSetMap.java) as the source of truth for the example.
-
-## Code
-
-Run [ListSetMap.java](ListSetMap.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -68,44 +34,30 @@ Run [ListSetMap.java](ListSetMap.java) and compare the output with the explanati
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Identify the business data or behavior.
-2. Choose the Java construct that expresses the idea clearly.
-3. Run the example and compare the output with the explanation.
+- What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU.
+- Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.
+- Senior note: collection choice affects API clarity, mutation rules, and algorithmic cost.
 
-What to observe:
+**What stays stable**
 
-- Read the inline comments and printed lines in main() to see the expected behavior.
+- What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU. Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU. Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading List Set Map as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU. Common confusion: choose List when duplicates or order matter, Set when uniqueness matters, Map when lookup by key matters.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: What to notice: List fits cart order, Set fits unique coupon codes, Map fits product lookup by SKU.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [ListSetMap.java](ListSetMap.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why List Set Map exists, what problem it solves, and what the runnable file proves.
+- Identify the business data or behavior. 2. Choose the Java construct that expresses the idea clearly. 3. Run the example and compare the output with the explanation.

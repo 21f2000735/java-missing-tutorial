@@ -8,47 +8,13 @@ mode: interview
 
 # idempotent reservations
 
-## Why This Exists
+## idempotent reservations
 
-Concept: idempotent reservations.
+**Concept**
 
 Booking, checkout, and order systems are retried under network failure.
 
-## The Pain Before It
-
-It prevents duplicate reservations when the same request is sent again.
-
-A flash-sale reservation endpoint receives duplicate calls for the same booking request.
-
-## Java Creator Mindset
-
-A business action needs a stable request identity so the server can return the same result on retry.
-
-## How You Might Invent It
-
-1. Accept a request id.
-2. Store the first result under that id.
-3. Return the stored result on duplicate calls.
-
-## Naive Attempt
-
-The naive version is to use idempotent reservations without checking what rule it is supposed to protect.
-
-## Why It Breaks
-
-It prevents duplicate reservations when the same request is sent again.
-
-Edge cases usually show the bug first.
-
-## Final Java Solution
-
-A business action needs a stable request identity so the server can return the same result on retry.
-
-Run [IdempotentReservations.java](IdempotentReservations.java) as the source of truth for the example.
-
-## Code
-
-Run [IdempotentReservations.java](IdempotentReservations.java) and compare the output with the explanation below.
+**Example**
 
 ```java
     public static void main(String[] args) {
@@ -73,46 +39,30 @@ Run [IdempotentReservations.java](IdempotentReservations.java) and compare the o
     }
 ```
 
-## Walkthrough
+**What happens**
 
-1. Accept a request id.
-2. Store the first result under that id.
-3. Return the stored result on duplicate calls.
+- Why it works: the same request id returns the same stored reservation result.
+- Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.
+- After reading this example, you should know:
 
-What to observe:
+**What stays stable**
 
-- firstResult = RESERVED
-- secondResult = RESERVED
-- reservationsCreated = 1
+- Why it works: the same request id returns the same stored reservation result. Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.
+- The example keeps the same Java shape while you vary one thing.
 
-## Mental Model
+**What changes**
 
-- What rule is being enforced?
-- What changes when you change one input?
-- What does the output prove about the rule?
+- Why it works: the same request id returns the same stored reservation result. Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.
+- That change is what reveals the behavior you need to understand.
 
-## Mistakes
+**Why it matters**
 
-- reading idempotent reservations as syntax instead of a rule
-- changing more than one thing at once
-- skipping the runnable file and only reading the prose
+Why it works: the same request id returns the same stored reservation result. Company lens: Amazon and Meta reward answers that treat retries as normal, not exceptional.
 
-## Tradeoffs
+**Rule**
 
-The gain is clarity or correctness.
+👉 Rule: Why it works: the same request id returns the same stored reservation result.
 
-The cost is usually one more rule, one more API, or one more concept to remember.
+**Try this**
 
-## Use / Avoid
-
-Use it when the problem in the header comment matches the real code you are writing.
-
-Avoid it when a simpler loop, local variable, or direct call already expresses the rule clearly.
-
-## Practice
-
-Change one line in [IdempotentReservations.java](IdempotentReservations.java), rerun it, and write down what changed before and after the edit.
-
-## Summary
-
-After this topic, you should be able to explain why idempotent reservations exists, what problem it solves, and what the runnable file proves.
+- Accept a request id. 2. Store the first result under that id. 3. Return the stored result on duplicate calls.
