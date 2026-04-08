@@ -61,10 +61,10 @@ export function buildSearchEntries(manifest) {
     });
   });
   entries.push({
-    label: 'Interview Prep',
+    label: 'Interview Hub',
     meta: 'Company Interview Q&A',
-    route: '#interview-prep',
-    snippet: 'Browse company interview questions by company, topic, and level.'
+    route: '#interview-hub',
+    snippet: 'Browse interview questions by band, company, topic, and frequency.'
   });
   manifest.sections.forEach((section) => {
     entries.push({
@@ -142,10 +142,10 @@ export function resolveRouteMetadata({
     };
   }
 
-  if (route.type === 'interview-prep') {
+  if (route.type === 'interview-prep' || route.type === 'interview-hub') {
     return {
-      title: `Interview Prep | ${siteTitle}`,
-      description: 'Browse company interview questions by company, topic, and level.'
+      title: `Interview Hub | ${siteTitle}`,
+      description: 'Browse interview questions by band, company, topic, and frequency.'
     };
   }
 

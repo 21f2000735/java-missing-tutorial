@@ -29,9 +29,9 @@ export function useRouteContent({ route, manifest, fetchText }) {
           return;
         }
 
-        if (route.type === 'interview-prep') {
+        if (route.type === 'interview-hub') {
           if (!cancelled) {
-            setContent({ status: 'ready', data: { type: 'interview-prep' }, error: '' });
+            setContent({ status: 'ready', data: { type: 'interview-hub', route }, error: '' });
           }
           return;
         }

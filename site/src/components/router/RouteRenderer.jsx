@@ -4,7 +4,7 @@ import ChapterPage from '../pages/ChapterPage.jsx';
 import TopicPage from '../pages/TopicPage.jsx';
 import HomePage from '../pages/HomePage.jsx';
 import ProgressPage from '../pages/ProgressPage.jsx';
-import InterviewQAPage from '../pages/InterviewQAPage.jsx';
+import InterviewHubPage from '../pages/InterviewHubPage.jsx';
 import { useRouteContent } from '../../hooks/use-route-content.js';
 
 export default function RouteRenderer({
@@ -43,8 +43,8 @@ export default function RouteRenderer({
     );
   }
 
-  if (data.type === 'interview-prep') {
-    return <InterviewQAPage />;
+  if (data.type === 'interview-hub') {
+    return <InterviewHubPage manifest={manifest} route={data.route} />;
   }
 
   if (data.type === 'resource') {

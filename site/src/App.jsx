@@ -19,6 +19,7 @@ import {
   normalizeManifest,
   resolveRouteMetadata
 } from './lib/site-manifest.js';
+import { INTERVIEW_QUESTION_COUNT } from './lib/interview-questions.js';
 import {
   inferChapterJavaVersion,
   matchesVersionFilter,
@@ -262,7 +263,10 @@ export default function App() {
                   {uiPreferences.readingMode ? 'Exit Reading Mode' : 'Reading Mode'}
                 </button>
                 <RandomTopicButton manifest={manifest} currentRoute={currentHash()} />
-                <a className="btn btn-dark btn-sm rounded-pill" href="#interview-prep">Interview Prep</a>
+                <a className="btn btn-dark btn-sm rounded-pill d-inline-flex align-items-center" href="#interview-hub">
+                  Interview Hub
+                  <span className="badge rounded-pill text-bg-light text-dark ms-2">{INTERVIEW_QUESTION_COUNT}</span>
+                </a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_TRACK">Interview Track</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_INDEX">Interview Index</a>
                 <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Problem Approach</a>
