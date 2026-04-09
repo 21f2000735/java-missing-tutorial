@@ -1,10 +1,8 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { marked } from 'marked';
 import {
   applyDocumentMetadata,
-  currentHash,
   fetchJson,
   fetchText as fetchTextFromRuntime,
   loadBootstrapBundle,
@@ -13,13 +11,10 @@ import {
 } from './lib/browser-runtime.js';
 import { GITHUB_URL, SITE_DESCRIPTION, SITE_TITLE } from './lib/site-config.js';
 import {
-  buildSearchEntries,
   collectChapterRoutes,
-  collectTopicRoutes,
   normalizeManifest,
   resolveRouteMetadata
 } from './lib/site-manifest.js';
-import { INTERVIEW_QUESTION_COUNT } from './lib/interview-questions.js';
 import {
   inferChapterJavaVersion,
   matchesVersionFilter,
@@ -29,11 +24,7 @@ import {
   SECTION_PROFILES,
   resourceSummaryFromSlug
 } from './lib/site-data.js';
-import Sidebar, { SearchBox } from './components/layout/Sidebar.jsx';
-import {
-  QuickLinkRail,
-  RandomTopicButton
-} from './components/common/AppChrome.jsx';
+import Sidebar from './components/layout/Sidebar.jsx';
 import RouteRenderer from './components/router/RouteRenderer.jsx';
 import { useLearningPathState } from './hooks/use-learning-path-state.js';
 import { useFlashcardState } from './hooks/use-flashcard-state.js';
@@ -43,13 +34,6 @@ import {
   useReadingState,
   useUiPreferences
 } from './hooks/use-app-state.js';
-
-marked.setOptions({
-  gfm: true,
-  breaks: false,
-  mangle: false,
-  headerIds: false
-});
 
 const LOAD_TIMEOUT_MS = 15000;
 
@@ -164,8 +148,6 @@ export default function App() {
     }));
   }, [manifest, route]);
 
-  const searchEntries = useMemo(() => buildSearchEntries(manifest), [manifest]);
-  const allTopicRoutes = useMemo(() => collectTopicRoutes(manifest), [manifest]);
   const allChapterRoutes = useMemo(() => collectChapterRoutes(manifest), [manifest]);
 
   const fetchText = useCallback(async (path) => {
@@ -178,19 +160,7 @@ export default function App() {
     return text;
   }, []);
 
-  function goToRandomTopic() {
-    if (!allTopicRoutes.length) {
-      navigateToHash('#home');
-      return;
-    }
-
-    const activeHash = currentHash();
-    const candidates = allTopicRoutes.filter((item) => item !== activeHash);
-    const pool = candidates.length ? candidates : allTopicRoutes;
-    const index = Math.floor(Math.random() * pool.length);
-    navigateToHash(pool[index]);
-  }
-
+  const isHome = route.type === 'home';
   const activeRoute = sidebarRouteFromHashRoute(route);
   const activeChapterRoute = chapterRouteFromHashRoute(route);
   const chapterIndex = activeChapterRoute ? allChapterRoutes.indexOf(activeChapterRoute) : -1;
@@ -245,86 +215,76 @@ export default function App() {
       <header className="site-header border-bottom">
         <nav className="navbar navbar-expand-lg px-3 px-lg-4 py-3">
           <div className="container-fluid px-0">
-            <div className="d-flex align-items-center gap-2">
-              <button className="btn btn-outline-dark btn-sm d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#reader-sidebar-mobile" aria-controls="reader-sidebar-mobile">
-                <i className="bi bi-list" />
-              </button>
+            <div className="site-brand-block d-flex align-items-center gap-2">
+              {!isHome ? (
+                <button className="btn btn-outline-dark btn-sm d-lg-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#reader-sidebar-mobile" aria-controls="reader-sidebar-mobile">
+                  <i className="bi bi-list" />
+                </button>
+              ) : null}
               <a className="navbar-brand fw-semibold" href="#home">{SITE_TITLE}</a>
             </div>
 
-            <div className="ms-lg-4 flex-grow-1 d-flex flex-wrap flex-lg-nowrap align-items-center gap-3 header-actions">
-              <SearchBox entries={searchEntries} />
-              <div className="d-none d-lg-flex align-items-center gap-2">
-                <button className={`btn btn-sm rounded-pill ${uiPreferences.isDark ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleTheme}>
-                  <i className={`bi ${uiPreferences.isDark ? 'bi-sun-fill' : 'bi-moon-stars-fill'} me-1`} />
-                  {uiPreferences.isDark ? 'Light Mode' : 'Dark Mode'}
-                </button>
-                <button className={`btn btn-sm rounded-pill ${uiPreferences.readingMode ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleReadingMode}>
-                  {uiPreferences.readingMode ? 'Exit Reading Mode' : 'Reading Mode'}
-                </button>
-                <RandomTopicButton manifest={manifest} currentRoute={currentHash()} />
-                <a className="btn btn-dark btn-sm rounded-pill d-inline-flex align-items-center" href="#interview-hub">
-                  Interview Hub
-                  <span className="badge rounded-pill text-bg-light text-dark ms-2">{INTERVIEW_QUESTION_COUNT}</span>
-                </a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_TRACK">Interview Track</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_INDEX">Interview Index</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/INTERVIEW_PROBLEM_APPROACH">Problem Approach</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#resource/OCJP_TRACK">Certification</a>
-                <a className="btn btn-outline-dark btn-sm rounded-pill" href="#progress">My Progress</a>
-              </div>
+            <div className="site-nav-links d-none d-lg-flex align-items-center gap-2">
+              <a className={`site-nav-link ${isHome ? 'active' : ''}`} href="#home">Home</a>
+              <a className="site-nav-link" href="#resource/BOOK">Book</a>
+              <a className="site-nav-link" href="#resource/INTERVIEW_TRACK">Interview Track</a>
+              <a className="site-nav-link" href="#resource/INTERVIEW_INDEX">Index</a>
+              <a className="site-nav-link" href="#progress">Progress</a>
+            </div>
+
+            <div className="site-nav-actions d-none d-lg-flex align-items-center gap-2">
+              <button className={`btn btn-sm rounded-pill ${uiPreferences.isDark ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleTheme}>
+                {uiPreferences.isDark ? 'Light Mode' : 'Dark Mode'}
+              </button>
+              <button className={`btn btn-sm rounded-pill ${uiPreferences.readingMode ? 'btn-dark' : 'btn-outline-dark'}`} type="button" onClick={uiPreferences.toggleReadingMode}>
+                {uiPreferences.readingMode ? 'Reading Off' : 'Reading On'}
+              </button>
             </div>
           </div>
         </nav>
-
-        <div className="px-3 px-lg-4 pb-3 app-quick-links">
-          <QuickLinkRail
-            onRandomTopic={goToRandomTopic}
-            onToggleTheme={uiPreferences.toggleTheme}
-            themeLabel={uiPreferences.isDark ? 'Light Mode' : 'Dark Mode'}
-            onToggleReadingMode={uiPreferences.toggleReadingMode}
-            readingLabel={uiPreferences.readingMode ? 'Exit Reading' : 'Reading Mode'}
-          />
-        </div>
       </header>
 
-      <main className="reader-shell">
-        <div className="offcanvas offcanvas-start reader-offcanvas d-lg-none" tabIndex="-1" id="reader-sidebar-mobile" aria-labelledby="reader-sidebar-mobile-label">
-          <div className="offcanvas-header">
-            <h2 className="offcanvas-title h5 mb-0" id="reader-sidebar-mobile-label">Chapter Navigation</h2>
-            <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" />
-          </div>
-          <div className="offcanvas-body">
-            <Sidebar
-              sections={manifest.sections}
-              activeRoute={activeRoute}
-              completedChapters={readingState.completedChapters}
-              quizScores={readingState.quizScores}
-              versionFilter={uiPreferences.versionFilter}
-              onVersionChange={uiPreferences.setVersionFilter}
-              chapterCount={manifest.chapterOrder.length}
-              scoreLabel={scoreLabel}
-              matchesVersionFilter={matchesVersionFilter}
-            />
-          </div>
-        </div>
+      <main className={isHome ? 'home-shell' : 'reader-shell'}>
+        {!isHome ? (
+          <>
+            <div className="offcanvas offcanvas-start reader-offcanvas d-lg-none" tabIndex="-1" id="reader-sidebar-mobile" aria-labelledby="reader-sidebar-mobile-label">
+              <div className="offcanvas-header">
+                <h2 className="offcanvas-title h5 mb-0" id="reader-sidebar-mobile-label">Chapter Navigation</h2>
+                <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close" />
+              </div>
+              <div className="offcanvas-body">
+                <Sidebar
+                  sections={manifest.sections}
+                  activeRoute={activeRoute}
+                  completedChapters={readingState.completedChapters}
+                  quizScores={readingState.quizScores}
+                  versionFilter={uiPreferences.versionFilter}
+                  onVersionChange={uiPreferences.setVersionFilter}
+                  chapterCount={manifest.chapterOrder.length}
+                  scoreLabel={scoreLabel}
+                  matchesVersionFilter={matchesVersionFilter}
+                />
+              </div>
+            </div>
 
-        <aside className={`reader-sidebar d-none d-lg-block ${uiPreferences.readingMode ? 'reader-sidebar-reading' : ''}`}>
-          <Sidebar
-            sections={manifest.sections}
-            activeRoute={activeRoute}
-            completedChapters={readingState.completedChapters}
-            quizScores={readingState.quizScores}
-            versionFilter={uiPreferences.versionFilter}
-            onVersionChange={uiPreferences.setVersionFilter}
-            chapterCount={manifest.chapterOrder.length}
-            scoreLabel={scoreLabel}
-            matchesVersionFilter={matchesVersionFilter}
-          />
-        </aside>
+            <aside className={`reader-sidebar d-none d-lg-block ${uiPreferences.readingMode ? 'reader-sidebar-reading' : ''}`}>
+              <Sidebar
+                sections={manifest.sections}
+                activeRoute={activeRoute}
+                completedChapters={readingState.completedChapters}
+                quizScores={readingState.quizScores}
+                versionFilter={uiPreferences.versionFilter}
+                onVersionChange={uiPreferences.setVersionFilter}
+                chapterCount={manifest.chapterOrder.length}
+                scoreLabel={scoreLabel}
+                matchesVersionFilter={matchesVersionFilter}
+              />
+            </aside>
+          </>
+        ) : null}
 
-        <section className="content-column">
-          <div className="content-wrap">
+        <section className={`content-column ${isHome ? 'home-content-column' : ''}`}>
+          <div className={`content-wrap ${isHome ? 'home-content-wrap' : ''}`}>
             <RouteRenderer
               route={route}
               manifest={manifest}

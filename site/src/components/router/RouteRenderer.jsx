@@ -30,7 +30,7 @@ export default function RouteRenderer({
   const data = content.data;
 
   if (data.type === 'home') {
-    return <HomePage manifest={manifest} fetchText={fetchText} learningPathState={learningPathState} />;
+    return <HomePage manifest={manifest} />;
   }
 
   if (data.type === 'progress') {
